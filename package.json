@@ -1,0 +1,103 @@
+{
+  "name": "mol-vast-tools",
+  "private": true,
+  "description": "Collection of VAST tool libraries",
+  "author": "MailOnline <fe@mailonline.co.uk>",
+  "scripts": {
+    "postinstall": "lerna bootstrap",
+    "prebuild": "rimraf dist",
+    "build": "lerna run build",
+    "lint-scripts": "eslint --ignore-path .gitignore './**/*.js'",
+    "lint-styles": "stylelint --ignore-path .gitignore '**/*.{scss,sass,css}'",
+    "lint": "npm run lint-scripts && npm run lint-styles",
+    "precommit": "npm run lint",
+    "prepush": "npm test",
+    "start": "echo \"This project has no start script\"",
+    "test": "NODE_ENV=test jest --json 2>/dev/null | jest-json-to-tap"
+  },
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/MailOnline/mol-vast-tools/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MailOnline/mol-vast-tools.git"
+  },
+  "homepage": "https://github.com/MailOnline/mol-vast-tools#readme",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/mol-conventional-changelog"
+    }
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "debug": false,
+          "modules": false,
+          "targets": {
+            "browsers": [
+              "> 1%",
+              "last 3 versions",
+              "ios > 8",
+              "not ie < 10"
+            ]
+          },
+          "useBuiltIns": true
+        }
+      ]
+    ],
+    "env": {
+      "debug": false,
+      "test": {
+        "presets": [
+          "es2015"
+        ],
+        "plugins": [
+          "transform-runtime"
+        ]
+      }
+    }
+  },
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-jest": "^20.0.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "eslint": "^4.4.0",
+    "eslint-config-mailonline": "^7.1.0",
+    "eslint-plugin-jsdoc": "^3.1.2",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "husky": "^0.14.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^20.0.4",
+    "jest-json-to-tap": "^2.0.0",
+    "jsdom": "^11.0.0",
+    "lerna": "^2.0.0",
+    "mol-conventional-changelog": "^1.2.0",
+    "node-sass": "^4.5.0",
+    "rimraf": "^2.5.4",
+    "shelljs": "^0.7.8",
+    "stylelint": "^8.0.0",
+    "stylelint-config-mailonline": "^3.0.2"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "packages/**/src/**/*.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(scss)$": "identity-obj-proxy"
+    },
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!@mol-fe/).*",
+      "packages/.*/node_modules/(?!@mol-fe/).*"
+    ]
+  }
+}
