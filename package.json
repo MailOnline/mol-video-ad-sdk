@@ -13,7 +13,7 @@
     "precommit": "npm run lint",
     "prepush": "npm test",
     "start": "echo \"This project has no start script\"",
-    "test": "NODE_ENV=test jest --json 2>/dev/null | jest-json-to-tap"
+    "test": "NODE_ENV=test jest"
   },
   "license": "UNLICENSED",
   "bugs": {
@@ -76,6 +76,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^20.0.4",
     "jest-json-to-tap": "^2.0.0",
+    "jsdoc": "^3.5.4",
     "jsdom": "^11.0.0",
     "lerna": "^2.0.0",
     "mol-conventional-changelog": "^1.2.0",
@@ -96,8 +97,8 @@
       "^.+\\.jsx?$": "babel-jest"
     },
     "transformIgnorePatterns": [
-      "/node_modules/(?!@mol-fe/).*",
-      "packages/.*/node_modules/(?!@mol-fe/).*"
+      "/node_modules/(?!mol-).*",
+      "packages/.*/node_modules/(?!mol-).*"
     ]
   }
 }
