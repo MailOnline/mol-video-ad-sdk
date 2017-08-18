@@ -1,10 +1,13 @@
 import get from 'lodash/get';
 
+/** @module mol-vast-selectors */
+
 /**
  * Selects the ads of the passed VAST.
  *
  * @param {Object} parsedVAST - Parsed VAST xml.
  * @returns {Array} - Array of ads or null.
+ * @static
  */
 const getAds = (parsedVAST) => get(parsedVAST, 'elements[0].elements', null);
 
@@ -13,6 +16,7 @@ const getAds = (parsedVAST) => get(parsedVAST, 'elements[0].elements', null);
  *
  * @param {Object} parsedVAST - Parsed VAST xml.
  * @returns {Object} - First ad of the VAST xml or null.
+ * @static
  */
 const getFirstAd = (parsedVAST) => get(parsedVAST, 'elements[0].elements[0]', null);
 
@@ -21,6 +25,7 @@ const getFirstAd = (parsedVAST) => get(parsedVAST, 'elements[0].elements[0]', nu
  *
  * @param {Object} ad - VAST ad object.
  * @returns {boolean} - Returns `true` if the ad contains a wrapper or `false` otherwise.
+ * @static
  */
 const isWrapper = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'WRAPPER';
 
@@ -29,6 +34,7 @@ const isWrapper = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'WRA
  *
  * @param {Object} ad - VAST ad object.
  * @returns {boolean} - Returns `true` if the ad contains an Inline or `false` otherwise.
+ * @static
  */
 const isInline = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'INLINE';
 
