@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import xml2js from 'xml-js/lib/xml2js';
+import xml2js from 'mol-vast-xml2js';
 import {getFirstAd} from '../../src/index';
 
 export const wrapperParsedXML = xml2js(fs.readFileSync(path.join(__dirname, 'vast-wrapper.xml'), 'utf8'), {compact: false});
