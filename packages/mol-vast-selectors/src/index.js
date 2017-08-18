@@ -38,9 +38,29 @@ const isWrapper = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'WRA
  */
 const isInline = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'INLINE';
 
+/**
+ * Returns the VASTAdTagURI from the wrapper ad.
+ *
+ * @param {Object} ad - VAST ad object.
+ * @returns {boolean} - Returns the VASTAdTagURI from the wrapper ad or null otherwise.
+ * @static
+ */
+const getVASTAdTagURI = (ad) => {
+  const elements = get(ad, 'elements[0].elements', null);
+
+  if (Array.isArray(elements)) {
+    const VASTAdTagURIElement = elements.find(({name}) => name.toUpperCase() === 'VASTADTAGURI');
+
+    return get(VASTAdTagURIElement, 'elements[0].cdata', null);
+  }
+
+  return null;
+};
+
 export {
   getAds,
   getFirstAd,
+  getVASTAdTagURI,
   isInline,
   isWrapper
 };
