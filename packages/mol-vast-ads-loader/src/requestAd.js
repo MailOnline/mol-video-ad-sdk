@@ -23,12 +23,11 @@ const requestAd = async (adTag, options, vastChain = []) => {
   let ad;
 
   try {
-    if (vastChain.length > (options.wrapperLimit || DEFAULT_WRAPPER_LIMIT)) {
+    if (vastChain.length >= (options.wrapperLimit || DEFAULT_WRAPPER_LIMIT)) {
       VASTAdResponse.errorCode = 304;
 
       return [VASTAdResponse, ...vastChain];
     }
-
     response = await fetch(adTag, options);
     XML = await response.text();
     parsedXML = xml2js(XML, {compact: false});
@@ -36,7 +35,7 @@ const requestAd = async (adTag, options, vastChain = []) => {
 
     VASTAdResponse = {
       ad,
-      errorCode: null,
+      errorCode: Boolean(ad) ? null : 300,
       parsedXML,
       requestTag: adTag,
       XML
@@ -56,8 +55,6 @@ const requestAd = async (adTag, options, vastChain = []) => {
       errorCode = 502;
     } else if (!parsedXML) {
       errorCode = 100;
-    } else if (!ad) {
-      errorCode = 300;
     }
 
     VASTAdResponse.errorCode = errorCode;
