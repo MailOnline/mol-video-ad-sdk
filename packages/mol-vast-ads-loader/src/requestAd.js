@@ -18,9 +18,9 @@ const requestAd = async (adTag, options, vastChain = []) => {
   };
 
   if (vastChain.length > (options.wrapperLimit || DEFAULT_WRAPPER_LIMIT)) {
-    vastChain[0].errorCode = 304;
+    VASTAdResponse.errorCode = 304;
 
-    return vastChain;
+    return [VASTAdResponse, ...vastChain];
   }
 
   let response;
