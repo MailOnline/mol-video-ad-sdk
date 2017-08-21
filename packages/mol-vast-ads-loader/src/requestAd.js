@@ -17,18 +17,18 @@ const requestAd = async (adTag, options, vastChain = []) => {
     XML: null
   };
 
-  if (vastChain.length > (options.wrapperLimit || DEFAULT_WRAPPER_LIMIT)) {
-    VASTAdResponse.errorCode = 304;
-
-    return [VASTAdResponse, ...vastChain];
-  }
-
   let response;
   let XML;
   let parsedXML;
   let ad;
 
   try {
+    if (vastChain.length > (options.wrapperLimit || DEFAULT_WRAPPER_LIMIT)) {
+      VASTAdResponse.errorCode = 304;
+
+      return [VASTAdResponse, ...vastChain];
+    }
+
     response = await fetch(adTag, options);
     XML = await response.text();
     parsedXML = xml2js(XML, {compact: false});
