@@ -7,6 +7,7 @@ import {
 } from '../src/index';
 import {
   inlineAd,
+  podParsedXML,
   wrapperAd,
   wrapperParsedXML
 } from './fixtures';
@@ -19,6 +20,13 @@ test('getAds must return the ads of the passed adResponse or null otherwise', ()
 test('getFirstAd must return the first ad of the passed adResponse or null otherwise', () => {
   expect(getFirstAd(wrapperParsedXML)).toEqual(wrapperAd);
   expect(getFirstAd({})).toBe(null);
+});
+
+test('getFirsAd must return the firs ad in the sequence if the passed VAST has an ad pod', () => {
+  const ad = getFirstAd(podParsedXML);
+  const {id} = ad.attributes;
+
+  expect(id).toBe('1234');
 });
 
 test('isWrapper must return true if the ad contains a wrapper and false otherwise', () => {

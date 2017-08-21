@@ -42,8 +42,6 @@ const requestAd = async (adTag, options, vastChain = []) => {
       XML
     };
 
-    // TODO: we need to check for ad pods
-
     const newVastChain = [VASTAdResponse, ...vastChain];
 
     if (isWrapper(ad)) {

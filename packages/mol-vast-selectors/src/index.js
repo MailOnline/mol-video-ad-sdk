@@ -11,14 +11,56 @@ import get from 'lodash/get';
  */
 const getAds = (parsedVAST) => get(parsedVAST, 'elements[0].elements', null);
 
+const isPodAd = (ad) => {
+  const sequence = parseInt(ad.attributes.sequence, 10);
+
+  return typeof sequence === 'number' && !isNaN(sequence);
+};
+
 /**
- * Selects the first ad of the passed VAST.
+ * Checks if the passed array of ads have an ad pod.
+ *
+ * @param {Array} ads - Array of ads.
+ * @returns {boolean} - Returns true if there is an ad pod in the array and false otherwise.
+ */
+const haveAdPod = (ads) => Boolean(ads.find(isPodAd));
+
+const compareBySequence = (itemA, itemB) => {
+  const itemASequence = parseInt(itemA.attributes.sequence, 10);
+  const itemBSequence = parseInt(itemB.attributes.sequence, 10);
+
+  if (itemASequence < itemBSequence) {
+    return -1;
+  }
+
+  if (itemASequence > itemBSequence) {
+    return 1;
+  }
+
+  return 0;
+};
+
+/**
+ * Selects the first ad of the passed VAST. If the passed VAST response contains an ad pod it will return the first ad in the ad pod sequence.
  *
  * @param {Object} parsedVAST - Parsed VAST xml.
  * @returns {Object} - First ad of the VAST xml or null.
  * @static
  */
-const getFirstAd = (parsedVAST) => get(parsedVAST, 'elements[0].elements[0]', null);
+const getFirstAd = (parsedVAST) => {
+  const ads = getAds(parsedVAST);
+
+  if (Array.isArray(ads)) {
+    if (haveAdPod(ads)) {
+      return ads.filter(isPodAd)
+        .sort(compareBySequence)[0];
+    }
+
+    return ads[0];
+  }
+
+  return null;
+};
 
 /**
  * Checks if the passed ad is a Wrapper.
@@ -61,6 +103,7 @@ export {
   getAds,
   getFirstAd,
   getVASTAdTagURI,
+  haveAdPod,
   isInline,
   isWrapper
 };
