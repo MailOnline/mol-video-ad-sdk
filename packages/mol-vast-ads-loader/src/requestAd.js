@@ -8,6 +8,15 @@ import fetch from './helpers/fetch';
 
 const DEFAULT_WRAPPER_LIMIT = 5;
 
+/**
+ * Request the ad using the passed ad tag and returns an array with the VAST responses needed to get an inline ad.
+ *
+ * @param {string} adTag - The VAST ad tag request url.
+ * @param {Object} options - Config object to set the wrapperlimit.
+ * @param {Array} vastChain - Optional array with the previous VAST responses.
+ * @returns {Array} - Returns a new VastChain with the newest VAST response at the begining of the array.
+ * @static
+ */
 const requestAd = async (adTag, options, vastChain = []) => {
   let VASTAdResponse = {
     ad: null,
