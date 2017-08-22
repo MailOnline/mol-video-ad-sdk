@@ -5,6 +5,12 @@ import {
 import requestAd from './requestAd';
 import getNextAd from './getNextAd';
 
+/**
+ *
+ * @param {Array} VASTChain - Array of VAST responses. See requestAd for more info.
+ * @param {Object} options - The only possible options is `useAdBuffet` which should be set to true if we want to get a buffet ad from an ad pod.
+ *                           If no buffet ad is available it will return the next ad in ad pod sequence.
+ */
 const requestNextAd = (VASTChain, options) => {
   if (!Array.isArray(VASTChain)) {
     throw new TypeError('Invalid VAST chain');
