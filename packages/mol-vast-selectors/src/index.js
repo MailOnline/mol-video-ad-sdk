@@ -11,19 +11,41 @@ import get from 'lodash/get';
  */
 const getAds = (parsedVAST) => get(parsedVAST, 'elements[0].elements', null);
 
-const isPodAd = (ad) => {
+/**
+ * Gets the sequence of the pod ad.
+ *
+ * @param {Object} ad - Parsed ad definition object.
+ * @returns {number} - The pod ad sequence number or null.
+ */
+const getPodAdSequence = (ad) => {
   const sequence = parseInt(ad.attributes.sequence, 10);
 
-  return typeof sequence === 'number' && !isNaN(sequence);
+  if (typeof sequence === 'number' && !isNaN(sequence)) {
+    return sequence;
+  }
+
+  return null;
 };
+
+/**
+ * Checks if the passed ad definition is a pod ad.
+ *
+ * @param {Object} ad - Parsed ad definition object.
+ * @returns {boolean} - Returns true if there the ad is a pod ad and false otherwise.
+ */
+const isPodAd = (ad) => Boolean(getPodAdSequence(ad));
 
 /**
  * Checks if the passed array of ads have an ad pod.
  *
- * @param {Array} ads - Array of ads.
+ * @param {Object} parsedVAST - Parsed VAST xml.
  * @returns {boolean} - Returns true if there is an ad pod in the array and false otherwise.
  */
-const haveAdPod = (ads) => Boolean(ads.find(isPodAd));
+const hasAdPod = (parsedVAST) => {
+  const ads = getAds(parsedVAST);
+
+  return Array.isArray(ads) && ads.filter(isPodAd).length > 1;
+};
 
 const compareBySequence = (itemA, itemB) => {
   const itemASequence = parseInt(itemA.attributes.sequence, 10);
@@ -51,7 +73,7 @@ const getFirstAd = (parsedVAST) => {
   const ads = getAds(parsedVAST);
 
   if (Array.isArray(ads)) {
-    if (haveAdPod(ads)) {
+    if (hasAdPod(parsedVAST)) {
       return ads.filter(isPodAd)
         .sort(compareBySequence)[0];
     }
@@ -103,7 +125,9 @@ export {
   getAds,
   getFirstAd,
   getVASTAdTagURI,
-  haveAdPod,
+  hasAdPod,
+  getPodAdSequence,
+  isPodAd,
   isInline,
   isWrapper
 };

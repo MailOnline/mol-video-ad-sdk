@@ -17,7 +17,7 @@ const DEFAULT_WRAPPER_LIMIT = 5;
  * @returns {Array} - Returns a new VastChain with the newest VAST response at the begining of the array.
  * @static
  */
-const requestAd = async (adTag, options, vastChain = []) => {
+const requestAd = async (adTag, options = {}, vastChain = []) => {
   let VASTAdResponse = {
     ad: null,
     errorCode: null,
@@ -32,7 +32,9 @@ const requestAd = async (adTag, options, vastChain = []) => {
   let ad;
 
   try {
-    if (vastChain.length >= (options.wrapperLimit || DEFAULT_WRAPPER_LIMIT)) {
+    const wrapperLimit = options.wrapperLimit || DEFAULT_WRAPPER_LIMIT;
+
+    if (vastChain.length >= wrapperLimit) {
       VASTAdResponse.errorCode = 304;
 
       return [VASTAdResponse, ...vastChain];
@@ -41,6 +43,11 @@ const requestAd = async (adTag, options, vastChain = []) => {
     XML = await response.text();
     parsedXML = xml2js(XML, {compact: false});
     ad = getFirstAd(parsedXML);
+
+    if (ad) {
+      // eslint-disable-next-line id-match
+      ad.___requested = true;
+    }
 
     VASTAdResponse = {
       ad,
