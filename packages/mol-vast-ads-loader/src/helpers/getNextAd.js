@@ -1,5 +1,5 @@
 import {
-  haveAdPod,
+  hasAdPod,
   getAds,
   getPodAdSequence,
   isPodAd
@@ -14,7 +14,7 @@ const getNexPod = (currentPod, ads) => {
 const getNextAd = ({ad, parsedXML}, options = {}) => {
   const {useAdBuffet} = options;
   const ads = getAds(parsedXML);
-  const isAdPod = haveAdPod(ads);
+  const isAdPod = hasAdPod(parsedXML);
   const availableAds = ads.filter((adDefinition) => !adDefinition.___requested);
   let nextAd;
 

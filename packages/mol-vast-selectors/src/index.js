@@ -38,10 +38,14 @@ const isPodAd = (ad) => Boolean(getPodAdSequence(ad));
 /**
  * Checks if the passed array of ads have an ad pod.
  *
- * @param {Array} ads - Array of ads.
+ * @param {Object} parsedVAST - Parsed VAST xml.
  * @returns {boolean} - Returns true if there is an ad pod in the array and false otherwise.
  */
-const haveAdPod = (ads) => ads.filter(isPodAd).length > 1;
+const hasAdPod = (parsedVAST) => {
+  const ads = getAds(parsedVAST);
+
+  return Array.isArray(ads) && ads.filter(isPodAd).length > 1;
+};
 
 const compareBySequence = (itemA, itemB) => {
   const itemASequence = parseInt(itemA.attributes.sequence, 10);
@@ -69,7 +73,7 @@ const getFirstAd = (parsedVAST) => {
   const ads = getAds(parsedVAST);
 
   if (Array.isArray(ads)) {
-    if (haveAdPod(ads)) {
+    if (hasAdPod(parsedVAST)) {
       return ads.filter(isPodAd)
         .sort(compareBySequence)[0];
     }
@@ -121,7 +125,7 @@ export {
   getAds,
   getFirstAd,
   getVASTAdTagURI,
-  haveAdPod,
+  hasAdPod,
   getPodAdSequence,
   isPodAd,
   isInline,
