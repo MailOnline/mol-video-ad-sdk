@@ -5,7 +5,7 @@ import {
   isPodAd
 } from 'mol-vast-selectors';
 
-const getNexPod = (currentPod, ads) => {
+const getNextPod = (currentPod, ads) => {
   const nextPodSequence = getPodAdSequence(currentPod) + 1;
 
   return ads.find((ad) => getPodAdSequence(ad) === nextPodSequence) || null;
@@ -24,7 +24,7 @@ const getNextAd = ({ad, parsedXML}, options = {}) => {
     }
 
     if (!nextAd) {
-      nextAd = getNexPod(ad, availableAds);
+      nextAd = getNextPod(ad, availableAds);
     }
   } else {
     nextAd = availableAds[0];
