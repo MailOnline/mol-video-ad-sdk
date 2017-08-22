@@ -2,6 +2,9 @@ import {
   getAds,
   getFirstAd,
   getVASTAdTagURI,
+  haveAdPod,
+  getPodAdSequence,
+  isPodAd,
   isInline,
   isWrapper
 } from '../src/index';
@@ -48,4 +51,29 @@ test('isInline must return true if the ad contains a wrapper and false otherwise
 test('getVASTAdTagURI must return the VASTAdTagURI from the wrapper ad or null otherwise', () => {
   expect(getVASTAdTagURI(wrapperAd)).toBe('https://VASTAdTagURI.example.com');
   expect(getVASTAdTagURI(inlineAd)).toBe(null);
+});
+
+test('haveAdPod must return true if the passed ads have an ad pod and false otherwise', () => {
+  expect(haveAdPod(getAds(podParsedXML))).toBe(true);
+  expect(haveAdPod([inlineAd, wrapperAd])).toBe(false);
+  expect(haveAdPod([])).toBe(false);
+});
+
+test('haveAdPod must return true if the there is only one ad with a sequence', () => {
+  expect(haveAdPod(getAds(podParsedXML))).toBe(true);
+  expect(haveAdPod([getAds(podParsedXML)[1]])).toBe(false);
+});
+
+test('getPodAdSequence mus return the sequence of the ad or false otherwise', () => {
+  const ads = getAds(podParsedXML);
+
+  expect(getPodAdSequence(ads[0])).toBe(null);
+  expect(getPodAdSequence(ads[1])).toBe(1);
+});
+
+test('isPodAd must return true if the ad has a sequence and false otherwise', () => {
+  const ads = getAds(podParsedXML);
+
+  expect(isPodAd(ads[0])).toBe(false);
+  expect(isPodAd(ads[1])).toBe(true);
 });

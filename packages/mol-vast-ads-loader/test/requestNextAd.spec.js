@@ -154,9 +154,3 @@ test('requestNextAd must throw an error if there are no more ads to play in the 
   expect(() => requestNextAd(VASTChain, {})).toThrowError(Error);
 });
 
-test('requestNextAd must play the next ad on the adPod');
-test('requestNextAd with useAdBuffet option flat set to true must request and ad from the adBuffet of the adPod');
-test('requestNextAd with useAdBuffet option flat set to true must request the next ad on the adPod if there are no more adBuffets to serve');
-test('requestNextAd must go to the waterfall if there are no more ads to play on the adpod');
-test('requestNextAd must not use the waterfall if the `avoidWaterfall` option flag is set to true');
-
