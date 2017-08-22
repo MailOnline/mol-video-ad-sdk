@@ -1,3 +1,4 @@
+/* eslint-disable id-match */
 import requestAd from '../src/requestAd';
 import {
   noAdParsedXML,
@@ -9,6 +10,14 @@ import {
   wrapperAd,
   inlineAd
 } from './fixtures';
+
+const markAdAsRequested = (ad) => {
+  ad.___requested = true;
+};
+
+const unmarkAdAsRequested = (ad) => {
+  delete ad.___requested;
+};
 
 test('requestAd must return a chain with errorcode 304 if the wrapperLimit is reached', async () => {
   const vastChain = await requestAd('http://adtag.test.example.com', {wrapperLimit: 1}, [{}]);
@@ -130,10 +139,8 @@ test('requestAd must do do the wrapper chain requests until it finds an inline a
 
   const vastChain = await requestAd('http://adtag.test.example.com', {});
 
-  // eslint-disable-next-line id-match
-  inlineAd.___requested = true;
-  // eslint-disable-next-line id-match
-  wrapperAd.___requested = true;
+  markAdAsRequested(inlineAd);
+  markAdAsRequested(wrapperAd);
 
   expect(vastChain).toEqual([
     {
@@ -158,4 +165,7 @@ test('requestAd must do do the wrapper chain requests until it finds an inline a
       XML: vastWrapperXML
     }
   ]);
+
+  unmarkAdAsRequested(inlineAd);
+  unmarkAdAsRequested(wrapperAd);
 });

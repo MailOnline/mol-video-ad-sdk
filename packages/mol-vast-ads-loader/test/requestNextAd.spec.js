@@ -1,3 +1,4 @@
+/* eslint-disable id-match */
 import {getAds} from 'mol-vast-selectors';
 import requestNextAd from '../src/requestNextAd';
 import {
@@ -7,16 +8,72 @@ import {
   wrapperParsedXML,
   inlineParsedXML,
   waterfallParsedXML,
+  waterfallWithInlineParsedXML,
   wrapperAd,
   inlineAd
 } from './fixtures';
+
+const markAdAsRequested = (ad) => {
+  ad.___requested = true;
+};
+
+const unmarkAdAsRequested = (ad) => {
+  delete ad.___requested;
+};
 
 test('requestNextAd must throw if we pass an invalid VAST chain', () => {
   expect(() => requestNextAd()).toThrowError('Invalid VAST chain');
   expect(() => requestNextAd()).toThrowError(TypeError);
 });
 
-test('requestNextAd must play the next ad on the waterfall', async () => {
+test('requestNexAd must return the next inline to play in the waterfall', async () => {
+  const waterfallAds = getAds(waterfallWithInlineParsedXML);
+  const VASTWaterfallChain = [
+    {
+      ad: inlineAd,
+      errorCode: null,
+      parsedXML: inlineParsedXML,
+      requestTag: 'https://VASTAdTagURI.example.com',
+      XML: vastInlineXML
+    },
+    {
+      ad: wrapperAd,
+      errorCode: null,
+      parsedXML: wrapperParsedXML,
+      requestTag: 'https://VASTAdTagURI.example.com',
+      XML: vastWrapperXML
+    },
+    {
+      ad: waterfallAds[0],
+      errorCode: null,
+      parsedXML: waterfallWithInlineParsedXML,
+      requestTag: 'http://adtag.test.example.com',
+      XML: vastWaterfallXML
+    }
+  ];
+
+  markAdAsRequested(inlineAd);
+  markAdAsRequested(wrapperAd);
+  markAdAsRequested(waterfallAds[0]);
+
+  const vastChain = await requestNextAd(VASTWaterfallChain, {});
+
+  expect(vastChain).toEqual([
+    {
+      ad: waterfallAds[1],
+      errorCode: null,
+      parsedXML: waterfallWithInlineParsedXML,
+      requestTag: 'http://adtag.test.example.com',
+      XML: vastWaterfallXML
+    }
+  ]);
+
+  unmarkAdAsRequested(inlineAd);
+  unmarkAdAsRequested(wrapperAd);
+  unmarkAdAsRequested(waterfallAds[0]);
+});
+
+test('requestNextAd must request the next ad on the waterfall', async () => {
   const waterfallAds = getAds(waterfallParsedXML);
   const VASTWaterfallChain = [
     {
@@ -65,12 +122,9 @@ test('requestNextAd must play the next ad on the waterfall', async () => {
     .mockImplementationOnce(() => Promise.resolve(wrapperResponse))
     .mockImplementationOnce(() => Promise.resolve(inlineResponse));
 
-  // eslint-disable-next-line id-match
-  inlineAd.___requested = true;
-  // eslint-disable-next-line id-match
-  wrapperAd.___requested = true;
-  // eslint-disable-next-line id-match
-  waterfallAds[0].___requested = true;
+  markAdAsRequested(inlineAd);
+  markAdAsRequested(wrapperAd);
+  markAdAsRequested(waterfallAds[0]);
 
   let vastChain = await requestNextAd(VASTWaterfallChain, {});
 
@@ -123,9 +177,16 @@ test('requestNextAd must play the next ad on the waterfall', async () => {
       XML: vastWaterfallXML
     }
   ]);
+
+  unmarkAdAsRequested(inlineAd);
+  unmarkAdAsRequested(wrapperAd);
+  unmarkAdAsRequested(waterfallAds[0]);
 });
 
 test('requestNextAd must throw an error if there are no more ads to play in the waterfall', () => {
+  markAdAsRequested(inlineAd);
+  markAdAsRequested(wrapperAd);
+
   const VASTChain = [
     {
       ad: inlineAd,
@@ -152,5 +213,8 @@ test('requestNextAd must throw an error if there are no more ads to play in the 
 
   expect(() => requestNextAd(VASTChain, {})).toThrowError('No next ad to request');
   expect(() => requestNextAd(VASTChain, {})).toThrowError(Error);
+
+  unmarkAdAsRequested(inlineAd);
+  unmarkAdAsRequested(wrapperAd);
 });
 
