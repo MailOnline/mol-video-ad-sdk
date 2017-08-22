@@ -3,7 +3,7 @@ import {
   isWrapper
 } from 'mol-vast-selectors';
 import requestAd from './requestAd';
-import getNextAd from './getNextAd';
+import getNextAd from './helpers/getNextAd';
 
 /**
  *

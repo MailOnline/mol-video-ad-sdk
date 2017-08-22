@@ -3,7 +3,7 @@ import {
   getAds,
   isPodAd
 } from 'mol-vast-selectors';
-import getNextAd from '../src/getNextAd';
+import getNextAd from '../src/helpers/getNextAd';
 import {
   wrapperParsedXML,
   podParsedXML,
