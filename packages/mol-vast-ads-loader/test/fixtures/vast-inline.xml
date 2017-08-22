@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <VAST version="4.0">
-  <Ad id="abc123" sequence="0">
+  <Ad id="abc123">
     <InLine>
       <AdSystem version="1.0">Shibby Service</AdSystem>
       <AdTitle>VAST 4.0 Test</AdTitle>
@@ -18,7 +18,7 @@
       </ViewableImpression>
       <AdVerification/>
       <Creatives>
-        <Creative adId="abc123" sequence="0" apiFramework="iab-api">
+        <Creative adId="abc123" apiFramework="iab-api">
           <UniversalAdId idValue="unknown">unknown</UniversalAdId>
           <CreativeExtensions>
             <CreativeExtension>

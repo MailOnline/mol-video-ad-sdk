@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VAST xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd" version="4.0">
+ <Ad id="1234">
+  <Wrapper>
+   <AdSystem>MOL vast test</AdSystem>
+    <AdTitle>VAST waterfall 1</AdTitle>
+   <VASTAdTagURI><![CDATA[https://VASTAdTagURI.example.com]]></VASTAdTagURI>
+   <Error><![CDATA[http://test.example.com[ERRORCODE]]]></Error>
+   <Impression><![CDATA[http://test.example.com]]></Impression>
+   <Creatives>
+       <Creative>
+           <Linear>
+               <Duration>00:00:31</Duration>
+               <TrackingEvents>
+                   <Tracking event="complete"><![CDATA[http://test.example.com]]></Tracking>
+                   <Tracking event="firstQuartile"><![CDATA[http://test.example.com]]></Tracking>
+                   <Tracking event="midpoint"><![CDATA[http://test.example.com]]></Tracking>
+                   <Tracking event="thirdQuartile"><![CDATA[http://test.example.com]]></Tracking>
+               </TrackingEvents>
+               <VideoClicks>
+                   <ClickTracking><![CDATA[http://test.example.com]]></ClickTracking>
+               </VideoClicks>
+               <MediaFiles>
+                   <MediaFile delivery="streaming" height="0" type="application/x-mpegURL" width="0"><![CDATA[http://test.media.example.com/test.video.m3u8]]></MediaFile>
+               </MediaFiles>
+           </Linear>
+       </Creative>
+   </Creatives>
+  </Wrapper>
+ </Ad>
+ <Ad id="1235">
+  <Wrapper>
+   <AdSystem>MOL vast test</AdSystem>
+    <AdTitle>VAST waterfall 2</AdTitle>
+   <VASTAdTagURI><![CDATA[https://VASTAdTagURI.example.com]]></VASTAdTagURI>
+   <Error><![CDATA[http://test.example.com[ERRORCODE]]]></Error>
+   <Impression><![CDATA[http://test.example.com]]></Impression>
+   <Creatives>
+       <Creative>
+           <Linear>
+               <Duration>00:00:31</Duration>
+               <TrackingEvents>
+                   <Tracking event="complete"><![CDATA[http://test.example.com]]></Tracking>
+                   <Tracking event="firstQuartile"><![CDATA[http://test.example.com]]></Tracking>
+                   <Tracking event="midpoint"><![CDATA[http://test.example.com]]></Tracking>
+                   <Tracking event="thirdQuartile"><![CDATA[http://test.example.com]]></Tracking>
+               </TrackingEvents>
+               <VideoClicks>
+                   <ClickTracking><![CDATA[http://test.example.com]]></ClickTracking>
+               </VideoClicks>
+               <MediaFiles>
+                   <MediaFile delivery="streaming" height="0" type="application/x-mpegURL" width="0"><![CDATA[http://test.media.example.com/test.video.m3u8]]></MediaFile>
+               </MediaFiles>
+           </Linear>
+       </Creative>
+   </Creatives>
+  </Wrapper>
+ </Ad>
+ <Ad id="1236">
+  <Wrapper>
+   <AdSystem>MOL vast test</AdSystem>
+    <AdTitle>VAST waterfall 3</AdTitle>
+   <VASTAdTagURI><![CDATA[https://VASTAdTagURI.example.com]]></VASTAdTagURI>
+   <Error><![CDATA[http://test.example.com[ERRORCODE]]]></Error>
+   <Impression><![CDATA[http://test.example.com]]></Impression>
+   <Creatives>
+       <Creative>
+           <Linear>
+               <Duration>00:00:31</Duration>
+               <TrackingEvents>
+                   <Tracking event="complete"><![CDATA[http://test.example.com]]></Tracking>
+                   <Tracking event="firstQuartile"><![CDATA[http://test.example.com]]></Tracking>
+                   <Tracking event="midpoint"><![CDATA[http://test.example.com]]></Tracking>
+                   <Tracking event="thirdQuartile"><![CDATA[http://test.example.com]]></Tracking>
+               </TrackingEvents>
+               <VideoClicks>
+                   <ClickTracking><![CDATA[http://test.example.com]]></ClickTracking>
+               </VideoClicks>
+               <MediaFiles>
+                   <MediaFile delivery="streaming" height="0" type="application/x-mpegURL" width="0"><![CDATA[http://test.media.example.com/test.video.m3u8]]></MediaFile>
+               </MediaFiles>
+           </Linear>
+       </Creative>
+   </Creatives>
+  </Wrapper>
+ </Ad>
+</VAST>

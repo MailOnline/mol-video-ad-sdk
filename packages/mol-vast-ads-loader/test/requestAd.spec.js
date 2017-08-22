@@ -130,6 +130,11 @@ test('requestAd must do do the wrapper chain requests until it finds an inline a
 
   const vastChain = await requestAd('http://adtag.test.example.com', {});
 
+  // eslint-disable-next-line id-match
+  inlineAd.___requested = true;
+  // eslint-disable-next-line id-match
+  wrapperAd.___requested = true;
+
   expect(vastChain).toEqual([
     {
       ad: inlineAd,
