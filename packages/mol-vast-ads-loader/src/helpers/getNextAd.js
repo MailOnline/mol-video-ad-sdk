@@ -30,14 +30,7 @@ const getNextAd = ({ad, parsedXML}, options = {}) => {
     nextAd = availableAds[0];
   }
 
-  if (Boolean(nextAd)) {
-    // eslint-disable-next-line id-match
-    nextAd.___requested = true;
-
-    return nextAd;
-  }
-
-  return null;
+  return nextAd || null;
 };
 
 export default getNextAd;

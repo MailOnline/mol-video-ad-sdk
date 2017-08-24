@@ -24,6 +24,9 @@ const requestNextAd = (VASTChain, options) => {
   const nextAd = getNextAd(vastResponse, options);
 
   if (Boolean(nextAd)) {
+    // eslint-disable-next-line id-match
+    nextAd.___requested = true;
+
     const newVastResponse = Object.assign({}, vastResponse, {
       ad: nextAd
     });
