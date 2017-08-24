@@ -6,7 +6,10 @@ import {
 } from 'mol-vast-selectors';
 import fetch from './helpers/fetch';
 
-const DEFAULT_WRAPPER_LIMIT = 5;
+const DEFAULT_OPTIONS = {
+  allowMultipleAds: true,
+  wrapperLimit: 5
+};
 
 /**
  * Request the ad using the passed ad tag and returns an array with the VAST responses needed to get an inline ad.
@@ -32,7 +35,8 @@ const requestAd = async (adTag, options = {}, vastChain = []) => {
   let ad;
 
   try {
-    const wrapperLimit = options.wrapperLimit || DEFAULT_WRAPPER_LIMIT;
+    const opts = Object.assign({}, DEFAULT_OPTIONS, options);
+    const wrapperLimit = opts.wrapperLimit;
 
     if (vastChain.length >= wrapperLimit) {
       VASTAdResponse.errorCode = 304;
