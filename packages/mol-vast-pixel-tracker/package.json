@@ -11,5 +11,8 @@
   ],
   "dependencies": {
     "xml-js": "^1.3.4"
+  },
+  "devDependencies": {
+    "mockdate": "^2.0.2"
   }
 }
