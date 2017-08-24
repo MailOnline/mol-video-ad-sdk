@@ -4,6 +4,7 @@ import {
 } from 'mol-vast-selectors';
 import requestAd from './requestAd';
 import getNextAd from './helpers/getNextAd';
+import markAsRequested from './helpers/markAsRequested';
 
 /**
  *
@@ -21,12 +22,9 @@ const requestNextAd = (VASTChain, options) => {
   }
 
   const vastResponse = VASTChain[0];
-  const nextAd = getNextAd(vastResponse, options);
+  const nextAd = markAsRequested(getNextAd(vastResponse, options));
 
   if (Boolean(nextAd)) {
-    // eslint-disable-next-line id-match
-    nextAd.___requested = true;
-
     const newVastResponse = Object.assign({}, vastResponse, {
       ad: nextAd
     });

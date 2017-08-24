@@ -2,9 +2,11 @@ import xml2js from 'mol-vast-xml2js';
 import {
   getFirstAd,
   getVASTAdTagURI,
+  isInline,
   isWrapper
 } from 'mol-vast-selectors';
 import fetch from './helpers/fetch';
+import markAsRequested from './helpers/markAsRequested';
 
 const DEFAULT_OPTIONS = {
   allowMultipleAds: true,
@@ -43,15 +45,11 @@ const requestAd = async (adTag, options = {}, vastChain = []) => {
 
       return [VASTAdResponse, ...vastChain];
     }
+
     response = await fetch(adTag, options);
     XML = await response.text();
     parsedXML = xml2js(XML, {compact: false});
-    ad = getFirstAd(parsedXML);
-
-    if (ad) {
-      // eslint-disable-next-line id-match
-      ad.___requested = true;
-    }
+    ad = markAsRequested(getFirstAd(parsedXML));
 
     VASTAdResponse = {
       ad,
@@ -61,13 +59,15 @@ const requestAd = async (adTag, options = {}, vastChain = []) => {
       XML
     };
 
-    const newVastChain = [VASTAdResponse, ...vastChain];
-
     if (isWrapper(ad)) {
-      return requestAd(getVASTAdTagURI(ad), options, newVastChain);
+      return requestAd(getVASTAdTagURI(ad), options, [VASTAdResponse, ...vastChain]);
     }
 
-    return newVastChain;
+    if (Boolean(ad) && !isInline(ad)) {
+      VASTAdResponse.errorCode = 101;
+    }
+
+    return [VASTAdResponse, ...vastChain];
   } catch (error) {
     let errorCode = 900;
 

@@ -1,5 +1,7 @@
 /* eslint-disable id-match */
+import {getAds} from 'mol-vast-selectors';
 import requestAd from '../src/requestAd';
+import markAsRequested from '../src/helpers/markAsRequested';
 import {
   noAdParsedXML,
   vastNoAdXML,
@@ -7,15 +9,13 @@ import {
   vastInlineXML,
   wrapperParsedXML,
   inlineParsedXML,
+  vastInvalidXML,
+  vastInvalidParsedXML,
   wrapperAd,
   inlineAd
 } from './fixtures';
 
-const markAdAsRequested = (ad) => {
-  ad.___requested = true;
-};
-
-const unmarkAdAsRequested = (ad) => {
+const unmarkAsRequested = (ad) => {
   delete ad.___requested;
 };
 
@@ -139,8 +139,8 @@ test('requestAd must do do the wrapper chain requests until it finds an inline a
 
   const vastChain = await requestAd('http://adtag.test.example.com', {});
 
-  markAdAsRequested(inlineAd);
-  markAdAsRequested(wrapperAd);
+  markAsRequested(inlineAd);
+  markAsRequested(wrapperAd);
 
   expect(vastChain).toEqual([
     {
@@ -166,6 +166,31 @@ test('requestAd must do do the wrapper chain requests until it finds an inline a
     }
   ]);
 
-  unmarkAdAsRequested(inlineAd);
-  unmarkAdAsRequested(wrapperAd);
+  unmarkAsRequested(inlineAd);
+  unmarkAsRequested(wrapperAd);
+});
+
+test('requestAd must set errorCode 101 if neither wrapper neither inline can be find inside the ad', async () => {
+  const invalidVastResponse = {
+    status: 200,
+    text: () => vastInvalidXML
+  };
+
+  global.fetch = jest.fn()
+    .mockImplementationOnce(() => Promise.resolve(invalidVastResponse));
+
+  const vastChain = await requestAd('http://adtag.test.example.com', {});
+  const ad = getAds(vastInvalidParsedXML)[0];
+
+  markAsRequested(ad);
+
+  expect(vastChain).toEqual([
+    {
+      ad: getAds(vastInvalidParsedXML)[0],
+      errorCode: 101,
+      parsedXML: vastInvalidParsedXML,
+      requestTag: 'http://adtag.test.example.com',
+      XML: vastInvalidXML
+    }
+  ]);
 });
