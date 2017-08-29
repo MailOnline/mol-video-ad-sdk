@@ -8,6 +8,61 @@ import {
 import fetch from './helpers/fetch';
 import markAsRequested from './helpers/markAsRequested';
 
+const validateChain = (vastChain, wrapperLimit) => {
+  if (vastChain.length >= wrapperLimit) {
+    const error = new Error('Wrapper Limit reached');
+
+    error.errorCode = 304;
+    throw error;
+  }
+};
+
+const fetchAdXML = async (adTag, options) => {
+  try {
+    const response = await fetch(adTag, options);
+    const XML = await response.text();
+
+    return XML;
+  } catch (error) {
+    error.errorCode = 502;
+
+    throw error;
+  }
+};
+
+const parseVASTXML = (XML) => {
+  try {
+    return xml2js(XML);
+  } catch (error) {
+    error.errorCode = 100;
+    throw error;
+  }
+};
+
+const getAd = (parsedXML) => {
+  try {
+    const ad = getFirstAd(parsedXML);
+
+    if (Boolean(ad)) {
+      return markAsRequested(ad);
+    }
+
+    throw new Error('No Ad');
+  } catch (error) {
+    error.errorCode = 303;
+    throw error;
+  }
+};
+
+const validateAd = (ad) => {
+  if (!isWrapper(ad) && !isInline(ad)) {
+    const error = new Error('Invalid VAST, ad contains neither Wrapper nor Inline');
+
+    error.errorCode = 101;
+    throw error;
+  }
+};
+
 const DEFAULT_OPTIONS = {
   allowMultipleAds: true,
   wrapperLimit: 5
@@ -23,7 +78,7 @@ const DEFAULT_OPTIONS = {
  * @static
  */
 const requestAd = async (adTag, options = {}, vastChain = []) => {
-  let VASTAdResponse = {
+  const VASTAdResponse = {
     ad: null,
     errorCode: null,
     parsedXML: null,
@@ -31,53 +86,28 @@ const requestAd = async (adTag, options = {}, vastChain = []) => {
     XML: null
   };
 
-  let response;
-  let XML;
-  let parsedXML;
-  let ad;
-
   try {
     const opts = Object.assign({}, DEFAULT_OPTIONS, options);
-    const wrapperLimit = opts.wrapperLimit;
 
-    if (vastChain.length >= wrapperLimit) {
-      VASTAdResponse.errorCode = 304;
+    validateChain(vastChain, opts.wrapperLimit);
 
-      return [VASTAdResponse, ...vastChain];
-    }
+    VASTAdResponse.XML = await fetchAdXML(adTag, options);
+    VASTAdResponse.parsedXML = parseVASTXML(VASTAdResponse.XML);
+    VASTAdResponse.ad = getAd(VASTAdResponse.parsedXML);
 
-    response = await fetch(adTag, options);
-    XML = await response.text();
-    parsedXML = xml2js(XML, {compact: false});
-    ad = markAsRequested(getFirstAd(parsedXML));
+    validateAd(VASTAdResponse.ad);
 
-    VASTAdResponse = {
-      ad,
-      errorCode: Boolean(ad) ? null : 300,
-      parsedXML,
-      requestTag: adTag,
-      XML
-    };
-
-    if (isWrapper(ad)) {
-      return requestAd(getVASTAdTagURI(ad), options, [VASTAdResponse, ...vastChain]);
-    }
-
-    if (Boolean(ad) && !isInline(ad)) {
-      VASTAdResponse.errorCode = 101;
+    if (isWrapper(VASTAdResponse.ad)) {
+      return requestAd(getVASTAdTagURI(VASTAdResponse.ad), options, [VASTAdResponse, ...vastChain]);
     }
 
     return [VASTAdResponse, ...vastChain];
   } catch (error) {
-    let errorCode = 900;
-
-    if (!response || !XML) {
-      errorCode = 502;
-    } else if (!parsedXML) {
-      errorCode = 100;
+    if (!Number.isInteger(error.errorCode)) {
+      error.errorCode = 900;
     }
 
-    VASTAdResponse.errorCode = errorCode;
+    VASTAdResponse.errorCode = error.errorCode;
     VASTAdResponse.error = error;
 
     return [VASTAdResponse, ...vastChain];

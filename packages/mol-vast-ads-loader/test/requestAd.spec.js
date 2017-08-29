@@ -25,6 +25,7 @@ test('requestAd must return a chain with errorcode 304 if the wrapperLimit is re
 
   expect(lastVastResponse).toEqual({
     ad: null,
+    error: expect.any(Error),
     errorCode: 304,
     parsedXML: null,
     requestTag: 'http://adtag.test.example.com',
@@ -38,6 +39,7 @@ test('requestAd must return a chain with errorcode 304 if the default wrapperLim
 
   expect(lastVastResponse).toEqual({
     ad: null,
+    error: expect.any(Error),
     errorCode: 304,
     parsedXML: null,
     requestTag: 'http://adtag.test.example.com',
@@ -98,11 +100,11 @@ test('requestAd must return a chain with error code 100 if there is a problem pa
     errorCode: 100,
     parsedXML: null,
     requestTag: 'http://adtag.test.example.com',
-    XML: null
+    XML: 'not xml'
   });
 });
 
-test('requestAd must return a chain with error 300 if there is no ad in the VAST response', async () => {
+test('requestAd must return a chain with error 303 if there is no ad in the VAST response', async () => {
   const response = {
     status: 200,
     text: () => vastNoAdXML
@@ -114,7 +116,8 @@ test('requestAd must return a chain with error 300 if there is no ad in the VAST
 
   expect(lastVastResponse).toEqual({
     ad: null,
-    errorCode: 300,
+    error: expect.any(Error),
+    errorCode: 303,
     parsedXML: noAdParsedXML,
     requestTag: 'http://adtag.test.example.com',
     XML: vastNoAdXML
@@ -187,6 +190,7 @@ test('requestAd must set errorCode 101 if neither wrapper neither inline can be 
   expect(vastChain).toEqual([
     {
       ad: getAds(vastInvalidParsedXML)[0],
+      error: expect.any(Error),
       errorCode: 101,
       parsedXML: vastInvalidParsedXML,
       requestTag: 'http://adtag.test.example.com',
