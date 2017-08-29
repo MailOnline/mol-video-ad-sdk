@@ -13,6 +13,7 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "mol-vast-xml2js": "^0.1.0"
+    "mol-vast-xml2js": "^0.1.0",
+    "mol-vast-fixtures": "0.1.0"
   }
 }

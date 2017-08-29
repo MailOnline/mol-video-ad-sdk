@@ -4,8 +4,6 @@ import {
   getAds,
   getFirstAd
 } from 'mol-vast-selectors';
-import requestAd from '../src/requestAd';
-import markAsRequested from '../src/helpers/markAsRequested';
 import {
   noAdParsedXML,
   vastNoAdXML,
@@ -19,7 +17,9 @@ import {
   vastInvalidParsedXML,
   wrapperAd,
   inlineAd
-} from './fixtures';
+} from 'mol-vast-fixtures';
+import requestAd from '../src/requestAd';
+import markAsRequested from '../src/helpers/markAsRequested';
 
 const unmarkAsRequested = (ad) => {
   delete ad.___requested;

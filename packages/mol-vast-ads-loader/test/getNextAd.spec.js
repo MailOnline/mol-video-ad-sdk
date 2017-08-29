@@ -3,14 +3,14 @@ import {
   getAds,
   isPodAd
 } from 'mol-vast-selectors';
-import getNextAd from '../src/helpers/getNextAd';
-import markAsRequested from '../src/helpers/markAsRequested';
 import {
   wrapperParsedXML,
   podParsedXML,
   waterfallParsedXML,
   wrapperAd
-} from './fixtures';
+} from 'mol-vast-fixtures';
+import getNextAd from '../src/helpers/getNextAd';
+import markAsRequested from '../src/helpers/markAsRequested';
 
 const unmarkAsRequested = (ad) => {
   delete ad.___requested;

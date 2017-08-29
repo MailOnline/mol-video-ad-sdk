@@ -1,4 +1,11 @@
 import {
+  inlineAd,
+  inlineParsedXML,
+  podParsedXML,
+  wrapperAd,
+  wrapperParsedXML
+} from 'mol-vast-fixtures';
+import {
   getAds,
   getFirstAd,
   getVASTAdTagURI,
@@ -9,13 +16,6 @@ import {
   isInline,
   isWrapper
 } from '../src/index';
-import {
-  inlineAd,
-  inlineParsedXML,
-  podParsedXML,
-  wrapperAd,
-  wrapperParsedXML
-} from './fixtures';
 
 const clone = (obj) => JSON.parse(JSON.stringify(obj));
 
