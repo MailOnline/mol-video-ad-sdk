@@ -11,7 +11,7 @@ import {
   wrapperAd,
   inlineAd
 } from 'mol-vast-fixtures';
-import requestNextAd from '../src/requestNextAd';
+import {requestNextAd} from '../src/index';
 
 const markAdAsRequested = (ad) => {
   ad.___requested = true;

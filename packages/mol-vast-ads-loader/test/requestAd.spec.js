@@ -18,7 +18,7 @@ import {
   wrapperAd,
   inlineAd
 } from 'mol-vast-fixtures';
-import requestAd from '../src/requestAd';
+import {requestAd} from '../src/index';
 import markAsRequested from '../src/helpers/markAsRequested';
 
 const unmarkAsRequested = (ad) => {
