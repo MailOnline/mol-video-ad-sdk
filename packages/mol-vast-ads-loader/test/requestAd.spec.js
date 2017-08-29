@@ -304,3 +304,45 @@ test('requestAd must set errorCode 203 if the wrapper comes with allowMultipleAd
     }
   ]);
 });
+
+test('requestAd must set errorCode 200 if the wrapper comes with followAdditionalWrappers  set to false and receives a wrapper', async () => {
+  const newWrapperXML = vastWrapperXML.replace('allowMultipleAds="true"', 'followAdditionalWrappers="false"');
+  const parsedWrapperXML = xml2js(newWrapperXML);
+  const newWrapperAd = getFirstAd(parsedWrapperXML);
+  const wrapperResponse = {
+    status: 200,
+    text: () => newWrapperXML
+  };
+
+  const anotherWrapperResponse = {
+    status: 200,
+    text: () => vastWrapperXML
+  };
+
+  global.fetch = jest.fn()
+    .mockImplementationOnce(() => Promise.resolve(wrapperResponse))
+    .mockImplementationOnce(() => Promise.resolve(anotherWrapperResponse));
+
+  const vastChain = await requestAd('http://adtag.test.example.com', {});
+
+  markAsRequested(newWrapperAd);
+  markAsRequested(wrapperAd);
+
+  expect(vastChain).toEqual([
+    {
+      ad: wrapperAd,
+      error: expect.any(Error),
+      errorCode: 200,
+      parsedXML: wrapperParsedXML,
+      requestTag: 'https://VASTAdTagURI.example.com',
+      XML: vastWrapperXML
+    },
+    {
+      ad: newWrapperAd,
+      errorCode: null,
+      parsedXML: parsedWrapperXML,
+      requestTag: 'http://adtag.test.example.com',
+      XML: newWrapperXML
+    }
+  ]);
+});

@@ -56,7 +56,7 @@ const getAd = (parsedXML) => {
   }
 };
 
-const validateResponse = ({ad, parsedXML}, {allowMultipleAds}) => {
+const validateResponse = ({ad, parsedXML}, {allowMultipleAds, followAdditionalWrappers}) => {
   if (!isWrapper(ad) && !isInline(ad)) {
     const error = new Error('Invalid VAST, ad contains neither Wrapper nor Inline');
 
@@ -70,10 +70,18 @@ const validateResponse = ({ad, parsedXML}, {allowMultipleAds}) => {
     error.errorCode = 203;
     throw error;
   }
+
+  if (isWrapper(ad) && !followAdditionalWrappers) {
+    const error = new Error('To follow additional wrappers is not allowed');
+
+    error.errorCode = 200;
+    throw error;
+  }
 };
 
 const DEFAULT_OPTIONS = {
   allowMultipleAds: true,
+  followAdditionalWrappers: true,
   wrapperLimit: 5
 };
 
