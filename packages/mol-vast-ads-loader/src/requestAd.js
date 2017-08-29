@@ -1,14 +1,16 @@
 import xml2js from 'mol-vast-xml2js';
 import {
+  getWrapperOptions,
   getFirstAd,
   getVASTAdTagURI,
+  hasAdPod,
   isInline,
   isWrapper
 } from 'mol-vast-selectors';
 import fetch from './helpers/fetch';
 import markAsRequested from './helpers/markAsRequested';
 
-const validateChain = (vastChain, wrapperLimit) => {
+const validateChain = (vastChain, {wrapperLimit}) => {
   if (vastChain.length >= wrapperLimit) {
     const error = new Error('Wrapper Limit reached');
 
@@ -54,11 +56,18 @@ const getAd = (parsedXML) => {
   }
 };
 
-const validateAd = (ad) => {
+const validateResponse = ({ad, parsedXML}, {allowMultipleAds}) => {
   if (!isWrapper(ad) && !isInline(ad)) {
     const error = new Error('Invalid VAST, ad contains neither Wrapper nor Inline');
 
     error.errorCode = 101;
+    throw error;
+  }
+
+  if (hasAdPod(parsedXML) && !allowMultipleAds) {
+    const error = new Error('Multiple ads are not allowed');
+
+    error.errorCode = 203;
     throw error;
   }
 };
@@ -89,16 +98,19 @@ const requestAd = async (adTag, options = {}, vastChain = []) => {
   try {
     const opts = Object.assign({}, DEFAULT_OPTIONS, options);
 
-    validateChain(vastChain, opts.wrapperLimit);
+    validateChain(vastChain, opts);
 
     VASTAdResponse.XML = await fetchAdXML(adTag, options);
     VASTAdResponse.parsedXML = parseVASTXML(VASTAdResponse.XML);
     VASTAdResponse.ad = getAd(VASTAdResponse.parsedXML);
 
-    validateAd(VASTAdResponse.ad);
+    validateResponse(VASTAdResponse, opts);
 
     if (isWrapper(VASTAdResponse.ad)) {
-      return requestAd(getVASTAdTagURI(VASTAdResponse.ad), options, [VASTAdResponse, ...vastChain]);
+      const wrapperOpts = getWrapperOptions(VASTAdResponse.ad);
+      const newOpts = Object.assign({}, opts, wrapperOpts);
+
+      return requestAd(getVASTAdTagURI(VASTAdResponse.ad), newOpts, [VASTAdResponse, ...vastChain]);
     }
 
     return [VASTAdResponse, ...vastChain];

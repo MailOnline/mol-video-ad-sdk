@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <VAST xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd" version="3.0">
  <Ad id="4367623109">
-  <Wrapper>
+  <Wrapper allowMultipleAds="true" >
    <AdSystem>AdSense/AdX</AdSystem>
    <VASTAdTagURI><![CDATA[https://VASTAdTagURI.example.com]]></VASTAdTagURI>
    <Error><![CDATA[https://pubads.g.doubleclick.net/pagead/conversion/?ai=BQWtdha2WWcSxJc_CxgKOmLfADKuTuYdFAAAAEAEgyJaWHDgAWOWlkO6CBGC7rquD0AqyARN3d3cuZGFpbHltYWlsLmNvLnVrugEHOHg4X3htbMgBBdoBUmh0dHA6Ly93d3cuZGFpbHltYWlsLmNvLnVrL2ZlbWFpbC9hcnRpY2xlLTQ4MDExMDAvTWljaGVsbGUtQnJpZGdlcy10aXBzLXNoYXBlLmh0bWyYAsusAakCMCWcaOSgtT7AAgLgAgDqAh4vNTc2NS9kbS52aWRlby9kbV92aWRlb19mZW1haWz4AvzRHpADjAaYA4wGqAMB0ASQTuAEAdIFBhDFx9KiEJAGAaAGO9gGAtgHAeAHC_IHAiAB0ggHCIBhEAEYAw&sigh=S97PJImx7DI&label=videoplayfailed[ERRORCODE]]]></Error>
