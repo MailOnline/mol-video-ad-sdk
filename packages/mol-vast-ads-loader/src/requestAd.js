@@ -32,9 +32,9 @@ const fetchAdXML = async (adTag, options) => {
   }
 };
 
-const parseVASTXML = (XML) => {
+const parseVASTXML = (xml) => {
   try {
-    return xml2js(XML);
+    return xml2js(xml);
   } catch (error) {
     error.errorCode = 100;
     throw error;

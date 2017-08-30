@@ -20,11 +20,11 @@ const validateChain = (VASTChain) => {
  *
  * @param {Array} VASTChain - Array of VAST responses. See requestAd for more info.
  * @param {Object} options - Options Map. The allowed properties area:
- *                            - `useAdBuffet` which should be set to true if we want to get a buffet ad from an ad pod.
- *                                            If no buffet ad is available it will return the next ad in ad pod sequence.
- *                                            Defaults to true.
- *                            - `fallbackOnNoAd` which will tell the video player to select from any stand-alone ads available.
- *                                               Defaults to true.
+ *                           * `useAdBuffet` which should be set to true if we want to get a buffet ad from an ad pod.
+ *                              If no buffet ad is available it will return the next ad in ad pod sequence.
+ *                              Defaults to true.
+ *                           * `fallbackOnNoAd` which will tell the video player to select from any stand-alone ads available.
+ *                              Defaults to true.
  */
 const requestNextAd = (VASTChain, options) => {
   validateChain(VASTChain);
