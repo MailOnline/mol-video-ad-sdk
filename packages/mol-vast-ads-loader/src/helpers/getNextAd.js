@@ -13,11 +13,10 @@ const getNextPod = (currentPod, ads) => {
 
 const getNextAd = ({ad, parsedXML}, {fallbackOnNoAd = true, useAdBuffet = false} = {}) => {
   const ads = getAds(parsedXML);
-  const isAdPod = hasAdPod(parsedXML);
   const availableAds = ads.filter((adDefinition) => !adDefinition.___requested);
   let nextAd = null;
 
-  if (isAdPod) {
+  if (hasAdPod(parsedXML)) {
     if (useAdBuffet) {
       nextAd = availableAds.filter((adDefinition) => !isPodAd(adDefinition))[0];
     }
