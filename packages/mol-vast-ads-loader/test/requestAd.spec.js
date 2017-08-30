@@ -1,21 +1,27 @@
 /* eslint-disable id-match */
-import requestAd from '../src/requestAd';
+import xml2js from 'mol-vast-xml2js';
+import {
+  getAds,
+  getFirstAd
+} from 'mol-vast-selectors';
 import {
   noAdParsedXML,
   vastNoAdXML,
   vastWrapperXML,
   vastInlineXML,
+  vastPodXML,
   wrapperParsedXML,
   inlineParsedXML,
+  podParsedXML,
+  vastInvalidXML,
+  vastInvalidParsedXML,
   wrapperAd,
   inlineAd
-} from './fixtures';
+} from 'mol-vast-fixtures';
+import {requestAd} from '../src/index';
+import markAsRequested from '../src/helpers/markAsRequested';
 
-const markAdAsRequested = (ad) => {
-  ad.___requested = true;
-};
-
-const unmarkAdAsRequested = (ad) => {
+const unmarkAsRequested = (ad) => {
   delete ad.___requested;
 };
 
@@ -25,6 +31,7 @@ test('requestAd must return a chain with errorcode 304 if the wrapperLimit is re
 
   expect(lastVastResponse).toEqual({
     ad: null,
+    error: expect.any(Error),
     errorCode: 304,
     parsedXML: null,
     requestTag: 'http://adtag.test.example.com',
@@ -38,6 +45,7 @@ test('requestAd must return a chain with errorcode 304 if the default wrapperLim
 
   expect(lastVastResponse).toEqual({
     ad: null,
+    error: expect.any(Error),
     errorCode: 304,
     parsedXML: null,
     requestTag: 'http://adtag.test.example.com',
@@ -98,11 +106,11 @@ test('requestAd must return a chain with error code 100 if there is a problem pa
     errorCode: 100,
     parsedXML: null,
     requestTag: 'http://adtag.test.example.com',
-    XML: null
+    XML: 'not xml'
   });
 });
 
-test('requestAd must return a chain with error 300 if there is no ad in the VAST response', async () => {
+test('requestAd must return a chain with error 303 if there is no ad in the VAST response', async () => {
   const response = {
     status: 200,
     text: () => vastNoAdXML
@@ -114,7 +122,8 @@ test('requestAd must return a chain with error 300 if there is no ad in the VAST
 
   expect(lastVastResponse).toEqual({
     ad: null,
-    errorCode: 300,
+    error: expect.any(Error),
+    errorCode: 303,
     parsedXML: noAdParsedXML,
     requestTag: 'http://adtag.test.example.com',
     XML: vastNoAdXML
@@ -139,8 +148,8 @@ test('requestAd must do do the wrapper chain requests until it finds an inline a
 
   const vastChain = await requestAd('http://adtag.test.example.com', {});
 
-  markAdAsRequested(inlineAd);
-  markAdAsRequested(wrapperAd);
+  markAsRequested(inlineAd);
+  markAsRequested(wrapperAd);
 
   expect(vastChain).toEqual([
     {
@@ -166,6 +175,174 @@ test('requestAd must do do the wrapper chain requests until it finds an inline a
     }
   ]);
 
-  unmarkAdAsRequested(inlineAd);
-  unmarkAdAsRequested(wrapperAd);
+  unmarkAsRequested(inlineAd);
+  unmarkAsRequested(wrapperAd);
+});
+
+test('requestAd must set errorCode 101 if neither wrapper neither inline can be find inside the ad', async () => {
+  const invalidVastResponse = {
+    status: 200,
+    text: () => vastInvalidXML
+  };
+
+  global.fetch = jest.fn()
+    .mockImplementationOnce(() => Promise.resolve(invalidVastResponse));
+
+  const vastChain = await requestAd('http://adtag.test.example.com', {});
+  const ad = getAds(vastInvalidParsedXML)[0];
+
+  markAsRequested(ad);
+
+  expect(vastChain).toEqual([
+    {
+      ad: getAds(vastInvalidParsedXML)[0],
+      error: expect.any(Error),
+      errorCode: 101,
+      parsedXML: vastInvalidParsedXML,
+      requestTag: 'http://adtag.test.example.com',
+      XML: vastInvalidXML
+    }
+  ]);
+});
+
+test('requestAd must set errorCode 203 if the allowMultipleAds option is set to false and receives an ad pod', async () => {
+  const startChain = [
+    {
+      ad: wrapperAd,
+      errorCode: null,
+      parsedXML: wrapperParsedXML,
+      requestTag: 'https://VASTAdTagURI.example.com',
+      XML: vastWrapperXML
+    },
+    {
+      ad: wrapperAd,
+      errorCode: null,
+      parsedXML: wrapperParsedXML,
+      requestTag: 'http://adtag.test.example.com',
+      XML: vastWrapperXML
+    }
+  ];
+
+  const podResponse = {
+    status: 200,
+    text: () => vastPodXML
+  };
+
+  global.fetch = jest.fn()
+    .mockImplementationOnce(() => Promise.resolve(podResponse));
+
+  const vastChain = await requestAd('https://VASTAdTagURI.example.com', {allowMultipleAds: false}, startChain);
+  const firstPodAd = getFirstAd(podParsedXML);
+
+  markAsRequested(firstPodAd);
+
+  expect(vastChain).toEqual([
+    {
+      ad: firstPodAd,
+      error: expect.any(Error),
+      errorCode: 203,
+      parsedXML: podParsedXML,
+      requestTag: 'https://VASTAdTagURI.example.com',
+      XML: vastPodXML
+    },
+    {
+      ad: wrapperAd,
+      errorCode: null,
+      parsedXML: wrapperParsedXML,
+      requestTag: 'https://VASTAdTagURI.example.com',
+      XML: vastWrapperXML
+    },
+    {
+      ad: wrapperAd,
+      errorCode: null,
+      parsedXML: wrapperParsedXML,
+      requestTag: 'http://adtag.test.example.com',
+      XML: vastWrapperXML
+    }
+  ]);
+});
+
+test('requestAd must set errorCode 203 if the wrapper comes with allowMultipleAds is set to false and receives an ad pod', async () => {
+  const newWrapperXML = vastWrapperXML.replace('allowMultipleAds="true"', 'allowMultipleAds="false"');
+  const parsedWrapperXML = xml2js(newWrapperXML);
+  const newWrapperAd = getFirstAd(parsedWrapperXML);
+  const wrapperResponse = {
+    status: 200,
+    text: () => newWrapperXML
+  };
+
+  const podResponse = {
+    status: 200,
+    text: () => vastPodXML
+  };
+
+  global.fetch = jest.fn()
+    .mockImplementationOnce(() => Promise.resolve(wrapperResponse))
+    .mockImplementationOnce(() => Promise.resolve(podResponse));
+
+  const vastChain = await requestAd('http://adtag.test.example.com', {});
+  const firstPodAd = getFirstAd(podParsedXML);
+
+  markAsRequested(firstPodAd);
+  markAsRequested(newWrapperAd);
+
+  expect(vastChain).toEqual([
+    {
+      ad: firstPodAd,
+      error: expect.any(Error),
+      errorCode: 203,
+      parsedXML: podParsedXML,
+      requestTag: 'https://VASTAdTagURI.example.com',
+      XML: vastPodXML
+    },
+    {
+      ad: newWrapperAd,
+      errorCode: null,
+      parsedXML: parsedWrapperXML,
+      requestTag: 'http://adtag.test.example.com',
+      XML: newWrapperXML
+    }
+  ]);
+});
+
+test('requestAd must set errorCode 200 if the wrapper comes with followAdditionalWrappers  set to false and receives a wrapper', async () => {
+  const newWrapperXML = vastWrapperXML.replace('allowMultipleAds="true"', 'followAdditionalWrappers="false"');
+  const parsedWrapperXML = xml2js(newWrapperXML);
+  const newWrapperAd = getFirstAd(parsedWrapperXML);
+  const wrapperResponse = {
+    status: 200,
+    text: () => newWrapperXML
+  };
+
+  const anotherWrapperResponse = {
+    status: 200,
+    text: () => vastWrapperXML
+  };
+
+  global.fetch = jest.fn()
+    .mockImplementationOnce(() => Promise.resolve(wrapperResponse))
+    .mockImplementationOnce(() => Promise.resolve(anotherWrapperResponse));
+
+  const vastChain = await requestAd('http://adtag.test.example.com', {});
+
+  markAsRequested(newWrapperAd);
+  markAsRequested(wrapperAd);
+
+  expect(vastChain).toEqual([
+    {
+      ad: wrapperAd,
+      error: expect.any(Error),
+      errorCode: 200,
+      parsedXML: wrapperParsedXML,
+      requestTag: 'https://VASTAdTagURI.example.com',
+      XML: vastWrapperXML
+    },
+    {
+      ad: newWrapperAd,
+      errorCode: null,
+      parsedXML: parsedWrapperXML,
+      requestTag: 'http://adtag.test.example.com',
+      XML: newWrapperXML
+    }
+  ]);
 });

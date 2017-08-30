@@ -1,6 +1,5 @@
 /* eslint-disable id-match */
 import {getAds} from 'mol-vast-selectors';
-import requestNextAd from '../src/requestNextAd';
 import {
   vastWrapperXML,
   vastInlineXML,
@@ -11,7 +10,8 @@ import {
   waterfallWithInlineParsedXML,
   wrapperAd,
   inlineAd
-} from './fixtures';
+} from 'mol-vast-fixtures';
+import {requestNextAd} from '../src/index';
 
 const markAdAsRequested = (ad) => {
   ad.___requested = true;

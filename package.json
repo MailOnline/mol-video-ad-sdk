@@ -90,6 +90,11 @@
     "collectCoverageFrom": [
       "packages/**/src/**/*.js"
     ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/packages\/mol-vast-fixtures/",
+      "/packages\/mol-vast-xml2js/"
+    ],
     "moduleNameMapper": {
       "\\.(scss)$": "identity-obj-proxy"
     },

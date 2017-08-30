@@ -1,20 +1,23 @@
 import {
+  inlineAd,
+  inlineParsedXML,
+  podParsedXML,
+  wrapperAd,
+  wrapperParsedXML
+} from 'mol-vast-fixtures';
+import {
   getAds,
   getFirstAd,
   getVASTAdTagURI,
+  getWrapperOptions,
   hasAdPod,
   getPodAdSequence,
   isPodAd,
   isInline,
   isWrapper
 } from '../src/index';
-import {
-  inlineAd,
-  inlineParsedXML,
-  podParsedXML,
-  wrapperAd,
-  wrapperParsedXML
-} from './fixtures';
+
+const clone = (obj) => JSON.parse(JSON.stringify(obj));
 
 test('getAds must return the ads of the passed adResponse or null otherwise', () => {
   expect(getAds(wrapperParsedXML)).toEqual([wrapperAd]);
@@ -82,4 +85,32 @@ test('isPodAd must return true if the ad has a sequence and false otherwise', ()
 
   expect(isPodAd(ads[0])).toBe(false);
   expect(isPodAd(ads[1])).toBe(true);
+});
+
+test('getWrapperOptions mus return the options of the ad or {} otherwise', () => {
+  expect(getWrapperOptions(inlineAd)).toEqual({});
+  expect(getWrapperOptions(wrapperAd)).toEqual({allowMultipleAds: true});
+
+  const wrapperAdClone = clone(wrapperAd);
+  const wrapperAttrs = wrapperAdClone.elements[0].attributes;
+
+  wrapperAttrs.allowMultipleAds = 'false';
+
+  expect(getWrapperOptions(wrapperAdClone)).toEqual({allowMultipleAds: false});
+
+  wrapperAttrs.allowMultipleAds = true;
+  wrapperAttrs.followAdditionalWrappers = 'false';
+
+  expect(getWrapperOptions(wrapperAdClone)).toEqual({
+    allowMultipleAds: true,
+    followAdditionalWrappers: false
+  });
+
+  wrapperAttrs.fallbackOnNoAd = 'true';
+
+  expect(getWrapperOptions(wrapperAdClone)).toEqual({
+    allowMultipleAds: true,
+    fallbackOnNoAd: true,
+    followAdditionalWrappers: false
+  });
 });

@@ -18,7 +18,7 @@ const getAds = (parsedVAST) => get(parsedVAST, 'elements[0].elements', null);
  * @returns {number} - The pod ad sequence number or null.
  */
 const getPodAdSequence = (ad) => {
-  const sequence = parseInt(ad.attributes.sequence, 10);
+  const sequence = ad && ad.attributes && parseInt(ad.attributes.sequence, 10);
 
   if (typeof sequence === 'number' && !isNaN(sequence)) {
     return sequence;
@@ -121,8 +121,47 @@ const getVASTAdTagURI = (ad) => {
   return null;
 };
 
+const getBooleanValue = (val) => {
+  if (typeof val === 'string') {
+    return val === 'true';
+  }
+
+  return Boolean(val);
+};
+
+/**
+ * Returns the options from the wrapper ad.
+ *
+ * @param {Object} ad - VAST ad object.
+ * @returns {Object} - Returns the options from the wrapper ad.
+ * @static
+ */
+const getWrapperOptions = (ad) => {
+  const {
+    allowMultipleAds,
+    fallbackOnNoAd,
+    followAdditionalWrappers
+  } = get(ad, 'elements[0].attributes', {});
+  const opts = {};
+
+  if (allowMultipleAds) {
+    opts.allowMultipleAds = getBooleanValue(allowMultipleAds);
+  }
+
+  if (fallbackOnNoAd) {
+    opts.fallbackOnNoAd = getBooleanValue(fallbackOnNoAd);
+  }
+
+  if (followAdditionalWrappers) {
+    opts.followAdditionalWrappers = getBooleanValue(followAdditionalWrappers);
+  }
+
+  return opts;
+};
+
 export {
   getAds,
+  getWrapperOptions,
   getFirstAd,
   getVASTAdTagURI,
   hasAdPod,

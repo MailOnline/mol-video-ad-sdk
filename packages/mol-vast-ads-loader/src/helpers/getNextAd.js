@@ -11,14 +11,12 @@ const getNextPod = (currentPod, ads) => {
   return ads.find((ad) => getPodAdSequence(ad) === nextPodSequence) || null;
 };
 
-const getNextAd = ({ad, parsedXML}, options = {}) => {
-  const {useAdBuffet} = options;
+const getNextAd = ({ad, parsedXML}, {fallbackOnNoAd = true, useAdBuffet = false} = {}) => {
   const ads = getAds(parsedXML);
-  const isAdPod = hasAdPod(parsedXML);
   const availableAds = ads.filter((adDefinition) => !adDefinition.___requested);
-  let nextAd;
+  let nextAd = null;
 
-  if (isAdPod) {
+  if (hasAdPod(parsedXML)) {
     if (useAdBuffet) {
       nextAd = availableAds.filter((adDefinition) => !isPodAd(adDefinition))[0];
     }
@@ -26,18 +24,11 @@ const getNextAd = ({ad, parsedXML}, options = {}) => {
     if (!nextAd) {
       nextAd = getNextPod(ad, availableAds);
     }
-  } else {
+  } else if (availableAds.length > 0 && fallbackOnNoAd) {
     nextAd = availableAds[0];
   }
 
-  if (Boolean(nextAd)) {
-    // eslint-disable-next-line id-match
-    nextAd.___requested = true;
-
-    return nextAd;
-  }
-
-  return null;
+  return nextAd;
 };
 
 export default getNextAd;
