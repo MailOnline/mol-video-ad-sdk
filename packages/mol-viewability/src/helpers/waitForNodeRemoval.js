@@ -46,7 +46,7 @@ const waitForNodeRemoval = (node) => {
       childList: true
     });
   } else {
-    deferred.reject(new Error('MutationObserve API is not supported'));
+    deferred.reject(new Error('MutationObserver API is not supported'));
   }
 
   return deferred.promise;
