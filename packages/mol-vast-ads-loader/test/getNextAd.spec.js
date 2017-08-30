@@ -44,7 +44,7 @@ test('getNextAd must return null if there is no next ad definition in the waterf
   unmarkAsRequested(wrapperAd);
 });
 
-test('getNextAd must get the next available ad definition in the waterfall', () => {
+test('getNextAd must get the next available ad definition if fallbackOnNoAd is true', () => {
   const waterfallAds = getAds(waterfallParsedXML);
 
   markAsRequested(waterfallAds[0]);
@@ -52,9 +52,18 @@ test('getNextAd must get the next available ad definition in the waterfall', () 
   expect(getNextAd({
     ad: waterfallAds[0],
     parsedXML: waterfallParsedXML
-  }, {})).toBe(waterfallAds[1]);
+  }, {fallbackOnNoAd: true})).toBe(waterfallAds[1]);
 
   unmarkAsRequested(waterfallAds[0]);
+});
+
+test('getNextAd must return null if fallbackOnNoAd is false', () => {
+  const waterfallAds = getAds(waterfallParsedXML);
+
+  expect(getNextAd({
+    ad: waterfallAds[0],
+    parsedXML: waterfallParsedXML
+  }, {fallbackOnNoAd: false})).toBe(null);
 });
 
 test('getNextAd must get the next ad definition on the ad Pod sequence', () => {
@@ -80,7 +89,7 @@ test('getNextAd must return null if there is no next pod in the ad pod sequence'
   expect(getNextAd({
     ad: podAds[0],
     parsedXML: podParsedXML
-  })).toBe(null);
+  }, {})).toBe(null);
 
   unmarkAdsAsRequested(podParsedXML);
 });

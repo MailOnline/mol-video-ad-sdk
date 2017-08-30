@@ -10,7 +10,7 @@ import {
 import fetch from './helpers/fetch';
 import markAsRequested from './helpers/markAsRequested';
 
-const validateChain = (vastChain, {wrapperLimit}) => {
+const validateChain = (vastChain, {wrapperLimit = 5}) => {
   if (vastChain.length >= wrapperLimit) {
     const error = new Error('Wrapper Limit reached');
 
@@ -56,7 +56,7 @@ const getAd = (parsedXML) => {
   }
 };
 
-const validateResponse = ({ad, parsedXML}, {allowMultipleAds, followAdditionalWrappers}) => {
+const validateResponse = ({ad, parsedXML}, {allowMultipleAds = true, followAdditionalWrappers = true}) => {
   if (!isWrapper(ad) && !isInline(ad)) {
     const error = new Error('Invalid VAST, ad contains neither Wrapper nor Inline');
 
@@ -79,10 +79,12 @@ const validateResponse = ({ad, parsedXML}, {allowMultipleAds, followAdditionalWr
   }
 };
 
-const DEFAULT_OPTIONS = {
-  allowMultipleAds: true,
-  followAdditionalWrappers: true,
-  wrapperLimit: 5
+const getOptions = (vastChain, options) => {
+  const parentAd = vastChain[0];
+  const parentAdIsWrapper = Boolean(parentAd) && isWrapper(parentAd.ad);
+  const wrapperOptions = parentAdIsWrapper ? getWrapperOptions(parentAd.ad) : {};
+
+  return Object.assign({}, wrapperOptions, options);
 };
 
 /**
@@ -104,7 +106,7 @@ const requestAd = async (adTag, options = {}, vastChain = []) => {
   };
 
   try {
-    const opts = Object.assign({}, DEFAULT_OPTIONS, options);
+    const opts = getOptions(vastChain, options);
 
     validateChain(vastChain, opts);
 
@@ -115,10 +117,7 @@ const requestAd = async (adTag, options = {}, vastChain = []) => {
     validateResponse(VASTAdResponse, opts);
 
     if (isWrapper(VASTAdResponse.ad)) {
-      const wrapperOpts = getWrapperOptions(VASTAdResponse.ad);
-      const newOpts = Object.assign({}, opts, wrapperOpts);
-
-      return requestAd(getVASTAdTagURI(VASTAdResponse.ad), newOpts, [VASTAdResponse, ...vastChain]);
+      return requestAd(getVASTAdTagURI(VASTAdResponse.ad), opts, [VASTAdResponse, ...vastChain]);
     }
 
     return [VASTAdResponse, ...vastChain];
