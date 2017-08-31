@@ -1,6 +1,6 @@
 import Deferred from './Deferred';
+import MutationObserver from './MutationObserver';
 
-const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 let observedNodes = [];
 let observer = null;
 
@@ -19,13 +19,18 @@ if (MutationObserver) {
 
   observer = new MutationObserver((mutations) => {
     mutations.forEach(({removedNodes}) => {
-      if (removedNodes.length > 1) {
+      if (removedNodes.length > 0) {
         const removedObservedNodes = getRemovedObservedNodes(removedNodes);
 
         removedObservedNodes.forEach((observedNode) => {
           const {node, deferred} = observedNode;
 
           observedNodes = observedNodes.filter((item) => item !== observedNode);
+
+          if (observedNodes.length === 0) {
+            observer.disconnect();
+          }
+
           deferred.resolve(node);
         });
       }
