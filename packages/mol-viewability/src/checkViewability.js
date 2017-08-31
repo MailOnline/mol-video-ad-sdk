@@ -1,7 +1,7 @@
 /* eslint-disable promise/always-return, promise/prefer-await-to-then */
 import {debounce} from 'lodash/debounce';
 import waitForNodeRemoval from './helpers/waitForNodeRemoval';
-import isElementVisible from './helpers/isElementVisible';
+import isElementVisible from './isElementVisible';
 
 let elementEntries = [];
 
