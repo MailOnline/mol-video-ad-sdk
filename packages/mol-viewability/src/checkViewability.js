@@ -1,5 +1,5 @@
 /* eslint-disable promise/always-return, promise/prefer-await-to-then */
-import {debounce} from 'lodash/debounce';
+import debounce from 'lodash/debounce';
 import document from './helpers/document';
 import window from './helpers/window';
 import waitForNodeRemoval from './helpers/waitForNodeRemoval';
