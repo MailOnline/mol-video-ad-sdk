@@ -1,8 +1,11 @@
+import document from './helpers/document';
+import window from './helpers/window';
+
 /**
  * Checks if the passed element is visible.
  *
  * @param {DOMElement} element - The DOMElement to check is visible.
- * @param {number} viewabilityOffsetFraction - Offset fraction that specifies the percentage of the element that needs to be visible to be considered visible.
+ * @param {number} viewabilityOffsetFraction - Offset fraction. Specifies the percentage of the element that needs to be hidden to be considered not vissible.
  * @returns {boolean} - True if the element is visible or false otherwise.
  */
 const isElementVisible = function (element, viewabilityOffsetFraction = 0) {
