@@ -23,13 +23,39 @@ const onViewportEvent = debounce(() => {
   }
 }, 100);
 
-const checkViewability = (element, {emit, viewabilityOffset = 0.4, scrollableElement = window, logger = console}) => {
+const validate = (element, emit) => {
+  if (!(element instanceof Element)) {
+    throw new TypeError('Passed Element is not an instance of Element.');
+  }
+
+  if (!Boolean(emit)) {
+    throw new TypeError('Passed emit is not a function.');
+  }
+};
+
+const checkViewability = (element, emit, {viewabilityOffset = 0.4, scrollableElement = window, logger = console} = {}) => {
+  validate(element, emit);
+
   const entry = {
     element,
     emit,
     lastInViewport: false,
     scrollableElement,
     viewabilityOffset
+  };
+
+  const removeEntry = () => {
+    elementEntries = elementEntries.filter((elementEntry) => elementEntry !== entry);
+
+    if (elementEntries.length === 0) {
+      window.removeEventListener('resize', onViewportEvent);
+      window.removeEventListener('orientationchange', onViewportEvent);
+      document.removeEventListener('visibilitychange', onViewportEvent);
+    }
+
+    if (!Boolean(elementEntries.find((elementEntry) => elementEntry.scrollableElement === scrollableElement))) {
+      scrollableElement.removeEventListener('scroll', onViewportEvent);
+    }
   };
 
   checkIsVisible(entry);
@@ -44,20 +70,10 @@ const checkViewability = (element, {emit, viewabilityOffset = 0.4, scrollableEle
   }
 
   waitForNodeRemoval(element)
-    .then(() => {
-      elementEntries = elementEntries.filter((elementEntry) => elementEntry !== entry);
-
-      if (elementEntries.length === 0) {
-        window.removeEventListener('resize', onViewportEvent);
-        window.removeEventListener('orientationchange', onViewportEvent);
-        document.removeEventListener('visibilitychange', onViewportEvent);
-      }
-
-      if (!Boolean(elementEntries.find((elementEntry) => elementEntry.scrollableElement === scrollableElement))) {
-        scrollableElement.removeEventListener('scroll', onViewportEvent);
-      }
-    })
+    .then(removeEntry)
     .catch((error) => logger.warn(error));
+
+  return removeEntry;
 };
 
 export default checkViewability;
