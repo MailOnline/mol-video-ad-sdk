@@ -1,6 +1,7 @@
 import Deferred from './Deferred';
 import MutationObserver from './MutationObserver';
 
+const toArray = (nodelist) => Array.prototype.slice.call(nodelist);
 let observedNodes = [];
 let observer = null;
 
@@ -18,23 +19,24 @@ if (MutationObserver) {
   };
 
   observer = new MutationObserver((mutations) => {
-    mutations.forEach(({removedNodes}) => {
-      if (removedNodes.length > 0) {
-        const removedObservedNodes = getRemovedObservedNodes(removedNodes);
+    toArray(mutations)
+      .forEach(({removedNodes}) => {
+        if (removedNodes.length > 0) {
+          const removedObservedNodes = getRemovedObservedNodes(toArray(removedNodes));
 
-        removedObservedNodes.forEach((observedNode) => {
-          const {node, deferred} = observedNode;
+          removedObservedNodes.forEach((observedNode) => {
+            const {node, deferred} = observedNode;
 
-          observedNodes = observedNodes.filter((item) => item !== observedNode);
+            observedNodes = observedNodes.filter((item) => item !== observedNode);
 
-          if (observedNodes.length === 0) {
-            observer.disconnect();
-          }
+            if (observedNodes.length === 0) {
+              observer.disconnect();
+            }
 
-          deferred.resolve(node);
-        });
-      }
-    });
+            deferred.resolve(node);
+          });
+        }
+      });
   });
 }
 
