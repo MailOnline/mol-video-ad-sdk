@@ -1,10 +1,10 @@
-import supportsElementOnservers from './supportsElementOnservers';
+import supportsElementObservers from './supportsElementObservers';
 import onElementResize from './onElementResize';
 import onElementRemove from './onElementRemove';
 import onElementVisibilityChange from './onElementVisibilityChange';
 
 export {
-  supportsElementOnservers,
+  supportsElementObservers,
   onElementResize,
   onElementRemove,
   onElementVisibilityChange

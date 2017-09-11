@@ -1,4 +1,4 @@
-import {supportsElementOnservers} from '../src/index';
+import {supportsElementObservers} from '../src/index';
 
 jest.mock('../src/helpers/MutationObserver', () => class MockMutationObserver {
   constructor () {
@@ -11,5 +11,5 @@ jest.mock('../src/helpers/MutationObserver', () => class MockMutationObserver {
 });
 
 test('supportsElementOnservers must return true if the MutationObserver api is not supported', () => {
-  expect(supportsElementOnservers).toBe(true);
+  expect(supportsElementObservers).toBe(true);
 });
