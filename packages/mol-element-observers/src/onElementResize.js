@@ -1,6 +1,5 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
 import debounce from 'lodash/debounce';
-import onResize from './helpers/onResize';
 import MutationObserver from './helpers/MutationObserver';
 
 const sizeMutationAttrs = ['style', 'width', 'height'];
@@ -31,7 +30,6 @@ const onElementResize = function (target, callback, {threshold = 100} = {}) {
 
   const checkElementHandler = threshold > 0 ? debounce(checkElementSize) : checkElementSize;
 
-  const stopOnResize = onResize(checkElementHandler);
   const observer = new MutationObserver((mutations) => {
     for (let index = 0; index < mutations.length; index++) {
       const {attributeName} = mutations[index];
@@ -50,7 +48,6 @@ const onElementResize = function (target, callback, {threshold = 100} = {}) {
 
   return () => {
     observer.disconnect();
-    stopOnResize();
   };
 };
 

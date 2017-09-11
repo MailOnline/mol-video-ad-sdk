@@ -63,31 +63,3 @@ test('onElementResize must call the callback if the element width changes on sty
   MutationObserver.simulateAttrMutation(target, 'style');
   expect(mock).toHaveBeenCalled();
 });
-
-test('onElementResize must call the callback if the element changes on resize', () => {
-  const target = document.createElement('DIV');
-  const mock = jest.fn();
-  const disconnect = onElementResize(target, () => mock());
-
-  expect(mock).not.toHaveBeenCalled();
-
-  target.style.width = '400px';
-  window.dispatchEvent(new Event('resize'));
-  expect(mock).toHaveBeenCalledTimes(1);
-
-  target.style.height = '400px';
-  window.dispatchEvent(new Event('orientationchange'));
-  expect(mock).toHaveBeenCalledTimes(2);
-
-  window.dispatchEvent(new Event('resize'));
-  window.dispatchEvent(new Event('orientationchange'));
-  expect(mock).toHaveBeenCalledTimes(2);
-
-  disconnect();
-
-  target.style.height = '500px';
-  window.dispatchEvent(new Event('resize'));
-  target.style.height = '600px';
-  window.dispatchEvent(new Event('orientationchange'));
-  expect(mock).toHaveBeenCalledTimes(2);
-});
