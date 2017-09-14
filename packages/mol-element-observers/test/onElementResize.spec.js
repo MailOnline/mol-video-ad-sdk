@@ -63,3 +63,47 @@ test('onElementResize must call the callback if the element width changes on sty
   MutationObserver.simulateAttrMutation(target, 'style');
   expect(mock).toHaveBeenCalled();
 });
+
+test('onElementResize must call the callback if the element resizes', () => {
+  const target = document.createElement('DIV');
+  const mock = jest.fn();
+
+  onElementResize(target, () => mock());
+  expect(mock).not.toHaveBeenCalled();
+
+  const resizeObjElement = target.querySelector('object');
+
+  // jsdom does not add the content window to object elements for the sack of the test we fake it
+  // with the normal window.
+  resizeObjElement.contentWindow = global.window;
+  resizeObjElement.onload();
+
+  target.style.width = '400px';
+  resizeObjElement.contentWindow.dispatchEvent(new Event('resize'));
+  expect(mock).toHaveBeenCalled();
+});
+
+test('onElementResize must return a disconnect fn', () => {
+  const target = document.createElement('DIV');
+  const mock = jest.fn();
+  const disconnect = onElementResize(target, () => mock());
+  const resizeObjElement = target.querySelector('object');
+
+  // jsdom does not add the content window to object elements for the sack of the test we fake it
+  // with the normal window.
+  resizeObjElement.contentWindow = global.window;
+  resizeObjElement.onload();
+
+  expect(mock).not.toHaveBeenCalled();
+
+  disconnect();
+
+  target.style.width = '400px';
+  expect(MutationObserver.disconnect).toHaveBeenCalled();
+  MutationObserver.simulateAttrMutation(target, 'style');
+  expect(mock).not.toHaveBeenCalled();
+
+  target.style.width = '300px';
+  resizeObjElement.contentWindow.dispatchEvent(new Event('resize'));
+  expect(mock).not.toHaveBeenCalled();
+});

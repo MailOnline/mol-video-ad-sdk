@@ -10,11 +10,9 @@
     "src"
   ],
   "peerDependencies": {
-    "lodash": "^4.17.4",
-    "mol-on-resize": "0.1.0"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "lodash": "^4.17.4",
-    "mol-on-resize": "0.1.0"
+    "lodash": "^4.17.4"
   }
 }

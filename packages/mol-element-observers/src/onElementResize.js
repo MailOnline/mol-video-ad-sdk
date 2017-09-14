@@ -2,7 +2,6 @@
 import debounce from 'lodash/debounce';
 import MutationObserver from './helpers/MutationObserver';
 
-const sizeMutationAttrs = ['style', 'width', 'height'];
 const validate = (target, callback) => {
   if (!(target instanceof Element)) {
     throw new TypeError('Target is not an Element node');
@@ -12,8 +11,110 @@ const validate = (target, callback) => {
     throw new TypeError('Callback is not a function');
   }
 };
+const noop = () => {};
+const sizeMutationAttrs = ['style', 'clientWidth', 'clientHeight'];
+const createResizeMO = (target, callback) => {
+  const observer = new MutationObserver((mutations) => {
+    for (let index = 0; index < mutations.length; index++) {
+      const {attributeName} = mutations[index];
 
-const onElementResize = function (target, callback, {threshold = 100} = {}) {
+      if (sizeMutationAttrs.indexOf(attributeName) !== -1) {
+      // eslint-disable-next-line callback-return
+        callback();
+      }
+    }
+  });
+
+  observer.observe(target, {
+    attributes: true,
+    characterData: false,
+    childList: true
+  });
+
+  return observer;
+};
+const mutationHandlers = Symbol('mutationHandlers');
+const observerKey = Symbol('mutationObserver');
+const onMutation = (target, callback) => {
+  if (!target[mutationHandlers]) {
+    target[mutationHandlers] = [];
+
+    const execHandlers = (...args) => {
+      if (target[mutationHandlers]) {
+        target[mutationHandlers].forEach((handler) => handler(...args));
+      }
+    };
+
+    target[observerKey] = createResizeMO(target, execHandlers);
+  }
+
+  target[mutationHandlers].push(callback);
+
+  return () => {
+    target[mutationHandlers] = target[mutationHandlers].filter((handler) => handler !== callback);
+
+    if (target[mutationHandlers].length === 0) {
+      target[observerKey].disconnect();
+
+      delete target[mutationHandlers];
+      delete target[observerKey];
+    }
+  };
+};
+
+const createResizeObjElement = (callback) => {
+  const obj = document.createElement('object');
+
+  // eslint-disable-next-line max-len
+  obj.setAttribute('style', 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;');
+  obj.onload = function () {
+    const global = this.contentWindow || this.contentDocument && this.contentDocument.defaultView;
+
+    if (global) {
+      global.addEventListener('resize', callback);
+    }
+  };
+  obj.type = 'text/html';
+  obj.data = 'about:blank';
+
+  return obj;
+};
+const resizeHandlers = Symbol('resizeHandlers');
+const resizeObject = Symbol('resizeObj');
+
+// Original code http://www.backalleycoder.com/2013/03/18/cross-browser-event-based-element-resize-detection/
+const onResize = (target, callback) => {
+  if (!target[resizeHandlers]) {
+    target[resizeHandlers] = [];
+    const execHandlers = (...args) => {
+      if (target[resizeHandlers]) {
+        target[resizeHandlers].forEach((handler) => handler(...args));
+      }
+    };
+
+    target[resizeObject] = createResizeObjElement(execHandlers);
+
+    if (getComputedStyle(target).position === 'static') {
+      target.style.position = 'relative';
+    }
+
+    target.appendChild(target[resizeObject]);
+  }
+
+  target[resizeHandlers].push(callback);
+
+  return () => {
+    target[resizeHandlers] = target[resizeHandlers].filter((handler) => handler !== callback);
+
+    if (target[resizeHandlers].length === 0) {
+      target.removeChild(target[resizeObject]);
+      delete target[resizeHandlers];
+      delete target[resizeObject];
+    }
+  };
+};
+
+const onElementResize = function (target, callback, {threshold = 20} = {}) {
   validate(target, callback);
 
   const makeSizeId = ({style, clientHeight, clientWidth}) => [style.width, style.height, clientWidth, clientHeight].join('');
@@ -28,26 +129,13 @@ const onElementResize = function (target, callback, {threshold = 100} = {}) {
     }
   };
 
-  const checkElementHandler = threshold > 0 ? debounce(checkElementSize) : checkElementSize;
-
-  const observer = new MutationObserver((mutations) => {
-    for (let index = 0; index < mutations.length; index++) {
-      const {attributeName} = mutations[index];
-
-      if (sizeMutationAttrs.indexOf(attributeName) !== -1) {
-        checkElementHandler();
-      }
-    }
-  });
-
-  observer.observe(target, {
-    attributes: true,
-    characterData: false,
-    childList: true
-  });
+  const checkElementHandler = debounce(checkElementSize, threshold);
+  const stopObservingMutations = Boolean(MutationObserver) ? onMutation(target, checkElementHandler) : noop;
+  const stopListeningToResize = onResize(target, checkElementHandler);
 
   return () => {
-    observer.disconnect();
+    stopObservingMutations();
+    stopListeningToResize();
   };
 };
 
