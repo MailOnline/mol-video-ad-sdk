@@ -65,7 +65,7 @@ const onElementVisibilityChange = function (target, callback, {threshold = 100, 
       document.removeEventListener('visibilitychange', viewportEventHandler);
     }
 
-    if (!Boolean(elementEntries.find((elementEntry) => elementEntry.scrollableElement === scrollableElement))) {
+    if (elementEntries.every((elementEntry) => elementEntry.scrollableElement !== scrollableElement)) {
       scrollableElement.removeEventListener('scroll', viewportEventHandler);
     }
   };

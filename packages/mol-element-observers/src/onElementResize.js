@@ -18,7 +18,7 @@ const createResizeMO = (target, callback) => {
     for (let index = 0; index < mutations.length; index++) {
       const {attributeName} = mutations[index];
 
-      if (sizeMutationAttrs.indexOf(attributeName) !== -1) {
+      if (sizeMutationAttrs.includes(attributeName)) {
       // eslint-disable-next-line callback-return
         callback();
       }
@@ -117,7 +117,7 @@ const onResize = (target, callback) => {
 const onElementResize = function (target, callback, {threshold = 20} = {}) {
   validate(target, callback);
 
-  const makeSizeId = ({style, clientHeight, clientWidth}) => [style.width, style.height, clientWidth, clientHeight].join('');
+  const makeSizeId = ({style, clientHeight, clientWidth}) => [style.width, style.height, clientWidth, clientHeight].join('.');
   let lastSize = makeSizeId(target);
   const checkElementSize = () => {
     const currentSize = makeSizeId(target);

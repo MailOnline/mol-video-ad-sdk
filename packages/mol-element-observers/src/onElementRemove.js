@@ -1,7 +1,7 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
 import MutationObserver from './helpers/MutationObserver';
 
-const toArray = (nodelist) => Array.prototype.slice.call(nodelist);
+const toArray = (...list) => [...list];
 const validate = (target, callback) => {
   if (!(target instanceof Element)) {
     throw new TypeError('Target is not an Element node');
@@ -20,7 +20,7 @@ const onElementRemove = function (target, callback) {
       const {removedNodes} = mutations[index];
       const removedNodesArray = toArray(removedNodes);
 
-      if (removedNodesArray.length > 0 && Boolean(removedNodes.find((node) => node === target))) {
+      if (removedNodesArray.length > 0 && removedNodes.some((node) => node === target)) {
         callback();
 
         return;
