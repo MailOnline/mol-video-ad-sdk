@@ -1,5 +1,5 @@
-import document from './helpers/document';
-import window from './helpers/window';
+import document from './document';
+import window from './window';
 
 /**
  * Checks if the passed element is visible.

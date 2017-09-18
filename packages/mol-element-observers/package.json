@@ -1,7 +1,7 @@
 {
-  "name": "mol-viewability",
+  "name": "mol-element-observer",
   "version": "0.1.0",
-  "description": "MOL's viewability methods",
+  "description": "Utility libary to identify size and tree mutations of a single DOM element",
   "author": "MailOnline <fe@mailonline.co.uk>",
   "browser": "src/index.js",
   "main": "src/index.js",

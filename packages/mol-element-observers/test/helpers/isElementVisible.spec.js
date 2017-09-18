@@ -1,13 +1,13 @@
 /* eslint-disable sort-keys */
-import document from '../src/helpers/document';
-import window from '../src/helpers/window';
-import isElementVisible from '../src/isElementVisible';
+import document from '../../src/helpers/document';
+import window from '../../src/helpers/window';
+import isElementVisible from '../../src/helpers/isElementVisible';
 
-jest.mock('../src/helpers/window', () => ({
+jest.mock('../../src/helpers/window', () => ({
   hidden: false
 }));
 
-jest.mock('../src/helpers/document', () => ({
+jest.mock('../../src/helpers/document', () => ({
   documentElement: {
     clientHeight: 0,
     clientWidth: 0
