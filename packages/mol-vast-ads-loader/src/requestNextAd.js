@@ -4,7 +4,7 @@ import {
 } from 'mol-vast-selectors';
 import requestAd from './requestAd';
 import getNextAd from './helpers/getNextAd';
-import markAsRequested from './helpers/markAsRequested';
+import {markAdAsRequested} from './helpers/adUtils';
 
 const validateChain = (VASTChain) => {
   if (!Array.isArray(VASTChain)) {
@@ -30,7 +30,7 @@ const requestNextAd = (VASTChain, options) => {
   validateChain(VASTChain);
 
   const vastResponse = VASTChain[0];
-  const nextAd = markAsRequested(getNextAd(vastResponse, options));
+  const nextAd = markAdAsRequested(getNextAd(vastResponse, options));
 
   if (Boolean(nextAd)) {
     const newVastResponse = Object.assign({}, vastResponse, {

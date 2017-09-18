@@ -4,6 +4,7 @@ import {
   getPodAdSequence,
   isPodAd
 } from 'mol-vast-selectors';
+import {hasAdBeenRequested} from './adUtils';
 
 const getNextPod = (currentPod, ads) => {
   const nextPodSequence = getPodAdSequence(currentPod) + 1;
@@ -13,7 +14,7 @@ const getNextPod = (currentPod, ads) => {
 
 const getNextAd = ({ad, parsedXML}, {fallbackOnNoAd = true, useAdBuffet = false} = {}) => {
   const ads = getAds(parsedXML);
-  const availableAds = ads.filter((adDefinition) => !adDefinition.___requested);
+  const availableAds = ads.filter((adDefinition) => !hasAdBeenRequested(adDefinition));
   let nextAd = null;
 
   if (hasAdPod(parsedXML)) {

@@ -8,7 +8,7 @@ import {
   isWrapper
 } from 'mol-vast-selectors';
 import fetch from './helpers/fetch';
-import markAsRequested from './helpers/markAsRequested';
+import {markAdAsRequested} from './helpers/adUtils';
 
 const validateChain = (vastChain, {wrapperLimit = 5}) => {
   if (vastChain.length >= wrapperLimit) {
@@ -46,7 +46,7 @@ const getAd = (parsedXML) => {
     const ad = getFirstAd(parsedXML);
 
     if (Boolean(ad)) {
-      return markAsRequested(ad);
+      return markAdAsRequested(ad);
     }
 
     throw new Error('No Ad');
