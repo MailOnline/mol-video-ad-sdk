@@ -8,5 +8,11 @@
   "license": "UNLICENSED",
   "files": [
     "src"
-  ]
+  ],
+  "peerDependencies": {
+    "mol-element-observers": "^0.1.0"
+  },
+  "devDependencies": {
+    "mol-element-observers": "^0.1.0"
+  }
 }

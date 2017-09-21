@@ -9,12 +9,12 @@ test('loadScript must return a promise', () => {
 });
 
 test('loadScript load the script synchrounous by default', () => {
-  const container = document.createElement('div');
+  const placeholder = document.createElement('div');
   const src = 'http://example.com/script';
 
-  loadScript(src, {container});
+  loadScript(src, {placeholder});
 
-  const script = container.querySelector('script');
+  const script = placeholder.querySelector('script');
 
   script.onload();
 
@@ -24,15 +24,15 @@ test('loadScript load the script synchrounous by default', () => {
 });
 
 test('loadScript must be able to load script as defer', () => {
-  const container = document.createElement('div');
+  const placeholder = document.createElement('div');
   const src = 'http://example.com/script';
 
   loadScript(src, {
-    container,
-    defer: true
+    defer: true,
+    placeholder
   });
 
-  const script = container.querySelector('script');
+  const script = placeholder.querySelector('script');
 
   expect(script.src).toEqual(src);
   expect(script.async).toEqual(false);
@@ -40,15 +40,15 @@ test('loadScript must be able to load script as defer', () => {
 });
 
 test('loadScript must be able to load script as async', () => {
-  const container = document.createElement('div');
+  const placeholder = document.createElement('div');
   const src = 'http://example.com/script';
 
   loadScript(src, {
     async: true,
-    container
+    placeholder
   });
 
-  const script = container.querySelector('script');
+  const script = placeholder.querySelector('script');
 
   expect(script.src).toEqual(src);
   expect(script.async).toEqual(true);
@@ -56,37 +56,37 @@ test('loadScript must be able to load script as async', () => {
 });
 
 test('loadScript set the type as \'text/javascript\' by default', () => {
-  const container = document.createElement('div');
+  const placeholder = document.createElement('div');
   const src = 'http://example.com/script';
 
-  loadScript(src, {container});
+  loadScript(src, {placeholder});
 
-  const script = container.querySelector('script');
+  const script = placeholder.querySelector('script');
 
   expect(script.src).toEqual(src);
   expect(script.type).toEqual('text/javascript');
 });
 
 test('loadScript must be able to set a custom type for the script', () => {
-  const container = document.createElement('div');
+  const placeholder = document.createElement('div');
   const src = 'http://example.com/script';
 
   loadScript(src, {
-    container,
+    placeholder,
     type: 'txt/test'
   });
 
-  const script = container.querySelector('script');
+  const script = placeholder.querySelector('script');
 
   expect(script.src).toEqual(src);
   expect(script.type).toEqual('txt/test');
 });
 
-test('loadScript must add the script to the given container', async () => {
-  const container = document.createElement('div');
+test('loadScript must add the script to the given placeholder', async () => {
+  const placeholder = document.createElement('div');
   const src = 'http://example.com/script';
-  const promise = loadScript(src, {container});
-  const script = container.querySelector('script');
+  const promise = loadScript(src, {placeholder});
+  const script = placeholder.querySelector('script');
 
   script.onload();
 
@@ -94,10 +94,10 @@ test('loadScript must add the script to the given container', async () => {
 });
 
 test('loadScript must reject the promise if tere is an error loading the script', () => {
-  const container = document.createElement('div');
+  const placeholder = document.createElement('div');
   const src = 'http://example.com/script';
-  const promise = loadScript(src, {container});
-  const script = container.querySelector('script');
+  const promise = loadScript(src, {placeholder});
+  const script = placeholder.querySelector('script');
 
   script.onerror();
 

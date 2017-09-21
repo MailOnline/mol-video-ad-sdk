@@ -33,6 +33,20 @@ test('VideoAdContainer if video element is not passed, it must create a video el
   expect(videoAdContainer.videoElement.parentNode).toBe(videoAdContainer.element);
 });
 
+test('VideoAdContainer must set the context to window', () => {
+  const placeholder = document.createElement('DIV');
+  const videoAdContainer = new VideoAdContainer(placeholder);
+
+  expect(videoAdContainer.context).toBe(window);
+});
+
+test('VideoAdContainer ready method must resolve with itself', async () => {
+  const placeholder = document.createElement('DIV');
+  const videoAdContainer = new VideoAdContainer(placeholder);
+
+  expect(await videoAdContainer.ready()).toBe(videoAdContainer);
+});
+
 test('VideoAdContainer must be possible to add scripts to the adContainer', () => {
   const placeholder = document.createElement('DIV');
   const videoAdContainer = new VideoAdContainer(placeholder);
@@ -51,7 +65,7 @@ test('VideoAdContainer must be possible to add scripts to the adContainer', () =
   expect(promise).resolves.toBe(script);
 });
 
-test('VideoAdContiner remove must remove the adContainer from the placeHolder and set the element reference to null', () => {
+test('VideoAdContainer destroy must remove the adContainer from the placeHolder and set the element reference to null', () => {
   const placeholder = document.createElement('DIV');
   const videoAdContainer = new VideoAdContainer(placeholder);
 
@@ -66,12 +80,29 @@ test('VideoAdContiner remove must remove the adContainer from the placeHolder an
   expect(placeholder.querySelector('.mol-video-ad-container')).toBe(null);
 });
 
-test('VideoAdContainer once removed must not allow the addition of scripts and must set the adContainer and videoElement to null', () => {
+test('VideoAdContainer once destroyed must not allow the addition of scripts and must set the adContainer and videoElement to null', () => {
   const placeholder = document.createElement('DIV');
   const videoAdContainer = new VideoAdContainer(placeholder);
   const src = 'http://example.com/resource';
 
   videoAdContainer.destroy();
 
-  expect(() => videoAdContainer.addScript(src, {})).toThrowError('videoAdContainer has been destroyed');
+  expect(() => videoAdContainer.addScript(src, {})).toThrowError('VideoAdContainer has been destroyed');
+  expect(() => videoAdContainer.resize()).toThrowError('VideoAdContainer has been destroyed');
+});
+
+test('VideoAdContainer isDestroy must return true if the ad container is destroyed and false otherwise', () => {
+  const placeholder = document.createElement('DIV');
+  const videoAdContainer = new VideoAdContainer(placeholder);
+
+  expect(videoAdContainer.isDestroyed()).toBe(false);
+  videoAdContainer.destroy();
+  expect(videoAdContainer.isDestroyed()).toBe(true);
+});
+
+test('VideoAdContainer resize must do nothing', () => {
+  const placeholder = document.createElement('DIV');
+  const videoAdContainer = new VideoAdContainer(placeholder);
+
+  expect(() => videoAdContainer.resize()).not.toThrowError();
 });

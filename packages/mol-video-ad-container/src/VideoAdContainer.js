@@ -1,50 +1,45 @@
 import loadScript from './helpers/loadScript';
+import createAdVideoElement from './helpers/createAdVideoElement';
 
-const createAdContainer = (placeHolder) => {
+const isVideoElement = (video) => video instanceof HTMLMediaElement;
+const createAdContainer = () => {
   const adContainer = document.createElement('DIV');
 
   adContainer.classList.add('mol-video-ad-container');
   adContainer.style.width = '100%';
   adContainer.style.height = '100%';
-  placeHolder.appendChild(adContainer);
 
   return adContainer;
 };
 
-const createAdVideoElement = (placeHolder) => {
-  const video = document.createElement('VIDEO');
-
-  video.style.width = '100%';
-  video.style.height = '100%';
-
-  placeHolder.appendChild(video);
-
-  return video;
-};
-
 export default class VideoAdContainer {
-  constructor (placeHolder, {videoElement = null} = {}) {
-    if (!(placeHolder instanceof Element)) {
-      throw new TypeError('placeHolder is not an Element');
+  constructor (placeholder, {videoElement = null} = {}) {
+    if (!(placeholder instanceof Element)) {
+      throw new TypeError('placeholder is not an Element');
     }
 
-    this.element = createAdContainer(placeHolder);
+    this.context = window;
+    this.element = createAdContainer();
+    this.videoElement = isVideoElement(videoElement) ? videoElement : createAdVideoElement();
 
-    if (videoElement) {
-      this.videoElement = videoElement;
-    } else {
-      this.videoElement = createAdVideoElement(this.element);
-    }
+    placeholder.appendChild(this.element);
+    this.element.appendChild(this.videoElement);
+  }
+
+  ready () {
+    return Promise.resolve(this);
   }
 
   addScript (src, options = {}) {
-    if (!Boolean(this.element)) {
-      throw new Error('videoAdContainer has been destroyed');
+    if (this.isDestroyed()) {
+      throw new Error('VideoAdContainer has been destroyed');
     }
 
+    const placeholder = options.placeholder || this.element;
+
     return loadScript(src, {
-      container: this.element,
       defer: true,
+      placeholder,
       ...options
     });
   }
@@ -52,7 +47,21 @@ export default class VideoAdContainer {
   destroy () {
     this.element.parentNode.removeChild(this.element);
     this.element = null;
+    this.context = null;
     this.videoElement = null;
+  }
+
+  isDestroyed () {
+    return !Boolean(this.element);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  resize () {
+    if (this.isDestroyed()) {
+      throw new Error('VideoAdContainer has been destroyed');
+    }
+
+    // Video ad containers resizes automatically the size of the placeholder
   }
 }
 

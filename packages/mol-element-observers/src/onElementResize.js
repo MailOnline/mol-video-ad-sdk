@@ -68,10 +68,8 @@ const createResizeObjElement = (callback) => {
   // eslint-disable-next-line max-len
   obj.setAttribute('style', 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;');
   obj.onload = function () {
-    const global = this.contentWindow || this.contentDocument && this.contentDocument.defaultView;
-
-    if (global) {
-      global.addEventListener('resize', callback);
+    if (this.contentWindow) {
+      this.contentWindow.addEventListener('resize', callback);
     }
   };
   obj.type = 'text/html';
