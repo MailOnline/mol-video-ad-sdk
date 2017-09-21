@@ -55,7 +55,6 @@ export default class VideoAdContainer {
     return !Boolean(this.element);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   resize () {
     if (this.isDestroyed()) {
       throw new Error('VideoAdContainer has been destroyed');
