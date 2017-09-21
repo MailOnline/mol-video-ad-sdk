@@ -19,11 +19,7 @@ import {
   inlineAd
 } from 'mol-vast-fixtures';
 import {requestAd} from '../src/index';
-import markAsRequested from '../src/helpers/markAsRequested';
-
-const unmarkAsRequested = (ad) => {
-  delete ad.___requested;
-};
+import {markAdAsRequested, unmarkAdAsRequested} from '../src/helpers/adUtils';
 
 test('requestAd must return a chain with errorcode 304 if the wrapperLimit is reached', async () => {
   const vastChain = await requestAd('http://adtag.test.example.com', {wrapperLimit: 1}, [{}]);
@@ -148,8 +144,8 @@ test('requestAd must do do the wrapper chain requests until it finds an inline a
 
   const vastChain = await requestAd('http://adtag.test.example.com', {});
 
-  markAsRequested(inlineAd);
-  markAsRequested(wrapperAd);
+  markAdAsRequested(inlineAd);
+  markAdAsRequested(wrapperAd);
 
   expect(vastChain).toEqual([
     {
@@ -175,8 +171,8 @@ test('requestAd must do do the wrapper chain requests until it finds an inline a
     }
   ]);
 
-  unmarkAsRequested(inlineAd);
-  unmarkAsRequested(wrapperAd);
+  unmarkAdAsRequested(inlineAd);
+  unmarkAdAsRequested(wrapperAd);
 });
 
 test('requestAd must set errorCode 101 if neither wrapper neither inline can be find inside the ad', async () => {
@@ -191,7 +187,7 @@ test('requestAd must set errorCode 101 if neither wrapper neither inline can be 
   const vastChain = await requestAd('http://adtag.test.example.com', {});
   const ad = getAds(vastInvalidParsedXML)[0];
 
-  markAsRequested(ad);
+  markAdAsRequested(ad);
 
   expect(vastChain).toEqual([
     {
@@ -234,7 +230,7 @@ test('requestAd must set errorCode 203 if the allowMultipleAds option is set to 
   const vastChain = await requestAd('https://VASTAdTagURI.example.com', {allowMultipleAds: false}, startChain);
   const firstPodAd = getFirstAd(podParsedXML);
 
-  markAsRequested(firstPodAd);
+  markAdAsRequested(firstPodAd);
 
   expect(vastChain).toEqual([
     {
@@ -283,8 +279,8 @@ test('requestAd must set errorCode 203 if the wrapper comes with allowMultipleAd
   const vastChain = await requestAd('http://adtag.test.example.com', {});
   const firstPodAd = getFirstAd(podParsedXML);
 
-  markAsRequested(firstPodAd);
-  markAsRequested(newWrapperAd);
+  markAdAsRequested(firstPodAd);
+  markAdAsRequested(newWrapperAd);
 
   expect(vastChain).toEqual([
     {
@@ -325,8 +321,8 @@ test('requestAd must set errorCode 200 if the wrapper comes with followAdditiona
 
   const vastChain = await requestAd('http://adtag.test.example.com', {});
 
-  markAsRequested(newWrapperAd);
-  markAsRequested(wrapperAd);
+  markAdAsRequested(newWrapperAd);
+  markAdAsRequested(wrapperAd);
 
   expect(vastChain).toEqual([
     {

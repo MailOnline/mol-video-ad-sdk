@@ -12,14 +12,7 @@ import {
   inlineAd
 } from 'mol-vast-fixtures';
 import {requestNextAd} from '../src/index';
-
-const markAdAsRequested = (ad) => {
-  ad.___requested = true;
-};
-
-const unmarkAdAsRequested = (ad) => {
-  delete ad.___requested;
-};
+import {markAdAsRequested, unmarkAdAsRequested} from '../src/helpers/adUtils';
 
 test('requestNextAd must throw if we pass an invalid VAST chain', () => {
   expect(() => requestNextAd()).toThrowError('Invalid VAST chain');
