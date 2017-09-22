@@ -152,14 +152,14 @@ test('requestAd must do do the wrapper chain requests until it finds an inline a
       ad: inlineAd,
       errorCode: null,
       parsedXML: inlineParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastInlineXML
     },
     {
       ad: wrapperAd,
       errorCode: null,
       parsedXML: wrapperParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastWrapperXML
     },
     {
@@ -207,7 +207,7 @@ test('requestAd must set errorCode 203 if the allowMultipleAds option is set to 
       ad: wrapperAd,
       errorCode: null,
       parsedXML: wrapperParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastWrapperXML
     },
     {
@@ -227,7 +227,7 @@ test('requestAd must set errorCode 203 if the allowMultipleAds option is set to 
   global.fetch = jest.fn()
     .mockImplementationOnce(() => Promise.resolve(podResponse));
 
-  const vastChain = await requestAd('https://VASTAdTagURI.example.com', {allowMultipleAds: false}, startChain);
+  const vastChain = await requestAd('https://test.example.com/vastadtaguri', {allowMultipleAds: false}, startChain);
   const firstPodAd = getFirstAd(podParsedXML);
 
   markAdAsRequested(firstPodAd);
@@ -238,14 +238,14 @@ test('requestAd must set errorCode 203 if the allowMultipleAds option is set to 
       error: expect.any(Error),
       errorCode: 203,
       parsedXML: podParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastPodXML
     },
     {
       ad: wrapperAd,
       errorCode: null,
       parsedXML: wrapperParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastWrapperXML
     },
     {
@@ -288,7 +288,7 @@ test('requestAd must set errorCode 203 if the wrapper comes with allowMultipleAd
       error: expect.any(Error),
       errorCode: 203,
       parsedXML: podParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastPodXML
     },
     {
@@ -330,7 +330,7 @@ test('requestAd must set errorCode 200 if the wrapper comes with followAdditiona
       error: expect.any(Error),
       errorCode: 200,
       parsedXML: wrapperParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastWrapperXML
     },
     {

@@ -2,23 +2,23 @@
 <VAST version="4.0">
   <Ad id="abc123">
     <InLine>
-      <AdSystem version="1.0">Shibby Service</AdSystem>
+      <AdSystem version="1.0">MOL</AdSystem>
       <AdTitle>VAST 4.0 Test</AdTitle>
-      <Impression>http://myTrackingURL/impression</Impression>
+      <Impression>https://test.example.com/impression</Impression>
       <Category authority="IAB">Inline Video</Category>
       <Description>VAST Inline</Description>
-      <Advertiser>IAB</Advertiser>
+      <Advertiser>MOL</Advertiser>
       <Pricing model="CPM" currency="USD">4.00</Pricing>
-      <Survey type="text/javascript">https://iab.com/survey.js</Survey>
+      <Survey type="text/javascript">https://test.example.com/survey.js</Survey>
       <Extensions/>
       <ViewableImpression>
-        <Viewable>https://iab.com/viewable</Viewable>
-        <NotViewable>https://iab.com/notViewable</NotViewable>
-        <ViewUndetermined>https://iab.com/notDetermined</ViewUndetermined>
+        <Viewable>https://test.example.com/viewable</Viewable>
+        <NotViewable>https://test.example.com/notViewable</NotViewable>
+        <ViewUndetermined>https://test.example.com/notDetermined</ViewUndetermined>
       </ViewableImpression>
       <AdVerification/>
       <Creatives>
-        <Creative adId="abc123" apiFramework="iab-api">
+        <Creative adId="abc123" apiFramework="mol-api">
           <UniversalAdId idValue="unknown">unknown</UniversalAdId>
           <CreativeExtensions>
             <CreativeExtension>
@@ -28,19 +28,19 @@
           <Linear>
             <Duration>00:00:30</Duration>
             <TrackingEvents>
-              <Tracking event="creativeView">http://iab.com/creativeView</Tracking>
-              <Tracking event="start">http://iab.com/start</Tracking>
-              <Tracking event="midpoint">http://iab.com/midpoint</Tracking>
-              <Tracking event="firstQuartile">http://iab.com/firstQuartile</Tracking>
-              <Tracking event="thirdQuartile">http://iab.com/thirdQuartile</Tracking>
-              <Tracking event="complete">http://iab.com/complete</Tracking>
+              <Tracking event="creativeView">http://test.example.com/creativeView</Tracking>
+              <Tracking event="start">http://test.example.com/start</Tracking>
+              <Tracking event="midpoint">http://test.example.com/midpoint</Tracking>
+              <Tracking event="firstQuartile">http://test.example.com/firstQuartile</Tracking>
+              <Tracking event="thirdQuartile">http://test.example.com/thirdQuartile</Tracking>
+              <Tracking event="complete">http://test.example.com/complete</Tracking>
             </TrackingEvents>
             <VideoClicks>
-              <ClickThrough>http://iab.com</ClickThrough>
-              <ClickTracking>http://iab.com/click</ClickTracking>
+              <ClickThrough>http://test.example.com</ClickThrough>
+              <ClickTracking>http://test.example.com/click</ClickTracking>
             </VideoClicks>
             <MediaFiles>
-              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="1920" height="1080" scalable="true" maintainAspectRatio="true">http://iad.com/test.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="1920" height="1080" scalable="true" maintainAspectRatio="true">https://test.example.com/test.mp4</MediaFile>
             </MediaFiles>
             <AdParameters><![CDATA[qs=test&reddit=true]]></AdParameters>
             <Icons>
@@ -53,12 +53,12 @@
             <Companion width="1920" height="1080" assetWidth="1920" assetHeight="1080">
               <HTMLResource>http://adserver.com/htmlresourcefile.htm</HTMLResource>
               <TrackingEvents>
-                <Tracking event="creativeView">http://iad.com/firstCompanionCreativeView</Tracking>
+                <Tracking event="creativeView">http://test.example.com/firstCompanionCreativeView</Tracking>
               </TrackingEvents>
             </Companion>
             <Companion width="1920" height="80">
-              <StaticResource creativeType="image/jpeg"><![CDATA[http://iad.com/companion.jpg?test1=true&test2=false]]></StaticResource>
-              <CompanionClickThrough>http://www.iab.com/clickThrough</CompanionClickThrough>
+              <StaticResource creativeType="image/jpeg"><![CDATA[https://test.example.com/companion.jpg?test1=true&test2=false]]></StaticResource>
+              <CompanionClickThrough>http://www.test.example.com/clickThrough</CompanionClickThrough>
             </Companion>
           </CompanionAds>
         </Creative>

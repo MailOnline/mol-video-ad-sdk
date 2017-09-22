@@ -9,7 +9,19 @@ import get from 'lodash/get';
  * @returns {Array} - Array of ads or null.
  * @static
  */
-const getAds = (parsedVAST) => get(parsedVAST, 'elements[0].elements', null);
+export const getAds = (parsedVAST) => {
+  const elements = get(parsedVAST, 'elements[0].elements', null);
+
+  if (elements) {
+    const ads = elements.filter(({name}) => name.toUpperCase() === 'AD');
+
+    if (ads.length > 0) {
+      return ads;
+    }
+  }
+
+  return null;
+};
 
 /**
  * Gets the sequence of the pod ad.
@@ -17,7 +29,7 @@ const getAds = (parsedVAST) => get(parsedVAST, 'elements[0].elements', null);
  * @param {Object} ad - Parsed ad definition object.
  * @returns {number} - The pod ad sequence number or null.
  */
-const getPodAdSequence = (ad) => {
+export const getPodAdSequence = (ad) => {
   const sequence = ad && ad.attributes && parseInt(ad.attributes.sequence, 10);
 
   if (typeof sequence === 'number' && !isNaN(sequence)) {
@@ -33,7 +45,7 @@ const getPodAdSequence = (ad) => {
  * @param {Object} ad - Parsed ad definition object.
  * @returns {boolean} - Returns true if there the ad is a pod ad and false otherwise.
  */
-const isPodAd = (ad) => Boolean(getPodAdSequence(ad));
+export const isPodAd = (ad) => Boolean(getPodAdSequence(ad));
 
 /**
  * Checks if the passed array of ads have an ad pod.
@@ -41,13 +53,13 @@ const isPodAd = (ad) => Boolean(getPodAdSequence(ad));
  * @param {Object} parsedVAST - Parsed VAST xml.
  * @returns {boolean} - Returns true if there is an ad pod in the array and false otherwise.
  */
-const hasAdPod = (parsedVAST) => {
+export const hasAdPod = (parsedVAST) => {
   const ads = getAds(parsedVAST);
 
   return Array.isArray(ads) && ads.filter(isPodAd).length > 1;
 };
 
-const compareBySequence = (itemA, itemB) => {
+export const compareBySequence = (itemA, itemB) => {
   const itemASequence = parseInt(itemA.attributes.sequence, 10);
   const itemBSequence = parseInt(itemB.attributes.sequence, 10);
 
@@ -69,7 +81,7 @@ const compareBySequence = (itemA, itemB) => {
  * @returns {Object} - First ad of the VAST xml or null.
  * @static
  */
-const getFirstAd = (parsedVAST) => {
+export const getFirstAd = (parsedVAST) => {
   const ads = getAds(parsedVAST);
 
   if (Array.isArray(ads)) {
@@ -91,7 +103,7 @@ const getFirstAd = (parsedVAST) => {
  * @returns {boolean} - Returns `true` if the ad contains a wrapper or `false` otherwise.
  * @static
  */
-const isWrapper = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'WRAPPER';
+export const isWrapper = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'WRAPPER';
 
 /**
  * Checks if the passed ad is an Inline.
@@ -100,7 +112,7 @@ const isWrapper = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'WRA
  * @returns {boolean} - Returns `true` if the ad contains an Inline or `false` otherwise.
  * @static
  */
-const isInline = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'INLINE';
+export const isInline = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'INLINE';
 
 /**
  * Returns the VASTAdTagURI from the wrapper ad.
@@ -109,7 +121,7 @@ const isInline = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'INLI
  * @returns {boolean} - Returns the VASTAdTagURI from the wrapper ad or null otherwise.
  * @static
  */
-const getVASTAdTagURI = (ad) => {
+export const getVASTAdTagURI = (ad) => {
   const elements = get(ad, 'elements[0].elements', null);
 
   if (Array.isArray(elements)) {
@@ -136,7 +148,7 @@ const getBooleanValue = (val) => {
  * @returns {Object} - Returns the options from the wrapper ad.
  * @static
  */
-const getWrapperOptions = (ad) => {
+export const getWrapperOptions = (ad) => {
   const {
     allowMultipleAds,
     fallbackOnNoAd,
@@ -157,16 +169,4 @@ const getWrapperOptions = (ad) => {
   }
 
   return opts;
-};
-
-export {
-  getAds,
-  getWrapperOptions,
-  getFirstAd,
-  getVASTAdTagURI,
-  hasAdPod,
-  getPodAdSequence,
-  isPodAd,
-  isInline,
-  isWrapper
 };

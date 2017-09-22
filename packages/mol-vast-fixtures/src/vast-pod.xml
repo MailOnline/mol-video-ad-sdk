@@ -1,24 +1,24 @@
 <VAST version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd">
     <Ad id="1233">
         <InLine>
-            <AdSystem>MOL vast test</AdSystem>
+            <AdSystem>MOL</AdSystem>
             <AdTitle>VAST ad buffet</AdTitle>
-            <Error><![CDATA[http://test.example.com]]></Error>
-            <Impression><![CDATA[http://test.example.com]]></Impression>
+            <Error><![CDATA[http://test.example.com/error]]></Error>
+            <Impression><![CDATA[http://test.example.com/impression]]></Impression>
 
             <Creatives>
                 <Creative>
                     <Linear>
                         <Duration>00:00:15</Duration>
                         <TrackingEvents>
-                            <Tracking event="complete"><![CDATA[http://test.example.com]]></Tracking>
-                            <Tracking event="firstQuartile"><![CDATA[http://test.example.com]]></Tracking>
-                            <Tracking event="midpoint"><![CDATA[http://test.example.com]]></Tracking>
-                            <Tracking event="thirdQuartile"><![CDATA[http://test.example.com]]></Tracking>
+                            <Tracking event="complete"><![CDATA[http://test.example.com/complete]]></Tracking>
+                            <Tracking event="firstQuartile"><![CDATA[http://test.example.com/firstquartile]]></Tracking>
+                            <Tracking event="midpoint"><![CDATA[http://test.example.com/midpoint]]></Tracking>
+                            <Tracking event="thirdQuartile"><![CDATA[http://test.example.com/thirdQuartile]]></Tracking>
                         </TrackingEvents>
                         <VideoClicks>
                             <ClickTracking>
-                              <![CDATA[http://test.example.com]]>
+                              <![CDATA[http://test.example.com/clicktracking]]>
                             </ClickTracking>
                         </VideoClicks>
                         <MediaFiles>
@@ -32,24 +32,24 @@
     </Ad>
     <Ad id="1234" sequence="1">
         <InLine>
-            <AdSystem>MOL vast test</AdSystem>
+            <AdSystem>MOL</AdSystem>
             <AdTitle>VAST ad pod sequence 1</AdTitle>
-            <Error><![CDATA[http://test.example.com]]></Error>
-            <Impression><![CDATA[http://test.example.com]]></Impression>
+            <Error><![CDATA[http://test.example.com/error]]></Error>
+            <Impression><![CDATA[http://test.example.com/impression]]></Impression>
 
             <Creatives>
                 <Creative>
                     <Linear>
                         <Duration>00:00:15</Duration>
                         <TrackingEvents>
-                            <Tracking event="complete"><![CDATA[http://test.example.com]]></Tracking>
-                            <Tracking event="firstQuartile"><![CDATA[http://test.example.com]]></Tracking>
-                            <Tracking event="midpoint"><![CDATA[http://test.example.com]]></Tracking>
-                            <Tracking event="thirdQuartile"><![CDATA[http://test.example.com]]></Tracking>
+                            <Tracking event="complete"><![CDATA[http://test.example.com/complete]]></Tracking>
+                            <Tracking event="firstQuartile"><![CDATA[http://test.example.com/firstquartile]]></Tracking>
+                            <Tracking event="midpoint"><![CDATA[http://test.example.com/midpoint]]></Tracking>
+                            <Tracking event="thirdQuartile"><![CDATA[http://test.example.com/thirdQuartile]]></Tracking>
                         </TrackingEvents>
                         <VideoClicks>
                             <ClickTracking>
-                              <![CDATA[http://test.example.com]]>
+                              <![CDATA[http://test.example.com/clicktracking]]>
                             </ClickTracking>
                         </VideoClicks>
                         <MediaFiles>
@@ -63,23 +63,25 @@
     </Ad>
     <Ad id="1235" sequence="2">
         <InLine>
-            <AdSystem>MOL vast test</AdSystem>
+            <AdSystem>MOL</AdSystem>
             <AdTitle>VAST ad pod sequence 2</AdTitle>
-            <Error><![CDATA[http://test.example.com]]]></Error>
-            <Impression><![CDATA[http://test.example.com=]]></Impression>
+            <Error><![CDATA[http://test.example.com/error]]></Error>
+            <Impression><![CDATA[http://test.example.com/impression]]></Impression>
 
             <Creatives>
                 <Creative>
                     <Linear>
                         <Duration>00:00:31</Duration>
                         <TrackingEvents>
-                            <Tracking event="complete"><![CDATA[http://test.example.com]]></Tracking>
-                            <Tracking event="firstQuartile"><![CDATA[http://test.example.com]]></Tracking>
-                            <Tracking event="midpoint"><![CDATA[http://test.example.com]]></Tracking>
-                            <Tracking event="thirdQuartile"><![CDATA[http://test.example.com]]></Tracking>
+                            <Tracking event="complete"><![CDATA[http://test.example.com/complete]]></Tracking>
+                            <Tracking event="firstQuartile"><![CDATA[http://test.example.com/firstquartile]]></Tracking>
+                            <Tracking event="midpoint"><![CDATA[http://test.example.com/midpoint]]></Tracking>
+                            <Tracking event="thirdQuartile"><![CDATA[http://test.example.com/thirdQuartile]]></Tracking>
                         </TrackingEvents>
                         <VideoClicks>
-                            <ClickTracking><![CDATA[http://test.example.com=]]></ClickTracking>
+                            <ClickTracking>
+                              <![CDATA[http://test.example.com/clicktracking]]>
+                            </ClickTracking>
                         </VideoClicks>
                         <MediaFiles>
                             <MediaFile delivery="streaming" height="0" type="application/x-mpegURL" width="0"><![CDATA[http://test.media.example.com/test.video.m3u8]]></MediaFile>
@@ -91,23 +93,25 @@
     </Ad>
     <Ad id="1236" sequence="3">
         <InLine>
-            <AdSystem>MOL vast test</AdSystem>
+            <AdSystem>MOL</AdSystem>
             <AdTitle>VAST ad pod sequence 3</AdTitle>
-            <Error><![CDATA[http://test.example.com]]]></Error>
-            <Impression><![CDATA[http://test.example.com=]]></Impression>
+            <Error><![CDATA[http://test.example.com/error]]></Error>
+            <Impression><![CDATA[http://test.example.com/impression]]></Impression>
 
             <Creatives>
                 <Creative>
                     <Linear>
                         <Duration>00:00:31</Duration>
                         <TrackingEvents>
-                            <Tracking event="complete"><![CDATA[http://test.example.com]]></Tracking>
-                            <Tracking event="firstQuartile"><![CDATA[http://test.example.com]]></Tracking>
-                            <Tracking event="midpoint"><![CDATA[http://test.example.com]]></Tracking>
-                            <Tracking event="thirdQuartile"><![CDATA[http://test.example.com]]></Tracking>
+                            <Tracking event="complete"><![CDATA[http://test.example.com/complete]]></Tracking>
+                            <Tracking event="firstQuartile"><![CDATA[http://test.example.com/firstquartile]]></Tracking>
+                            <Tracking event="midpoint"><![CDATA[http://test.example.com/midpoint]]></Tracking>
+                            <Tracking event="thirdQuartile"><![CDATA[http://test.example.com/thirdQuartile]]></Tracking>
                         </TrackingEvents>
                         <VideoClicks>
-                            <ClickTracking><![CDATA[http://test.example.com]]></ClickTracking>
+                            <ClickTracking>
+                              <![CDATA[http://test.example.com/clicktracking]]>
+                            </ClickTracking>
                         </VideoClicks>
                         <MediaFiles>
                             <MediaFile delivery="streaming" height="0" type="application/x-mpegURL" width="0"><![CDATA[http://test.media.example.com/test.video.m3u8]]></MediaFile>

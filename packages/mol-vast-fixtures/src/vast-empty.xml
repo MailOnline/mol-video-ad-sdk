@@ -1,3 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <VAST version="4.0">
+   <Error><![CDATA[http://test.example.com/error/[ERRORCODE]]]></Error>
 </VAST>

@@ -3,7 +3,8 @@ import {
   inlineParsedXML,
   podParsedXML,
   wrapperAd,
-  wrapperParsedXML
+  wrapperParsedXML,
+  noAdParsedXML
 } from 'mol-vast-fixtures';
 import {
   getAds,
@@ -21,6 +22,7 @@ const clone = (obj) => JSON.parse(JSON.stringify(obj));
 
 test('getAds must return the ads of the passed adResponse or null otherwise', () => {
   expect(getAds(wrapperParsedXML)).toEqual([wrapperAd]);
+  expect(getAds(noAdParsedXML)).toBe(null);
   expect(getAds({})).toBe(null);
 });
 
@@ -53,7 +55,7 @@ test('isInline must return true if the ad contains a wrapper and false otherwise
 });
 
 test('getVASTAdTagURI must return the VASTAdTagURI from the wrapper ad or null otherwise', () => {
-  expect(getVASTAdTagURI(wrapperAd)).toBe('https://VASTAdTagURI.example.com');
+  expect(getVASTAdTagURI(wrapperAd)).toBe('https://test.example.com/vastadtaguri');
   expect(getVASTAdTagURI(inlineAd)).toBe(null);
 });
 
