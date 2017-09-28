@@ -19,14 +19,14 @@ beforeEach(() => {
       ad: inlineAd,
       errorCode: null,
       parsedXML: inlineParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastInlineXML
     },
     {
       ad: wrapperAd,
       errorCode: null,
       parsedXML: wrapperParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastWrapperXML
     },
     {
