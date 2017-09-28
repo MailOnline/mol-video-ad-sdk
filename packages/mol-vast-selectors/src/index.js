@@ -1,6 +1,27 @@
-import get from 'lodash/get';
+import {
+  get,
+  getAll,
+  getFirstChild,
+  getText,
+  getAttributes,
+  getAttribute,
+  getBooleanValue
+} from './helpers/xmlSelectors';
 
-/** @module mol-vast-selectors */
+export const compareBySequence = (itemA, itemB) => {
+  const itemASequence = parseInt(getAttribute(itemA, 'sequence'), 10);
+  const itemBSequence = parseInt(getAttribute(itemB, 'sequence'), 10);
+
+  if (itemASequence < itemBSequence) {
+    return -1;
+  }
+
+  if (itemASequence > itemBSequence) {
+    return 1;
+  }
+
+  return 0;
+};
 
 /**
  * Selects the ads of the passed VAST.
@@ -10,14 +31,11 @@ import get from 'lodash/get';
  * @static
  */
 export const getAds = (parsedVAST) => {
-  const elements = get(parsedVAST, 'elements[0].elements', null);
+  const vastElement = get(parsedVAST, 'VAST');
+  const ads = getAll(vastElement, 'Ad');
 
-  if (elements) {
-    const ads = elements.filter(({name}) => name.toUpperCase() === 'AD');
-
-    if (ads.length > 0) {
-      return ads;
-    }
+  if (ads.length > 0) {
+    return ads;
   }
 
   return null;
@@ -30,7 +48,7 @@ export const getAds = (parsedVAST) => {
  * @returns {number} - The pod ad sequence number or null.
  */
 export const getPodAdSequence = (ad) => {
-  const sequence = ad && ad.attributes && parseInt(ad.attributes.sequence, 10);
+  const sequence = parseInt(getAttribute(ad, 'sequence'), 10);
 
   if (typeof sequence === 'number' && !isNaN(sequence)) {
     return sequence;
@@ -59,21 +77,6 @@ export const hasAdPod = (parsedVAST) => {
   return Array.isArray(ads) && ads.filter(isPodAd).length > 1;
 };
 
-export const compareBySequence = (itemA, itemB) => {
-  const itemASequence = parseInt(itemA.attributes.sequence, 10);
-  const itemBSequence = parseInt(itemB.attributes.sequence, 10);
-
-  if (itemASequence < itemBSequence) {
-    return -1;
-  }
-
-  if (itemASequence > itemBSequence) {
-    return 1;
-  }
-
-  return 0;
-};
-
 /**
  * Selects the first ad of the passed VAST. If the passed VAST response contains an ad pod it will return the first ad in the ad pod sequence.
  *
@@ -84,7 +87,7 @@ export const compareBySequence = (itemA, itemB) => {
 export const getFirstAd = (parsedVAST) => {
   const ads = getAds(parsedVAST);
 
-  if (Array.isArray(ads)) {
+  if (Array.isArray(ads) && ads.length > 0) {
     if (hasAdPod(parsedVAST)) {
       return ads.filter(isPodAd)
         .sort(compareBySequence)[0];
@@ -103,7 +106,7 @@ export const getFirstAd = (parsedVAST) => {
  * @returns {boolean} - Returns `true` if the ad contains a wrapper or `false` otherwise.
  * @static
  */
-export const isWrapper = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'WRAPPER';
+export const isWrapper = (ad = {}) => Boolean(get(ad || {}, 'Wrapper'));
 
 /**
  * Checks if the passed ad is an Inline.
@@ -112,7 +115,7 @@ export const isWrapper = (ad) => get(ad, 'elements[0].name', '').toUpperCase() =
  * @returns {boolean} - Returns `true` if the ad contains an Inline or `false` otherwise.
  * @static
  */
-export const isInline = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'INLINE';
+export const isInline = (ad) => Boolean(get(ad || {}, 'Inline'));
 
 /**
  * Returns the VASTAdTagURI from the wrapper ad.
@@ -122,23 +125,14 @@ export const isInline = (ad) => get(ad, 'elements[0].name', '').toUpperCase() ==
  * @static
  */
 export const getVASTAdTagURI = (ad) => {
-  const elements = get(ad, 'elements[0].elements', null);
+  const wrapperElement = get(ad, 'Wrapper');
+  const vastAdTagURIElement = wrapperElement && get(wrapperElement, 'VastAdTagUri');
 
-  if (Array.isArray(elements)) {
-    const VASTAdTagURIElement = elements.find(({name}) => name.toUpperCase() === 'VASTADTAGURI');
-
-    return get(VASTAdTagURIElement, 'elements[0].cdata', null);
+  if (vastAdTagURIElement) {
+    return getText(vastAdTagURIElement) || null;
   }
 
   return null;
-};
-
-const getBooleanValue = (val) => {
-  if (typeof val === 'string') {
-    return val === 'true';
-  }
-
-  return Boolean(val);
 };
 
 /**
@@ -153,7 +147,8 @@ export const getWrapperOptions = (ad) => {
     allowMultipleAds,
     fallbackOnNoAd,
     followAdditionalWrappers
-  } = get(ad, 'elements[0].attributes', {});
+  } = getAttributes(get(ad, 'Wrapper'));
+
   const opts = {};
 
   if (allowMultipleAds) {
@@ -169,4 +164,77 @@ export const getWrapperOptions = (ad) => {
   }
 
   return opts;
+};
+
+export const getAdError = (ad) => {
+  const adTypeElement = ad && getFirstChild(ad);
+
+  if (adTypeElement) {
+    const error = get(adTypeElement, 'Error');
+
+    if (error) {
+      return getText(error);
+    }
+  }
+
+  return null;
+};
+
+const getLinearCreative = (ad) => {
+  const adTypeElement = getFirstChild(ad);
+  const creativesElement = adTypeElement && get(adTypeElement, 'creatives');
+  const hasLinear = (creative) => get(creative, 'linear');
+
+  return creativesElement && getAll(creativesElement).find(hasLinear) || null;
+};
+
+export const getMediaFiles = (ad) => {
+  const creativeElement = ad && getLinearCreative(ad);
+
+  if (creativeElement) {
+    const universalAdIdElement = get(creativeElement, 'UniversalAdId');
+    const universalAdId = universalAdIdElement && getText(universalAdIdElement) || null;
+    const linearElement = get(creativeElement, 'Linear');
+    const mediaFilesElement = get(linearElement, 'MediaFiles');
+    const mediaFileElements = mediaFilesElement && getAll(mediaFilesElement, 'MediaFile');
+
+    if (mediaFileElements && mediaFileElements.length > 0) {
+      return mediaFileElements.map((mediaFileElement) => {
+        const src = getText(mediaFileElement);
+        const {
+          bitrate,
+          codec,
+          delivery,
+          height,
+          id,
+          maintainAspectRatio,
+          maxBitrate,
+          minBitrate,
+          scalable,
+          type,
+          width
+        } = getAttributes(mediaFileElement);
+
+        return {
+          bitrate,
+          codec,
+          delivery,
+          height,
+          id,
+          maintainAspectRatio,
+          maxBitrate,
+          minBitrate,
+          scalable,
+          src,
+          type,
+          universalAdId,
+          width
+        };
+      });
+    }
+
+    return null;
+  }
+
+  return null;
 };

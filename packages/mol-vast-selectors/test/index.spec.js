@@ -8,7 +8,9 @@ import {
 } from 'mol-vast-fixtures';
 import {
   getAds,
+  getAdError,
   getFirstAd,
+  getMediaFiles,
   getVASTAdTagURI,
   getWrapperOptions,
   hasAdPod,
@@ -89,7 +91,7 @@ test('isPodAd must return true if the ad has a sequence and false otherwise', ()
   expect(isPodAd(ads[1])).toBe(true);
 });
 
-test('getWrapperOptions mus return the options of the ad or {} otherwise', () => {
+test('getWrapperOptions must return the options of the ad or {} otherwise', () => {
   expect(getWrapperOptions(inlineAd)).toEqual({});
   expect(getWrapperOptions(wrapperAd)).toEqual({allowMultipleAds: true});
 
@@ -114,5 +116,42 @@ test('getWrapperOptions mus return the options of the ad or {} otherwise', () =>
     allowMultipleAds: true,
     fallbackOnNoAd: true,
     followAdditionalWrappers: false
+  });
+});
+
+test('getAdError must return the error uri of the inline/wrapper or null if missing', () => {
+  expect(getAdError(inlineAd)).toBe('https://test.example.com/error');
+  expect(getAdError(wrapperAd)).toBe('https://test.example.com/error/[ERRORCODE]');
+  expect(getAdError()).toEqual(null);
+  expect(getAdError(null)).toEqual(null);
+  expect(getAdError({})).toEqual(null);
+});
+
+test('getMediaFiles must return null for wrong ads', () => {
+  expect(getMediaFiles()).toEqual(null);
+  expect(getMediaFiles(null)).toEqual(null);
+  expect(getMediaFiles({})).toEqual(null);
+  expect(getMediaFiles(wrapperAd)).toEqual(null);
+});
+
+test('getMediaFiles must return the mediafiles', () => {
+  const mediaFiles = getMediaFiles(inlineAd);
+
+  expect(mediaFiles).toBeInstanceOf(Array);
+  expect(mediaFiles.length).toBe(1);
+  expect(mediaFiles[0]).toEqual({
+    bitrate: '600',
+    codec: undefined,
+    delivery: 'progressive',
+    height: '1080',
+    id: undefined,
+    maintainAspectRatio: 'true',
+    maxBitrate: undefined,
+    minBitrate: undefined,
+    scalable: 'true',
+    src: 'https://test.example.com/test.mp4',
+    type: 'video/mp4',
+    universalAdId: 'unknown',
+    width: '1920'
   });
 });
