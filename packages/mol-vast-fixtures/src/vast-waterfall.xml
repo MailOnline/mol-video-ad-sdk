@@ -5,20 +5,20 @@
    <AdSystem>MOL</AdSystem>
     <AdTitle>VAST waterfall 1</AdTitle>
    <VASTAdTagURI><![CDATA[https://test.example.com/vastadtaguri]]></VASTAdTagURI>
-   <Error><![CDATA[http://test.example.com/error/[ERRORCODE]]]></Error>
-   <Impression><![CDATA[http://test.example.com/impression]]></Impression>
+   <Error><![CDATA[https://test.example.com/error/[ERRORCODE]]]></Error>
+   <Impression><![CDATA[https://test.example.com/impression]]></Impression>
    <Creatives>
        <Creative>
            <Linear>
                <Duration>00:00:31</Duration>
                <TrackingEvents>
-                   <Tracking event="complete"><![CDATA[http://test.example.com/complete]]></Tracking>
-                   <Tracking event="firstQuartile"><![CDATA[http://test.example.com/firstquartile]]></Tracking>
-                   <Tracking event="midpoint"><![CDATA[http://test.example.com/midpoint]]></Tracking>
-                   <Tracking event="thirdQuartile"><![CDATA[http://test.example.com/thirdquartile]]></Tracking>
+                   <Tracking event="complete"><![CDATA[https://test.example.com/complete]]></Tracking>
+                   <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstquartile]]></Tracking>
+                   <Tracking event="midpoint"><![CDATA[https://test.example.com/midpoint]]></Tracking>
+                   <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdquartile]]></Tracking>
                </TrackingEvents>
                <VideoClicks>
-                   <ClickTracking><![CDATA[http://test.example.com/clicktracking]]></ClickTracking>
+                   <ClickTracking><![CDATA[https://test.example.com/clicktracking]]></ClickTracking>
                </VideoClicks>
                <MediaFiles>
                    <MediaFile delivery="streaming" height="0" type="application/x-mpegURL" width="0"><![CDATA[http://test.media.example.com/test.video.m3u8]]></MediaFile>
@@ -33,20 +33,20 @@
    <AdSystem>MOL</AdSystem>
     <AdTitle>VAST waterfall 2</AdTitle>
    <VASTAdTagURI><![CDATA[https://test.example.com/vastadtaguri]]></VASTAdTagURI>
-   <Error><![CDATA[http://test.example.com/error/[ERRORCODE]]]></Error>
-   <Impression><![CDATA[http://test.example.com/impression]]></Impression>
+   <Error><![CDATA[https://test.example.com/error/[ERRORCODE]]]></Error>
+   <Impression><![CDATA[https://test.example.com/impression]]></Impression>
    <Creatives>
        <Creative>
            <Linear>
                <Duration>00:00:31</Duration>
                <TrackingEvents>
-                   <Tracking event="complete"><![CDATA[http://test.example.com/complete]]></Tracking>
-                   <Tracking event="firstQuartile"><![CDATA[http://test.example.com/firstquartile]]></Tracking>
-                   <Tracking event="midpoint"><![CDATA[http://test.example.com/midpoint]]></Tracking>
-                   <Tracking event="thirdQuartile"><![CDATA[http://test.example.com/thirdquartile]]></Tracking>
+                   <Tracking event="complete"><![CDATA[https://test.example.com/complete]]></Tracking>
+                   <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstquartile]]></Tracking>
+                   <Tracking event="midpoint"><![CDATA[https://test.example.com/midpoint]]></Tracking>
+                   <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdquartile]]></Tracking>
                </TrackingEvents>
                <VideoClicks>
-                   <ClickTracking><![CDATA[http://test.example.com/clicktracking]]></ClickTracking>
+                   <ClickTracking><![CDATA[https://test.example.com/clicktracking]]></ClickTracking>
                </VideoClicks>
                <MediaFiles>
                    <MediaFile delivery="streaming" height="0" type="application/x-mpegURL" width="0"><![CDATA[http://test.media.example.com/test.video.m3u8]]></MediaFile>
@@ -61,20 +61,20 @@
    <AdSystem>MOL</AdSystem>
     <AdTitle>VAST waterfall 3</AdTitle>
    <VASTAdTagURI><![CDATA[https://test.example.com/vastadtaguri]]></VASTAdTagURI>
-   <Error><![CDATA[http://test.example.com/error/[ERRORCODE]]]></Error>
-   <Impression><![CDATA[http://test.example.com/impression]]></Impression>
+   <Error><![CDATA[https://test.example.com/error/[ERRORCODE]]]></Error>
+   <Impression><![CDATA[https://test.example.com/impression]]></Impression>
    <Creatives>
        <Creative>
            <Linear>
                <Duration>00:00:31</Duration>
                <TrackingEvents>
-                   <Tracking event="complete"><![CDATA[http://test.example.com/complete]]></Tracking>
-                   <Tracking event="firstQuartile"><![CDATA[http://test.example.com/firstquartile]]></Tracking>
-                   <Tracking event="midpoint"><![CDATA[http://test.example.com/midpoint]]></Tracking>
-                   <Tracking event="thirdQuartile"><![CDATA[http://test.example.com/thirdquartile]]></Tracking>
+                   <Tracking event="complete"><![CDATA[https://test.example.com/complete]]></Tracking>
+                   <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstquartile]]></Tracking>
+                   <Tracking event="midpoint"><![CDATA[https://test.example.com/midpoint]]></Tracking>
+                   <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdquartile]]></Tracking>
                </TrackingEvents>
                <VideoClicks>
-                   <ClickTracking><![CDATA[http://test.example.com/clicktracking]]></ClickTracking>
+                   <ClickTracking><![CDATA[https://test.example.com/clicktracking]]></ClickTracking>
                </VideoClicks>
                <MediaFiles>
                    <MediaFile delivery="streaming" height="0" type="application/x-mpegURL" width="0"><![CDATA[http://test.media.example.com/test.video.m3u8]]></MediaFile>

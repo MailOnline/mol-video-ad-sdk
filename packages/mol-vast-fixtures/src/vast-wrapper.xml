@@ -4,8 +4,8 @@
   <Wrapper allowMultipleAds="true" >
    <AdSystem>MOL</AdSystem>
    <VASTAdTagURI><![CDATA[https://test.example.com/vastadtaguri]]></VASTAdTagURI>
-   <Error><![CDATA[http://test.example.com/error/[ERRORCODE]]]></Error>
-   <Impression><![CDATA[http://test.example.com/impression]]></Impression>
+   <Error><![CDATA[https://test.example.com/error/[ERRORCODE]]]></Error>
+   <Impression><![CDATA[https://test.example.com/impression]]></Impression>
    <Creatives>
     <Creative sequence="1">
      <Linear>
@@ -42,7 +42,7 @@
        <Tracking event="closeLinear"><![CDATA[https://test.example.com/closelinear]]></Tracking>
       </TrackingEvents>
       <VideoClicks>
-       <ClickTracking><![CDATA[http://test.example.com/clicktracking]]></ClickTracking>
+       <ClickTracking><![CDATA[https://test.example.com/clicktracking]]></ClickTracking>
       </VideoClicks>
      </Linear>
     </Creative>

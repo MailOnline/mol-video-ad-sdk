@@ -3,22 +3,22 @@
         <InLine>
             <AdSystem>MOL</AdSystem>
             <AdTitle>VAST ad buffet</AdTitle>
-            <Error><![CDATA[http://test.example.com/error]]></Error>
-            <Impression><![CDATA[http://test.example.com/impression]]></Impression>
+            <Error><![CDATA[https://test.example.com/error]]></Error>
+            <Impression><![CDATA[https://test.example.com/impression]]></Impression>
 
             <Creatives>
                 <Creative>
                     <Linear>
                         <Duration>00:00:15</Duration>
                         <TrackingEvents>
-                            <Tracking event="complete"><![CDATA[http://test.example.com/complete]]></Tracking>
-                            <Tracking event="firstQuartile"><![CDATA[http://test.example.com/firstquartile]]></Tracking>
-                            <Tracking event="midpoint"><![CDATA[http://test.example.com/midpoint]]></Tracking>
-                            <Tracking event="thirdQuartile"><![CDATA[http://test.example.com/thirdQuartile]]></Tracking>
+                            <Tracking event="complete"><![CDATA[https://test.example.com/complete]]></Tracking>
+                            <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstquartile]]></Tracking>
+                            <Tracking event="midpoint"><![CDATA[https://test.example.com/midpoint]]></Tracking>
+                            <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdQuartile]]></Tracking>
                         </TrackingEvents>
                         <VideoClicks>
                             <ClickTracking>
-                              <![CDATA[http://test.example.com/clicktracking]]>
+                              <![CDATA[https://test.example.com/clicktracking]]>
                             </ClickTracking>
                         </VideoClicks>
                         <MediaFiles>
@@ -34,22 +34,22 @@
         <InLine>
             <AdSystem>MOL</AdSystem>
             <AdTitle>VAST ad pod sequence 1</AdTitle>
-            <Error><![CDATA[http://test.example.com/error]]></Error>
-            <Impression><![CDATA[http://test.example.com/impression]]></Impression>
+            <Error><![CDATA[https://test.example.com/error]]></Error>
+            <Impression><![CDATA[https://test.example.com/impression]]></Impression>
 
             <Creatives>
                 <Creative>
                     <Linear>
                         <Duration>00:00:15</Duration>
                         <TrackingEvents>
-                            <Tracking event="complete"><![CDATA[http://test.example.com/complete]]></Tracking>
-                            <Tracking event="firstQuartile"><![CDATA[http://test.example.com/firstquartile]]></Tracking>
-                            <Tracking event="midpoint"><![CDATA[http://test.example.com/midpoint]]></Tracking>
-                            <Tracking event="thirdQuartile"><![CDATA[http://test.example.com/thirdQuartile]]></Tracking>
+                            <Tracking event="complete"><![CDATA[https://test.example.com/complete]]></Tracking>
+                            <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstquartile]]></Tracking>
+                            <Tracking event="midpoint"><![CDATA[https://test.example.com/midpoint]]></Tracking>
+                            <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdQuartile]]></Tracking>
                         </TrackingEvents>
                         <VideoClicks>
                             <ClickTracking>
-                              <![CDATA[http://test.example.com/clicktracking]]>
+                              <![CDATA[https://test.example.com/clicktracking]]>
                             </ClickTracking>
                         </VideoClicks>
                         <MediaFiles>
@@ -65,22 +65,22 @@
         <InLine>
             <AdSystem>MOL</AdSystem>
             <AdTitle>VAST ad pod sequence 2</AdTitle>
-            <Error><![CDATA[http://test.example.com/error]]></Error>
-            <Impression><![CDATA[http://test.example.com/impression]]></Impression>
+            <Error><![CDATA[https://test.example.com/error]]></Error>
+            <Impression><![CDATA[https://test.example.com/impression]]></Impression>
 
             <Creatives>
                 <Creative>
                     <Linear>
                         <Duration>00:00:31</Duration>
                         <TrackingEvents>
-                            <Tracking event="complete"><![CDATA[http://test.example.com/complete]]></Tracking>
-                            <Tracking event="firstQuartile"><![CDATA[http://test.example.com/firstquartile]]></Tracking>
-                            <Tracking event="midpoint"><![CDATA[http://test.example.com/midpoint]]></Tracking>
-                            <Tracking event="thirdQuartile"><![CDATA[http://test.example.com/thirdQuartile]]></Tracking>
+                            <Tracking event="complete"><![CDATA[https://test.example.com/complete]]></Tracking>
+                            <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstquartile]]></Tracking>
+                            <Tracking event="midpoint"><![CDATA[https://test.example.com/midpoint]]></Tracking>
+                            <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdQuartile]]></Tracking>
                         </TrackingEvents>
                         <VideoClicks>
                             <ClickTracking>
-                              <![CDATA[http://test.example.com/clicktracking]]>
+                              <![CDATA[https://test.example.com/clicktracking]]>
                             </ClickTracking>
                         </VideoClicks>
                         <MediaFiles>
@@ -95,22 +95,22 @@
         <InLine>
             <AdSystem>MOL</AdSystem>
             <AdTitle>VAST ad pod sequence 3</AdTitle>
-            <Error><![CDATA[http://test.example.com/error]]></Error>
-            <Impression><![CDATA[http://test.example.com/impression]]></Impression>
+            <Error><![CDATA[https://test.example.com/error]]></Error>
+            <Impression><![CDATA[https://test.example.com/impression]]></Impression>
 
             <Creatives>
                 <Creative>
                     <Linear>
                         <Duration>00:00:31</Duration>
                         <TrackingEvents>
-                            <Tracking event="complete"><![CDATA[http://test.example.com/complete]]></Tracking>
-                            <Tracking event="firstQuartile"><![CDATA[http://test.example.com/firstquartile]]></Tracking>
-                            <Tracking event="midpoint"><![CDATA[http://test.example.com/midpoint]]></Tracking>
-                            <Tracking event="thirdQuartile"><![CDATA[http://test.example.com/thirdQuartile]]></Tracking>
+                            <Tracking event="complete"><![CDATA[https://test.example.com/complete]]></Tracking>
+                            <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstquartile]]></Tracking>
+                            <Tracking event="midpoint"><![CDATA[https://test.example.com/midpoint]]></Tracking>
+                            <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdQuartile]]></Tracking>
                         </TrackingEvents>
                         <VideoClicks>
                             <ClickTracking>
-                              <![CDATA[http://test.example.com/clicktracking]]>
+                              <![CDATA[https://test.example.com/clicktracking]]>
                             </ClickTracking>
                         </VideoClicks>
                         <MediaFiles>
