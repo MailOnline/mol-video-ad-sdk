@@ -11,10 +11,12 @@
   ],
   "peerDependencies": {
     "mol-video-ad-container": "^0.1.0",
+    "mol-vast-selectors": "^0.1.0",
     "mol-tiny-emitter": "^0.1.0"
   },
   "devDependencies": {
     "mol-video-ad-container": "^0.1.0",
+    "mol-vast-selectors": "^0.1.0",
     "mol-tiny-emitter": "^0.1.0",
     "mol-vast-fixtures": "^0.1.0"
   }
