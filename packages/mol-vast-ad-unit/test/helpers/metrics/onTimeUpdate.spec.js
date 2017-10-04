@@ -29,10 +29,6 @@ afterEach(() => {
   videoElement = null;
 });
 
-test('onTimeUpdate must be a function', () => {
-  expect(onTimeUpdate).toBeInstanceOf(Function);
-});
-
 test('onTimeUpdate must call the callback with start, firstQuartile, midpoint, thirdQuartile and complete at the right order', () => {
   const callback = jest.fn();
   const disconnect = onTimeUpdate(videoElement, callback);
