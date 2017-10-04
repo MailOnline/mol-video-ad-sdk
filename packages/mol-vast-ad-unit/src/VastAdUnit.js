@@ -3,6 +3,7 @@ import Emitter from 'mol-tiny-emitter';
 import {getMediaFiles} from 'mol-vast-selectors';
 import canPlay from './helpers/canPlay';
 import sortMediaByBestFit from './helpers/sortMediaByBestFit';
+import metricHandlers from './helpers/metrics';
 
 const findBestMedia = (videoElement, mediaFiles, container) => {
   const screenRect = container.getBoundingClientRect();
@@ -12,8 +13,15 @@ const findBestMedia = (videoElement, mediaFiles, container) => {
   return sortedMediaFiles[0];
 };
 
+const startMetricListeners = (videoElement, callback) => {
+  const stopHandlersFns = metricHandlers.map((handler) => handler(videoElement, callback));
+
+  return () => stopHandlersFns.forEach((disconnect) => disconnect());
+};
+
 const onErrorCallbacks = Symbol('onErrorCallbacks');
 const onCompleteCallbacks = Symbol('onCompleteCallbacks');
+const removeMetricListeners = Symbol('removeMetricListeners');
 
 class VastAdUnit extends Emitter {
   constructor (vastAdChain, videoAdContainer, {logger = console} = {}) {
@@ -39,8 +47,8 @@ class VastAdUnit extends Emitter {
     }
 
     videoElement.src = media.src;
+    this[removeMetricListeners] = startMetricListeners(videoElement, (event) => this.emit(event));
 
-    // TODO: listen to media events and emit tracking events
     // TODO: add the symbol to the container
     // TODO: add skip control if necessary
     // TODO: Click tracking
@@ -70,9 +78,11 @@ class VastAdUnit extends Emitter {
   }
 
   destroy () {
-    // removes the ad source from the video element
-    // stop listening to media events
+    this.videoElement.src = '';
+    this[removeMetricListeners]();
+
     // removes the symbol from the ad container
+    // removes skip control
   }
 }
 
