@@ -42,6 +42,8 @@ class VastAdUnit extends Emitter {
 
     // TODO: listen to media events and emit tracking events
     // TODO: add the symbol to the container
+    // TODO: add skip control if necessary
+    // TODO: Click tracking
 
     videoElement.play();
   }
