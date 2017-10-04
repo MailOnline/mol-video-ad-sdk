@@ -7,6 +7,7 @@ import {
   getAttribute,
   getBooleanValue
 } from './helpers/xmlSelectors';
+import parseOffset from './helpers/parseOffset';
 
 export const compareBySequence = (itemA, itemB) => {
   const itemASequence = parseInt(getAttribute(itemA, 'sequence'), 10);
@@ -238,3 +239,57 @@ export const getMediaFiles = (ad) => {
 
   return null;
 };
+
+export const getLinearTrackingEvents = (ad) => {
+  const creativeElement = ad && getLinearCreative(ad);
+
+  if (creativeElement) {
+    const linearElement = get(creativeElement, 'Linear');
+    const trackingEventsElement = linearElement && get(linearElement, 'TrackingEvents');
+    const trackinEventElements = trackingEventsElement && getAll(trackingEventsElement, 'Tracking');
+
+    if (trackinEventElements && trackinEventElements.length > 0) {
+      return trackinEventElements.map((trackinEventElement) => {
+        const {event, offset} = getAttributes(trackinEventElement);
+        const uri = getText(trackinEventElement);
+
+        return {
+          event,
+          offset: offset && parseOffset(offset),
+          uri
+        };
+      });
+    }
+  }
+
+  return null;
+};
+
+export const getLinearProgressEvents = (ad) => {
+  const trackinEvents = ad && getLinearTrackingEvents(ad);
+
+  if (trackinEvents) {
+    const progressEvents = trackinEvents.filter(({event}) => event === 'progress');
+
+    if (progressEvents.length > 0) {
+      return progressEvents;
+    }
+  }
+
+  return null;
+};
+
+export const getLinearTimeSpentViewingEvents = (ad) => {
+  const trackinEvents = ad && getLinearTrackingEvents(ad);
+
+  if (trackinEvents) {
+    const timeSpentViewingEvents = trackinEvents.filter(({event}) => event === 'timeSpentViewing');
+
+    if (timeSpentViewingEvents.length > 0) {
+      return timeSpentViewingEvents;
+    }
+  }
+
+  return null;
+};
+

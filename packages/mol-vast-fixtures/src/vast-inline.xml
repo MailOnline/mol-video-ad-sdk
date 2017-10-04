@@ -35,6 +35,8 @@
               <Tracking event="firstQuartile">https://test.example.com/firstQuartile</Tracking>
               <Tracking event="thirdQuartile">https://test.example.com/thirdQuartile</Tracking>
               <Tracking event="complete">https://test.example.com/complete</Tracking>
+              <Tracking event="timeSpentViewing" offset="00:00:05"><![CDATA[https://test.example.com/timeSpentViewing]]></Tracking>
+              <Tracking event="timeSpentViewing" offset="15%"><![CDATA[https://test.example.com/timeSpentViewing2]]></Tracking>
             </TrackingEvents>
             <VideoClicks>
               <ClickThrough>https://test.example.com</ClickThrough>

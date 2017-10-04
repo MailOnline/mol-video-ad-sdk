@@ -10,6 +10,9 @@ import {
   getAds,
   getAdError,
   getFirstAd,
+  getLinearProgressEvents,
+  getLinearTrackingEvents,
+  getLinearTimeSpentViewingEvents,
   getMediaFiles,
   getVASTAdTagURI,
   getWrapperOptions,
@@ -154,4 +157,263 @@ test('getMediaFiles must return the mediafiles', () => {
     universalAdId: 'unknown',
     width: '1920'
   });
+});
+
+test('getLinearTrackingEvents must return null if there are no linear tracking events', () => {
+  expect(getLinearTrackingEvents()).toEqual(null);
+  expect(getLinearTrackingEvents(null)).toEqual(null);
+  expect(getLinearTrackingEvents({})).toEqual(null);
+  expect(getLinearTrackingEvents(noAdParsedXML)).toEqual(null);
+});
+
+test('getLinearTrackingEvents must return the linear tracking events', () => {
+  expect(getLinearTrackingEvents(inlineAd)).toEqual([
+    {
+      event: 'creativeView',
+      offset: undefined,
+      uri: 'https://test.example.com/creativeView'
+    },
+    {
+      event: 'start',
+      offset: undefined,
+      uri: 'https://test.example.com/start'
+    },
+    {
+      event: 'midpoint',
+      offset: undefined,
+      uri: 'https://test.example.com/midpoint'
+    },
+    {
+      event: 'firstQuartile',
+      offset: undefined,
+      uri: 'https://test.example.com/firstQuartile'
+    },
+    {
+      event: 'thirdQuartile',
+      offset: undefined,
+      uri: 'https://test.example.com/thirdQuartile'
+    },
+    {
+      event: 'complete',
+      offset: undefined,
+      uri: 'https://test.example.com/complete'
+    },
+    {
+      event: 'timeSpentViewing',
+      offset: 5000,
+      uri: 'https://test.example.com/timeSpentViewing'
+    },
+    {
+      event: 'timeSpentViewing',
+      offset: '15%',
+      uri: 'https://test.example.com/timeSpentViewing2'
+    }
+  ]);
+
+  expect(getLinearTrackingEvents(wrapperAd)).toEqual([
+    {
+      event: 'start',
+      offset: undefined,
+      uri: 'https://test.example.com/start'
+    },
+    {
+      event: 'start',
+      offset: undefined,
+      uri: 'https://test.example.com/start2'
+    },
+    {
+      event: 'firstQuartile',
+      offset: undefined,
+      uri: 'https://test.example.com/firstquartile'
+    },
+    {
+      event: 'firstQuartile',
+      offset: undefined,
+      uri: 'https://test.example.com/firstquartile2'
+    },
+    {
+      event: 'midpoint',
+      offset: undefined,
+      uri: 'https://test.example.com/midpoint'
+    },
+    {
+      event: 'midpoint',
+      offset: undefined,
+      uri: 'https://test.example.com/midpoint2'
+    },
+    {
+      event: 'thirdQuartile',
+      offset: undefined,
+      uri: 'https://test.example.com/thirdquartile'
+    },
+    {
+      event: 'thirdQuartile',
+      offset: undefined,
+      uri: 'https://test.example.com/thirdquartile2'
+    },
+    {
+      event: 'complete',
+      offset: undefined,
+      uri: 'https://test.example.com/complete'
+    },
+    {
+      event: 'complete',
+      offset: undefined,
+      uri: 'https://test.example.com/complete2'
+    },
+    {
+      event: 'mute',
+      offset: undefined,
+      uri: 'https://test.example.com/mute'
+    },
+    {
+      event: 'mute',
+      offset: undefined,
+      uri: 'https://test.example.com/mute2'
+    },
+    {
+      event: 'unmute',
+      offset: undefined,
+      uri: 'https://test.example.com/unmute'
+    },
+    {
+      event: 'unmute',
+      offset: undefined,
+      uri: 'https://test.example.com/unmute2'
+    },
+    {
+      event: 'rewind',
+      offset: undefined,
+      uri: 'https://test.example.com/rewind'
+    },
+    {
+      event: 'rewind',
+      offset: undefined,
+      uri: 'https://test.example.com/rewind2'
+    },
+    {
+      event: 'pause',
+      offset: undefined,
+      uri: 'https://test.example.com/pause'
+    },
+    {
+      event: 'pause',
+      offset: undefined,
+      uri: 'https://test.example.com/pause2'
+    },
+    {
+      event: 'progress',
+      offset: 5000,
+      uri: 'https://test.example.com/progress'
+    },
+    {
+      event: 'progress',
+      offset: '15%',
+      uri: 'https://test.example.com/progress2'
+    },
+    {
+      event: 'resume',
+      offset: undefined,
+      uri: 'https://test.example.com/resume'
+    },
+    {
+      event: 'resume',
+      offset: undefined,
+      uri: 'https://test.example.com/resume2'
+    },
+    {
+      event: 'fullscreen',
+      offset: undefined,
+      uri: 'https://test.example.com/fullscreen'
+    },
+    {
+      event: 'fullscreen',
+      offset: undefined,
+      uri: 'https://test.example.com/fullscreen2'
+    },
+    {
+      event: 'creativeView',
+      offset: undefined,
+      uri: 'https://test.example.com/creativeview'
+    },
+    {
+      event: 'creativeView',
+      offset: undefined,
+      uri: 'https://test.example.com/creativeview2'
+    },
+    {
+      event: 'exitFullscreen',
+      offset: undefined,
+      uri: 'https://test.example.com/exitfullscreen'
+    },
+    {
+      event: 'exitFullscreen',
+      offset: undefined,
+      uri: 'https://test.example.com/exitfullscreen'
+    },
+    {
+      event: 'acceptInvitationLinear',
+      offset: undefined,
+      uri: 'https://test.example.com/acceptinvitationlinear'
+    },
+    {
+      event: 'acceptInvitationLinear',
+      offset: undefined,
+      uri: 'https://test.example.com/acceptinvitationlinear2'
+    },
+    {
+      event: 'closeLinear',
+      offset: undefined,
+      uri: 'https://test.example.com/closelinear'
+    },
+    {
+      event: 'closeLinear',
+      offset: undefined,
+      uri: 'https://test.example.com/closelinear'
+    }
+  ]);
+});
+
+test('getLinearProgressEvents must return null if there are no progress tracking events', () => {
+  expect(getLinearProgressEvents()).toEqual(null);
+  expect(getLinearProgressEvents(null)).toEqual(null);
+  expect(getLinearProgressEvents({})).toEqual(null);
+  expect(getLinearProgressEvents(inlineAd)).toEqual(null);
+});
+
+test('getLinearProgressEvents must return the linear progress events', () => {
+  expect(getLinearProgressEvents(wrapperAd)).toEqual([
+    {
+      event: 'progress',
+      offset: 5000,
+      uri: 'https://test.example.com/progress'
+    },
+    {
+      event: 'progress',
+      offset: '15%',
+      uri: 'https://test.example.com/progress2'
+    }
+  ]);
+});
+
+test('getLinearTimeSpentViewingEvents must return null if there are no timeSpentViewing tracking events', () => {
+  expect(getLinearTimeSpentViewingEvents()).toEqual(null);
+  expect(getLinearTimeSpentViewingEvents(null)).toEqual(null);
+  expect(getLinearTimeSpentViewingEvents({})).toEqual(null);
+  expect(getLinearTimeSpentViewingEvents(wrapperAd)).toEqual(null);
+});
+
+test('getLinearTimeSpentViewingEvents must return the linear timeSpentViewing events', () => {
+  expect(getLinearTimeSpentViewingEvents(inlineAd)).toEqual([
+    {
+      event: 'timeSpentViewing',
+      offset: 5000,
+      uri: 'https://test.example.com/timeSpentViewing'
+    },
+    {
+      event: 'timeSpentViewing',
+      offset: '15%',
+      uri: 'https://test.example.com/timeSpentViewing2'
+    }
+  ]);
 });

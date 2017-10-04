@@ -28,6 +28,8 @@
        <Tracking event="rewind"><![CDATA[https://test.example.com/rewind2]]></Tracking>
        <Tracking event="pause"><![CDATA[https://test.example.com/pause]]></Tracking>
        <Tracking event="pause"><![CDATA[https://test.example.com/pause2]]></Tracking>
+       <Tracking event="progress" offset="00:00:05"><![CDATA[https://test.example.com/progress]]></Tracking>
+       <Tracking event="progress" offset="15%"><![CDATA[https://test.example.com/progress2]]></Tracking>
        <Tracking event="resume"><![CDATA[https://test.example.com/resume]]></Tracking>
        <Tracking event="resume"><![CDATA[https://test.example.com/resume2]]></Tracking>
        <Tracking event="fullscreen"><![CDATA[https://test.example.com/fullscreen]]></Tracking>
