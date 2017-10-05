@@ -39,8 +39,8 @@
               <Tracking event="timeSpentViewing" offset="15%"><![CDATA[https://test.example.com/timeSpentViewing2]]></Tracking>
             </TrackingEvents>
             <VideoClicks>
-              <ClickThrough>https://test.example.com</ClickThrough>
-              <ClickTracking>https://test.example.com/click</ClickTracking>
+              <ClickThrough>https://test.example.com/clickthrough</ClickThrough>
+              <ClickTracking>https://test.example.com/clicktracking</ClickTracking>
             </VideoClicks>
             <MediaFiles>
               <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="1920" height="1080" scalable="true" maintainAspectRatio="true">https://test.example.com/test1920x1080.mp4</MediaFile>

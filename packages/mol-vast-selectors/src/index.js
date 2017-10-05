@@ -300,3 +300,36 @@ export const getLinearTimeSpentViewingEvents = (ad) => {
   return null;
 };
 
+const getVideoClicksElement = (ad) => {
+  const creativeElement = ad && getLinearCreative(ad);
+  const linearElement = creativeElement && get(creativeElement, 'Linear');
+  const videoClicksElement = linearElement && get(linearElement, 'VideoClicks');
+
+  if (videoClicksElement) {
+    return videoClicksElement;
+  }
+
+  return null;
+};
+
+export const getClickThrough = (ad) => {
+  const videoClicksElement = getVideoClicksElement(ad);
+  const clickThroughElement = videoClicksElement && get(videoClicksElement, 'ClickThrough');
+
+  if (clickThroughElement) {
+    return getText(clickThroughElement);
+  }
+
+  return null;
+};
+
+export const getClickTracking = (ad) => {
+  const videoClicksElement = getVideoClicksElement(ad);
+  const clickTrackingElement = videoClicksElement && get(videoClicksElement, 'ClickTracking');
+
+  if (clickTrackingElement) {
+    return getText(clickTrackingElement);
+  }
+
+  return null;
+};

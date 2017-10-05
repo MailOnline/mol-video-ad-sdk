@@ -9,6 +9,8 @@ import {
 import {
   getAds,
   getAdError,
+  getClickThrough,
+  getClickTracking,
   getFirstAd,
   getLinearProgressEvents,
   getLinearTrackingEvents,
@@ -416,4 +418,26 @@ test('getLinearTimeSpentViewingEvents must return the linear timeSpentViewing ev
       uri: 'https://test.example.com/timeSpentViewing2'
     }
   ]);
+});
+
+test('getClickThrough must return true if there is none', () => {
+  expect(getClickThrough()).toEqual(null);
+  expect(getClickThrough(null)).toEqual(null);
+  expect(getClickThrough({})).toEqual(null);
+  expect(getClickThrough(wrapperAd)).toEqual(null);
+});
+
+test('getClickThrough must return the clickThrough uri', () => {
+  expect(getClickThrough(inlineAd)).toEqual('https://test.example.com/clickthrough');
+});
+
+test('getClickTracking must return true if there is none', () => {
+  expect(getClickTracking()).toEqual(null);
+  expect(getClickTracking(null)).toEqual(null);
+  expect(getClickTracking({})).toEqual(null);
+});
+
+test('getClickTracking must return the clickThrough uri', () => {
+  expect(getClickTracking(inlineAd)).toEqual('https://test.example.com/clicktracking');
+  expect(getClickTracking(wrapperAd)).toEqual('https://test.example.com/clicktracking');
 });
