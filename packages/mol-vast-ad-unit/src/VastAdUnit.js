@@ -6,6 +6,7 @@ import sortMediaByBestFit from './helpers/sortMediaByBestFit';
 import metricHandlers from './helpers/metrics';
 import {
   complete,
+  progress,
   error
 } from './helpers/metrics/linearTrackingEvents';
 
@@ -25,7 +26,6 @@ const startMetricListeners = (videoElement, callback) => {
 
 const onErrorCallbacks = Symbol('onErrorCallbacks');
 const onCompleteCallbacks = Symbol('onCompleteCallbacks');
-const onProgressCallbacks = Symbol('onProgressCallbacks');
 const removeMetricListeners = Symbol('removeMetricListeners');
 
 class VastAdUnit extends Emitter {
@@ -40,7 +40,6 @@ class VastAdUnit extends Emitter {
     this.contentplayhead = null;
     this[onErrorCallbacks] = [];
     this[onCompleteCallbacks] = [];
-    this[onProgressCallbacks] = [];
   }
 
   run () {
@@ -54,25 +53,33 @@ class VastAdUnit extends Emitter {
 
     videoElement.src = media.src;
     this.assetUri = media.src;
-    this[removeMetricListeners] = startMetricListeners(videoElement, (event) => {
-      this.emit(event);
+    this[removeMetricListeners] = startMetricListeners(videoElement, (event, data) => {
+      this.emit(event, event);
 
-      if (event === complete) {
-        this[onCompleteCallbacks].forEach((callback) => callback());
+      switch (event) {
+      case progress: {
+        const {contentplayhead} = data;
+
+        this.contentplayhead = contentplayhead;
+        this[onErrorCallbacks].forEach((callback) => callback(data));
+        break;
       }
-
-      if (event === error) {
+      case complete: {
+        this[onCompleteCallbacks].forEach((callback) => callback());
+        break;
+      }
+      case error: {
         this[onErrorCallbacks].forEach((callback) => callback());
+        break;
+      }
       }
     });
 
     // TODO:
-    //      - contentplayhead logic
-    //      - onProgress logic
-    //      - add the ICON to the container
-    //      - add skip control if necessary
-    //      - Click tracking
     //      - Impression tracking
+    //      - Click tracking
+    //      - add skip control if necessary
+    //      - add the ICON to the container
 
     videoElement.play();
   }
@@ -99,21 +106,6 @@ class VastAdUnit extends Emitter {
     this[onErrorCallbacks].push(callback);
   }
 
-  onProgress (offset, callback) {
-    if (typeof offset !== 'string' && typeof offset !== 'number') {
-      throw new TypeError('Wrong offset');
-    }
-
-    if (typeof callback !== 'function') {
-      throw new TypeError('Expected a callback function');
-    }
-
-    this[onProgressCallbacks].push({
-      callback,
-      offset
-    });
-  }
-
   destroy () {
     this.videoAdContainer.videoElement.src = '';
     this[removeMetricListeners]();
@@ -126,7 +118,6 @@ class VastAdUnit extends Emitter {
     this.contentplayhead = null;
     this[onErrorCallbacks] = null;
     this[onCompleteCallbacks] = null;
-    this[onProgressCallbacks] = null;
     this[removeMetricListeners] = null;
   }
 }

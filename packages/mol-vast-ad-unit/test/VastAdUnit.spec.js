@@ -12,17 +12,25 @@ import VastAdUnit from '../src/VastAdUnit';
 import canPlay from '../src/helpers/canPlay';
 import metricHandlers from '../src/helpers/metrics';
 
+const mockStopMetricHandler = jest.fn();
+
 jest.mock('../src/helpers/canPlay.js', () => jest.fn());
 jest.mock('../src/helpers/metrics/index.js', () => [
   jest.fn((videoElement, callback) => {
     videoElement.addEventListener('ended', () => callback('complete'));
     videoElement.addEventListener('error', () => callback('error'));
+    videoElement.addEventListener('progress', ({detail}) => callback('progress', detail));
+    videoElement.addEventListener('custom', () => callback('custom'));
+
+    return mockStopMetricHandler;
   }),
-  jest.fn()
+  jest.fn(() => mockStopMetricHandler)
 ]);
 
 let vastAdChain;
 let videoAdContainer;
+
+const createProgressEvent = (data) => new CustomEvent('progress', {detail: data});
 
 beforeEach(async () => {
   vastAdChain = [
@@ -219,25 +227,49 @@ test('VastAdUnit onError must be called if there was an issue viewing the ad', (
   expect(callback).toHaveBeenCalledTimes(1);
 });
 
-test('VastAdUnit onProgress must complain if you don`t pass an offset', () => {
+test('VastAdUnit on progress must update the contentPlayhead', () => {
   canPlay.mockReturnValue(true);
   const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
 
-  expect(() => adUnit.onProgress()).toThrow(TypeError);
-  expect(() => adUnit.onProgress()).toThrow('Wrong offset');
+  adUnit.run();
+  videoAdContainer.videoElement.dispatchEvent(createProgressEvent({
+    accumulated: 1,
+    contentplayhead: '00:00:01.000'
+  }));
+
+  expect(adUnit.contentplayhead).toBe('00:00:01.000');
 });
 
-test('VastAdUnit progress must complain if you don`t pass a callback', () => {
+test('VastAdUnit must emit whatever metric event happens', async () => {
   canPlay.mockReturnValue(true);
   const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
 
-  expect(() => adUnit.onProgress('15%')).toThrow(TypeError);
-  expect(() => adUnit.onProgress('15%')).toThrow('Expected a callback function');
+  const promise = new Promise((resolve) => {
+    adUnit.on('custom', resolve);
+  });
+
+  adUnit.run();
+  videoAdContainer.videoElement.dispatchEvent(new CustomEvent('custom'));
+
+  const triggeredEvent = await promise;
+
+  expect(triggeredEvent).toBe('custom');
 });
 
-test('VastAdUnit progress must call the callback once the offset has passed');
+test('VastAdUnit destroy must remove the src from the videoElement, stop the metric handlers and set state to null', () => {
+  canPlay.mockReturnValue(true);
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
 
-test('VastAdUnit destroy must remove the src from the videoElement');
-test('VastAdUnit destroy must remove the metric listeners');
-test('VastAdUnit destroy must set everything to null');
+  adUnit.run();
+  adUnit.destroy();
+
+  expect(videoAdContainer.videoElement.src).toBe('');
+  expect(adUnit.vastAdChain).toEqual(null);
+  expect(adUnit.videoAdContainer).toEqual(null);
+  expect(adUnit.error).toEqual(null);
+  expect(adUnit.errorCode).toEqual(null);
+  expect(adUnit.assetUri).toEqual(null);
+  expect(adUnit.contentplayhead).toEqual(null);
+  expect(mockStopMetricHandler).toHaveBeenCalledTimes(metricHandlers.length);
+});
 
