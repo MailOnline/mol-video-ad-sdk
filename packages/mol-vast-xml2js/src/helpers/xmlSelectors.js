@@ -31,11 +31,3 @@ export const getText = (element) => {
 export const getAttributes = ({attributes = {}} = {}) => attributes;
 
 export const getAttribute = (element, attributeName) => getAttributes(element)[attributeName];
-
-export const getBooleanValue = (val) => {
-  if (typeof val === 'string') {
-    return val === 'true';
-  }
-
-  return Boolean(val);
-};

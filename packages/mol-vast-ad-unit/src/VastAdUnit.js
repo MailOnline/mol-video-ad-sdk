@@ -76,7 +76,6 @@ class VastAdUnit extends Emitter {
     });
 
     // TODO:
-    //      - Impression tracking
     //      - Click tracking
     //      - add skip control if necessary
     //      - add the ICON to the container

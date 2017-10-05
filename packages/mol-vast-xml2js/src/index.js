@@ -1,4 +1,21 @@
 import xml2js from 'xml-js/lib/xml2js';
+import {
+  get,
+  getAll,
+  getFirstChild,
+  getText,
+  getAttributes,
+  getAttribute
+} from './helpers/xmlSelectors';
+
+export {
+  get,
+  getAll,
+  getFirstChild,
+  getText,
+  getAttributes,
+  getAttribute
+};
 
 /**
  * Parses the passed xml text.

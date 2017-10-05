@@ -4,10 +4,17 @@ import {
   getFirstChild,
   getText,
   getAttributes,
-  getAttribute,
-  getBooleanValue
-} from './helpers/xmlSelectors';
+  getAttribute
+} from 'mol-vast-xml2js';
 import parseOffset from './helpers/parseOffset';
+
+export const getBooleanValue = (val) => {
+  if (typeof val === 'string') {
+    return val === 'true';
+  }
+
+  return Boolean(val);
+};
 
 export const compareBySequence = (itemA, itemB) => {
   const itemASequence = parseInt(getAttribute(itemA, 'sequence'), 10);
