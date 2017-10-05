@@ -1,4 +1,4 @@
-/* eslint-disable class-methods-use-this */
+/* eslint-disable class-methods-use-this, promise/prefer-await-to-callbacks */
 import Emitter from 'mol-tiny-emitter';
 import {getMediaFiles} from 'mol-vast-selectors';
 import canPlay from './helpers/canPlay';
@@ -21,6 +21,7 @@ const startMetricListeners = (videoElement, callback) => {
 
 const onErrorCallbacks = Symbol('onErrorCallbacks');
 const onCompleteCallbacks = Symbol('onCompleteCallbacks');
+const onProgressCallbacks = Symbol('onProgressCallbacks');
 const removeMetricListeners = Symbol('removeMetricListeners');
 
 class VastAdUnit extends Emitter {
@@ -35,23 +36,31 @@ class VastAdUnit extends Emitter {
     this.contentplayhead = null;
     this[onErrorCallbacks] = [];
     this[onCompleteCallbacks] = [];
+    this[onProgressCallbacks] = [];
   }
 
   run () {
     const videoElement = this.videoAdContainer.videoElement;
-    const mediaFiles = getMediaFiles(this.vastAdChain[0].ad) || [];
-    const media = findBestMedia(videoElement, mediaFiles, this.videoAdContainer.element);
+    const mediaFiles = getMediaFiles(this.vastAdChain[0].ad);
+    const media = mediaFiles && findBestMedia(videoElement, mediaFiles, this.videoAdContainer.element);
 
     if (!Boolean(media)) {
       throw new Error('Can\'t find a suitable media to play');
     }
 
     videoElement.src = media.src;
+    this.assetUri = media.src;
     this[removeMetricListeners] = startMetricListeners(videoElement, (event) => this.emit(event));
 
-    // TODO: add the symbol to the container
-    // TODO: add skip control if necessary
-    // TODO: Click tracking
+    // TODO:
+    //      - contentplayhead logic
+    //      - onComplete logic
+    //      - onError logic
+    //      - onProgress logic
+    //      - add the symbol to the container
+    //      - add skip control if necessary
+    //      - Click tracking
+    //      - Impression tracking
 
     videoElement.play();
   }
@@ -63,26 +72,51 @@ class VastAdUnit extends Emitter {
     this.destroy();
   }
 
-  // eslint-disable-next-line promise/prefer-await-to-callbacks
   oncomplete (callback) {
-    if (typeof callback === 'function') {
-      this[onCompleteCallbacks].push(callback);
+    if (typeof callback !== 'function') {
+      throw new TypeError('Expected a callback function');
     }
+
+    this[onCompleteCallbacks].push(callback);
   }
 
-  // eslint-disable-next-line promise/prefer-await-to-callbacks
   onerror (callback) {
-    if (typeof callback === 'function') {
-      this[onErrorCallbacks].push(callback);
+    if (typeof callback !== 'function') {
+      throw new TypeError('Expected a callback function');
     }
+
+    this[onErrorCallbacks].push(callback);
+  }
+
+  onprogress (offset, callback) {
+    if (typeof offset !== 'string' && typeof offset !== 'number') {
+      throw new TypeError('Wrong offset');
+    }
+
+    if (typeof callback !== 'function') {
+      throw new TypeError('Expected a callback function');
+    }
+
+    this[onProgressCallbacks].push({
+      callback,
+      offset
+    });
   }
 
   destroy () {
-    this.videoElement.src = '';
+    this.videoAdContainer.videoElement.src = '';
     this[removeMetricListeners]();
 
-    // removes the symbol from the ad container
-    // removes skip control
+    this.vastAdChain = null;
+    this.videoAdContainer = null;
+    this.error = null;
+    this.errorCode = null;
+    this.assetUri = null;
+    this.contentplayhead = null;
+    this[onErrorCallbacks] = null;
+    this[onCompleteCallbacks] = null;
+    this[onProgressCallbacks] = null;
+    this[removeMetricListeners] = null;
   }
 }
 

@@ -43,7 +43,9 @@
               <ClickTracking>https://test.example.com/click</ClickTracking>
             </VideoClicks>
             <MediaFiles>
-              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="1920" height="1080" scalable="true" maintainAspectRatio="true">https://test.example.com/test.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="1920" height="1080" scalable="true" maintainAspectRatio="true">https://test.example.com/test1920x1080.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="768" height="432" scalable="true" maintainAspectRatio="true">https://test.example.com/test768x432.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="640" height="362" scalable="true" maintainAspectRatio="true">https://test.example.com/test640x362.mp4</MediaFile>
             </MediaFiles>
             <AdParameters><![CDATA[qs=test&reddit=true]]></AdParameters>
             <Icons>

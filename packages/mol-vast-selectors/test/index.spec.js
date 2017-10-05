@@ -141,7 +141,7 @@ test('getMediaFiles must return the mediafiles', () => {
   const mediaFiles = getMediaFiles(inlineAd);
 
   expect(mediaFiles).toBeInstanceOf(Array);
-  expect(mediaFiles.length).toBe(1);
+  expect(mediaFiles.length).toBe(3);
   expect(mediaFiles[0]).toEqual({
     bitrate: '600',
     codec: undefined,
@@ -152,7 +152,7 @@ test('getMediaFiles must return the mediafiles', () => {
     maxBitrate: undefined,
     minBitrate: undefined,
     scalable: 'true',
-    src: 'https://test.example.com/test.mp4',
+    src: 'https://test.example.com/test1920x1080.mp4',
     type: 'video/mp4',
     universalAdId: 'unknown',
     width: '1920'
