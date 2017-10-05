@@ -4,6 +4,10 @@ import {getMediaFiles} from 'mol-vast-selectors';
 import canPlay from './helpers/canPlay';
 import sortMediaByBestFit from './helpers/sortMediaByBestFit';
 import metricHandlers from './helpers/metrics';
+import {
+  complete,
+  error
+} from './helpers/metrics/linearTrackingEvents';
 
 const findBestMedia = (videoElement, mediaFiles, container) => {
   const screenRect = container.getBoundingClientRect();
@@ -50,14 +54,22 @@ class VastAdUnit extends Emitter {
 
     videoElement.src = media.src;
     this.assetUri = media.src;
-    this[removeMetricListeners] = startMetricListeners(videoElement, (event) => this.emit(event));
+    this[removeMetricListeners] = startMetricListeners(videoElement, (event) => {
+      this.emit(event);
+
+      if (event === complete) {
+        this[onCompleteCallbacks].forEach((callback) => callback());
+      }
+
+      if (event === error) {
+        this[onErrorCallbacks].forEach((callback) => callback());
+      }
+    });
 
     // TODO:
     //      - contentplayhead logic
-    //      - onComplete logic
-    //      - onError logic
     //      - onProgress logic
-    //      - add the symbol to the container
+    //      - add the ICON to the container
     //      - add skip control if necessary
     //      - Click tracking
     //      - Impression tracking
@@ -69,10 +81,9 @@ class VastAdUnit extends Emitter {
     const videoElement = this.videoAdContainer.videoElement;
 
     videoElement.pause();
-    this.destroy();
   }
 
-  oncomplete (callback) {
+  onComplete (callback) {
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
     }
@@ -80,7 +91,7 @@ class VastAdUnit extends Emitter {
     this[onCompleteCallbacks].push(callback);
   }
 
-  onerror (callback) {
+  onError (callback) {
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
     }
@@ -88,7 +99,7 @@ class VastAdUnit extends Emitter {
     this[onErrorCallbacks].push(callback);
   }
 
-  onprogress (offset, callback) {
+  onProgress (offset, callback) {
     if (typeof offset !== 'string' && typeof offset !== 'number') {
       throw new TypeError('Wrong offset');
     }

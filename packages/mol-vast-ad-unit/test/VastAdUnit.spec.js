@@ -1,3 +1,4 @@
+/* eslint-disable promise/prefer-await-to-callbacks */
 import {
   vastWrapperXML,
   vastInlineXML,
@@ -13,7 +14,10 @@ import metricHandlers from '../src/helpers/metrics';
 
 jest.mock('../src/helpers/canPlay.js', () => jest.fn());
 jest.mock('../src/helpers/metrics/index.js', () => [
-  jest.fn(),
+  jest.fn((videoElement, callback) => {
+    videoElement.addEventListener('ended', () => callback('complete'));
+    videoElement.addEventListener('error', () => callback('error'));
+  }),
   jest.fn()
 ]);
 
@@ -165,21 +169,72 @@ test('VastAdUnit cancel must stop the ad video and destroy the ad unit', () => {
   adUnit.run();
 
   expect(videoAdContainer.videoElement.pause).toHaveBeenCalledTimes(0);
-  expect(adUnit.destroy).toHaveBeenCalledTimes(0);
   adUnit.cancel();
 
   expect(videoAdContainer.videoElement.pause).toHaveBeenCalledTimes(1);
-  expect(adUnit.destroy).toHaveBeenCalledTimes(1);
+  expect(adUnit.destroy).toHaveBeenCalledTimes(0);
 });
 
-test('VastAdUnit onComplete must complain if you don\'t pass a callback');
-test('VastAdUnit onComplete must call the passed callback once the ad has completed');
+test('VastAdUnit onComplete must complain if you don\'t pass a callback', () => {
+  canPlay.mockReturnValue(true);
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
 
-test('VastAdUnit onError must complain if you don\'t pass a callback');
-test('VastAdUnit onError must be called if there was an issue viewing the ad');
+  expect(() => adUnit.onComplete()).toThrow(TypeError);
+  expect(() => adUnit.onComplete()).toThrow('Expected a callback function');
+});
 
-test('VastAdUnit progress must complain if you don`t pass an offset');
-test('VastAdUnit progress must complain if you don`t pass a callback');
+test('VastAdUnit onComplete must call the passed callback once the ad has completed', () => {
+  canPlay.mockReturnValue(true);
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const callback = jest.fn();
+
+  adUnit.onComplete(callback);
+  adUnit.run();
+
+  expect(callback).not.toHaveBeenCalled();
+
+  videoAdContainer.videoElement.dispatchEvent(new Event('ended'));
+  expect(callback).toHaveBeenCalledTimes(1);
+});
+
+test('VastAdUnit onError must complain if you don\'t pass a callback', () => {
+  canPlay.mockReturnValue(true);
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+
+  expect(() => adUnit.onError()).toThrow(TypeError);
+  expect(() => adUnit.onError()).toThrow('Expected a callback function');
+});
+
+test('VastAdUnit onError must be called if there was an issue viewing the ad', () => {
+  canPlay.mockReturnValue(true);
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const callback = jest.fn();
+
+  adUnit.onError(callback);
+  adUnit.run();
+
+  expect(callback).not.toHaveBeenCalled();
+
+  videoAdContainer.videoElement.dispatchEvent(new Event('error'));
+  expect(callback).toHaveBeenCalledTimes(1);
+});
+
+test('VastAdUnit onProgress must complain if you don`t pass an offset', () => {
+  canPlay.mockReturnValue(true);
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+
+  expect(() => adUnit.onProgress()).toThrow(TypeError);
+  expect(() => adUnit.onProgress()).toThrow('Wrong offset');
+});
+
+test('VastAdUnit progress must complain if you don`t pass a callback', () => {
+  canPlay.mockReturnValue(true);
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+
+  expect(() => adUnit.onProgress('15%')).toThrow(TypeError);
+  expect(() => adUnit.onProgress('15%')).toThrow('Expected a callback function');
+});
+
 test('VastAdUnit progress must call the callback once the offset has passed');
 
 test('VastAdUnit destroy must remove the src from the videoElement');

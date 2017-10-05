@@ -1,5 +1,6 @@
 const acceptInvitationLinear = 'acceptInvitationLinear';
 const complete = 'complete';
+const error = 'error';
 const firstQuartile = 'firstQuartile';
 const midpoint = 'midpoint';
 const mute = 'mute';
@@ -19,6 +20,7 @@ const unmute = 'unmute';
 export {
   acceptInvitationLinear,
   complete,
+  error,
   firstQuartile,
   midpoint,
   mute,
