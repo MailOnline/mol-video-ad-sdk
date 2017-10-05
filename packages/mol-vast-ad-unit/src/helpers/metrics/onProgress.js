@@ -10,7 +10,7 @@ const onProgress = (videoElement, callback) => {
   const previousCurrentTime = secondsToMilliseconds(videoElement.currentTime);
   let accumulatedProgress = 0;
 
-  const progresshandler = () => {
+  const progressHandler = () => {
     const currentTime = videoElement.currentTime;
     const delta = Math.abs(currentTime - previousCurrentTime);
 
@@ -22,10 +22,10 @@ const onProgress = (videoElement, callback) => {
     });
   };
 
-  videoElement.addEventListener('timeupdate', progresshandler);
+  videoElement.addEventListener('timeupdate', progressHandler);
 
   return () => {
-    videoElement.removeEventListener('timeupdate', progresshandler);
+    videoElement.removeEventListener('timeupdate', progressHandler);
   };
 };
 

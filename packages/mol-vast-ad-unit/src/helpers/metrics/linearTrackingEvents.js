@@ -2,6 +2,7 @@ const acceptInvitationLinear = 'acceptInvitationLinear';
 const complete = 'complete';
 const error = 'error';
 const firstQuartile = 'firstQuartile';
+const impression = 'impression';
 const midpoint = 'midpoint';
 const mute = 'mute';
 const otherAdInteraction = 'otherAdInteraction';
@@ -22,6 +23,7 @@ export {
   complete,
   error,
   firstQuartile,
+  impression,
   midpoint,
   mute,
   otherAdInteraction,
