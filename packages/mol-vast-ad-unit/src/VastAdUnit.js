@@ -5,12 +5,12 @@ import {
 } from 'mol-vast-selectors';
 import canPlay from './helpers/canPlay';
 import sortMediaByBestFit from './helpers/sortMediaByBestFit';
-import metricHandlers from './helpers/metrics/handlers';
 import {
   complete,
   progress,
   error
 } from './helpers/metrics/linearTrackingEvents';
+import initMetricHandlers from './helpers/metrics/initMetricHandlers';
 
 const findBestMedia = (videoElement, mediaFiles, container) => {
   const screenRect = container.getBoundingClientRect();
@@ -20,15 +20,9 @@ const findBestMedia = (videoElement, mediaFiles, container) => {
   return sortedMediaFiles[0];
 };
 
-const startMetricListeners = (videoAdContainer, callback) => {
-  const stopHandlersFns = metricHandlers.map((handler) => handler(videoAdContainer, callback));
-
-  return () => stopHandlersFns.forEach((disconnect) => disconnect());
-};
-
 const onErrorCallbacks = Symbol('onErrorCallbacks');
 const onCompleteCallbacks = Symbol('onCompleteCallbacks');
-const removeMetricListeners = Symbol('removeMetricListeners');
+const removeMetrichandlers = Symbol('removeMetrichandlers');
 
 class VastAdUnit extends Emitter {
   constructor (vastAdChain, videoAdContainer, {logger = console} = {}) {
@@ -58,7 +52,7 @@ class VastAdUnit extends Emitter {
     videoElement.src = media.src;
     this.assetUri = media.src;
 
-    this[removeMetricListeners] = startMetricListeners(videoAdContainer, (event, data) => {
+    this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, (event, data) => {
       this.emit(event, event);
 
       switch (event) {
@@ -112,7 +106,7 @@ class VastAdUnit extends Emitter {
 
   destroy () {
     this.videoAdContainer.videoElement.src = '';
-    this[removeMetricListeners]();
+    this[removeMetrichandlers]();
 
     this.vastAdChain = null;
     this.videoAdContainer = null;
@@ -122,7 +116,7 @@ class VastAdUnit extends Emitter {
     this.contentplayhead = null;
     this[onErrorCallbacks] = null;
     this[onCompleteCallbacks] = null;
-    this[removeMetricListeners] = null;
+    this[removeMetrichandlers] = null;
   }
 }
 
