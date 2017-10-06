@@ -1,7 +1,8 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
 import Emitter from 'mol-tiny-emitter';
 import {
-  getMediaFiles
+  getMediaFiles,
+  getSkipoffset
 } from 'mol-vast-selectors';
 import canPlay from './helpers/canPlay';
 import sortMediaByBestFit from './helpers/sortMediaByBestFit';
@@ -44,15 +45,8 @@ class VastAdUnit extends Emitter {
     const inlineAd = this.vastAdChain[0].ad;
     const mediaFiles = getMediaFiles(inlineAd);
     const media = mediaFiles && findBestMedia(videoElement, mediaFiles, element);
-
-    if (!Boolean(media)) {
-      throw new Error('Can\'t find a suitable media to play');
-    }
-
-    videoElement.src = media.src;
-    this.assetUri = media.src;
-
-    this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, (event, data) => {
+    const skipoffset = getSkipoffset(inlineAd);
+    const handleMetric = (event, data) => {
       this.emit(event, event, this);
 
       switch (event) {
@@ -72,7 +66,16 @@ class VastAdUnit extends Emitter {
         break;
       }
       }
-    });
+    };
+
+    if (!Boolean(media)) {
+      throw new Error('Can\'t find a suitable media to play');
+    }
+
+    videoElement.src = media.src;
+    this.assetUri = media.src;
+
+    this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, handleMetric, {skipoffset});
 
     // TODO:
     //      - add skip control if necessary

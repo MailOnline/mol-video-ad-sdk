@@ -1,6 +1,8 @@
+/* eslint-disable import/max-dependencies */
 import onFullscreenChange from './onFullscreenChange';
 import onPlayPause from './onPlayPause';
 import onRewind from './onRewind';
+import onSkip from './onSkip';
 import onError from './onError';
 import onTimeUpdate from './onTimeUpdate';
 import onVolumeChange from './onVolumeChange';
@@ -16,6 +18,7 @@ export default [
   onPlayPause,
   onProgress,
   onRewind,
+  onSkip,
   onTimeUpdate,
   onVolumeChange
 ];

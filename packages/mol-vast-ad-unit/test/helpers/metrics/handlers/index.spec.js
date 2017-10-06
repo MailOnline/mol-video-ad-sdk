@@ -1,7 +1,9 @@
+/* eslint-disable import/max-dependencies */
 import metricsHandlers from '../../../../src/helpers/metrics/handlers';
 import onFullscreenChange from '../../../../src/helpers/metrics/handlers/onFullscreenChange';
 import onPlayPause from '../../../../src/helpers/metrics/handlers/onPlayPause';
 import onRewind from '../../../../src/helpers/metrics/handlers/onRewind';
+import onSkip from '../../../../src/helpers/metrics/handlers/onSkip';
 import onError from '../../../../src/helpers/metrics/handlers/onError';
 import onTimeUpdate from '../../../../src/helpers/metrics/handlers/onTimeUpdate';
 import onVolumeChange from '../../../../src/helpers/metrics/handlers/onVolumeChange';
@@ -22,6 +24,7 @@ test('metricsHandlers must include all the metricHandlers', () => {
     onPlayPause,
     onProgress,
     onRewind,
+    onSkip,
     onTimeUpdate,
     onVolumeChange
   ]);
