@@ -1,7 +1,7 @@
-import onRewind from '../../../src/helpers/metrics/onRewind';
+import onImpression from '../../../../src/helpers/metrics/handlers/onImpression';
 import {
-  rewind
-} from '../../../src/helpers/metrics/linearTrackingEvents';
+  impression
+} from '../../../../src/helpers/metrics/linearTrackingEvents';
 
 let videoElement;
 
@@ -21,28 +21,33 @@ afterEach(() => {
   videoElement = null;
 });
 
-test('onRewind must call the callback with rewind when there is a rewind of the current video', () => {
+test('onImpression must call the callback with impression when there is a impression of the current video', () => {
   const callback = jest.fn();
-  const disconnect = onRewind({videoElement}, callback);
+  const disconnect = onImpression({videoElement}, callback);
 
-  videoElement.currentTime = 10;
+  videoElement.currentTime = 1;
   videoElement.dispatchEvent(new Event('timeupdate'));
   expect(callback).toHaveBeenCalledTimes(0);
 
-  videoElement.currentTime = 25;
+  videoElement.currentTime = 1.5;
   videoElement.dispatchEvent(new Event('timeupdate'));
   expect(callback).toHaveBeenCalledTimes(0);
 
-  videoElement.currentTime = 24.5;
-  videoElement.dispatchEvent(new Event('timeupdate'));
-  expect(callback).toHaveBeenCalledTimes(0);
-
-  videoElement.currentTime = 15;
+  videoElement.currentTime = 2;
   videoElement.dispatchEvent(new Event('timeupdate'));
   expect(callback).toHaveBeenCalledTimes(1);
-  expect(callback).toHaveBeenCalledWith(rewind);
+  expect(callback).toHaveBeenCalledWith(impression);
   callback.mockClear();
 
+  videoElement.currentTime = 2.5;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+
+  videoElement.currentTime = 3;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+
+  videoElement.currentTime = 3.5;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+  expect(callback).toHaveBeenCalledTimes(0);
   disconnect();
 
   videoElement.currentTime = 50;

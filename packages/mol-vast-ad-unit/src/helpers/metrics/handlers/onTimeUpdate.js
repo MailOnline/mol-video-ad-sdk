@@ -5,7 +5,7 @@ import {
   midpoint,
   start,
   thirdQuartile
-} from './linearTrackingEvents';
+} from '../linearTrackingEvents';
 
 const percentageProgress = (currentTime, duration) => currentTime * 100 / duration;
 const isPassFirstQuartile = (currentTime, duration) => percentageProgress(currentTime, duration) >= 25;

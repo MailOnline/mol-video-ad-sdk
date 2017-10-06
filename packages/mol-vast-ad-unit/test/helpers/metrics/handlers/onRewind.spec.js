@@ -1,7 +1,7 @@
-import onProgress from '../../../src/helpers/metrics/onProgress';
+import onRewind from '../../../../src/helpers/metrics/handlers/onRewind';
 import {
-  progress
-} from '../../../src/helpers/metrics/linearTrackingEvents';
+  rewind
+} from '../../../../src/helpers/metrics/linearTrackingEvents';
 
 let videoElement;
 
@@ -21,35 +21,26 @@ afterEach(() => {
   videoElement = null;
 });
 
-test('onProgress call the callback with the progress', () => {
+test('onRewind must call the callback with rewind when there is a rewind of the current video', () => {
   const callback = jest.fn();
-  const disconnect = onProgress({videoElement}, callback);
+  const disconnect = onRewind({videoElement}, callback);
 
   videoElement.currentTime = 10;
   videoElement.dispatchEvent(new Event('timeupdate'));
-  expect(callback).toHaveBeenCalledTimes(1);
-  expect(callback).toHaveBeenCalledWith(progress, expect.objectContaining({
-    accumulated: 10000,
-    contentplayhead: '00:00:10.000'
-  }));
-  callback.mockClear();
+  expect(callback).toHaveBeenCalledTimes(0);
 
-  videoElement.currentTime = 10;
+  videoElement.currentTime = 25;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+  expect(callback).toHaveBeenCalledTimes(0);
+
+  videoElement.currentTime = 24.5;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+  expect(callback).toHaveBeenCalledTimes(0);
+
+  videoElement.currentTime = 15;
   videoElement.dispatchEvent(new Event('timeupdate'));
   expect(callback).toHaveBeenCalledTimes(1);
-  expect(callback).toHaveBeenCalledWith(progress, expect.objectContaining({
-    accumulated: 20000,
-    contentplayhead: '00:00:20.000'
-  }));
-  callback.mockClear();
-
-  videoElement.currentTime = 100;
-  videoElement.dispatchEvent(new Event('timeupdate'));
-  expect(callback).toHaveBeenCalledTimes(1);
-  expect(callback).toHaveBeenCalledWith(progress, expect.objectContaining({
-    accumulated: 120000,
-    contentplayhead: '00:02:00.000'
-  }));
+  expect(callback).toHaveBeenCalledWith(rewind);
   callback.mockClear();
 
   disconnect();

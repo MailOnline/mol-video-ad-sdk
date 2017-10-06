@@ -2,7 +2,7 @@
 import {
   pause,
   resume
-} from './linearTrackingEvents';
+} from '../linearTrackingEvents';
 
 const onPlayPause = ({videoElement}, callback) => {
   let started = false;

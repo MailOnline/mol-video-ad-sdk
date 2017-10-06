@@ -10,12 +10,12 @@ import {
 import {createVideoAdContainer} from 'mol-video-ad-container';
 import VastAdUnit from '../src/VastAdUnit';
 import canPlay from '../src/helpers/canPlay';
-import metricHandlers from '../src/helpers/metrics';
+import metricHandlers from '../src/helpers/metrics/handlers';
 
 const mockStopMetricHandler = jest.fn();
 
 jest.mock('../src/helpers/canPlay.js', () => jest.fn());
-jest.mock('../src/helpers/metrics/index.js', () => [
+jest.mock('../src/helpers/metrics/handlers/index.js', () => [
   jest.fn(({videoElement}, callback) => {
     videoElement.addEventListener('ended', () => callback('complete'));
     videoElement.addEventListener('error', () => callback('error'));

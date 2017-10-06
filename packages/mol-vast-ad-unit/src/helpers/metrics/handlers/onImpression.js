@@ -1,7 +1,7 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
 import {
   impression
-} from './linearTrackingEvents';
+} from '../linearTrackingEvents';
 
 const onImpression = ({videoElement}, callback) => {
   const impressionHandler = () => {

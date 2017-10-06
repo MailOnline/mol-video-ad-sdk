@@ -1,7 +1,7 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
 import {
   rewind
-} from './linearTrackingEvents';
+} from '../linearTrackingEvents';
 
 const onRewind = ({videoElement}, callback) => {
   let currentTime = videoElement.currentTime;

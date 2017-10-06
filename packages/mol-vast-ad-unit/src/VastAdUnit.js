@@ -5,7 +5,7 @@ import {
 } from 'mol-vast-selectors';
 import canPlay from './helpers/canPlay';
 import sortMediaByBestFit from './helpers/sortMediaByBestFit';
-import metricHandlers from './helpers/metrics';
+import metricHandlers from './helpers/metrics/handlers';
 import {
   complete,
   progress,

@@ -1,7 +1,7 @@
-import onError from '../../../src/helpers/metrics/onError';
+import onError from '../../../../src/helpers/metrics/handlers/onError';
 import {
   error
-} from '../../../src/helpers/metrics/linearTrackingEvents';
+} from '../../../../src/helpers/metrics/linearTrackingEvents';
 
 let videoElement;
 

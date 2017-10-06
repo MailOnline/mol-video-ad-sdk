@@ -1,8 +1,8 @@
-import onFullscreenChange from '../../../src/helpers/metrics/onFullscreenChange';
+import onFullscreenChange from '../../../../src/helpers/metrics/handlers/onFullscreenChange';
 import {
   playerCollapse,
   playerExpand
-} from '../../../src/helpers/metrics/linearTrackingEvents';
+} from '../../../../src/helpers/metrics/linearTrackingEvents';
 
 test('onFullscreenChange must call playerExpand on when going fullscreen and playerCollapse when when leaving fullscreen', () => {
   const callback = jest.fn();

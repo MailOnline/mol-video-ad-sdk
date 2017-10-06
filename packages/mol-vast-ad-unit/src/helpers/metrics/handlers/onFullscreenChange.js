@@ -2,7 +2,7 @@
 import {
   playerCollapse,
   playerExpand
-} from './linearTrackingEvents';
+} from '../linearTrackingEvents';
 
 const onFullscreenChange = ({context}, callback) => {
   const {document} = context;

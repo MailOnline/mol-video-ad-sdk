@@ -1,5 +1,5 @@
-import onVolumeChange from '../../../src/helpers/metrics/onVolumeChange';
-import {mute, unmute} from '../../../src/helpers/metrics/linearTrackingEvents';
+import onVolumeChange from '../../../../src/helpers/metrics/handlers/onVolumeChange';
+import {mute, unmute} from '../../../../src/helpers/metrics/linearTrackingEvents';
 
 test('onVolumechange must call the callback with mute if the video was unmute and it became mute and the other way around', () => {
   const callback = jest.fn();

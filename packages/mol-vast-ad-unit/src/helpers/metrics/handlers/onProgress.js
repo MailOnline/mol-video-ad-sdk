@@ -1,8 +1,8 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
-import formatProgress from '../formatProgress';
+import formatProgress from '../../formatProgress';
 import {
   progress
-} from './linearTrackingEvents';
+} from '../linearTrackingEvents';
 
 const secondsToMilliseconds = (seconds) => seconds * 1000;
 

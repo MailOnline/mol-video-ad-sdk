@@ -1,7 +1,7 @@
 /* eslint-disable callback-return, promise/prefer-await-to-callbacks */
 import {
   clickThrough
-} from './linearTrackingEvents';
+} from '../linearTrackingEvents';
 
 const onClickThrough = ({videoElement, context, element}, callback) => {
   const {document} = context;

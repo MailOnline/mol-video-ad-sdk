@@ -1,7 +1,7 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
 import {
   error
-} from './linearTrackingEvents';
+} from '../linearTrackingEvents';
 
 const onError = ({videoElement}, callback) => {
   const errorHandler = () => {

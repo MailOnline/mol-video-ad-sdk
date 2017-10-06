@@ -2,7 +2,7 @@
 import {
   mute,
   unmute
-} from './linearTrackingEvents';
+} from '../linearTrackingEvents';
 
 const isMuted = (videoElement) => videoElement.muted || videoElement.volume === 0;
 

@@ -1,15 +1,11 @@
-import onTimeUpdate from '../../../src/helpers/metrics/onTimeUpdate';
+import onTimeUpdate from '../../../../src/helpers/metrics/handlers/onTimeUpdate';
 import {
   complete,
   firstQuartile,
   midpoint,
-
-  // progress,
   start,
   thirdQuartile
-
-  // timeSpentViewing
-} from '../../../src/helpers/metrics/linearTrackingEvents';
+} from '../../../../src/helpers/metrics/linearTrackingEvents';
 
 let videoElement;
 
