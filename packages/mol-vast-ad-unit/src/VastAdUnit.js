@@ -53,7 +53,7 @@ class VastAdUnit extends Emitter {
     this.assetUri = media.src;
 
     this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, (event, data) => {
-      this.emit(event, event);
+      this.emit(event, event, this);
 
       switch (event) {
       case progress: {
@@ -75,7 +75,6 @@ class VastAdUnit extends Emitter {
     });
 
     // TODO:
-    //      - Click tracking
     //      - add skip control if necessary
     //      - add the ICON to the container
 

@@ -248,15 +248,17 @@ test('VastAdUnit must emit whatever metric event happens', async () => {
   const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
 
   const promise = new Promise((resolve) => {
-    adUnit.on('custom', resolve);
+    adUnit.on('custom', (...args) => {
+      resolve(args);
+    });
   });
 
   adUnit.run();
   videoAdContainer.videoElement.dispatchEvent(new CustomEvent('custom'));
 
-  const triggeredEvent = await promise;
+  const passedArgs = await promise;
 
-  expect(triggeredEvent).toBe('custom');
+  expect(passedArgs).toEqual(['custom', adUnit]);
 });
 
 test('VastAdUnit destroy must remove the src from the videoElement, stop the metric handlers and set state to null', () => {
