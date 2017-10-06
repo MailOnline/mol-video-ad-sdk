@@ -1,6 +1,8 @@
-/* eslint-disable class-methods-use-this, promise/prefer-await-to-callbacks */
+/* eslint-disable promise/prefer-await-to-callbacks */
 import Emitter from 'mol-tiny-emitter';
-import {getMediaFiles} from 'mol-vast-selectors';
+import {
+  getMediaFiles
+} from 'mol-vast-selectors';
 import canPlay from './helpers/canPlay';
 import sortMediaByBestFit from './helpers/sortMediaByBestFit';
 import metricHandlers from './helpers/metrics';
@@ -18,8 +20,8 @@ const findBestMedia = (videoElement, mediaFiles, container) => {
   return sortedMediaFiles[0];
 };
 
-const startMetricListeners = (videoElement, callback) => {
-  const stopHandlersFns = metricHandlers.map((handler) => handler(videoElement, callback));
+const startMetricListeners = (videoAdContainer, callback) => {
+  const stopHandlersFns = metricHandlers.map((handler) => handler(videoAdContainer, callback));
 
   return () => stopHandlersFns.forEach((disconnect) => disconnect());
 };
@@ -43,9 +45,11 @@ class VastAdUnit extends Emitter {
   }
 
   run () {
-    const videoElement = this.videoAdContainer.videoElement;
-    const mediaFiles = getMediaFiles(this.vastAdChain[0].ad);
-    const media = mediaFiles && findBestMedia(videoElement, mediaFiles, this.videoAdContainer.element);
+    const videoAdContainer = this.videoAdContainer;
+    const {videoElement, element} = videoAdContainer;
+    const inlineAd = this.vastAdChain[0].ad;
+    const mediaFiles = getMediaFiles(inlineAd);
+    const media = mediaFiles && findBestMedia(videoElement, mediaFiles, element);
 
     if (!Boolean(media)) {
       throw new Error('Can\'t find a suitable media to play');
@@ -53,7 +57,8 @@ class VastAdUnit extends Emitter {
 
     videoElement.src = media.src;
     this.assetUri = media.src;
-    this[removeMetricListeners] = startMetricListeners(videoElement, (event, data) => {
+
+    this[removeMetricListeners] = startMetricListeners(videoAdContainer, (event, data) => {
       this.emit(event, event);
 
       switch (event) {

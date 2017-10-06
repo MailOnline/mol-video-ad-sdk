@@ -23,7 +23,7 @@ afterEach(() => {
 
 test('onRewind must call the callback with rewind when there is a rewind of the current video', () => {
   const callback = jest.fn();
-  const disconnect = onRewind(videoElement, callback);
+  const disconnect = onRewind({videoElement}, callback);
 
   videoElement.currentTime = 10;
   videoElement.dispatchEvent(new Event('timeupdate'));

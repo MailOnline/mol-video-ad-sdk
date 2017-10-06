@@ -31,7 +31,7 @@ afterEach(() => {
 
 test('onTimeUpdate must call the callback with start, firstQuartile, midpoint, thirdQuartile and complete at the right order', () => {
   const callback = jest.fn();
-  const disconnect = onTimeUpdate(videoElement, callback);
+  const disconnect = onTimeUpdate({videoElement}, callback);
 
   videoElement.currentTime = 1;
   videoElement.dispatchEvent(new Event('timeupdate'));
@@ -85,7 +85,7 @@ test('onTimeUpdate must call the callback with start, firstQuartile, midpoint, t
 
 test('onTimeUpdate must rely on the ended event as a fallback for the timeupdate event for the complete event', () => {
   const callback = jest.fn();
-  const disconnect = onTimeUpdate(videoElement, callback);
+  const disconnect = onTimeUpdate({videoElement}, callback);
 
   videoElement.currentTime = 1;
   videoElement.dispatchEvent(new Event('timeupdate'));

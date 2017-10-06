@@ -6,7 +6,7 @@ import {
 
 const isMuted = (videoElement) => videoElement.muted || videoElement.volume === 0;
 
-const onVolumeChange = (videoElement, callback) => {
+const onVolumeChange = ({videoElement}, callback) => {
   let wasMuted = isMuted(videoElement);
 
   const volumechangeHandler = () => {

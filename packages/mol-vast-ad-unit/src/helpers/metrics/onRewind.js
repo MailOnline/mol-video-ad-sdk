@@ -3,7 +3,7 @@ import {
   rewind
 } from './linearTrackingEvents';
 
-const onRewind = (videoElement, callback) => {
+const onRewind = ({videoElement}, callback) => {
   let currentTime = videoElement.currentTime;
 
   const timeupdateHandler = () => {

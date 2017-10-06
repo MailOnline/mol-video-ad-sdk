@@ -3,7 +3,7 @@ import {
   error
 } from './linearTrackingEvents';
 
-const onError = (videoElement, callback) => {
+const onError = ({videoElement}, callback) => {
   const errorHandler = () => {
     callback(error);
   };

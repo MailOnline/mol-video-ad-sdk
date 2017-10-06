@@ -7,6 +7,7 @@ import onTimeUpdate from '../../../src/helpers/metrics/onTimeUpdate';
 import onVolumeChange from '../../../src/helpers/metrics/onVolumeChange';
 import onImpression from '../../../src/helpers/metrics/onImpression';
 import onProgress from '../../../src/helpers/metrics/onProgress';
+import onClickThrough from '../../../src/helpers/metrics/onClickThrough';
 
 test('metrics must be an array', () => {
   expect(metrics).toBeInstanceOf(Array);
@@ -14,6 +15,7 @@ test('metrics must be an array', () => {
 
 test('metrics must include all the metricHandlers', () => {
   expect(metrics).toEqual([
+    onClickThrough,
     onError,
     onFullscreenChange,
     onImpression,

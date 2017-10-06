@@ -6,7 +6,7 @@ test('onVolumechange must call the callback with mute if the video was unmute an
   const videoElement = document.createElement('VIDEO');
 
   videoElement.muted = false;
-  const disconnect = onVolumeChange(videoElement, callback);
+  const disconnect = onVolumeChange({videoElement}, callback);
 
   videoElement.muted = true;
   videoElement.dispatchEvent(new Event('volumechange'));

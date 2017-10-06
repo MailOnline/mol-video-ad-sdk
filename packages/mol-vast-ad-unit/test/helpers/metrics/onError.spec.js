@@ -23,7 +23,7 @@ afterEach(() => {
 
 test('onError must call the callback with rewind when there is an error on the current video', () => {
   const callback = jest.fn();
-  const disconnect = onError(videoElement, callback);
+  const disconnect = onError({videoElement}, callback);
 
   expect(callback).toHaveBeenCalledTimes(0);
   videoElement.dispatchEvent(new Event('error'));

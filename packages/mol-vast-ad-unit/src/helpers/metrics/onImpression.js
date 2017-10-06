@@ -3,7 +3,7 @@ import {
   impression
 } from './linearTrackingEvents';
 
-const onImpression = (videoElement, callback) => {
+const onImpression = ({videoElement}, callback) => {
   const impressionHandler = () => {
     const currentTime = videoElement.currentTime;
 

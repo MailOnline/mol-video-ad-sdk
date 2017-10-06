@@ -23,7 +23,7 @@ afterEach(() => {
 
 test('onImpression must call the callback with impression when there is a impression of the current video', () => {
   const callback = jest.fn();
-  const disconnect = onImpression(videoElement, callback);
+  const disconnect = onImpression({videoElement}, callback);
 
   videoElement.currentTime = 1;
   videoElement.dispatchEvent(new Event('timeupdate'));

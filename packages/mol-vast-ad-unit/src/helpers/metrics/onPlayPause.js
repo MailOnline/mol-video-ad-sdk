@@ -4,7 +4,7 @@ import {
   resume
 } from './linearTrackingEvents';
 
-const onPlayPause = (videoElement, callback) => {
+const onPlayPause = ({videoElement}, callback) => {
   let started = false;
   let paused = true;
 

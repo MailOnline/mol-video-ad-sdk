@@ -4,7 +4,8 @@ import {
   playerExpand
 } from './linearTrackingEvents';
 
-const onFullscreenChange = (document, callback) => {
+const onFullscreenChange = ({context}, callback) => {
+  const {document} = context;
   const fullscreenchangeHandler = () => {
     if (Boolean(document.fullscreenElement)) {
       callback(playerExpand);

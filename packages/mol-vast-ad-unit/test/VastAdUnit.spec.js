@@ -16,7 +16,7 @@ const mockStopMetricHandler = jest.fn();
 
 jest.mock('../src/helpers/canPlay.js', () => jest.fn());
 jest.mock('../src/helpers/metrics/index.js', () => [
-  jest.fn((videoElement, callback) => {
+  jest.fn(({videoElement}, callback) => {
     videoElement.addEventListener('ended', () => callback('complete'));
     videoElement.addEventListener('error', () => callback('error'));
     videoElement.addEventListener('progress', ({detail}) => callback('progress', detail));
@@ -150,7 +150,10 @@ test('VastAdUnit run must start the metric listeners', () => {
 
   metricHandlers.forEach((handler) => {
     expect(handler).toHaveBeenCalledTimes(1);
-    expect(handler).toHaveBeenCalledWith(videoAdContainer.videoElement, expect.any(Function));
+    expect(handler).toHaveBeenCalledWith(
+      videoAdContainer,
+      expect.any(Function)
+    );
   });
 });
 

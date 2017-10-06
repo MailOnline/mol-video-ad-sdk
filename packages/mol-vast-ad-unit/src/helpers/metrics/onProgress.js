@@ -6,7 +6,7 @@ import {
 
 const secondsToMilliseconds = (seconds) => seconds * 1000;
 
-const onProgress = (videoElement, callback) => {
+const onProgress = ({videoElement}, callback) => {
   const previousCurrentTime = secondsToMilliseconds(videoElement.currentTime);
   let accumulatedProgress = 0;
 

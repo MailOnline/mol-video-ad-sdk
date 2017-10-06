@@ -23,7 +23,7 @@ afterEach(() => {
 
 test('onProgress call the callback with the progress', () => {
   const callback = jest.fn();
-  const disconnect = onProgress(videoElement, callback);
+  const disconnect = onProgress({videoElement}, callback);
 
   videoElement.currentTime = 10;
   videoElement.dispatchEvent(new Event('timeupdate'));

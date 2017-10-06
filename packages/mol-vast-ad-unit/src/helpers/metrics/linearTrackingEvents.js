@@ -1,5 +1,6 @@
 const acceptInvitationLinear = 'acceptInvitationLinear';
 const complete = 'complete';
+const clickThrough = 'clickThrough';
 const error = 'error';
 const firstQuartile = 'firstQuartile';
 const impression = 'impression';
@@ -20,6 +21,7 @@ const unmute = 'unmute';
 
 export {
   acceptInvitationLinear,
+  clickThrough,
   complete,
   error,
   firstQuartile,

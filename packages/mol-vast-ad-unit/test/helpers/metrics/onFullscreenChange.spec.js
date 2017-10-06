@@ -6,7 +6,7 @@ import {
 
 test('onFullscreenChange must call playerExpand on when going fullscreen and playerCollapse when when leaving fullscreen', () => {
   const callback = jest.fn();
-  const disconnect = onFullscreenChange(document, callback);
+  const disconnect = onFullscreenChange({context: window}, callback);
 
   document.fullscreenElement = document.createElement('VIDEO');
   document.dispatchEvent(new Event('fullscreenchange'));
