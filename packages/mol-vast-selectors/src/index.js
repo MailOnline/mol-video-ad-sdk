@@ -333,3 +333,15 @@ export const getClickTracking = (ad) => {
 
   return null;
 };
+
+export const getSkipoffset = (ad) => {
+  const creativeElement = ad && getLinearCreative(ad);
+  const linearElement = creativeElement && get(creativeElement, 'Linear');
+  const skipoffset = linearElement && getAttribute(linearElement, 'skipoffset');
+
+  if (skipoffset) {
+    return parseOffset(skipoffset);
+  }
+
+  return null;
+};

@@ -16,6 +16,7 @@ import {
   getLinearTrackingEvents,
   getLinearTimeSpentViewingEvents,
   getMediaFiles,
+  getSkipoffset,
   getVASTAdTagURI,
   getWrapperOptions,
   hasAdPod,
@@ -420,7 +421,7 @@ test('getLinearTimeSpentViewingEvents must return the linear timeSpentViewing ev
   ]);
 });
 
-test('getClickThrough must return true if there is none', () => {
+test('getClickThrough must return null if there is none', () => {
   expect(getClickThrough()).toEqual(null);
   expect(getClickThrough(null)).toEqual(null);
   expect(getClickThrough({})).toEqual(null);
@@ -440,4 +441,15 @@ test('getClickTracking must return true if there is none', () => {
 test('getClickTracking must return the clickThrough uri', () => {
   expect(getClickTracking(inlineAd)).toEqual('https://test.example.com/clicktracking');
   expect(getClickTracking(wrapperAd)).toEqual('https://test.example.com/clicktracking');
+});
+
+test('getSkipoffset must return null if there none', () => {
+  expect(getSkipoffset()).toEqual(null);
+  expect(getSkipoffset(null)).toEqual(null);
+  expect(getSkipoffset({})).toEqual(null);
+  expect(getSkipoffset(wrapperAd)).toEqual(null);
+});
+
+test('getSkipoffset must return the parset skipoffset', () => {
+  expect(getSkipoffset(inlineAd)).toEqual(5000);
 });

@@ -26,7 +26,7 @@
               <Custom>this is custom stuff</Custom>
             </CreativeExtension>
           </CreativeExtensions>
-          <Linear>
+          <Linear skipoffset="00:00:05" >
             <Duration>00:00:30</Duration>
             <TrackingEvents>
               <Tracking event="creativeView">https://test.example.com/creativeView</Tracking>
