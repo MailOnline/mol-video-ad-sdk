@@ -44,8 +44,72 @@ test('onSkip must do nothing if the current time is less than the offset', () =>
   expect(element.querySelector('.mol-vast-skip-control')).not.toEqual(null);
 });
 
-test('onSkip must append the skip control to the videoAdContainer');
-test('onSkip must be possible to pass a skipControl factory method');
-test('onSkip must call the callback with skip if the user clicks in the control');
-test('onSkip disconnect must remove the skip control if exists');
-test('onSkip disconnect must prevent the skip control from appearing');
+test('onSkip must call the callback with skip if the user clicks in the control', () => {
+  const {element, videoElement} = videoAdContainer;
+
+  onSkip(videoAdContainer, callback, {skipoffset: 5000});
+
+  videoElement.currentTime = 5;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+  expect(callback).toHaveBeenCalledTimes(0);
+
+  const skipControl = element.querySelector('.mol-vast-skip-control');
+
+  skipControl.click();
+
+  expect(callback).toHaveBeenCalledTimes(1);
+  expect(callback).toHaveBeenCalledWith(skip);
+});
+
+test('onSkip must be possible to pass a skipControl factory method', () => {
+  const {element, videoElement} = videoAdContainer;
+
+  onSkip(videoAdContainer, callback, {
+    createSkipControl: () => {
+      const skipBtn = document.createElement('BUTTON');
+
+      skipBtn.classList.add('custom-skip-control');
+
+      return skipBtn;
+    },
+    skipoffset: 5000
+  });
+
+  videoElement.currentTime = 5;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+  expect(callback).toHaveBeenCalledTimes(0);
+  expect(element.querySelector('.mol-vast-skip-control')).toEqual(null);
+
+  const skipControl = element.querySelector('.custom-skip-control');
+
+  skipControl.click();
+
+  expect(callback).toHaveBeenCalledTimes(1);
+  expect(callback).toHaveBeenCalledWith(skip);
+});
+
+test('onSkip disconnect must remove the skip control if exists', () => {
+  const {element, videoElement} = videoAdContainer;
+  const disconnect = onSkip(videoAdContainer, callback, {skipoffset: 5000});
+
+  videoElement.currentTime = 5;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+  expect(callback).toHaveBeenCalledTimes(0);
+  expect(element.querySelector('.mol-vast-skip-control')).not.toEqual(null);
+
+  disconnect();
+  expect(element.querySelector('.mol-vast-skip-control')).toEqual(null);
+});
+
+test('onSkip disconnect must prevent the skip control from appearing', () => {
+  const {element, videoElement} = videoAdContainer;
+  const disconnect = onSkip(videoAdContainer, callback, {skipoffset: 5000});
+
+  expect(element.querySelector('.mol-vast-skip-control')).toEqual(null);
+
+  disconnect();
+  videoElement.currentTime = 5;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+  expect(callback).toHaveBeenCalledTimes(0);
+  expect(element.querySelector('.mol-vast-skip-control')).toEqual(null);
+});
