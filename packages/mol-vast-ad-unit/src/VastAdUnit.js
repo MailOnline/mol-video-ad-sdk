@@ -77,9 +77,7 @@ class VastAdUnit extends Emitter {
 
     this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, handleMetric, {skipoffset});
 
-    // TODO:
-    //      - add skip control if necessary
-    //      - add the ICON to the container
+    // TODO: add the ICON to the container
 
     videoElement.play();
   }
