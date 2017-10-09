@@ -58,7 +58,7 @@
                 </IconClicks>
                 <IconViewTracking>https://test.example.com/iconViewTracking</IconViewTracking>
               </Icon>
-              <Icon program="MOL_STATIC" width="20px" height="20px" xPosition="right" yPosition="top" duration="00:00:30" offset="00:00:05" pxratio="2">
+              <Icon program="MOL_STATIC" width="20" height="20px" xPosition="right" yPosition="top" duration="00:00:30" offset="00:00:05" pxratio="2">
                 <StaticResource>https://test.example.com/icon/staticResource</StaticResource>
                 <IconClicks>
                   <IconClickThrough>https://test.example.com/iconClickThrough</IconClickThrough>
@@ -66,7 +66,7 @@
                 </IconClicks>
                 <IconViewTracking>https://test.example.com/iconViewTracking</IconViewTracking>
               </Icon>
-              <Icon program="MOL_HTML" width="20px" height="20px" xPosition="left" yPosition="20px" duration="00:00:30" offset="00:00:05" pxratio="1">
+              <Icon program="MOL_HTML" width="20px" height="20" xPosition="left" yPosition="20px" duration="00:00:30" offset="00:00:05" pxratio="1">
                 <HTMLResource>https://test.example.com/icon/htmlResource</HTMLResource>
                 <IconClicks>
                   <IconClickThrough>https://test.example.com/iconClickThrough</IconClickThrough>

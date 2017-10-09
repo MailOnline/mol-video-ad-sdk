@@ -8,7 +8,7 @@ import getLinearCreative from './helpers/getLinearCreative';
 import parseTime from './helpers/parseTime';
 
 const formatCssSize = (size) => {
-  const hasPixelSuffix = /.+\.px$/gi.test(size);
+  const hasPixelSuffix = /\d+px$/g.test(size);
 
   if (hasPixelSuffix) {
     return size;
@@ -97,8 +97,9 @@ const getIconClicks = (iconElement) => {
 };
 
 const getIcons = (ad) => {
-  const linear = getLinearCreative(ad);
-  const iconsElement = linear && get(linear, 'Icons');
+  const linearCreativeElement = ad && getLinearCreative(ad);
+  const linearElement = linearCreativeElement && get(linearCreativeElement, 'linear');
+  const iconsElement = linearElement && get(linearElement, 'Icons');
   const iconElements = iconsElement && getAll(iconsElement, 'Icon');
 
   if (iconElements && iconElements.length > 0) {
