@@ -74,7 +74,7 @@
                 </IconClicks>
                 <IconViewTracking>https://test.example.com/iconViewTracking</IconViewTracking>
               </Icon>
-              <Icon program="MOL_IFRAME" width="20px" height="20px" xPosition="10" yPosition="30" duration="00:00:30" offset="00:00:05" pxratio="1">
+              <Icon program="MOL_IFRAME" width="20px" height="20px" xPosition="10" yPosition="30" pxratio="1">
                 <IFrameResource>https://test.example.com/icon/iFrameResource</IFrameResource>
                 <IconClicks>
                   <IconClickThrough>https://test.example.com/iconClickThrough</IconClickThrough>

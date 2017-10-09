@@ -7,6 +7,7 @@ import {
   getAttribute
 } from 'mol-vast-xml2js';
 import parseOffset from './helpers/parseOffset';
+import getLinearCreative from './helpers/getLinearCreative';
 
 export const getBooleanValue = (val) => {
   if (typeof val === 'string') {
@@ -186,14 +187,6 @@ export const getAdError = (ad) => {
   }
 
   return null;
-};
-
-const getLinearCreative = (ad) => {
-  const adTypeElement = getFirstChild(ad);
-  const creativesElement = adTypeElement && get(adTypeElement, 'creatives');
-  const hasLinear = (creative) => get(creative, 'linear');
-
-  return creativesElement && getAll(creativesElement).find(hasLinear) || null;
 };
 
 export const getMediaFiles = (ad) => {
