@@ -8,6 +8,7 @@ import {
 } from 'mol-vast-xml2js';
 import parseOffset from './helpers/parseOffset';
 import getLinearCreative from './helpers/getLinearCreative';
+import getIcons from './getIcons';
 
 export const getBooleanValue = (val) => {
   if (typeof val === 'string') {
@@ -338,3 +339,5 @@ export const getSkipoffset = (ad) => {
 
   return null;
 };
+
+export {getIcons};
