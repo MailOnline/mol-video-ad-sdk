@@ -46,6 +46,10 @@
       <VideoClicks>
        <ClickTracking><![CDATA[https://test.example.com/clicktracking]]></ClickTracking>
       </VideoClicks>
+      <Icons>
+        <Icon>http://adchoices.com</Icon>
+        <Icon>https://test.example.com/icon/staticResource</Icon>
+      </Icons>
      </Linear>
     </Creative>
    </Creatives>

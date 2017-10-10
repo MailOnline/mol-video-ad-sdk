@@ -49,7 +49,6 @@
             </MediaFiles>
             <AdParameters><![CDATA[qs=test&reddit=true]]></AdParameters>
             <Icons>
-              <Icon>http://adchoices.com</Icon>
               <Icon program="MOL_STATIC" width="20px" height="20px" xPosition="right" yPosition="top" duration="00:00:30" offset="00:00:05" pxratio="1">
                 <StaticResource>https://test.example.com/icon/staticResource</StaticResource>
                 <IconClicks>
@@ -59,7 +58,7 @@
                 <IconViewTracking>https://test.example.com/iconViewTracking</IconViewTracking>
               </Icon>
               <Icon program="MOL_STATIC" width="20" height="20px" xPosition="right" yPosition="top" duration="00:00:30" offset="00:00:05" pxratio="2">
-                <StaticResource>https://test.example.com/icon/staticResource</StaticResource>
+                <StaticResource>https://test.example.com/icon/staticResource2</StaticResource>
                 <IconClicks>
                   <IconClickThrough>https://test.example.com/iconClickThrough</IconClickThrough>
                   <IconClickTracking>https://test.example.com/iconClickTracking</IconClickTracking>
