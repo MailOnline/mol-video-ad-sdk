@@ -40,11 +40,11 @@ const groupIconsByProgram = (icons) => icons.reduce((accumulator, icon) => {
 }, {});
 
 const sortIconByBestPxratio = (icons) => {
-  const devivePixelRatio = Window.devicePixelRatio || 0;
+  const devicePixelRatio = window.devicePixelRatio || 0;
 
   const compareTo = (iconA, iconB) => {
-    const deltaA = Math.abs(devivePixelRatio - (iconA.pxratio || 0));
-    const deltaB = Math.abs(devivePixelRatio - (iconB.pxratio || 0));
+    const deltaA = Math.abs(devicePixelRatio - (iconA.pxratio || 0));
+    const deltaB = Math.abs(devicePixelRatio - (iconB.pxratio || 0));
 
     return deltaA - deltaB;
   };
@@ -85,9 +85,14 @@ const retrieveIcons = (vastChain) => {
     ...accumulator,
     ...getIcons(ad) || []
   ], []);
-  const uniqIcons = uniqByResource(icons);
 
-  return chooseIcons(uniqIcons);
+  if (icons.length > 0) {
+    const uniqIcons = uniqByResource(icons);
+
+    return chooseIcons(uniqIcons);
+  }
+
+  return null;
 };
 
 export default retrieveIcons;
