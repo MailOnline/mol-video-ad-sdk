@@ -1,7 +1,7 @@
 {
-  "name": "mol-vast-ad-unit",
+  "name": "mol-video-ad-unit",
   "version": "0.1.0",
-  "description": "creates vast ad units that will display the video ad.",
+  "description": "creates video ad units that will display the video ad.",
   "author": "MailOnline <fe@mailonline.co.uk>",
   "browser": "src/index.js",
   "main": "src/index.js",
