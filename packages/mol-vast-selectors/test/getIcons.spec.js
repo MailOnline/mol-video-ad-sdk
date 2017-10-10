@@ -8,11 +8,10 @@ test('getIcons must return null if there are no icons', () => {
   expect(getIcons()).toEqual(null);
   expect(getIcons(null)).toEqual(null);
   expect(getIcons({})).toEqual(null);
-  expect(getIcons(wrapperAd)).toEqual(null);
 });
 
 test('getIcons must return the formatted icons', () => {
-  expect(getIcons(inlineAd)).toEqual([
+  expect(getIcons(wrapperAd)).toEqual([
     {
       duration: undefined,
       height: undefined,
@@ -26,6 +25,22 @@ test('getIcons must return the formatted icons', () => {
       xPosition: 'right',
       yPosition: 'top'
     },
+    {
+      duration: undefined,
+      height: undefined,
+      iconClickThrough: undefined,
+      iconClickTracking: undefined,
+      offset: undefined,
+      program: undefined,
+      pxratio: undefined,
+      staticResource: 'https://test.example.com/icon/staticResource',
+      width: undefined,
+      xPosition: 'right',
+      yPosition: 'top'
+    }
+  ]);
+
+  expect(getIcons(inlineAd)).toEqual([
     {
       duration: 30000,
       height: '20px',
@@ -49,7 +64,7 @@ test('getIcons must return the formatted icons', () => {
       offset: 5000,
       program: 'MOL_STATIC',
       pxratio: 2,
-      staticResource: 'https://test.example.com/icon/staticResource',
+      staticResource: 'https://test.example.com/icon/staticResource2',
       width: '20px',
       xPosition: 'right',
       yPosition: 'top'
@@ -80,5 +95,6 @@ test('getIcons must return the formatted icons', () => {
       pxratio: 1,
       width: '20px',
       xPosition: '10px',
-      yPosition: '30px'}]);
+      yPosition: '30px'}
+  ]);
 });
