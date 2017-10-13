@@ -1,4 +1,5 @@
 import {getIcons} from 'mol-vast-selectors';
+import getResource from '../resources/getResource';
 
 const UNKNOWN = 'UNKNOWN';
 const uniqBy = (array, uniqValue) => {
@@ -16,12 +17,6 @@ const uniqBy = (array, uniqValue) => {
     return true;
   });
 };
-
-const getResource = ({
-  staticResource,
-  htmlResource,
-  iFrameResource
-}) => staticResource || htmlResource || iFrameResource;
 
 const uniqByResource = (icons) => uniqBy(icons, getResource);
 

@@ -2,7 +2,7 @@ import {
   wrapperAd,
   inlineAd
 } from 'mol-vast-fixtures';
-import retrieveIcons from '../../src/helpers/retrieveIcons';
+import retrieveIcons from '../../../src/helpers/icons/retrieveIcons';
 
 beforeEach(() => {
   Object.defineProperty(window, 'devicePixelRatio', {
