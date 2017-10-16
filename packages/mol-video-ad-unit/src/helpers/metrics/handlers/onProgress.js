@@ -1,5 +1,5 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
-import formatProgress from '../../formatProgress';
+import formatProgress from '../../utils/formatProgress';
 import {
   progress
 } from '../linearTrackingEvents';

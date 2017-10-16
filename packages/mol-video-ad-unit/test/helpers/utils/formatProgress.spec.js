@@ -1,4 +1,4 @@
-import formatProgress from '../../src/helpers/formatProgress';
+import formatProgress from '../../../src/helpers/utils/formatProgress';
 
 test('formatProgress must format the passed ms to hh:mm:ss.mmm', () => {
   const hourInMs = 60 * 60 * 1000;

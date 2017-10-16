@@ -1,5 +1,5 @@
 /* eslint-disable id-match */
-import guessMimeType from '../../src/helpers/guessMimeType';
+import guessMimeType from '../../../src/helpers/utils/guessMimeType';
 
 test('guessMimeType must guess the mime of the passed source', () => {
   const mimeMap = {

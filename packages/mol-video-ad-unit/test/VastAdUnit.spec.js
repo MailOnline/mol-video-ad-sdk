@@ -9,7 +9,7 @@ import {
 } from 'mol-vast-fixtures';
 import {createVideoAdContainer} from 'mol-video-ad-container';
 import VastAdUnit from '../src/VastAdUnit';
-import canPlay from '../src/helpers/canPlay';
+import canPlay from '../src/helpers/utils/canPlay';
 import metricHandlers from '../src/helpers/metrics/handlers';
 
 const mockStopMetricHandler = jest.fn();
