@@ -3,8 +3,8 @@ const createIconPlaceholder = (document) => {
 
   placeholder.classList.add('mol-video-ad-icon-placeholder');
   placeholder.style.position = 'absolute';
-  placeholder.style.top = '0';
-  placeholder.style.left = '0';
+  placeholder.style.top = '0px';
+  placeholder.style.left = '0px';
   placeholder.style.width = '100%';
   placeholder.style.height = '100%';
 
