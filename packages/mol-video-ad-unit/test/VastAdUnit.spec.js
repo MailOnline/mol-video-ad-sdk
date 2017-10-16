@@ -14,7 +14,7 @@ import metricHandlers from '../src/helpers/metrics/handlers';
 
 const mockStopMetricHandler = jest.fn();
 
-jest.mock('../src/helpers/canPlay.js', () => jest.fn());
+jest.mock('../src/helpers/utils/canPlay.js', () => jest.fn());
 jest.mock('../src/helpers/metrics/handlers/index.js', () => [
   jest.fn(({videoElement}, callback) => {
     videoElement.addEventListener('ended', () => callback('complete'));
