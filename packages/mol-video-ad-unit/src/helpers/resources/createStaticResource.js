@@ -1,16 +1,16 @@
-const createStaticResource = (src, {document, payload}) => {
+const createStaticResource = (src, {document, data}) => {
   const {
     height,
     width
-  } = payload;
+  } = data;
   const img = document.createElement('IMG');
 
   if (width) {
-    img.style.width = width;
+    img.width = width;
   }
 
   if (height) {
-    img.style.height = height;
+    img.height = height;
   }
 
   img.src = src;

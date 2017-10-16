@@ -1,8 +1,8 @@
-const createIframeResource = (src, {document, payload}) => {
+const createIframeResource = (src, {document, data}) => {
   const {
     height,
     width
-  } = payload;
+  } = data;
   const iframeElement = document.createElement('IFRAME');
 
   iframeElement.src = src;

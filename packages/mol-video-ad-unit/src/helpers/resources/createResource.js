@@ -2,30 +2,30 @@ import createHtmlResource from './createHtmlResource';
 import createIframeResource from './createIframeResource';
 import createStaticResource from './createStaticResource';
 
-const createResource = (document, payload) => {
+const createResource = (document, data) => {
   const {
     staticResource,
     htmlResource,
     iframeResource
-  } = payload;
+  } = data;
 
   if (Boolean(staticResource)) {
     return createStaticResource(staticResource, {
-      document,
-      payload
+      data,
+      document
     });
   }
 
   if (Boolean(htmlResource)) {
     return createHtmlResource(htmlResource, {
-      document,
-      payload
+      data,
+      document
     });
   }
 
   return createIframeResource(iframeResource, {
-    document,
-    payload
+    data,
+    document
   });
 };
 
