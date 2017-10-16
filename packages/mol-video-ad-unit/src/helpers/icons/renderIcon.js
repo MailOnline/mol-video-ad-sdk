@@ -18,6 +18,8 @@ const updateIconElement = (iconElement, icon) => {
     top
   } = icon;
 
+  iconElement.height = height;
+  iconElement.width = width;
   iconElement.style.position = 'absolute';
   iconElement.style.left = `${left}px`;
   iconElement.style.top = `${top}px`;
