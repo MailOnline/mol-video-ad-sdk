@@ -1,6 +1,6 @@
-const isCustomXposition = (xPosition) => !['left', 'right'].includes(xPosition.toLowerCase());
-const isCustomYPosition = (yPosition) => !['top', 'bottom'].includes(yPosition.toLowerCase());
-const calculateIconLeft = (dynamicPos, iconWidth, drawnIcons, placeholder) => {
+const isCustomXposition = (xPosition) => !['left', 'right'].includes(String(xPosition).toLowerCase());
+const isCustomYPosition = (yPosition) => !['top', 'bottom'].includes(String(yPosition).toLowerCase());
+const calculateIconLeft = (dynamicPos, iconWidth, drawnIcons, phWidth) => {
   const icons = drawnIcons.filter((icon) => icon.xPosition === dynamicPos);
   const drawnIconsWidth = icons.reduce((accumulator, icon) => accumulator + icon.width, 0);
 
@@ -8,22 +8,23 @@ const calculateIconLeft = (dynamicPos, iconWidth, drawnIcons, placeholder) => {
     return drawnIconsWidth;
   }
 
-  return placeholder.getBoundingClientRect().width - drawnIconsWidth - iconWidth;
+  return phWidth - drawnIconsWidth - iconWidth;
 };
 
-const calculateIconTop = (dynamicPos, iconHeight, placeholder) => {
+const calculateIconTop = (dynamicPos, iconHeight, phHeight) => {
   if (dynamicPos === 'top') {
     return 0;
   }
 
-  return placeholder.getBoundingClientRect().height - iconHeight;
+  return phHeight - iconHeight;
 };
 
 const updateIcon = (icon, iconElement, {drawnIcons, placeholder}) => {
   const rect = iconElement.getBoundingClientRect();
+  const phRect = placeholder.getBoundingClientRect();
   const width = icon.width || rect.width;
   const height = icon.height || rect.height;
-  const xPosition = icon.xPostion || 'right';
+  const xPosition = icon.xPosition || 'right';
   const yPosition = icon.yPosition || 'top';
   let left;
   let top;
@@ -31,13 +32,13 @@ const updateIcon = (icon, iconElement, {drawnIcons, placeholder}) => {
   if (isCustomXposition(xPosition)) {
     left = xPosition;
   } else {
-    left = calculateIconLeft(xPosition, width, drawnIcons, placeholder);
+    left = calculateIconLeft(xPosition, width, drawnIcons, phRect.width);
   }
 
   if (isCustomYPosition(yPosition)) {
     top = yPosition;
   } else {
-    top = calculateIconTop(yPosition, height, placeholder);
+    top = calculateIconTop(yPosition, height, phRect.height);
   }
 
   return Object.assign({}, icon, {
