@@ -7,21 +7,17 @@ import {
 import getLinearCreative from './helpers/getLinearCreative';
 import parseTime from './helpers/parseTime';
 
-const formatCssSize = (size) => {
-  const hasPixelSuffix = /\d+px$/g.test(size);
+const formatSize = (size) => {
+  const match = `${size}`.match(/\d+/g);
 
-  if (hasPixelSuffix) {
-    return size;
-  }
-
-  return `${size}px`;
+  return parseInt(match[0], 10);
 };
 
 const formatPosition = (position) => {
-  const isNumberString = /^\d+$/.test(position);
+  const isNumberString = /\d+/.test(position);
 
   if (isNumberString) {
-    return formatCssSize(position);
+    return formatSize(position);
   }
 
   return position;
@@ -41,11 +37,11 @@ const getIconAttributes = (iconElement) => {
 
   return {
     duration: duration && parseTime(duration),
-    height: height && formatCssSize(height),
+    height: height && formatSize(height),
     offset: offset && parseTime(offset),
     program,
     pxratio: pxratio && parseInt(pxratio, 10),
-    width: width && formatCssSize(width),
+    width: width && formatSize(width),
     xPosition: xPosition && formatPosition(xPosition),
     yPosition: yPosition && formatPosition(yPosition)
   };

@@ -26,7 +26,7 @@ test('retrieveIcons must return the icons filtering out the duplicates and just 
   expect(icons).toEqual([
     {
       duration: 30000,
-      height: '20px',
+      height: 20,
       iconClickThrough: 'https://test.example.com/iconClickThrough',
       iconClickTracking: 'https://test.example.com/iconClickTracking',
       iconViewTracking: 'https://test.example.com/iconViewTracking',
@@ -34,13 +34,13 @@ test('retrieveIcons must return the icons filtering out the duplicates and just 
       program: 'MOL_STATIC',
       pxratio: 2,
       staticResource: 'https://test.example.com/icon/staticResource2',
-      width: '20px',
+      width: 20,
       xPosition: 'right',
       yPosition: 'top'
     },
     {
       duration: 30000,
-      height: '20px',
+      height: 20,
       htmlResource: 'https://test.example.com/icon/htmlResource',
       iconClickThrough: 'https://test.example.com/iconClickThrough',
       iconClickTracking: 'https://test.example.com/iconClickTracking',
@@ -48,13 +48,13 @@ test('retrieveIcons must return the icons filtering out the duplicates and just 
       offset: 5000,
       program: 'MOL_HTML',
       pxratio: 1,
-      width: '20px',
+      width: 20,
       xPosition: 'left',
-      yPosition: '20px'
+      yPosition: 20
     },
     {
       duration: undefined,
-      height: '20px',
+      height: 20,
       iconClickThrough: 'https://test.example.com/iconClickThrough',
       iconClickTracking: 'https://test.example.com/iconClickTracking',
       iconViewTracking: 'https://test.example.com/iconViewTracking',
@@ -62,9 +62,9 @@ test('retrieveIcons must return the icons filtering out the duplicates and just 
       offset: undefined,
       program: 'MOL_IFRAME',
       pxratio: 1,
-      width: '20px',
-      xPosition: '10px',
-      yPosition: '30px'
+      width: 20,
+      xPosition: 10,
+      yPosition: 30
     },
     {
       duration: undefined,
@@ -94,7 +94,7 @@ test('retrieveIcons must filter the icons taking the pxratio into account', () =
   expect(icons).toEqual(expect.arrayContaining([
     {
       duration: 30000,
-      height: '20px',
+      height: 20,
       iconClickThrough: 'https://test.example.com/iconClickThrough',
       iconClickTracking: 'https://test.example.com/iconClickTracking',
       iconViewTracking: 'https://test.example.com/iconViewTracking',
@@ -102,7 +102,7 @@ test('retrieveIcons must filter the icons taking the pxratio into account', () =
       program: 'MOL_STATIC',
       pxratio: 2,
       staticResource: 'https://test.example.com/icon/staticResource2',
-      width: '20px',
+      width: 20,
       xPosition: 'right',
       yPosition: 'top'
     }
@@ -121,7 +121,7 @@ test('retrieveIcons must filter the icons taking the pxratio into account', () =
   expect(molStaticIcons.length).toBe(1);
   expect(molStaticIcons[0]).toEqual(expect.objectContaining({
     duration: 30000,
-    height: '20px',
+    height: 20,
     iconClickThrough: 'https://test.example.com/iconClickThrough',
     iconClickTracking: 'https://test.example.com/iconClickTracking',
     iconViewTracking: 'https://test.example.com/iconViewTracking',
@@ -129,7 +129,7 @@ test('retrieveIcons must filter the icons taking the pxratio into account', () =
     program: 'MOL_STATIC',
     pxratio: 1,
     staticResource: 'https://test.example.com/icon/staticResource',
-    width: '20px',
+    width: 20,
     xPosition: 'right',
     yPosition: 'top'
   }));
