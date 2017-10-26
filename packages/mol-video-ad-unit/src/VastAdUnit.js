@@ -12,6 +12,10 @@ import {
   error
 } from './helpers/metrics/linearTrackingEvents';
 import initMetricHandlers from './helpers/metrics/initMetricHandlers';
+import {
+  addIcons,
+  retrieveIcons
+} from './helpers/icons';
 
 const findBestMedia = (videoElement, mediaFiles, container) => {
   const screenRect = container.getBoundingClientRect();
@@ -24,6 +28,7 @@ const findBestMedia = (videoElement, mediaFiles, container) => {
 const onErrorCallbacks = Symbol('onErrorCallbacks');
 const onCompleteCallbacks = Symbol('onCompleteCallbacks');
 const removeMetrichandlers = Symbol('removeMetrichandlers');
+const removeIcons = Symbol('removeIcons');
 
 class VastAdUnit extends Emitter {
   constructor (vastAdChain, videoAdContainer, {logger = console} = {}) {
@@ -77,7 +82,14 @@ class VastAdUnit extends Emitter {
 
     this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, handleMetric, {skipoffset});
 
-    // TODO: add the ICON to the container
+    const icons = retrieveIcons(this.vastAdChain);
+
+    if (icons) {
+      this[removeIcons] = addIcons(icons, {
+        logger: this.logger,
+        videoAdContainer: this.videoAdContainer
+      });
+    }
 
     videoElement.play();
   }
@@ -117,6 +129,10 @@ class VastAdUnit extends Emitter {
     this[onErrorCallbacks] = null;
     this[onCompleteCallbacks] = null;
     this[removeMetrichandlers] = null;
+
+    if (this[removeIcons]) {
+      this[removeIcons]();
+    }
   }
 }
 

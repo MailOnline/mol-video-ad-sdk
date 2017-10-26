@@ -11,6 +11,10 @@ import {createVideoAdContainer} from 'mol-video-ad-container';
 import VastAdUnit from '../src/VastAdUnit';
 import canPlay from '../src/helpers/utils/canPlay';
 import metricHandlers from '../src/helpers/metrics/handlers';
+import {
+  addIcons,
+  retrieveIcons
+} from '../src/helpers/icons';
 
 const mockStopMetricHandler = jest.fn();
 
@@ -26,6 +30,11 @@ jest.mock('../src/helpers/metrics/handlers/index.js', () => [
   }),
   jest.fn(() => mockStopMetricHandler)
 ]);
+
+jest.mock('../src/helpers/icons/index.js', () => ({
+  addIcons: jest.fn(),
+  retrieveIcons: jest.fn()
+}));
 
 let vastAdChain;
 let videoAdContainer;
@@ -62,6 +71,9 @@ beforeEach(async () => {
 afterEach(() => {
   vastAdChain = null;
   videoAdContainer = null;
+
+  addIcons.mockClear();
+  retrieveIcons.mockClear();
 });
 
 test('VastAdUnit must set the initial state with the data passed to the constructor', () => {
@@ -167,6 +179,30 @@ test('VastAdUnit run must play the selected mediaFile', () => {
   adUnit.run();
 
   expect(videoAdContainer.videoElement.play).toHaveBeenCalledTimes(1);
+});
+
+test('VastAdUnit run must add the icons of the vastChain', () => {
+  canPlay.mockReturnValue(true);
+
+  let adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+
+  adUnit.run();
+
+  expect(retrieveIcons).toHaveBeenCalledTimes(1);
+  expect(addIcons).not.toHaveBeenCalled();
+
+  adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+
+  retrieveIcons.mockImplementation(() => [{
+    height: 20,
+    width: 20,
+    xPosition: 'left',
+    yPosition: 'top'
+  }]);
+  adUnit.run();
+
+  expect(retrieveIcons).toHaveBeenCalledTimes(2);
+  expect(addIcons).toHaveBeenCalledTimes(1);
 });
 
 test('VastAdUnit cancel must stop the ad video and destroy the ad unit', () => {
@@ -278,3 +314,23 @@ test('VastAdUnit destroy must remove the src from the videoElement, stop the met
   expect(mockStopMetricHandler).toHaveBeenCalledTimes(metricHandlers.length);
 });
 
+test('VastAdUnit destroy must remove the icons of the vastChain', () => {
+  canPlay.mockReturnValue(true);
+
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const removeIconMock = jest.fn();
+
+  retrieveIcons.mockImplementation(() => [{
+    height: 20,
+    width: 20,
+    xPosition: 'left',
+    yPosition: 'top'
+  }]);
+
+  addIcons.mockImplementation(() => removeIconMock);
+
+  adUnit.run();
+  adUnit.destroy();
+
+  expect(removeIconMock).toHaveBeenCalledTimes(1);
+});
