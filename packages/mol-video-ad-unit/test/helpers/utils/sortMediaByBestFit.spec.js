@@ -1,6 +1,6 @@
 import sortMediaByBestFit from '../../../src/helpers/utils/sortMediaByBestFit';
 
-test('sortMediaByBestFit must sort the medifiles by best screen fit', () => {
+test('sortMediaByBestFit must sort the mediaFiles by best screen fit', () => {
   const mediafiles = [
     {width: 120},
     {width: 100},

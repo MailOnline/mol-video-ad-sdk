@@ -17,7 +17,7 @@ test('createStaticResource must return an image', () => {
   expect(resource.height).toBe(100);
 });
 
-test('createStaticResource must not set the with and height if not passed', () => {
+test('createStaticResource must not set the width and height if not passed', () => {
   const payload = {
     data: {},
     document

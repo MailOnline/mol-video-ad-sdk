@@ -18,7 +18,7 @@ test('createIframeResource must return an iframe', () => {
   expect(resource.sandbox).toBe('allow-forms allow-popups allow-scripts');
 });
 
-test('createIframeResource must not set the with and height if not passed', () => {
+test('createIframeResource must not set the width and height if not passed', () => {
   const payload = {
     data: {},
     document
