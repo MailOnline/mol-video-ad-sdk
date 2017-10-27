@@ -1,6 +1,37 @@
-import get from 'lodash/get';
+import {
+  get,
+  getAll,
+  getFirstChild,
+  getText,
+  getAttributes,
+  getAttribute
+} from 'mol-vast-xml2js';
+import parseOffset from './helpers/parseOffset';
+import getLinearCreative from './helpers/getLinearCreative';
+import getIcons from './getIcons';
 
-/** @module mol-vast-selectors */
+export const getBooleanValue = (val) => {
+  if (typeof val === 'string') {
+    return val === 'true';
+  }
+
+  return Boolean(val);
+};
+
+export const compareBySequence = (itemA, itemB) => {
+  const itemASequence = parseInt(getAttribute(itemA, 'sequence'), 10);
+  const itemBSequence = parseInt(getAttribute(itemB, 'sequence'), 10);
+
+  if (itemASequence < itemBSequence) {
+    return -1;
+  }
+
+  if (itemASequence > itemBSequence) {
+    return 1;
+  }
+
+  return 0;
+};
 
 /**
  * Selects the ads of the passed VAST.
@@ -9,7 +40,16 @@ import get from 'lodash/get';
  * @returns {Array} - Array of ads or null.
  * @static
  */
-const getAds = (parsedVAST) => get(parsedVAST, 'elements[0].elements', null);
+export const getAds = (parsedVAST) => {
+  const vastElement = get(parsedVAST, 'VAST');
+  const ads = getAll(vastElement, 'Ad');
+
+  if (ads.length > 0) {
+    return ads;
+  }
+
+  return null;
+};
 
 /**
  * Gets the sequence of the pod ad.
@@ -17,8 +57,8 @@ const getAds = (parsedVAST) => get(parsedVAST, 'elements[0].elements', null);
  * @param {Object} ad - Parsed ad definition object.
  * @returns {number} - The pod ad sequence number or null.
  */
-const getPodAdSequence = (ad) => {
-  const sequence = ad && ad.attributes && parseInt(ad.attributes.sequence, 10);
+export const getPodAdSequence = (ad) => {
+  const sequence = parseInt(getAttribute(ad, 'sequence'), 10);
 
   if (typeof sequence === 'number' && !isNaN(sequence)) {
     return sequence;
@@ -33,7 +73,7 @@ const getPodAdSequence = (ad) => {
  * @param {Object} ad - Parsed ad definition object.
  * @returns {boolean} - Returns true if there the ad is a pod ad and false otherwise.
  */
-const isPodAd = (ad) => Boolean(getPodAdSequence(ad));
+export const isPodAd = (ad) => Boolean(getPodAdSequence(ad));
 
 /**
  * Checks if the passed array of ads have an ad pod.
@@ -41,25 +81,10 @@ const isPodAd = (ad) => Boolean(getPodAdSequence(ad));
  * @param {Object} parsedVAST - Parsed VAST xml.
  * @returns {boolean} - Returns true if there is an ad pod in the array and false otherwise.
  */
-const hasAdPod = (parsedVAST) => {
+export const hasAdPod = (parsedVAST) => {
   const ads = getAds(parsedVAST);
 
   return Array.isArray(ads) && ads.filter(isPodAd).length > 1;
-};
-
-const compareBySequence = (itemA, itemB) => {
-  const itemASequence = parseInt(itemA.attributes.sequence, 10);
-  const itemBSequence = parseInt(itemB.attributes.sequence, 10);
-
-  if (itemASequence < itemBSequence) {
-    return -1;
-  }
-
-  if (itemASequence > itemBSequence) {
-    return 1;
-  }
-
-  return 0;
 };
 
 /**
@@ -69,10 +94,10 @@ const compareBySequence = (itemA, itemB) => {
  * @returns {Object} - First ad of the VAST xml or null.
  * @static
  */
-const getFirstAd = (parsedVAST) => {
+export const getFirstAd = (parsedVAST) => {
   const ads = getAds(parsedVAST);
 
-  if (Array.isArray(ads)) {
+  if (Array.isArray(ads) && ads.length > 0) {
     if (hasAdPod(parsedVAST)) {
       return ads.filter(isPodAd)
         .sort(compareBySequence)[0];
@@ -91,7 +116,7 @@ const getFirstAd = (parsedVAST) => {
  * @returns {boolean} - Returns `true` if the ad contains a wrapper or `false` otherwise.
  * @static
  */
-const isWrapper = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'WRAPPER';
+export const isWrapper = (ad = {}) => Boolean(get(ad || {}, 'Wrapper'));
 
 /**
  * Checks if the passed ad is an Inline.
@@ -100,7 +125,7 @@ const isWrapper = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'WRA
  * @returns {boolean} - Returns `true` if the ad contains an Inline or `false` otherwise.
  * @static
  */
-const isInline = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'INLINE';
+export const isInline = (ad) => Boolean(get(ad || {}, 'Inline'));
 
 /**
  * Returns the VASTAdTagURI from the wrapper ad.
@@ -109,24 +134,15 @@ const isInline = (ad) => get(ad, 'elements[0].name', '').toUpperCase() === 'INLI
  * @returns {boolean} - Returns the VASTAdTagURI from the wrapper ad or null otherwise.
  * @static
  */
-const getVASTAdTagURI = (ad) => {
-  const elements = get(ad, 'elements[0].elements', null);
+export const getVASTAdTagURI = (ad) => {
+  const wrapperElement = get(ad, 'Wrapper');
+  const vastAdTagURIElement = wrapperElement && get(wrapperElement, 'VastAdTagUri');
 
-  if (Array.isArray(elements)) {
-    const VASTAdTagURIElement = elements.find(({name}) => name.toUpperCase() === 'VASTADTAGURI');
-
-    return get(VASTAdTagURIElement, 'elements[0].cdata', null);
+  if (vastAdTagURIElement) {
+    return getText(vastAdTagURIElement) || null;
   }
 
   return null;
-};
-
-const getBooleanValue = (val) => {
-  if (typeof val === 'string') {
-    return val === 'true';
-  }
-
-  return Boolean(val);
 };
 
 /**
@@ -136,12 +152,13 @@ const getBooleanValue = (val) => {
  * @returns {Object} - Returns the options from the wrapper ad.
  * @static
  */
-const getWrapperOptions = (ad) => {
+export const getWrapperOptions = (ad) => {
   const {
     allowMultipleAds,
     fallbackOnNoAd,
     followAdditionalWrappers
-  } = get(ad, 'elements[0].attributes', {});
+  } = getAttributes(get(ad, 'Wrapper'));
+
   const opts = {};
 
   if (allowMultipleAds) {
@@ -159,14 +176,168 @@ const getWrapperOptions = (ad) => {
   return opts;
 };
 
-export {
-  getAds,
-  getWrapperOptions,
-  getFirstAd,
-  getVASTAdTagURI,
-  hasAdPod,
-  getPodAdSequence,
-  isPodAd,
-  isInline,
-  isWrapper
+export const getAdError = (ad) => {
+  const adTypeElement = ad && getFirstChild(ad);
+
+  if (adTypeElement) {
+    const error = get(adTypeElement, 'Error');
+
+    if (error) {
+      return getText(error);
+    }
+  }
+
+  return null;
 };
+
+export const getMediaFiles = (ad) => {
+  const creativeElement = ad && getLinearCreative(ad);
+
+  if (creativeElement) {
+    const universalAdIdElement = get(creativeElement, 'UniversalAdId');
+    const universalAdId = universalAdIdElement && getText(universalAdIdElement) || null;
+    const linearElement = get(creativeElement, 'Linear');
+    const mediaFilesElement = get(linearElement, 'MediaFiles');
+    const mediaFileElements = mediaFilesElement && getAll(mediaFilesElement, 'MediaFile');
+
+    if (mediaFileElements && mediaFileElements.length > 0) {
+      return mediaFileElements.map((mediaFileElement) => {
+        const src = getText(mediaFileElement);
+        const {
+          bitrate,
+          codec,
+          delivery,
+          height,
+          id,
+          maintainAspectRatio,
+          maxBitrate,
+          minBitrate,
+          scalable,
+          type,
+          width
+        } = getAttributes(mediaFileElement);
+
+        return {
+          bitrate,
+          codec,
+          delivery,
+          height,
+          id,
+          maintainAspectRatio,
+          maxBitrate,
+          minBitrate,
+          scalable,
+          src,
+          type,
+          universalAdId,
+          width
+        };
+      });
+    }
+
+    return null;
+  }
+
+  return null;
+};
+
+export const getLinearTrackingEvents = (ad) => {
+  const creativeElement = ad && getLinearCreative(ad);
+
+  if (creativeElement) {
+    const linearElement = get(creativeElement, 'Linear');
+    const trackingEventsElement = linearElement && get(linearElement, 'TrackingEvents');
+    const trackinEventElements = trackingEventsElement && getAll(trackingEventsElement, 'Tracking');
+
+    if (trackinEventElements && trackinEventElements.length > 0) {
+      return trackinEventElements.map((trackinEventElement) => {
+        const {event, offset} = getAttributes(trackinEventElement);
+        const uri = getText(trackinEventElement);
+
+        return {
+          event,
+          offset: offset && parseOffset(offset),
+          uri
+        };
+      });
+    }
+  }
+
+  return null;
+};
+
+export const getLinearProgressEvents = (ad) => {
+  const trackinEvents = ad && getLinearTrackingEvents(ad);
+
+  if (trackinEvents) {
+    const progressEvents = trackinEvents.filter(({event}) => event === 'progress');
+
+    if (progressEvents.length > 0) {
+      return progressEvents;
+    }
+  }
+
+  return null;
+};
+
+export const getLinearTimeSpentViewingEvents = (ad) => {
+  const trackinEvents = ad && getLinearTrackingEvents(ad);
+
+  if (trackinEvents) {
+    const timeSpentViewingEvents = trackinEvents.filter(({event}) => event === 'timeSpentViewing');
+
+    if (timeSpentViewingEvents.length > 0) {
+      return timeSpentViewingEvents;
+    }
+  }
+
+  return null;
+};
+
+const getVideoClicksElement = (ad) => {
+  const creativeElement = ad && getLinearCreative(ad);
+  const linearElement = creativeElement && get(creativeElement, 'Linear');
+  const videoClicksElement = linearElement && get(linearElement, 'VideoClicks');
+
+  if (videoClicksElement) {
+    return videoClicksElement;
+  }
+
+  return null;
+};
+
+export const getClickThrough = (ad) => {
+  const videoClicksElement = getVideoClicksElement(ad);
+  const clickThroughElement = videoClicksElement && get(videoClicksElement, 'ClickThrough');
+
+  if (clickThroughElement) {
+    return getText(clickThroughElement);
+  }
+
+  return null;
+};
+
+export const getClickTracking = (ad) => {
+  const videoClicksElement = getVideoClicksElement(ad);
+  const clickTrackingElement = videoClicksElement && get(videoClicksElement, 'ClickTracking');
+
+  if (clickTrackingElement) {
+    return getText(clickTrackingElement);
+  }
+
+  return null;
+};
+
+export const getSkipoffset = (ad) => {
+  const creativeElement = ad && getLinearCreative(ad);
+  const linearElement = creativeElement && get(creativeElement, 'Linear');
+  const skipoffset = linearElement && getAttribute(linearElement, 'skipoffset');
+
+  if (skipoffset) {
+    return parseOffset(skipoffset);
+  }
+
+  return null;
+};
+
+export {getIcons};

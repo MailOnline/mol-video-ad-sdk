@@ -9,11 +9,7 @@
   "files": [
     "src"
   ],
-  "peerDependencies": {
-    "lodash": "^4.17.4"
-  },
   "devDependencies": {
-    "lodash": "^4.17.4",
     "mol-vast-xml2js": "^0.1.0",
     "mol-vast-fixtures": "0.1.0"
   }

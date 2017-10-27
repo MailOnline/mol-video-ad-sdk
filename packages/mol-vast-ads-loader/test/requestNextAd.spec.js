@@ -26,14 +26,14 @@ test('requestNexAd must return the next inline to play in the waterfall', async 
       ad: inlineAd,
       errorCode: null,
       parsedXML: inlineParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastInlineXML
     },
     {
       ad: wrapperAd,
       errorCode: null,
       parsedXML: wrapperParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastWrapperXML
     },
     {
@@ -73,21 +73,21 @@ test('requestNextAd must request the next ad on the waterfall', async () => {
       ad: inlineAd,
       errorCode: null,
       parsedXML: inlineParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastInlineXML
     },
     {
       ad: wrapperAd,
       errorCode: null,
       parsedXML: wrapperParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastWrapperXML
     },
     {
       ad: wrapperAd,
       errorCode: null,
       parsedXML: wrapperParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastWrapperXML
     },
     {
@@ -126,14 +126,14 @@ test('requestNextAd must request the next ad on the waterfall', async () => {
       ad: inlineAd,
       errorCode: null,
       parsedXML: inlineParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastInlineXML
     },
     {
       ad: wrapperAd,
       errorCode: null,
       parsedXML: wrapperParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastWrapperXML
     },
     {
@@ -152,14 +152,14 @@ test('requestNextAd must request the next ad on the waterfall', async () => {
       ad: inlineAd,
       errorCode: null,
       parsedXML: inlineParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastInlineXML
     },
     {
       ad: wrapperAd,
       errorCode: null,
       parsedXML: wrapperParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastWrapperXML
     },
     {
@@ -185,21 +185,21 @@ test('requestNextAd must throw an error if there are no more ads to play in the 
       ad: inlineAd,
       errorCode: null,
       parsedXML: inlineParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastInlineXML
     },
     {
       ad: wrapperAd,
       errorCode: null,
       parsedXML: wrapperParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastWrapperXML
     },
     {
       ad: wrapperAd,
       errorCode: null,
       parsedXML: wrapperParsedXML,
-      requestTag: 'https://VASTAdTagURI.example.com',
+      requestTag: 'https://test.example.com/vastadtaguri',
       XML: vastWrapperXML
     }
   ];
