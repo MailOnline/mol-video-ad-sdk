@@ -18,6 +18,8 @@ const start = 'start';
 const thirdQuartile = 'thirdQuartile';
 const timeSpentViewing = 'timeSpentViewing';
 const unmute = 'unmute';
+const iconClickThrough = 'iconClickThrough';
+const iconView = 'iconView';
 
 export {
   acceptInvitationLinear,
@@ -26,6 +28,8 @@ export {
   error,
   firstQuartile,
   impression,
+  iconClickThrough,
+  iconView,
   midpoint,
   mute,
   otherAdInteraction,
