@@ -30,6 +30,8 @@ export default class VideoAdContainer {
     return Promise.resolve(this);
   }
 
+  // TODO: ON RESIZE USING MOL-ELEMENT-OBSERVERS
+
   addScript (src, options = {}) {
     if (this.isDestroyed()) {
       throw new Error('VideoAdContainer has been destroyed');

@@ -88,6 +88,8 @@ class VastAdUnit extends Emitter {
       this[removeIcons] = addIcons(icons, {
         logger: this.logger,
         videoAdContainer: this.videoAdContainer
+
+        // TODO: onIconView, onIconClick
       });
     }
 

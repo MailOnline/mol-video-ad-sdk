@@ -13,6 +13,8 @@ const onClickThrough = ({videoElement, context, element}, callback) => {
   anchor.style.width = '100%';
   anchor.style.height = '100%';
   anchor.style.position = 'absolute';
+
+  // TODO: This zIndex will conflict with the icons. I think we should remove it
   anchor.style.zIndex = 9999;
 
   anchor.onclick = (event) => {
@@ -24,10 +26,10 @@ const onClickThrough = ({videoElement, context, element}, callback) => {
       videoElement.play();
     } else {
       videoElement.pause();
+
+      // TODO: do the click through
       callback(clickThrough);
     }
-
-    return false;
   };
 
   placeholder.insertBefore(anchor, videoElement);
