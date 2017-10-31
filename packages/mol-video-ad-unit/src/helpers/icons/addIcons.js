@@ -16,7 +16,10 @@ const removeDrawnIcons = (icons) => icons
   .filter(({element}) => Boolean(element) && Boolean(element.parentNode))
   .forEach(({element}) => element.parentNode.removeChild(element));
 
-const addIcons = (icons, {videoAdContainer, ...rest}) => {
+const firstRender = Symbol('firstRender');
+const noop = () => {};
+
+const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noop, ...rest}) => {
   const {videoElement, element} = videoAdContainer;
   let finished = false;
 
@@ -28,13 +31,20 @@ const addIcons = (icons, {videoAdContainer, ...rest}) => {
     }
 
     const iconsToDraw = icons.filter((icon) => canBeAdded(icon, videoElement));
-
-    await renderIcons(iconsToDraw, {
+    const drawnIcons = await renderIcons(iconsToDraw, {
+      onIconClick,
       videoAdContainer,
       ...rest
     });
 
-    element.dispatchEvent(new Event('iconsdrawn'));
+    element.dispatchEvent(new CustomEvent('iconsdrawn'));
+
+    drawnIcons.forEach((icon) => {
+      if (icon[firstRender]) {
+        onIconView(icon);
+        icon[firstRender] = false;
+      }
+    });
 
     if (finished) {
       removeDrawnIcons(icons);
@@ -42,10 +52,17 @@ const addIcons = (icons, {videoAdContainer, ...rest}) => {
       return;
     }
 
+    // TODO: redraw on resize of ad container element
+
+    // TODO: REVIEW HAS TO REDRAW LOGIC
     if (hasToRedraw(icons, videoElement)) {
       once(videoElement, 'timeupdate', addIconsToAd);
     }
   };
+
+  icons.forEach((icon) => {
+    icon[firstRender] = true;
+  });
 
   addIconsToAd();
 

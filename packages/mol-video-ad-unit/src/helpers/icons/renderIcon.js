@@ -2,9 +2,35 @@ import loadIcon from './loadIcon';
 import updateIcon from './updateIcon';
 import canBeRendered from './canBeRendered';
 
+const wrapWithClickThrough = (iconElement, icon, {onIconClick}) => {
+  const anchor = document.createElement('A');
+
+  if (icon.iconClickthrough) {
+    anchor.href = icon.iconClickthrough;
+    anchor.target = '_blank';
+  }
+
+  anchor.onclick = (event) => {
+    if (Event.prototype.stopPropagation !== undefined) {
+      event.stopPropagation();
+    }
+
+    onIconClick(icon);
+  };
+
+  anchor.appendChild(iconElement);
+
+  return anchor;
+};
+
 const createIcon = async (icon, config) => {
   if (!icon.element) {
-    icon.element = await loadIcon(icon, config);
+    const iconElement = await loadIcon(icon, config);
+
+    iconElement.height = '100%';
+    iconElement.width = '100%';
+
+    icon.element = wrapWithClickThrough(iconElement, icon, config);
   }
 
   return icon.element;

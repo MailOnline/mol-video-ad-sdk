@@ -1,5 +1,6 @@
 import createResource from '../resources/createResource';
 
+// TODO: RENAME TO loadResource AND MOVE TO RESOURCES FOLDER
 const loadIcon = (icon, {document, placeholder}) => new Promise((resolve, reject) => {
   try {
     const iconElement = createResource(document, icon);
