@@ -1,9 +1,9 @@
+import loadResource from '../../../src/helpers/resources/loadResource';
 import renderIcon from '../../../src/helpers/icons/renderIcon';
-import loadIcon from '../../../src/helpers/icons/loadIcon';
 import updateIcon from '../../../src/helpers/icons/updateIcon';
 import canBeRendered from '../../../src/helpers/icons/canBeRendered';
 
-jest.mock('../../../src/helpers/icons/loadIcon');
+jest.mock('../../../src/helpers/resources/loadResource');
 jest.mock('../../../src/helpers/icons/updateIcon');
 jest.mock('../../../src/helpers/icons/canBeRendered');
 
@@ -38,19 +38,19 @@ afterEach(() => {
 test('renderIcon must fail if there was a problem creating the icon', () => {
   const loadingError = new Error('problem loading icon');
 
-  loadIcon.mockImplementation(() => Promise.reject(loadingError));
+  loadResource.mockImplementation(() => Promise.reject(loadingError));
   expect(renderIcon(icon, config)).rejects.toBe(loadingError);
 });
 
 test('renderIcon must fail if the icon can not be rendered', () => {
-  loadIcon.mockImplementation(() => Promise.resolve(iconResource));
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
   updateIcon.mockImplementation(() => icon);
   canBeRendered.mockImplementation(() => false);
   expect(renderIcon(icon, config)).rejects.toThrowErrorMatchingSnapshot();
 });
 
 test('must append the icon to the placeholder if three is no problem', async () => {
-  loadIcon.mockImplementation(() => Promise.resolve(iconResource));
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
   updateIcon.mockImplementation(() => icon);
   canBeRendered.mockImplementation(() => true);
 
@@ -60,17 +60,17 @@ test('must append the icon to the placeholder if three is no problem', async () 
 });
 
 test('renderIcon must reuse previously created icons', async () => {
-  loadIcon.mockImplementation(() => Promise.resolve(iconResource));
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
   updateIcon.mockImplementation(() => icon);
   canBeRendered.mockImplementation(() => true);
 
   const renderedIcon = await renderIcon(icon, config);
 
-  loadIcon.mockClear();
+  loadResource.mockClear();
 
   await renderIcon(renderedIcon, config);
 
-  expect(loadIcon).not.toHaveBeenCalled();
+  expect(loadResource).not.toHaveBeenCalled();
 
   expect(placeholder.contains(iconResource)).toBe(true);
 });
@@ -78,7 +78,7 @@ test('renderIcon must reuse previously created icons', async () => {
 test('renderIcon must return the updated icon', () => {
   const updatedIcon = Object.assign({}, icon);
 
-  loadIcon.mockImplementation(() => Promise.resolve(iconResource));
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
   updateIcon.mockImplementation(() => updatedIcon);
   canBeRendered.mockImplementation(() => true);
 
@@ -93,7 +93,7 @@ test('renderIcon must style the icon Element', async () => {
     width: 6
   };
 
-  loadIcon.mockImplementation(() => Promise.resolve(iconResource));
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
   updateIcon.mockImplementation(() => updatedIcon);
   canBeRendered.mockImplementation(() => true);
 

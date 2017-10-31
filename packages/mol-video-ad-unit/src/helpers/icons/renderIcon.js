@@ -1,4 +1,4 @@
-import loadIcon from './loadIcon';
+import loadResource from '../resources/loadResource';
 import updateIcon from './updateIcon';
 import canBeRendered from './canBeRendered';
 
@@ -25,7 +25,7 @@ const wrapWithClickThrough = (iconElement, icon, {onIconClick}) => {
 
 const createIcon = async (icon, config) => {
   if (!icon.element) {
-    const iconElement = await loadIcon(icon, config);
+    const iconElement = await loadResource(icon, config);
 
     iconElement.height = '100%';
     iconElement.width = '100%';

@@ -1,4 +1,4 @@
-import loadIcon from '../../../src/helpers/icons/loadIcon';
+import loadResource from '../../../src/helpers/resources/loadResource';
 import createResource from '../../../src/helpers/resources/createResource';
 
 const mockResource = document.createElement('IMG');
@@ -23,8 +23,8 @@ afterEach(() => {
   placeholder = null;
 });
 
-test('loadIcon must return a promise', async () => {
-  const promise = loadIcon(icon, {
+test('loadResource must return a promise', async () => {
+  const promise = loadResource(icon, {
     document,
     placeholder
   });
@@ -42,8 +42,8 @@ test('loadIcon must return a promise', async () => {
   expect(placeholder.querySelector('.mock-resource-element')).toBeNull();
 });
 
-test('loadIcon must reject the promise if there is a problem loading the icon', () => {
-  const promise = loadIcon(icon, {
+test('loadResource must reject the promise if there is a problem loading the icon', () => {
+  const promise = loadResource(icon, {
     document,
     placeholder
   });
@@ -59,12 +59,12 @@ test('loadIcon must reject the promise if there is a problem loading the icon', 
   expect(placeholder.querySelector('.mock-resource-element')).toBeNull();
 });
 
-test('loadIcon must reject the promise if there is a problem creating the resource', () => {
+test('loadResource must reject the promise if there is a problem creating the resource', () => {
   createResource.mockImplementation(() => () => {
     throw new Error('boom');
   });
 
-  const promise = loadIcon(icon, {
+  const promise = loadResource(icon, {
     document,
     placeholder
   });
