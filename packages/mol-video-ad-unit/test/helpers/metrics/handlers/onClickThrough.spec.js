@@ -43,7 +43,6 @@ test('onClickThrough must add an anchor to the videoAdContainer element', () => 
   expect(anchor.style.width).toEqual('100%');
   expect(anchor.style.height).toEqual('100%');
   expect(anchor.style.position).toEqual('absolute');
-  expect(anchor.style.zIndex).toEqual('9999');
 });
 
 test('onClickThrough must on anchor click, pause the video content and call the callback with clickthrough', () => {

@@ -14,9 +14,6 @@ const onClickThrough = ({videoElement, context, element}, callback) => {
   anchor.style.height = '100%';
   anchor.style.position = 'absolute';
 
-  // TODO: This zIndex will conflict with the icons. I think we should remove it
-  anchor.style.zIndex = 9999;
-
   anchor.onclick = (event) => {
     if (Event.prototype.stopPropagation !== undefined) {
       event.stopPropagation();
