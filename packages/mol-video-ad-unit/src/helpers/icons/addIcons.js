@@ -1,6 +1,8 @@
 import once from '../dom/once';
 import renderIcons from './renderIcons';
 
+const firstRenderPending = Symbol('firstRenderPending');
+const noop = () => {};
 const canBeAdded = (icon, videoElement) => {
   const currentTimeInMs = videoElement.currentTime * 1000;
   const videoDurationInMs = videoElement.duration * 1000;
@@ -10,14 +12,21 @@ const canBeAdded = (icon, videoElement) => {
   return offset <= currentTimeInMs && currentTimeInMs - offset <= duration;
 };
 
-const hasToRedraw = (icons, videoElement) => icons.some((icon) => canBeAdded(icon, videoElement));
+const hasPendingIconRedraws = (icons, videoElement) => {
+  const currentTimeInMs = videoElement.currentTime * 1000;
+  const videoDurationInMs = videoElement.duration * 1000;
+
+  const iconsPendingToBedrawn = icons
+    .filter((icon) => !icon.offset || icon.offset < currentTimeInMs);
+  const iconsPendingToBeRemoved = icons
+    .filter((icon) => icon.duration && icon.duration < videoDurationInMs);
+
+  return iconsPendingToBedrawn.length > 0 || iconsPendingToBeRemoved.length > 0;
+};
 
 const removeDrawnIcons = (icons) => icons
   .filter(({element}) => Boolean(element) && Boolean(element.parentNode))
   .forEach(({element}) => element.parentNode.removeChild(element));
-
-const firstRender = Symbol('firstRender');
-const noop = () => {};
 
 const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noop, ...rest} = {}) => {
   const {videoElement, element} = videoAdContainer;
@@ -40,9 +49,9 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
     element.dispatchEvent(new CustomEvent('iconsdrawn'));
 
     drawnIcons.forEach((icon) => {
-      if (icon[firstRender]) {
+      if (icon[firstRenderPending]) {
         onIconView(icon);
-        icon[firstRender] = false;
+        icon[firstRenderPending] = false;
       }
     });
 
@@ -54,14 +63,13 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
 
     // TODO: redraw on resize of ad container element
 
-    // TODO: REVIEW HAS TO REDRAW LOGIC
-    if (hasToRedraw(icons, videoElement)) {
+    if (hasPendingIconRedraws(icons, videoElement)) {
       once(videoElement, 'timeupdate', addIconsToAd);
     }
   };
 
   icons.forEach((icon) => {
-    icon[firstRender] = true;
+    icon[firstRenderPending] = true;
   });
 
   addIconsToAd();
