@@ -33,8 +33,6 @@ export default class VideoAdContainer {
     return Promise.resolve(this);
   }
 
-  // TODO: TEST onResize logic
-
   // eslint-disable-next-line promise/prefer-await-to-callbacks
   onResize (callback) {
     if (this.isDestroyed()) {
