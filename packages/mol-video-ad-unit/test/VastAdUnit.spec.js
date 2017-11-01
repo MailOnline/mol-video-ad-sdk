@@ -12,6 +12,10 @@ import VastAdUnit from '../src/VastAdUnit';
 import canPlay from '../src/helpers/utils/canPlay';
 import metricHandlers from '../src/helpers/metrics/handlers';
 import {
+  iconClick,
+  iconView
+} from '../src/helpers/metrics/linearTrackingEvents';
+import {
   addIcons,
   retrieveIcons
 } from '../src/helpers/icons';
@@ -24,7 +28,7 @@ jest.mock('../src/helpers/metrics/handlers/index.js', () => [
     videoElement.addEventListener('ended', () => callback('complete'));
     videoElement.addEventListener('error', () => callback('error'));
     videoElement.addEventListener('progress', ({detail}) => callback('progress', detail));
-    videoElement.addEventListener('custom', () => callback('custom'));
+    videoElement.addEventListener('custom', (event) => callback('custom', event.data));
 
     return mockStopMetricHandler;
   }),
@@ -211,7 +215,12 @@ test('VastAdUnit run must play the selected mediaFile', () => {
 
 test('VastAdUnit run must add the icons of the vastChain', () => {
   canPlay.mockReturnValue(true);
-
+  const icons = [{
+    height: 20,
+    width: 20,
+    xPosition: 'left',
+    yPosition: 'top'
+  }];
   let adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
 
   adUnit.run();
@@ -219,18 +228,80 @@ test('VastAdUnit run must add the icons of the vastChain', () => {
   expect(retrieveIcons).toHaveBeenCalledTimes(1);
   expect(addIcons).not.toHaveBeenCalled();
 
+  retrieveIcons.mockImplementation(() => icons);
   adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
 
-  retrieveIcons.mockImplementation(() => [{
-    height: 20,
-    width: 20,
-    xPosition: 'left',
-    yPosition: 'top'
-  }]);
   adUnit.run();
 
   expect(retrieveIcons).toHaveBeenCalledTimes(2);
   expect(addIcons).toHaveBeenCalledTimes(1);
+
+  expect(addIcons).toHaveBeenCalledWith(icons, {
+    logger: adUnit.logger,
+    onIconClick: expect.any(Function),
+    onIconView: expect.any(Function),
+    videoAdContainer
+  });
+});
+
+test('VastAdUnit passed iconView must emit iconView passing the event, this and the viewed icon', async () => {
+  canPlay.mockReturnValue(true);
+  const icons = [{
+    height: 20,
+    width: 20,
+    xPosition: 'left',
+    yPosition: 'top'
+  }];
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+
+  retrieveIcons.mockImplementation(() => icons);
+  adUnit.run();
+
+  expect(addIcons).toHaveBeenCalledTimes(1);
+
+  const passedConfig = addIcons.mock.calls[0][1];
+
+  const promise = new Promise((resolve) => {
+    adUnit.on(iconView, (...args) => {
+      resolve(args);
+    });
+  });
+
+  passedConfig.onIconView(icons[0]);
+
+  const passedArgs = await promise;
+
+  expect(passedArgs).toEqual([iconView, adUnit, icons[0]]);
+});
+
+test('VastAdUnit passed iconClick must emiit iconClick passing the event, this and the viewed icon', async () => {
+  canPlay.mockReturnValue(true);
+  const icons = [{
+    height: 20,
+    width: 20,
+    xPosition: 'left',
+    yPosition: 'top'
+  }];
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+
+  retrieveIcons.mockImplementation(() => icons);
+  adUnit.run();
+
+  expect(addIcons).toHaveBeenCalledTimes(1);
+
+  const passedConfig = addIcons.mock.calls[0][1];
+
+  const promise = new Promise((resolve) => {
+    adUnit.on(iconClick, (...args) => {
+      resolve(args);
+    });
+  });
+
+  passedConfig.onIconClick(icons[0]);
+
+  const passedArgs = await promise;
+
+  expect(passedArgs).toEqual([iconClick, adUnit, icons[0]]);
 });
 
 test('VastAdUnit cancel must stop the ad video and destroy the ad unit', () => {
@@ -318,11 +389,15 @@ test('VastAdUnit must emit whatever metric event happens', async () => {
   });
 
   adUnit.run();
-  videoAdContainer.videoElement.dispatchEvent(new CustomEvent('custom'));
+  const data = {};
+  const event = new CustomEvent('custom');
+
+  event.data = data;
+  videoAdContainer.videoElement.dispatchEvent(event);
 
   const passedArgs = await promise;
 
-  expect(passedArgs).toEqual(['custom', adUnit]);
+  expect(passedArgs).toEqual(['custom', adUnit, data]);
 });
 
 test('VastAdUnit destroy must remove the src from the videoElement, stop the metric handlers and set state to null', () => {

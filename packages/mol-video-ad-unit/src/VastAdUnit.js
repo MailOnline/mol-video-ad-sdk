@@ -9,6 +9,8 @@ import canPlay from './helpers/utils/canPlay';
 import sortMediaByBestFit from './helpers/utils/sortMediaByBestFit';
 import {
   complete,
+  iconClick,
+  iconView,
   progress,
   error
 } from './helpers/metrics/linearTrackingEvents';
@@ -55,7 +57,7 @@ class VastAdUnit extends Emitter {
     const skipoffset = getSkipoffset(inlineAd);
     const clickThroughUrl = getClickThrough(inlineAd);
     const handleMetric = (event, data) => {
-      this.emit(event, event, this);
+      this.emit(event, event, this, data);
 
       switch (event) {
       case progress: {
@@ -95,9 +97,9 @@ class VastAdUnit extends Emitter {
     if (icons) {
       this[removeIcons] = addIcons(icons, {
         logger: this.logger,
+        onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
+        onIconView: (icon) => this.emit(iconView, iconView, this, icon),
         videoAdContainer: this.videoAdContainer
-
-        // TODO: onIconView, onIconClick
       });
     }
 

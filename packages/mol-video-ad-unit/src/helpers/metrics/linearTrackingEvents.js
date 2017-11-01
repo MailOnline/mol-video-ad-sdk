@@ -18,7 +18,7 @@ const start = 'start';
 const thirdQuartile = 'thirdQuartile';
 const timeSpentViewing = 'timeSpentViewing';
 const unmute = 'unmute';
-const iconClickThrough = 'iconClickThrough';
+const iconClick = 'iconClick';
 const iconView = 'iconView';
 
 export {
@@ -28,7 +28,7 @@ export {
   error,
   firstQuartile,
   impression,
-  iconClickThrough,
+  iconClick,
   iconView,
   midpoint,
   mute,
