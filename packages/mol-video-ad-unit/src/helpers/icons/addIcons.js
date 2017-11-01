@@ -19,7 +19,7 @@ const removeDrawnIcons = (icons) => icons
 const firstRender = Symbol('firstRender');
 const noop = () => {};
 
-const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noop, ...rest}) => {
+const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noop, ...rest} = {}) => {
   const {videoElement, element} = videoAdContainer;
   let finished = false;
 
