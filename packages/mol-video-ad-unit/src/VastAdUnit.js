@@ -32,9 +32,10 @@ const removeMetrichandlers = Symbol('removeMetrichandlers');
 const removeIcons = Symbol('removeIcons');
 
 class VastAdUnit extends Emitter {
-  constructor (vastAdChain, videoAdContainer, {logger = console} = {}) {
+  constructor (vastAdChain, videoAdContainer, {hooks = {}, logger = console} = {}) {
     super(logger);
 
+    this.hooks = hooks;
     this.vastAdChain = vastAdChain;
     this.videoAdContainer = videoAdContainer;
     this.error = null;
@@ -83,7 +84,11 @@ class VastAdUnit extends Emitter {
     this.assetUri = media.src;
 
     // eslint-disable-next-line object-property-newline
-    this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, handleMetric, {clickThroughUrl, skipoffset});
+    this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, handleMetric, {
+      clickThroughUrl,
+      skipoffset,
+      ...this.hooks
+    });
 
     const icons = retrieveIcons(this.vastAdChain);
 

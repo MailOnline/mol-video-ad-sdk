@@ -173,6 +173,30 @@ test('VastAdUnit run must start the metric listeners', () => {
   });
 });
 
+test('VastAdUnit must be possible to pass a createSkipOffset hook to the handlers', () => {
+  metricHandlers.forEach((handler) => handler.mockClear());
+  canPlay.mockReturnValue(true);
+  const createSkipOffset = jest.fn();
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer, {
+    hooks: {createSkipOffset}
+  });
+
+  adUnit.run();
+
+  metricHandlers.forEach((handler) => {
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(handler).toHaveBeenCalledWith(
+      videoAdContainer,
+      expect.any(Function),
+      {
+        clickThroughUrl: 'https://test.example.com/clickthrough',
+        createSkipOffset,
+        skipoffset: 5000
+      }
+    );
+  });
+});
+
 test('VastAdUnit run must play the selected mediaFile', () => {
   canPlay.mockReturnValue(true);
   Object.defineProperty(videoAdContainer.videoElement, 'play', {

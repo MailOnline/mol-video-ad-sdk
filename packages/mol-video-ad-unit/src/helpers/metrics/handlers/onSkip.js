@@ -16,7 +16,6 @@ const createDefaultSkipControl = (document) => {
   return skipBtn;
 };
 
-// TODO: WHAT HAPPEN WITH THE HOOK IN ADUNIT
 const onSkip = (videoAdContainer, callback, {skipoffset, createSkipControl = createDefaultSkipControl} = {}) => {
   if (!Boolean(skipoffset)) {
     return () => {};
