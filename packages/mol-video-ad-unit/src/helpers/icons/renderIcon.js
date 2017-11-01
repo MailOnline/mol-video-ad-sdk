@@ -5,6 +5,7 @@ import canBeRendered from './canBeRendered';
 const wrapWithClickThrough = (iconElement, icon, {onIconClick}) => {
   const anchor = document.createElement('A');
 
+  // TODO: Test iconClickthrough logic
   if (icon.iconClickthrough) {
     anchor.href = icon.iconClickthrough;
     anchor.target = '_blank';

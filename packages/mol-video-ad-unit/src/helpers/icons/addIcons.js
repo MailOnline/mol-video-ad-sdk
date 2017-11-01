@@ -39,6 +39,7 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
 
     element.dispatchEvent(new CustomEvent('iconsdrawn'));
 
+    // TODO: test icon view call logic
     drawnIcons.forEach((icon) => {
       if (icon[firstRender]) {
         onIconView(icon);
