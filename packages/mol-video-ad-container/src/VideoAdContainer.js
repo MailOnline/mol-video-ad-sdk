@@ -1,3 +1,4 @@
+import {onElementResize} from 'mol-element-observers';
 import loadScript from './helpers/loadScript';
 import createAdVideoElement from './helpers/createAdVideoElement';
 
@@ -11,6 +12,8 @@ const createAdContainer = () => {
 
   return adContainer;
 };
+const stopOnResizeObserver = Symbol('stopOnResizeObserver');
+const onResizeCallbacks = Symbol('onResizeCallbacks');
 
 export default class VideoAdContainer {
   constructor (placeholder, {videoElement = null} = {}) {
@@ -30,7 +33,23 @@ export default class VideoAdContainer {
     return Promise.resolve(this);
   }
 
-  // TODO: ON RESIZE USING MOL-ELEMENT-OBSERVERS
+  // TODO: TEST onResize logic
+
+  // eslint-disable-next-line promise/prefer-await-to-callbacks
+  onResize (callback) {
+    if (this.isDestroyed()) {
+      throw new Error('VideoAdContainer has been destroyed');
+    }
+
+    if (!this[stopOnResizeObserver]) {
+      this[onResizeCallbacks] = [];
+      const callOnResizeCallbacks = () => this[onResizeCallbacks].forEach((onResizeCallback) => onResizeCallback());
+
+      this[stopOnResizeObserver] = onElementResize(this.element, callOnResizeCallbacks);
+    }
+
+    this[onResizeCallbacks].push(callback);
+  }
 
   addScript (src, options = {}) {
     if (this.isDestroyed()) {
@@ -51,6 +70,13 @@ export default class VideoAdContainer {
     this.element = null;
     this.context = null;
     this.videoElement = null;
+
+    if (this[stopOnResizeObserver]) {
+      this[stopOnResizeObserver]();
+
+      this[onResizeCallbacks] = null;
+      this[stopOnResizeObserver] = null;
+    }
   }
 
   isDestroyed () {
