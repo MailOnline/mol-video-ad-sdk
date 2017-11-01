@@ -2,10 +2,10 @@ import loadResource from '../resources/loadResource';
 import updateIcon from './updateIcon';
 import canBeRendered from './canBeRendered';
 
-const wrapWithClickThrough = (iconElement, icon, {onIconClick}) => {
+const noop = () => {};
+const wrapWithClickThrough = (iconElement, icon, {onIconClick = noop} = {}) => {
   const anchor = document.createElement('A');
 
-  // TODO: Test iconClickthrough logic
   if (icon.iconClickthrough) {
     anchor.href = icon.iconClickthrough;
     anchor.target = '_blank';
@@ -26,12 +26,14 @@ const wrapWithClickThrough = (iconElement, icon, {onIconClick}) => {
 
 const createIcon = async (icon, config) => {
   if (!icon.element) {
-    const iconElement = await loadResource(icon, config);
+    const iconResource = await loadResource(icon, config);
 
-    iconElement.height = '100%';
-    iconElement.width = '100%';
+    iconResource.width = '100%';
+    iconResource.height = '100%';
+    iconResource.style.height = '100%';
+    iconResource.style.width = '100%';
 
-    icon.element = wrapWithClickThrough(iconElement, icon, config);
+    icon.element = wrapWithClickThrough(iconResource, icon, config);
   }
 
   return icon.element;
