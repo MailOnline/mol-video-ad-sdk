@@ -10,7 +10,6 @@ const renderIcons = (icons, {onIconClick, videoAdContainer, logger}) => {
   const drawnIcons = [];
 
   return icons.reduce((promise, icon) => promise
-    .catch((error) => logger.error(error))
     .then(() => renderIcon(icon, {
       document,
       drawnIcons,
@@ -18,6 +17,7 @@ const renderIcons = (icons, {onIconClick, videoAdContainer, logger}) => {
       placeholder: element
     }))
     .then((renderedIcon) => drawnIcons.push(renderedIcon))
+    .catch((error) => logger.error(error))
     , Promise.resolve(drawnIcons))
     .then(() => drawnIcons);
 };

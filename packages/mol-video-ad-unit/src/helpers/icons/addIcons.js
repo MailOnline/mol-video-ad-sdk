@@ -32,7 +32,7 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
   const {videoElement, element} = videoAdContainer;
   let finished = false;
 
-  const addIconsToAd = async () => {
+  const drawIcons = async () => {
     removeDrawnIcons(icons);
 
     if (finished) {
@@ -61,10 +61,8 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
       return;
     }
 
-    // TODO: redraw on resize of ad container element
-
     if (hasPendingIconRedraws(icons, videoElement)) {
-      once(videoElement, 'timeupdate', addIconsToAd);
+      once(videoElement, 'timeupdate', drawIcons);
     }
   };
 
@@ -72,11 +70,14 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
     icon[firstRenderPending] = true;
   });
 
-  addIconsToAd();
+  const stopResizeHandler = videoAdContainer.onResize(drawIcons);
+
+  drawIcons();
 
   return () => {
     finished = true;
     removeDrawnIcons(icons);
+    stopResizeHandler();
   };
 };
 
