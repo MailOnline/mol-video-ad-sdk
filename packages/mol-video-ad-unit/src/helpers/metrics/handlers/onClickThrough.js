@@ -3,16 +3,20 @@ import {
   clickThrough
 } from '../linearTrackingEvents';
 
-const onClickThrough = ({videoElement, context, element}, callback) => {
+const onClickThrough = ({videoElement, context, element}, callback, {clickThroughUrl} = {}) => {
   const {document} = context;
   const placeholder = element || videoElement.parentNode;
   const anchor = document.createElement('A');
 
   anchor.classList.add('mol-vast-clickthrough');
-  anchor.href = '';
   anchor.style.width = '100%';
   anchor.style.height = '100%';
   anchor.style.position = 'absolute';
+
+  if (clickThroughUrl) {
+    anchor.href = clickThroughUrl;
+    anchor.target = '_blank';
+  }
 
   anchor.onclick = (event) => {
     if (Event.prototype.stopPropagation !== undefined) {
@@ -24,7 +28,6 @@ const onClickThrough = ({videoElement, context, element}, callback) => {
     } else {
       videoElement.pause();
 
-      // TODO: do the click through
       callback(clickThrough);
     }
   };

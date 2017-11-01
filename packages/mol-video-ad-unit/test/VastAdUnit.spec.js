@@ -164,7 +164,11 @@ test('VastAdUnit run must start the metric listeners', () => {
     expect(handler).toHaveBeenCalledTimes(1);
     expect(handler).toHaveBeenCalledWith(
       videoAdContainer,
-      expect.any(Function)
+      expect.any(Function),
+      {
+        clickThroughUrl: 'https://test.example.com/clickthrough',
+        skipoffset: 5000
+      }
     );
   });
 });

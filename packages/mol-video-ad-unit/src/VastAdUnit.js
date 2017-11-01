@@ -1,6 +1,7 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
 import Emitter from 'mol-tiny-emitter';
 import {
+  getClickThrough,
   getMediaFiles,
   getSkipoffset
 } from 'mol-vast-selectors';
@@ -51,6 +52,7 @@ class VastAdUnit extends Emitter {
     const mediaFiles = getMediaFiles(inlineAd);
     const media = mediaFiles && findBestMedia(videoElement, mediaFiles, element);
     const skipoffset = getSkipoffset(inlineAd);
+    const clickThroughUrl = getClickThrough(inlineAd);
     const handleMetric = (event, data) => {
       this.emit(event, event, this);
 
@@ -80,7 +82,8 @@ class VastAdUnit extends Emitter {
     videoElement.src = media.src;
     this.assetUri = media.src;
 
-    this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, handleMetric, {skipoffset});
+    // eslint-disable-next-line object-property-newline
+    this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, handleMetric, {clickThroughUrl, skipoffset});
 
     const icons = retrieveIcons(this.vastAdChain);
 
