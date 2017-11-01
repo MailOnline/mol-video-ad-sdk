@@ -134,3 +134,27 @@ test('VideoAdContainer onResize must call the callback whenever the element resi
   onResizeHandler();
   expect(callback).toHaveBeenCalledTimes(2);
 });
+
+test('videoAdContainer onResize must return a stop function', async () => {
+  const videoAdContainer = new VideoAdContainer(placeholder);
+
+  await videoAdContainer.ready();
+
+  const adContainerElement = videoAdContainer.element;
+  const callback = jest.fn();
+
+  const stopListening = videoAdContainer.onResize(callback);
+
+  expect(onElementResize).toHaveBeenCalledWith(adContainerElement, expect.any(Function));
+
+  const onResizeHandler = onElementResize.mock.calls[0][1];
+
+  expect(callback).not.toHaveBeenCalled();
+  onResizeHandler();
+  expect(callback).toHaveBeenCalled();
+
+  stopListening();
+
+  onResizeHandler();
+  expect(callback).toHaveBeenCalledTimes(1);
+});

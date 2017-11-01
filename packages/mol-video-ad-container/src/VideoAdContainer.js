@@ -47,6 +47,10 @@ export default class VideoAdContainer {
     }
 
     this[onResizeCallbacks].push(callback);
+
+    return () => {
+      this[onResizeCallbacks] = this[onResizeCallbacks].filter((onResizeCallback) => onResizeCallback !== callback);
+    };
   }
 
   addScript (src, options = {}) {
