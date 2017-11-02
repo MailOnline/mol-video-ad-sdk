@@ -1,12 +1,13 @@
+import {linearEvents} from 'mol-video-ad-tracker';
 import onTimeUpdate from '../../../../src/helpers/metrics/handlers/onTimeUpdate';
-import {
+
+const {
   complete,
   firstQuartile,
   midpoint,
   start,
   thirdQuartile
-} from '../../../../src/helpers/metrics/linearTrackingEvents';
-
+} = linearEvents;
 let videoElement;
 
 beforeEach(() => {

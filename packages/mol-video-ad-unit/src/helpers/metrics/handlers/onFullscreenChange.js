@@ -1,8 +1,10 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
-import {
+import {linearEvents} from 'mol-video-ad-tracker';
+
+const {
   playerCollapse,
   playerExpand
-} from '../linearTrackingEvents';
+} = linearEvents;
 
 const onFullscreenChange = ({context}, callback) => {
   const {document} = context;

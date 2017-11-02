@@ -1,8 +1,10 @@
+import {linearEvents} from 'mol-video-ad-tracker';
 import onFullscreenChange from '../../../../src/helpers/metrics/handlers/onFullscreenChange';
-import {
+
+const {
   playerCollapse,
   playerExpand
-} from '../../../../src/helpers/metrics/linearTrackingEvents';
+} = linearEvents;
 
 test('onFullscreenChange must call playerExpand on when going fullscreen and playerCollapse when when leaving fullscreen', () => {
   const callback = jest.fn();

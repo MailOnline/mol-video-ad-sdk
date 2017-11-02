@@ -1,8 +1,7 @@
+import {linearEvents} from 'mol-video-ad-tracker';
 import onProgress from '../../../../src/helpers/metrics/handlers/onProgress';
-import {
-  progress
-} from '../../../../src/helpers/metrics/linearTrackingEvents';
 
+const {progress} = linearEvents;
 let videoElement;
 
 beforeEach(() => {

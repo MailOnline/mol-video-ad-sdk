@@ -1,9 +1,8 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
+import {linearEvents} from 'mol-video-ad-tracker';
 import formatProgress from '../../utils/formatProgress';
-import {
-  progress
-} from '../linearTrackingEvents';
 
+const {progress} = linearEvents;
 const secondsToMilliseconds = (seconds) => seconds * 1000;
 
 const onProgress = ({videoElement}, callback) => {

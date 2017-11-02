@@ -1,8 +1,7 @@
+import {linearEvents} from 'mol-video-ad-tracker';
 import onImpression from '../../../../src/helpers/metrics/handlers/onImpression';
-import {
-  impression
-} from '../../../../src/helpers/metrics/linearTrackingEvents';
 
+const {impression} = linearEvents;
 let videoElement;
 
 beforeEach(() => {

@@ -1,9 +1,10 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
-import {
+import {linearEvents} from 'mol-video-ad-tracker';
+
+const {
   mute,
   unmute
-} from '../linearTrackingEvents';
-
+} = linearEvents;
 const isMuted = (videoElement) => videoElement.muted || videoElement.volume === 0;
 
 const onVolumeChange = ({videoElement}, callback) => {

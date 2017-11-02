@@ -1,5 +1,7 @@
+import {linearEvents} from 'mol-video-ad-tracker';
 import onPlayPause from '../../../../src/helpers/metrics/handlers/onPlayPause';
-import {pause, resume} from '../../../../src/helpers/metrics/linearTrackingEvents';
+
+const {pause, resume} = linearEvents;
 
 test('onPlayPause must call the callback with start at the video start with pause when paused and with resume then the video gets resumed', () => {
   const callback = jest.fn();

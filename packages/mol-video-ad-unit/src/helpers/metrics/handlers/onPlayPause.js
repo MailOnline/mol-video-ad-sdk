@@ -1,8 +1,11 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
-import {
+
+import {linearEvents} from 'mol-video-ad-tracker';
+
+const {
   pause,
   resume
-} from '../linearTrackingEvents';
+} = linearEvents;
 
 const onPlayPause = ({videoElement}, callback) => {
   let started = false;

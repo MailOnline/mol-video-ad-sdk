@@ -8,7 +8,7 @@ import parseMacro from './helpers/parseMacro';
  * @returns {Array} - Array of Image object whose sources are the parsed URLMacros.
  * @static
  */
-export const track = (URLMacros = [], data = {}) => {
+const track = (URLMacros = [], data = {}) => {
   const sources = URLMacros.map((urlMacro) => parseMacro(urlMacro, data));
 
   return sources.map((source) => {
@@ -20,5 +20,5 @@ export const track = (URLMacros = [], data = {}) => {
   });
 };
 
-export default {track};
+export default track;
 

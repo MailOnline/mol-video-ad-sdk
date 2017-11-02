@@ -1,8 +1,7 @@
+import {linearEvents} from 'mol-video-ad-tracker';
 import onRewind from '../../../../src/helpers/metrics/handlers/onRewind';
-import {
-  rewind
-} from '../../../../src/helpers/metrics/linearTrackingEvents';
 
+const {rewind} = linearEvents;
 let videoElement;
 
 beforeEach(() => {

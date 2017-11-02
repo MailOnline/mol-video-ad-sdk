@@ -1,7 +1,8 @@
+import {linearEvents} from 'mol-video-ad-tracker';
 import {createVideoAdContainer} from 'mol-video-ad-container';
 import onSkip from '../../../../src/helpers/metrics/handlers/onSkip';
-import {skip} from '../../../../src/helpers/metrics/linearTrackingEvents';
 
+const {skip} = linearEvents;
 let videoAdContainer;
 let callback;
 

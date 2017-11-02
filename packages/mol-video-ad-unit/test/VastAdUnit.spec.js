@@ -1,4 +1,5 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
+import {linearEvents} from 'mol-video-ad-tracker';
 import {
   vastWrapperXML,
   vastInlineXML,
@@ -12,14 +13,14 @@ import VastAdUnit from '../src/VastAdUnit';
 import canPlay from '../src/helpers/utils/canPlay';
 import metricHandlers from '../src/helpers/metrics/handlers';
 import {
-  iconClick,
-  iconView
-} from '../src/helpers/metrics/linearTrackingEvents';
-import {
   addIcons,
   retrieveIcons
 } from '../src/helpers/icons';
 
+const {
+  iconClick,
+  iconView
+} = linearEvents;
 const mockStopMetricHandler = jest.fn();
 
 jest.mock('../src/helpers/utils/canPlay.js', () => jest.fn());
