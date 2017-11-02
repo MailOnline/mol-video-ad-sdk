@@ -1,6 +1,8 @@
 import once from '../dom/once';
 import renderIcons from './renderIcons';
 
+const firstRenderPending = Symbol('firstRenderPending');
+const noop = () => {};
 const canBeAdded = (icon, videoElement) => {
   const currentTimeInMs = videoElement.currentTime * 1000;
   const videoDurationInMs = videoElement.duration * 1000;
@@ -10,17 +12,27 @@ const canBeAdded = (icon, videoElement) => {
   return offset <= currentTimeInMs && currentTimeInMs - offset <= duration;
 };
 
-const hasToRedraw = (icons, videoElement) => icons.some((icon) => canBeAdded(icon, videoElement));
+const hasPendingIconRedraws = (icons, videoElement) => {
+  const currentTimeInMs = videoElement.currentTime * 1000;
+  const videoDurationInMs = videoElement.duration * 1000;
+
+  const iconsPendingToBedrawn = icons
+    .filter((icon) => !icon.offset || icon.offset < currentTimeInMs);
+  const iconsPendingToBeRemoved = icons
+    .filter((icon) => icon.duration && icon.duration < videoDurationInMs);
+
+  return iconsPendingToBedrawn.length > 0 || iconsPendingToBeRemoved.length > 0;
+};
 
 const removeDrawnIcons = (icons) => icons
   .filter(({element}) => Boolean(element) && Boolean(element.parentNode))
   .forEach(({element}) => element.parentNode.removeChild(element));
 
-const addIcons = (icons, {videoAdContainer, ...rest}) => {
+const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noop, ...rest} = {}) => {
   const {videoElement, element} = videoAdContainer;
   let finished = false;
 
-  const addIconsToAd = async () => {
+  const drawIcons = async () => {
     removeDrawnIcons(icons);
 
     if (finished) {
@@ -28,13 +40,20 @@ const addIcons = (icons, {videoAdContainer, ...rest}) => {
     }
 
     const iconsToDraw = icons.filter((icon) => canBeAdded(icon, videoElement));
-
-    await renderIcons(iconsToDraw, {
+    const drawnIcons = await renderIcons(iconsToDraw, {
+      onIconClick,
       videoAdContainer,
       ...rest
     });
 
-    element.dispatchEvent(new Event('iconsdrawn'));
+    element.dispatchEvent(new CustomEvent('iconsdrawn'));
+
+    drawnIcons.forEach((icon) => {
+      if (icon[firstRenderPending]) {
+        onIconView(icon);
+        icon[firstRenderPending] = false;
+      }
+    });
 
     if (finished) {
       removeDrawnIcons(icons);
@@ -42,16 +61,23 @@ const addIcons = (icons, {videoAdContainer, ...rest}) => {
       return;
     }
 
-    if (hasToRedraw(icons, videoElement)) {
-      once(videoElement, 'timeupdate', addIconsToAd);
+    if (hasPendingIconRedraws(icons, videoElement)) {
+      once(videoElement, 'timeupdate', drawIcons);
     }
   };
 
-  addIconsToAd();
+  icons.forEach((icon) => {
+    icon[firstRenderPending] = true;
+  });
+
+  const stopResizeHandler = videoAdContainer.onResize(drawIcons);
+
+  drawIcons();
 
   return () => {
     finished = true;
     removeDrawnIcons(icons);
+    stopResizeHandler();
   };
 };
 

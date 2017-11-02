@@ -1,5 +1,4 @@
 /* eslint-disable promise/prefer-await-to-then */
-import {onElementResize} from 'mol-element-observers';
 import createAdVideoElement from './helpers/createAdVideoElement';
 import VideoAdContainer from './VideoAdContainer';
 
@@ -12,7 +11,6 @@ const createAdContainerIframe = () => {
   return iframe;
 };
 const iframeElementKey = Symbol('iframeElement');
-const stopOnResizeKey = Symbol('stopOnResizeKey');
 const readyPromiseKey = Symbol('readyPromiseKey');
 
 const getContentDocument = (iframeElement) => iframeElement.contentDocument || iframeElement.contentWindow.document;
@@ -52,7 +50,7 @@ export default class SecureVideoAdContainer extends VideoAdContainer {
         this.resize();
 
         if (dynamicResize) {
-          this[stopOnResizeKey] = onElementResize(this.element, () => this.resize());
+          this.onResize(() => this.resize());
         }
 
         return this;
@@ -93,12 +91,7 @@ export default class SecureVideoAdContainer extends VideoAdContainer {
   destroy () {
     super.destroy();
 
-    if (this[stopOnResizeKey]) {
-      this[stopOnResizeKey]();
-    }
-
     this[iframeElementKey] = null;
-    this[stopOnResizeKey] = null;
   }
 }
 

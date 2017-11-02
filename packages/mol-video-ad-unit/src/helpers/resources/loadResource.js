@@ -1,6 +1,6 @@
-import createResource from '../resources/createResource';
+import createResource from './createResource';
 
-const loadIcon = (icon, {document, placeholder}) => new Promise((resolve, reject) => {
+const loadResource = (icon, {document, placeholder}) => new Promise((resolve, reject) => {
   try {
     const iconElement = createResource(document, icon);
 
@@ -24,4 +24,4 @@ const loadIcon = (icon, {document, placeholder}) => new Promise((resolve, reject
   }
 });
 
-export default loadIcon;
+export default loadResource;

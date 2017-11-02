@@ -40,10 +40,28 @@ test('onClickThrough must add an anchor to the videoAdContainer element', () => 
 
   expect(anchor).toBeInstanceOf(HTMLAnchorElement);
   expect(anchor.href).toBe('');
+  expect(anchor.target).toBe('');
   expect(anchor.style.width).toEqual('100%');
   expect(anchor.style.height).toEqual('100%');
   expect(anchor.style.position).toEqual('absolute');
-  expect(anchor.style.zIndex).toEqual('9999');
+});
+
+test('onClickThrough must add the clickThrough url to the anchor if passed', () => {
+  const {element} = videoAdContainer;
+  const clickThroughUrl = 'http://test.example.com/clickThroughUrl';
+
+  onClickThrough(videoAdContainer, callback, {
+    clickThroughUrl
+  });
+
+  const anchor = element.querySelector('a.mol-vast-clickthrough');
+
+  expect(anchor).toBeInstanceOf(HTMLAnchorElement);
+  expect(anchor.href).toBe(clickThroughUrl);
+  expect(anchor.target).toBe('_blank');
+  expect(anchor.style.width).toEqual('100%');
+  expect(anchor.style.height).toEqual('100%');
+  expect(anchor.style.position).toEqual('absolute');
 });
 
 test('onClickThrough must on anchor click, pause the video content and call the callback with clickthrough', () => {

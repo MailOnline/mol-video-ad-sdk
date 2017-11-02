@@ -41,7 +41,7 @@ const updateIcon = (icon, iconElement, {drawnIcons, placeholder}) => {
     top = calculateIconTop(yPosition, height, phRect.height);
   }
 
-  return Object.assign({}, icon, {
+  return Object.assign(icon, {
     height,
     left,
     top,

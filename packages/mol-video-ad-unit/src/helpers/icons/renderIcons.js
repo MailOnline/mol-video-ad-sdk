@@ -1,7 +1,7 @@
 /* eslint-disable promise/prefer-await-to-then */
 import renderIcon from './renderIcon';
 
-const renderIcons = (icons, {videoAdContainer, logger}) => {
+const renderIcons = (icons, {onIconClick, videoAdContainer, logger}) => {
   const {
     context,
     element
@@ -10,13 +10,14 @@ const renderIcons = (icons, {videoAdContainer, logger}) => {
   const drawnIcons = [];
 
   return icons.reduce((promise, icon) => promise
-    .catch((error) => logger.error(error))
     .then(() => renderIcon(icon, {
       document,
       drawnIcons,
+      onIconClick,
       placeholder: element
     }))
     .then((renderedIcon) => drawnIcons.push(renderedIcon))
+    .catch((error) => logger.error(error))
     , Promise.resolve(drawnIcons))
     .then(() => drawnIcons);
 };

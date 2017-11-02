@@ -1,6 +1,7 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
 import Emitter from 'mol-tiny-emitter';
 import {
+  getClickThrough,
   getMediaFiles,
   getSkipoffset
 } from 'mol-vast-selectors';
@@ -8,6 +9,8 @@ import canPlay from './helpers/utils/canPlay';
 import sortMediaByBestFit from './helpers/utils/sortMediaByBestFit';
 import {
   complete,
+  iconClick,
+  iconView,
   progress,
   error
 } from './helpers/metrics/linearTrackingEvents';
@@ -31,9 +34,10 @@ const removeMetrichandlers = Symbol('removeMetrichandlers');
 const removeIcons = Symbol('removeIcons');
 
 class VastAdUnit extends Emitter {
-  constructor (vastAdChain, videoAdContainer, {logger = console} = {}) {
+  constructor (vastAdChain, videoAdContainer, {hooks = {}, logger = console} = {}) {
     super(logger);
 
+    this.hooks = hooks;
     this.vastAdChain = vastAdChain;
     this.videoAdContainer = videoAdContainer;
     this.error = null;
@@ -51,8 +55,9 @@ class VastAdUnit extends Emitter {
     const mediaFiles = getMediaFiles(inlineAd);
     const media = mediaFiles && findBestMedia(videoElement, mediaFiles, element);
     const skipoffset = getSkipoffset(inlineAd);
+    const clickThroughUrl = getClickThrough(inlineAd);
     const handleMetric = (event, data) => {
-      this.emit(event, event, this);
+      this.emit(event, event, this, data);
 
       switch (event) {
       case progress: {
@@ -80,13 +85,20 @@ class VastAdUnit extends Emitter {
     videoElement.src = media.src;
     this.assetUri = media.src;
 
-    this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, handleMetric, {skipoffset});
+    // eslint-disable-next-line object-property-newline
+    this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, handleMetric, {
+      clickThroughUrl,
+      skipoffset,
+      ...this.hooks
+    });
 
     const icons = retrieveIcons(this.vastAdChain);
 
     if (icons) {
       this[removeIcons] = addIcons(icons, {
         logger: this.logger,
+        onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
+        onIconView: (icon) => this.emit(iconView, iconView, this, icon),
         videoAdContainer: this.videoAdContainer
       });
     }

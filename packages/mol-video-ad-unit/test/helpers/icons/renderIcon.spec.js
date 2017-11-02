@@ -1,20 +1,20 @@
+import loadResource from '../../../src/helpers/resources/loadResource';
 import renderIcon from '../../../src/helpers/icons/renderIcon';
-import loadIcon from '../../../src/helpers/icons/loadIcon';
 import updateIcon from '../../../src/helpers/icons/updateIcon';
 import canBeRendered from '../../../src/helpers/icons/canBeRendered';
 
-jest.mock('../../../src/helpers/icons/loadIcon');
+jest.mock('../../../src/helpers/resources/loadResource');
 jest.mock('../../../src/helpers/icons/updateIcon');
 jest.mock('../../../src/helpers/icons/canBeRendered');
 
 let config;
 let icon;
-let iconElement;
+let iconResource;
 let placeholder;
 
 beforeEach(() => {
   placeholder = document.createElement('DIV');
-  iconElement = document.createElement('IMG');
+  iconResource = document.createElement('DIV');
   config = {
     placeholder
   };
@@ -31,54 +31,54 @@ beforeEach(() => {
 afterEach(() => {
   config = null;
   placeholder = null;
-  iconElement = null;
+  iconResource = null;
   placeholder = null;
 });
 
 test('renderIcon must fail if there was a problem creating the icon', () => {
   const loadingError = new Error('problem loading icon');
 
-  loadIcon.mockImplementation(() => Promise.reject(loadingError));
+  loadResource.mockImplementation(() => Promise.reject(loadingError));
   expect(renderIcon(icon, config)).rejects.toBe(loadingError);
 });
 
 test('renderIcon must fail if the icon can not be rendered', () => {
-  loadIcon.mockImplementation(() => Promise.resolve(iconElement));
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
   updateIcon.mockImplementation(() => icon);
   canBeRendered.mockImplementation(() => false);
   expect(renderIcon(icon, config)).rejects.toThrowErrorMatchingSnapshot();
 });
 
 test('must append the icon to the placeholder if three is no problem', async () => {
-  loadIcon.mockImplementation(() => Promise.resolve(iconElement));
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
   updateIcon.mockImplementation(() => icon);
   canBeRendered.mockImplementation(() => true);
 
   await renderIcon(icon, config);
 
-  expect(placeholder.contains(iconElement)).toBe(true);
+  expect(placeholder.contains(iconResource)).toBe(true);
 });
 
 test('renderIcon must reuse previously created icons', async () => {
-  loadIcon.mockImplementation(() => Promise.resolve(iconElement));
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
   updateIcon.mockImplementation(() => icon);
   canBeRendered.mockImplementation(() => true);
 
   const renderedIcon = await renderIcon(icon, config);
 
-  loadIcon.mockClear();
+  loadResource.mockClear();
 
   await renderIcon(renderedIcon, config);
 
-  expect(loadIcon).not.toHaveBeenCalled();
+  expect(loadResource).not.toHaveBeenCalled();
 
-  expect(placeholder.contains(iconElement)).toBe(true);
+  expect(placeholder.contains(iconResource)).toBe(true);
 });
 
 test('renderIcon must return the updated icon', () => {
   const updatedIcon = Object.assign({}, icon);
 
-  loadIcon.mockImplementation(() => Promise.resolve(iconElement));
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
   updateIcon.mockImplementation(() => updatedIcon);
   canBeRendered.mockImplementation(() => true);
 
@@ -93,11 +93,13 @@ test('renderIcon must style the icon Element', async () => {
     width: 6
   };
 
-  loadIcon.mockImplementation(() => Promise.resolve(iconElement));
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
   updateIcon.mockImplementation(() => updatedIcon);
   canBeRendered.mockImplementation(() => true);
 
   await renderIcon(icon, config);
+
+  const iconElement = icon.element;
 
   expect(iconElement.height).toEqual(updatedIcon.height);
   expect(iconElement.width).toEqual(updatedIcon.width);
@@ -106,4 +108,76 @@ test('renderIcon must style the icon Element', async () => {
   expect(iconElement.style.top).toEqual(`${updatedIcon.top}px`);
   expect(iconElement.style.height).toEqual(`${updatedIcon.height}px`);
   expect(iconElement.style.width).toEqual(`${updatedIcon.width}px`);
+});
+
+test('renderIcon must wrap the resource with an anchor', async () => {
+  const updatedIcon = {
+    height: 3,
+    left: 1,
+    top: 4,
+    width: 6
+  };
+
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
+  updateIcon.mockImplementation(() => updatedIcon);
+  canBeRendered.mockImplementation(() => true);
+
+  await renderIcon(icon, config);
+
+  const iconElement = icon.element;
+
+  expect(iconElement).toBeInstanceOf(HTMLAnchorElement);
+  expect(iconElement.href).toBe('');
+  expect(iconElement.target).toBe('');
+  expect(iconResource.parentNode).toBe(iconElement);
+  expect(iconResource.width).toBe('100%');
+  expect(iconResource.height).toBe('100%');
+  expect(iconResource.style.width).toBe('100%');
+  expect(iconResource.style.height).toBe('100%');
+});
+
+test('renderIcon element anchor must have the clickThrough url if passed', async () => {
+  const updatedIcon = {
+    height: 3,
+    left: 1,
+    top: 4,
+    width: 6
+  };
+
+  icon.iconClickthrough = 'http://test.example.com/iconClickthrough';
+
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
+  updateIcon.mockImplementation(() => updatedIcon);
+  canBeRendered.mockImplementation(() => true);
+
+  await renderIcon(icon, config);
+
+  const iconElement = icon.element;
+
+  expect(iconElement).toBeInstanceOf(HTMLAnchorElement);
+  expect(iconElement.href).toBe(icon.iconClickthrough);
+  expect(iconElement.target).toBe('_blank');
+});
+
+test('renderIcon element anchor on click must call the passed onIconClick method', async () => {
+  const updatedIcon = {
+    height: 3,
+    left: 1,
+    top: 4,
+    width: 6
+  };
+
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
+  updateIcon.mockImplementation(() => updatedIcon);
+  canBeRendered.mockImplementation(() => true);
+
+  config.onIconClick = jest.fn();
+  await renderIcon(icon, config);
+
+  const iconElement = icon.element;
+
+  iconElement.click();
+
+  expect(config.onIconClick).toHaveBeenCalledTimes(1);
+  expect(config.onIconClick).toHaveBeenCalledWith(icon);
 });

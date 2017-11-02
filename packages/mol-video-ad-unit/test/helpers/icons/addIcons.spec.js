@@ -261,3 +261,96 @@ test('addIcons on remove must remove the icons on corner cases too', async () =>
   expect(element.contains(icons[0].element)).toBe(false);
   expect(element.contains(icons[1].element)).toBe(false);
 });
+
+test('addIcons must call onIconView hook the moment the icon gets added to the page', async () => {
+  const icons = [
+    {
+      height: 20,
+      offset: 5000,
+      width: 20,
+      xPosition: 'right',
+      yPosition: 'top'
+    },
+    {
+      height: 20,
+      width: 20,
+      xPosition: 'left',
+      yPosition: 'top'
+    }
+  ];
+  const {element, videoElement} = videoAdContainer;
+  const onIconView = jest.fn();
+
+  addIcons(icons, {
+    logger,
+    onIconView,
+    videoAdContainer
+  });
+
+  await waitFor(element, 'iconsdrawn');
+
+  expect(onIconView).toHaveBeenCalledTimes(1);
+  expect(onIconView).toHaveBeenCalledWith(icons[1]);
+
+  videoElement.currentTime = 5;
+
+  videoElement.dispatchEvent(new Event('timeupdate'));
+
+  await waitFor(element, 'iconsdrawn');
+
+  expect(onIconView).toHaveBeenCalledTimes(2);
+  expect(onIconView).toHaveBeenCalledWith(icons[0]);
+  expect(onIconView).toHaveBeenCalledWith(icons[1]);
+});
+
+test('addIcons must redraw the icons whenever the videoAdContainer resizes', async () => {
+  canBeRendered.mockReset();
+  canBeRendered.mockImplementationOnce(() => true)
+    .mockImplementationOnce(() => false)
+    .mockImplementationOnce(() => true)
+    .mockImplementationOnce(() => true);
+
+  const icons = [
+    {
+      height: 20,
+      width: 20,
+      xPosition: 'right',
+      yPosition: 'top'
+    },
+    {
+      height: 20,
+      width: 20,
+      xPosition: 'left',
+      yPosition: 'top'
+    }
+  ];
+  const {element} = videoAdContainer;
+  const mockRemoveOnResize = jest.fn();
+
+  videoAdContainer.onResize = jest.fn();
+  videoAdContainer.onResize.mockImplementation(() => mockRemoveOnResize);
+  const removeIcons = addIcons(icons, {
+    logger,
+    videoAdContainer
+  });
+
+  const onResizeHandler = videoAdContainer.onResize.mock.calls[0][0];
+
+  await waitFor(element, 'iconsdrawn');
+
+  expect(element.contains(icons[0].element)).toBe(true);
+  expect(element.contains(icons[1].element)).toBe(false);
+
+  onResizeHandler();
+  await waitFor(element, 'iconsdrawn');
+
+  expect(element.contains(icons[0].element)).toBe(true);
+  expect(element.contains(icons[1].element)).toBe(true);
+  expect(mockRemoveOnResize).not.toHaveBeenCalled();
+
+  removeIcons();
+
+  expect(element.contains(icons[0].element)).toBe(false);
+  expect(element.contains(icons[1].element)).toBe(false);
+  expect(mockRemoveOnResize).toHaveBeenCalledTimes(1);
+});

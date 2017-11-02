@@ -1,10 +1,39 @@
-import loadIcon from './loadIcon';
+import loadResource from '../resources/loadResource';
 import updateIcon from './updateIcon';
 import canBeRendered from './canBeRendered';
 
+const noop = () => {};
+const wrapWithClickThrough = (iconElement, icon, {onIconClick = noop} = {}) => {
+  const anchor = document.createElement('A');
+
+  if (icon.iconClickthrough) {
+    anchor.href = icon.iconClickthrough;
+    anchor.target = '_blank';
+  }
+
+  anchor.onclick = (event) => {
+    if (Event.prototype.stopPropagation !== undefined) {
+      event.stopPropagation();
+    }
+
+    onIconClick(icon);
+  };
+
+  anchor.appendChild(iconElement);
+
+  return anchor;
+};
+
 const createIcon = async (icon, config) => {
   if (!icon.element) {
-    icon.element = await loadIcon(icon, config);
+    const iconResource = await loadResource(icon, config);
+
+    iconResource.width = '100%';
+    iconResource.height = '100%';
+    iconResource.style.height = '100%';
+    iconResource.style.width = '100%';
+
+    icon.element = wrapWithClickThrough(iconResource, icon, config);
   }
 
   return icon.element;
