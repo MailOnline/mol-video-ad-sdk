@@ -6,5 +6,4 @@
   without a try catch so if a handler throws an error all the other handlers will also fail.
 
 ## See also
-* [API documentation](../../docs/tiny-emitter-API.md)
 * [Root README](../../README.md)
