@@ -1,4 +1,4 @@
-import {track} from '../src/index';
+import track from '../../src/helpers/track';
 
 test('track must return an array of Images with the parsed macros as sources', () => {
   const urlMacros = [
