@@ -1,4 +1,4 @@
-import parseMacro from './parseMacro';
+import parseMacro from './helpers/parseMacro';
 
 /**
  * Create a list of tracking images with the passed URL macros.

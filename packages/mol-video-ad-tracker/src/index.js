@@ -1,5 +1,5 @@
 import linearEvents from './linearEvents';
-import track from './helpers/track';
+import track from './track';
 
 export {
   linearEvents,
