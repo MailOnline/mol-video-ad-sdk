@@ -1,8 +1,7 @@
+import {linearEvents} from 'mol-video-ad-tracker';
 import onError from '../../../../src/helpers/metrics/handlers/onError';
-import {
-  error
-} from '../../../../src/helpers/metrics/linearTrackingEvents';
 
+const {error} = linearEvents;
 let videoElement;
 
 beforeEach(() => {

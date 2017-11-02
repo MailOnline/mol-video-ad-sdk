@@ -1,7 +1,8 @@
+import {linearEvents} from 'mol-video-ad-tracker';
 import {createVideoAdContainer} from 'mol-video-ad-container';
 import onClickThrough from '../../../../src/helpers/metrics/handlers/onClickThrough';
-import {clickThrough} from '../../../../src/helpers/metrics/linearTrackingEvents';
 
+const {clickThrough} = linearEvents;
 let videoAdContainer;
 let callback;
 

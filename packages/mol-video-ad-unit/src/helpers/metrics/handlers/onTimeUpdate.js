@@ -1,12 +1,13 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
-import {
+import {linearEvents} from 'mol-video-ad-tracker';
+
+const {
   complete,
   firstQuartile,
   midpoint,
   start,
   thirdQuartile
-} from '../linearTrackingEvents';
-
+} = linearEvents;
 const percentageProgress = (currentTime, duration) => currentTime * 100 / duration;
 const isPassFirstQuartile = (currentTime, duration) => percentageProgress(currentTime, duration) >= 25;
 const isPassMidPoint = (currentTime, duration) => percentageProgress(currentTime, duration) >= 50;

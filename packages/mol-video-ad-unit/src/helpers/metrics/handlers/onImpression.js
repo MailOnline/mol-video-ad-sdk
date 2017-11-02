@@ -1,7 +1,7 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
-import {
-  impression
-} from '../linearTrackingEvents';
+import {linearEvents} from 'mol-video-ad-tracker';
+
+const {impression} = linearEvents;
 
 const onImpression = ({videoElement}, callback) => {
   const impressionHandler = () => {

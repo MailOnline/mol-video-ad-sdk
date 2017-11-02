@@ -1,4 +1,5 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
+import {linearEvents} from 'mol-video-ad-tracker';
 import Emitter from 'mol-tiny-emitter';
 import {
   getClickThrough,
@@ -7,19 +8,19 @@ import {
 } from 'mol-vast-selectors';
 import canPlay from './helpers/utils/canPlay';
 import sortMediaByBestFit from './helpers/utils/sortMediaByBestFit';
-import {
-  complete,
-  iconClick,
-  iconView,
-  progress,
-  error
-} from './helpers/metrics/linearTrackingEvents';
 import initMetricHandlers from './helpers/metrics/initMetricHandlers';
 import {
   addIcons,
   retrieveIcons
 } from './helpers/icons';
 
+const {
+  complete,
+  iconClick,
+  iconView,
+  progress,
+  error
+} = linearEvents;
 const findBestMedia = (videoElement, mediaFiles, container) => {
   const screenRect = container.getBoundingClientRect();
   const suportedMediaFiles = mediaFiles.filter((mediaFile) => canPlay(videoElement, mediaFile));

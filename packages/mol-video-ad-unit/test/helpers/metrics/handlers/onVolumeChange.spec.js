@@ -1,5 +1,10 @@
+import {linearEvents} from 'mol-video-ad-tracker';
 import onVolumeChange from '../../../../src/helpers/metrics/handlers/onVolumeChange';
-import {mute, unmute} from '../../../../src/helpers/metrics/linearTrackingEvents';
+
+const {
+  mute,
+  unmute
+} = linearEvents;
 
 test('onVolumechange must call the callback with mute if the video was unmute and it became mute and the other way around', () => {
   const callback = jest.fn();
