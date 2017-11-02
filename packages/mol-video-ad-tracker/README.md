@@ -1,6 +1,6 @@
-# mol-vast-pixel-tracker
+# mol-video-ad-tracker
 
-> VAST pixel tracker methods
+> MOL Video ad tracking tools
 
 ## See also
 * [API documentation](../../docs/vast-tracker-API.md)
