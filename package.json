@@ -68,9 +68,6 @@
     "stylelint-config-mailonline": "^3.0.2"
   },
   "jest": {
-    "reporters": [
-      "./node_modules/jest-tap-reporter"
-    ],
     "collectCoverageFrom": [
       "packages/**/src/**/*.js"
     ],
