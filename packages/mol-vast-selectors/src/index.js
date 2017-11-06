@@ -52,6 +52,27 @@ export const getAds = (parsedVAST) => {
 };
 
 /**
+ * Gets the Error URI of the passed parsed VAST xml.
+ *
+ * @param {Object} parsedVAST - Parsed VAST xml.
+ * @returns {String/null} - Vast Error URI or null otherwise.
+ * @static
+ */
+export const getVastErrorURI = (parsedVAST) => {
+  const vastElement = parsedVAST && get(parsedVAST, 'VAST');
+
+  if (vastElement) {
+    const error = get(vastElement, 'Error');
+
+    if (error) {
+      return getText(error);
+    }
+  }
+
+  return null;
+};
+
+/**
  * Gets the sequence of the pod ad.
  *
  * @param {Object} ad - Parsed ad definition object.
@@ -176,7 +197,14 @@ export const getWrapperOptions = (ad) => {
   return opts;
 };
 
-export const getAdError = (ad) => {
+/**
+ * Gets the Error URI of the passed ad.
+ *
+ * @param {Object} ad - VAST ad object.
+ * @returns {String/null} - Vast ad Error URI or null otherwise.
+ * @static
+ */
+export const getAdErrorURI = (ad) => {
   const adTypeElement = ad && getFirstChild(ad);
 
   if (adTypeElement) {
