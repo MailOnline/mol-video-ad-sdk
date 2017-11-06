@@ -4,7 +4,6 @@ import {
   getVastErrorURI
 } from 'mol-vast-selectors';
 
-// TODO: TEST THIS LOGIC
 const trackError = (vastChain, doTrack = track) => {
   const ERRORCODE = vastChain[0].errorCode;
   const errorURIs = [];
