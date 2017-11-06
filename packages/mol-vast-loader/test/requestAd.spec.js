@@ -22,7 +22,7 @@ import {requestAd} from '../src/index';
 import {markAdAsRequested, unmarkAdAsRequested} from '../src/helpers/adUtils';
 
 test('requestAd must return a chain with errorcode 304 if the wrapperLimit is reached', async () => {
-  const vastChain = await requestAd('http://adtag.test.example.com', {wrapperLimit: 1}, [{}]);
+  const vastChain = await requestAd('http://adtag.test.example.com', {wrapperLimit: 1}, [{}, {}]);
   const lastVastResponse = vastChain[0];
 
   expect(lastVastResponse).toEqual({
@@ -36,7 +36,7 @@ test('requestAd must return a chain with errorcode 304 if the wrapperLimit is re
 });
 
 test('requestAd must return a chain with errorcode 304 if the default wrapperLimit is reached', async () => {
-  const vastChain = await requestAd('http://adtag.test.example.com', {}, [{}, {}, {}, {}, {}]);
+  const vastChain = await requestAd('http://adtag.test.example.com', {}, [{}, {}, {}, {}, {}, {}]);
   const lastVastResponse = vastChain[0];
 
   expect(lastVastResponse).toEqual({
