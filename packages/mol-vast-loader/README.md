@@ -1,6 +1,6 @@
 # mol-vast-loader
 
-> MOL VAST ads loader
+> MOL VAST loader
 
 ## See also
 * [Root README](../../README.md)

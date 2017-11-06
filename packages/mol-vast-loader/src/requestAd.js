@@ -46,7 +46,9 @@ const getAd = (parsedXML) => {
     const ad = getFirstAd(parsedXML);
 
     if (Boolean(ad)) {
-      return markAdAsRequested(ad);
+      markAdAsRequested(ad);
+
+      return ad;
     }
 
     throw new Error('No Ad');

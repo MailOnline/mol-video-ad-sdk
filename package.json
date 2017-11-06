@@ -58,6 +58,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.0.2",
     "jest-json-to-tap": "^2.0.0",
+    "jest-tap-reporter": "^1.2.0",
     "jsdoc": "^3.5.5",
     "jsdom": "^11.0.0",
     "lerna": "^2.2.0",
@@ -67,6 +68,9 @@
     "stylelint-config-mailonline": "^3.0.2"
   },
   "jest": {
+    "reporters": [
+      "./node_modules/jest-tap-reporter"
+    ],
     "collectCoverageFrom": [
       "packages/**/src/**/*.js"
     ],

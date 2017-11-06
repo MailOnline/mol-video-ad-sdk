@@ -1,11 +1,7 @@
 const requested = Symbol('requested');
 
 export const markAdAsRequested = (ad) => {
-  if (Boolean(ad)) {
-    ad[requested] = true;
-  }
-
-  return ad;
+  ad[requested] = true;
 };
 
 export const unmarkAdAsRequested = (ad) => {
