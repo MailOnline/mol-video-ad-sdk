@@ -1,8 +1,6 @@
 import {requestAd} from 'mol-vast-loader';
 import trackError from './helpers/trackError';
 
-// TODO: test this logic
-
 /**
  * Request the ad using the passed ad tag and returns an array with the VAST responses needed to get an inline ad.
  *
