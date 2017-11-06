@@ -10,7 +10,14 @@
     "src"
   ],
   "peerDependencies": {
+    "mol-vast-loader": "^0.1.0",
+    "mol-video-ad-tracker": "^0.1.0",
+    "mol-vast-selectors": "^0.1.0"
   },
   "devDependencies": {
+    "mol-vast-loader": "^0.1.0",
+    "mol-video-ad-tracker": "^0.1.0",
+    "mol-vast-selectors": "^0.1.0",
+    "mol-vast-fixtures": "^0.1.0"
   }
 }

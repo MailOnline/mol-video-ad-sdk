@@ -11,7 +11,7 @@ import fetch from './helpers/fetch';
 import {markAdAsRequested} from './helpers/adUtils';
 
 const validateChain = (vastChain, {wrapperLimit = 5}) => {
-  if (vastChain.length >= wrapperLimit) {
+  if (vastChain.length > wrapperLimit) {
     const error = new Error('Wrapper Limit reached');
 
     error.errorCode = 304;
@@ -93,9 +93,14 @@ const getOptions = (vastChain, options) => {
  * Request the ad using the passed ad tag and returns an array with the VAST responses needed to get an inline ad.
  *
  * @param {string} adTag - The VAST ad tag request url.
- * @param {Object} options - Config object to set the wrapperlimit.
+ * @param {Object} options - Options Map. The allowed properties area:
+ *                           * `wrapperLimit` which sets the maximum number of wrappers allowed in the vastChain.
+ *                              Defaults to 5.
+ *                           * `AllowMultipleAds` Boolean to indicate whether adPods are allowed or not.
+ *                              Defaults to true.
  * @param {Array} vastChain - Optional array with the previous VAST responses.
- * @returns {Array} - Returns a new VastChain with the newest VAST response at the begining of the array.
+ * @returns {Array} - Returns a Promise that will resolve a VastChain with the newest VAST response at the begining of the array.
+ *                    If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
  * @static
  */
 const requestAd = async (adTag, options = {}, vastChain = []) => {
