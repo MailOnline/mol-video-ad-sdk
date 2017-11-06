@@ -30,13 +30,15 @@ const requestNextAd = (VASTChain, options) => {
   validateChain(VASTChain);
 
   const vastResponse = VASTChain[0];
-  const nextAd = markAdAsRequested(getNextAd(vastResponse, options));
+  const nextAd = getNextAd(vastResponse, options);
 
   if (Boolean(nextAd)) {
     const newVastResponse = Object.assign({}, vastResponse, {
       ad: nextAd
     });
     const newVastChain = [newVastResponse, ...VASTChain.slice(1)];
+
+    markAdAsRequested(nextAd);
 
     if (isWrapper(nextAd)) {
       return requestAd(getVASTAdTagURI(nextAd), options, newVastChain);
