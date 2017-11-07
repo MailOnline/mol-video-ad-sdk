@@ -57,6 +57,12 @@ afterEach(() => {
   trackError.mockClear();
 });
 
+test('load must throw if you don\'t pass a valid adTag', () => {
+  expect(load()).rejects.toBeInstanceOf(TypeError);
+  expect(load('')).rejects.toBeInstanceOf(TypeError);
+  expect(load({})).rejects.toBeInstanceOf(TypeError);
+});
+
 test('load must return the vastChain', async () => {
   requestAd.mockReturnValueOnce(Promise.resolve(successVastChain));
   const adTag = 'test.example.com/adTag';

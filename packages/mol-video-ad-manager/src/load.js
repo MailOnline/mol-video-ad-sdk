@@ -17,6 +17,10 @@ import trackError from './helpers/trackError';
  * @static
  */
 const load = async (adTag, options = {}) => {
+  if (typeof adTag !== 'string' || adTag.length === 0) {
+    throw new TypeError('Invalid ad tag');
+  }
+
   const vastChain = await requestAd(adTag, options);
   const lastVastResponse = vastChain[0];
 
