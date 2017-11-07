@@ -89,6 +89,8 @@ const getOptions = (vastChain, options) => {
   return Object.assign({}, wrapperOptions, options);
 };
 
+// TODO: add jsDoc for VASTChain
+
 /**
  * Request the ad using the passed ad tag and returns an array with the VAST responses needed to get an inline ad.
  *

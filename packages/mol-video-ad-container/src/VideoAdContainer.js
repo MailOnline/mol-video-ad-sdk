@@ -15,6 +15,7 @@ const createAdContainer = () => {
 const stopOnResizeObserver = Symbol('stopOnResizeObserver');
 const onResizeCallbacks = Symbol('onResizeCallbacks');
 
+// TODO: add jsDoc
 export default class VideoAdContainer {
   constructor (placeholder, {videoElement = null} = {}) {
     if (!(placeholder instanceof Element)) {

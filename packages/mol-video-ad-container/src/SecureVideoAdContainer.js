@@ -15,6 +15,7 @@ const readyPromiseKey = Symbol('readyPromiseKey');
 
 const getContentDocument = (iframeElement) => iframeElement.contentDocument || iframeElement.contentWindow.document;
 
+// TODO: add jsDoc
 export default class SecureVideoAdContainer extends VideoAdContainer {
   constructor (placeholder, options = {}) {
     super(placeholder, options);
