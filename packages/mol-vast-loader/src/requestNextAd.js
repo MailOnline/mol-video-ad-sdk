@@ -19,7 +19,7 @@ const validateChain = (VASTChain) => {
 /**
  * Requests the next ad in the VAST Chain.
  *
- * @param {Array} VASTChain - Array of VAST responses. See requestAd for more info.
+ * @param {VASTChain} VASTChain - Array of VAST responses. See requestAd for more info.
  * @param {Object} options - Options Map. The allowed properties area:
  *                           * `wrapperLimit` which sets the maximum number of wrappers allowed in the vastChain.
  *                              Defaults to 5.
@@ -35,7 +35,7 @@ const validateChain = (VASTChain) => {
  *                              Note: if the VASTChain contains an adPod this property will be ignored.
  *                              Defaults to true.
  *
- * @returns {Array} - Returns a Promise that will resolve a VastChain with the newest VAST response at the begining of the array.
+ * @returns Promise<VASTChain>  - Returns a Promise that will resolve a VastChain with the newest VAST response at the begining of the array.
  *                    If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
  * @static
  */

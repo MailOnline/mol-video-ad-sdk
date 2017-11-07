@@ -5,7 +5,7 @@ import {hasAdPod} from 'mol-vast-selectors';
  *
  * @param {Array} VASTChain - Array of VAST responses. See `load` or `requestAd` for more info.
  *
- * @returns {boolean} - Returns true if the VASTChain contains an ad pod and false otherwise.
+ * @returns {boolean} - True if the VASTChain contains an ad pod and false otherwise.
  * @static
  */
 const isAdPod = (VASTChain = []) => VASTChain.map(({parsedXML}) => parsedXML).some(hasAdPod);

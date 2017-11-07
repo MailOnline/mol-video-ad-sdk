@@ -20,7 +20,7 @@ import trackError from './helpers/trackError';
  *                              Note: if the VASTChain contains an adPod this property will be ignored.
  *                              Defaults to true.
  *
- * @returns {Array} - Returns a Promise that will resolve a VastChain with the newest VAST response at the begining of the array.
+ * @returns Promise<VASTChain> - Returns a Promise that will resolve a VastChain with the newest VAST response at the begining of the array.
  *                    If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
  * @static
  */

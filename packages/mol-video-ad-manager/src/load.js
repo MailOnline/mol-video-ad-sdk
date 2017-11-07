@@ -12,8 +12,8 @@ import trackError from './helpers/trackError';
  *                              Defaults to true.
  *                           * `track` optional function to track whatever errors occur during the loading.
  *                              Defaults to `mol-video-ad-tracker` track method.
- * @returns {Array} - Returns a Promise that will resolve a VastChain with the newest VAST response at the begining of the array.
- *                    If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
+ * @returns Promise<VASTChain> - Returns a Promise that will resolve a VastChain with the newest VAST response at the begining of the array.
+ *                              If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
  * @static
  */
 const load = async (adTag, options = {}) => {
