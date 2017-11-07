@@ -41,10 +41,10 @@ export const compareBySequence = (itemA, itemB) => {
  * @static
  */
 export const getAds = (parsedVAST) => {
-  const vastElement = get(parsedVAST, 'VAST');
-  const ads = getAll(vastElement, 'Ad');
+  const vastElement = parsedVAST && get(parsedVAST, 'VAST');
+  const ads = vastElement && getAll(vastElement, 'Ad');
 
-  if (ads.length > 0) {
+  if (ads && ads.length > 0) {
     return ads;
   }
 

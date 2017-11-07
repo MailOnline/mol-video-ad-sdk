@@ -40,6 +40,8 @@ test('getAds must return the ads of the passed adResponse or null otherwise', ()
   expect(getAds(wrapperParsedXML)).toEqual([wrapperAd]);
   expect(getAds(noAdParsedXML)).toBe(null);
   expect(getAds({})).toBe(null);
+  expect(getAds(null)).toBe(null);
+  expect(getAds()).toBe(null);
 });
 
 test('getFirstAd must return the first ad of the passed adResponse or null otherwise', () => {
@@ -79,6 +81,8 @@ test('hasAdPod must return true if the passed ads have an ad pod and false other
   expect(hasAdPod(podParsedXML)).toBe(true);
   expect(hasAdPod(inlineParsedXML)).toBe(false);
   expect(hasAdPod({})).toBe(false);
+  expect(hasAdPod(null)).toBe(false);
+  expect(hasAdPod()).toBe(false);
 });
 
 test('hasAdPod must return false if the there is only one ad with a sequence', () => {
