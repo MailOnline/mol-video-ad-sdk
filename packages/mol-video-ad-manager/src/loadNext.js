@@ -1,4 +1,6 @@
-/* eslint-disable no-unused-vars */
+import {requestNextAd} from 'mol-vast-loader';
+import trackError from './helpers/trackError';
+
 /**
  * Loads the next ad in the VAST Chain.
  *
@@ -22,8 +24,21 @@
  *                    If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
  * @static
  */
-const loadNext = (VASTChain, options = {}) => {
+const loadNext = async (VASTChain, options = {}) => {
+  if (!VASTChain || !Array.isArray(VASTChain) || VASTChain.length === 0) {
+    throw new TypeError('Invalid VASTchain');
+  }
 
+  const vastChain = await requestNextAd(VASTChain, options);
+  const lastVastResponse = vastChain[0];
+
+  if (lastVastResponse && Boolean(lastVastResponse.errorCode)) {
+    const {track} = options;
+
+    trackError(vastChain, track);
+  }
+
+  return vastChain;
 };
 
 export default loadNext;
