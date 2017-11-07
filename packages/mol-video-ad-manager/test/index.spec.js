@@ -1,5 +1,6 @@
 import {
   createVideoAdContainer,
+  createVideoAdUnit,
   isAdPod,
   load,
   loadNext
@@ -19,5 +20,9 @@ test('mol-video-ad-manager must publish `isAdPod`', () => {
 
 test('mol-video-ad-manager must publish `createVideoAdContainer`', () => {
   expect(createVideoAdContainer).toBeInstanceOf(Function);
+});
+
+test('mol-video-ad-manager must publish `createVideoAdUnit`', () => {
+  expect(createVideoAdUnit).toBeInstanceOf(Function);
 });
 
