@@ -6,7 +6,7 @@ import trackError from './helpers/trackError';
  *
  * @param {string} adTag - The VAST ad tag request url.
  * @param {Object} options - Options Map. The allowed properties area:
- *                           * `wrapperLimit` which sets the maximum number of wrapper allowed in the vastChain.
+ *                           * `wrapperLimit` which sets the maximum number of wrappers allowed in the vastChain.
  *                              Defaults to 5.
  *                           * `AllowMultipleAds` Boolean to indicate whether adPods are allowed or not.
  *                              Defaults to true.
