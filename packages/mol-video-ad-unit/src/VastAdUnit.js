@@ -80,6 +80,7 @@ class VastAdUnit extends Emitter {
     };
 
     if (!Boolean(media)) {
+      // TODO: SHOULD EMIT THE ERROR INSTEAD OF THROWING SO THAT IT CAN BE CALLED BY ON ERROR
       throw new Error('Can\'t find a suitable media to play');
     }
 
