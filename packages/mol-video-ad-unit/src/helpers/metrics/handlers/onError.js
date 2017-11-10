@@ -5,7 +5,7 @@ const {error} = linearEvents;
 
 const onError = ({videoElement}, callback) => {
   const errorHandler = () => {
-    callback(error);
+    callback(error, videoElement.error);
   };
 
   videoElement.addEventListener('error', errorHandler);
