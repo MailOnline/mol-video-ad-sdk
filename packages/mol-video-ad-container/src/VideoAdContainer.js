@@ -15,10 +15,12 @@ const createAdContainer = () => {
 const stopOnResizeObserver = Symbol('stopOnResizeObserver');
 const onResizeCallbacks = Symbol('onResizeCallbacks');
 
-/** Contains everyting necesary to contain and create a video ad within a given placeholder Element. */
+/**
+ * Contains everyting necesary to contain and create a video ad within a given placeholder Element.
+ */
 class VideoAdContainer {
   /**
-   * Create a VideoAdContainer instance.
+   * Creates a VideoAdContainer.
    *
    * @param {HTMLDivElement} placeholder - DIV that will contain the ad.
    * @param {Object} options - Options Map.
@@ -60,7 +62,7 @@ class VideoAdContainer {
   }
 
   /**
-   * Returns apromise that will resolve once the VideoAdContainer is ready to be used.
+   * Returns a promise that will resolve once the VideoAdContainer is ready to be used.
    *
    * @returns Promise<VideoAdContainer> - resolves with itself.
    */
@@ -101,7 +103,6 @@ class VideoAdContainer {
    * @param {string} options.type - Defaults to 'text/javascript'.
    * @param {boolean} options.async - if "true" the "async" attribute is added to the new script. Defaults to false.
    * @param {boolean} options.defer - if "true" the "defer" attribute is added to the new script. Defaults to true.
-   * @param {HTMLElement} options.placeholder - Element that should contain the script. Defaults to {@link VideoAdContainer#element}.
    */
   addScript (src, options = {}) {
     if (this.isDestroyed()) {
@@ -144,7 +145,7 @@ class VideoAdContainer {
   }
 
   /*
-    Call this method whenever you need to do a manual resize and are not sure that the change will be automatically picked.
+    This method is not really needed just here to keep the same interface than {@link SecureVideoAdContainer}
   */
   resize () {
     if (this.isDestroyed()) {
