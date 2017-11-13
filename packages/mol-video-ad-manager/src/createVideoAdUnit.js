@@ -1,13 +1,13 @@
 import {createVastAdUnit} from 'mol-video-ad-unit';
 
 /*
-  LINEAR TRACKING EVENTS
+  VPAID LINEAR TRACKING EVENTS
 
   * acceptInvitationLinear, <= Not used in VAST maybe for VPAID
   * otherAdInteraction, <= Not used in VAST maybe for VPAID?
   * timeSpentViewing, <= Not used in VAST maybe for VPAID?
 
-  EVENTS EMITTED BY VAST ADUNIT
+  VAST LINEAR TRACKING EVENTS
 
   * clickThrough, <= emit called with eventName and adUint
   * complete,  <= emit called with eventName and adUint
