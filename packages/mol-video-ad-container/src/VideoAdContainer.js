@@ -151,8 +151,7 @@ class VideoAdContainer {
       throw new Error('VideoAdContainer has been destroyed');
     }
 
-    // Video ad containers resizes automatically the size of the placeholder
-    // TODO: Shall this method call the onResize callbacks?????
+    // Video ad containers resize automatically to the size of the placeholder
   }
 }
 
