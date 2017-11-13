@@ -10,7 +10,7 @@ import {trackError} from 'mol-video-ad-tracker';
  *                              Defaults to 5.
  *                           * `AllowMultipleAds` Boolean to indicate whether adPods are allowed or not.
  *                              Defaults to true.
- *                           * `track` optional function to track whatever errors occur during the loading.
+ *                           * `tracker` optional function to track whatever errors occur during the loading.
  *                              Defaults to `mol-video-ad-tracker` track method.
  *                           * `useAdBuffet` which should be set to true if we want to get a buffet ad from an ad pod.
  *                              If no buffet ad is available it will return the next ad in ad pod sequence.
@@ -33,9 +33,9 @@ const loadNext = async (VASTChain, options = {}) => {
   const lastVastResponse = vastChain[0];
 
   if (lastVastResponse && Boolean(lastVastResponse.errorCode)) {
-    const {track} = options;
+    const {tracker} = options;
 
-    trackError(vastChain, track);
+    trackError(vastChain, {tracker});
   }
 
   return vastChain;

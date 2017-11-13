@@ -84,13 +84,13 @@ test('loadNext must track whatever error may have happened', async () => {
   expect(requestNextAd).toHaveBeenCalledTimes(1);
   expect(requestNextAd).toBeCalledWith(successVastChain, options);
   expect(trackError).toHaveBeenCalledTimes(1);
-  expect(trackError).toHaveBeenCalledWith(errorVastChain, undefined);
+  expect(trackError).toHaveBeenCalledWith(errorVastChain, {});
 });
 
-test('loadNext must accept an optional track function to track the error', async () => {
+test('loadNext must accept an optional tracker function to track the error', async () => {
   requestNextAd.mockReturnValueOnce(Promise.resolve(errorVastChain));
   const options = {
-    track: () => {}
+    tracker: () => {}
   };
   const vastChain = await loadNext(successVastChain, options);
 
@@ -98,6 +98,6 @@ test('loadNext must accept an optional track function to track the error', async
   expect(requestNextAd).toHaveBeenCalledTimes(1);
   expect(requestNextAd).toBeCalledWith(successVastChain, options);
   expect(trackError).toHaveBeenCalledTimes(1);
-  expect(trackError).toHaveBeenCalledWith(errorVastChain, options.track);
+  expect(trackError).toHaveBeenCalledWith(errorVastChain, {tracker: options.tracker});
 });
 

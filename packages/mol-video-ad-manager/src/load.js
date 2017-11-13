@@ -10,8 +10,8 @@ import {trackError} from 'mol-video-ad-tracker';
  *                              Defaults to 5.
  *                           * `AllowMultipleAds` Boolean to indicate whether adPods are allowed or not.
  *                              Defaults to true.
- *                           * `track` optional function to track whatever errors occur during the loading.
- *                              Defaults to `mol-video-ad-tracker` track method.
+ *                           * `tracker` optional function to track whatever errors occur during the loading.
+ *                              Defaults to `mol-video-ad-tracker` macrosTracker method.
  * @returns Promise<VASTChain> - Returns a Promise that will resolve a VastChain with the newest VAST response at the begining of the array.
  *                              If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
  * @static
@@ -25,9 +25,9 @@ const load = async (adTag, options = {}) => {
   const lastVastResponse = vastChain[0];
 
   if (lastVastResponse && Boolean(lastVastResponse.errorCode)) {
-    const {track} = options;
+    const {tracker} = options;
 
-    trackError(vastChain, track);
+    trackError(vastChain, {tracker});
   }
 
   return vastChain;

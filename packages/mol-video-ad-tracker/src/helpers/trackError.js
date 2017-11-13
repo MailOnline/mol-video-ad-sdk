@@ -2,9 +2,9 @@ import {
   getAdErrorURI,
   getVastErrorURI
 } from 'mol-vast-selectors';
-import trackMacros from './trackMacros';
+import macrosTracker from './macrosTracker';
 
-const trackError = (vastChain, doTrack = trackMacros) => {
+const trackError = (vastChain, {tracker = macrosTracker} = {}) => {
   const ERRORCODE = vastChain[0].errorCode;
   const errorURIs = [];
 
@@ -16,7 +16,7 @@ const trackError = (vastChain, doTrack = trackMacros) => {
     }
   });
 
-  errorURIs.forEach((macro) => doTrack(macro, {ERRORCODE}));
+  errorURIs.forEach((macro) => tracker(macro, {ERRORCODE}));
 };
 
 export default trackError;
