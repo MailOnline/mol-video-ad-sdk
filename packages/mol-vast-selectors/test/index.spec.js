@@ -12,9 +12,7 @@ import {
   getClickThrough,
   getClickTracking,
   getFirstAd,
-  getLinearProgressEvents,
   getLinearTrackingEvents,
-  getLinearTimeSpentViewingEvents,
   getMediaFiles,
   getSkipoffset,
   getVASTAdTagURI,
@@ -389,15 +387,12 @@ test('getLinearTrackingEvents must return the linear tracking events', () => {
   ]);
 });
 
-test('getLinearProgressEvents must return null if there are no progress tracking events', () => {
-  expect(getLinearProgressEvents()).toEqual(null);
-  expect(getLinearProgressEvents(null)).toEqual(null);
-  expect(getLinearProgressEvents({})).toEqual(null);
-  expect(getLinearProgressEvents(inlineAd)).toEqual(null);
+test('getLinearTrackingEvents must return null if you filter by event and are no tracking events after filtering', () => {
+  expect(getLinearTrackingEvents(inlineAd, 'progress')).toEqual(null);
 });
 
-test('getLinearProgressEvents must return the linear progress events', () => {
-  expect(getLinearProgressEvents(wrapperAd)).toEqual([
+test('getLinearTrackingEvents must return the linear progress events if you filter by progress', () => {
+  expect(getLinearTrackingEvents(wrapperAd, 'progress')).toEqual([
     {
       event: 'progress',
       offset: 5000,
@@ -407,28 +402,6 @@ test('getLinearProgressEvents must return the linear progress events', () => {
       event: 'progress',
       offset: '15%',
       uri: 'https://test.example.com/progress2'
-    }
-  ]);
-});
-
-test('getLinearTimeSpentViewingEvents must return null if there are no timeSpentViewing tracking events', () => {
-  expect(getLinearTimeSpentViewingEvents()).toEqual(null);
-  expect(getLinearTimeSpentViewingEvents(null)).toEqual(null);
-  expect(getLinearTimeSpentViewingEvents({})).toEqual(null);
-  expect(getLinearTimeSpentViewingEvents(wrapperAd)).toEqual(null);
-});
-
-test('getLinearTimeSpentViewingEvents must return the linear timeSpentViewing events', () => {
-  expect(getLinearTimeSpentViewingEvents(inlineAd)).toEqual([
-    {
-      event: 'timeSpentViewing',
-      offset: 5000,
-      uri: 'https://test.example.com/timeSpentViewing'
-    },
-    {
-      event: 'timeSpentViewing',
-      offset: '15%',
-      uri: 'https://test.example.com/timeSpentViewing2'
     }
   ]);
 });

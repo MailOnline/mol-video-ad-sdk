@@ -269,7 +269,7 @@ export const getMediaFiles = (ad) => {
   return null;
 };
 
-export const getLinearTrackingEvents = (ad) => {
+export const getLinearTrackingEvents = (ad, eventName) => {
   const creativeElement = ad && getLinearCreative(ad);
 
   if (creativeElement) {
@@ -278,7 +278,7 @@ export const getLinearTrackingEvents = (ad) => {
     const trackinEventElements = trackingEventsElement && getAll(trackingEventsElement, 'Tracking');
 
     if (trackinEventElements && trackinEventElements.length > 0) {
-      return trackinEventElements.map((trackinEventElement) => {
+      const trackingEvents = trackinEventElements.map((trackinEventElement) => {
         const {event, offset} = getAttributes(trackinEventElement);
         const uri = getText(trackinEventElement);
 
@@ -288,34 +288,16 @@ export const getLinearTrackingEvents = (ad) => {
           uri
         };
       });
-    }
-  }
 
-  return null;
-};
+      if (eventName) {
+        const filteredEvents = trackingEvents.filter(({event}) => event === eventName);
 
-export const getLinearProgressEvents = (ad) => {
-  const trackinEvents = ad && getLinearTrackingEvents(ad);
-
-  if (trackinEvents) {
-    const progressEvents = trackinEvents.filter(({event}) => event === 'progress');
-
-    if (progressEvents.length > 0) {
-      return progressEvents;
-    }
-  }
-
-  return null;
-};
-
-export const getLinearTimeSpentViewingEvents = (ad) => {
-  const trackinEvents = ad && getLinearTrackingEvents(ad);
-
-  if (trackinEvents) {
-    const timeSpentViewingEvents = trackinEvents.filter(({event}) => event === 'timeSpentViewing');
-
-    if (timeSpentViewingEvents.length > 0) {
-      return timeSpentViewingEvents;
+        if (filteredEvents.length > 0) {
+          return filteredEvents;
+        }
+      } else {
+        return trackingEvents;
+      }
     }
   }
 
