@@ -19,7 +19,8 @@ import {
 
 const {
   iconClick,
-  iconView
+  iconView,
+  error: errorEvt
 } = linearEvents;
 const mockStopMetricHandler = jest.fn();
 
@@ -27,7 +28,7 @@ jest.mock('../src/helpers/utils/canPlay.js', () => jest.fn());
 jest.mock('../src/helpers/metrics/handlers/index.js', () => [
   jest.fn(({videoElement}, callback) => {
     videoElement.addEventListener('ended', () => callback('complete'));
-    videoElement.addEventListener('error', () => callback('error'));
+    videoElement.addEventListener('error', () => callback('error', videoElement.error));
     videoElement.addEventListener('progress', ({detail}) => callback('progress', detail));
     videoElement.addEventListener('custom', (event) => callback('custom', event.data));
 
@@ -71,6 +72,12 @@ beforeEach(async () => {
     }
   ];
   videoAdContainer = await createVideoAdContainer(document.createElement('DIV'));
+  const {videoElement} = videoAdContainer;
+
+  Object.defineProperty(videoElement, 'error', {
+    value: undefined,
+    writable: true
+  });
 });
 
 afterEach(() => {
@@ -92,24 +99,32 @@ test('VastAdUnit must set the initial state with the data passed to the construc
   expect(adUnit.contentplayhead).toEqual(null);
 });
 
-test('VastAdUnit run must throw and error if there is no suitable mediaFile to play', () => {
+test('VastAdUnit emit an error if there is no suitable mediaFile to play', async () => {
   canPlay.mockReturnValue(false);
-  let adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const errorHandler = jest.fn();
+  const onErrorCallback = jest.fn();
+  const errorPromise = new Promise((resolve) => {
+    adUnit.on(errorEvt, (...args) => {
+      resolve(args);
+    });
+  });
 
-  expect(() => adUnit.run()).toThrowError('Can\'t find a suitable media to play');
+  adUnit.on(errorEvt, errorHandler);
+  adUnit.onError(() => {
+    throw new Error('boom');
+  });
+  adUnit.onError(onErrorCallback);
+  adUnit.run();
+  await errorPromise;
 
-  canPlay.mockReturnValue(true);
-  adUnit = new VastAdUnit([
-    {
-      ad: wrapperAd,
-      errorCode: null,
-      parsedXML: wrapperParsedXML,
-      requestTag: 'http://adtag.test.example.com',
-      XML: vastWrapperXML
-    }
-  ], videoAdContainer);
-
-  expect(() => adUnit.run()).toThrowError('Can\'t find a suitable media to play');
+  expect(adUnit.error).toBeInstanceOf(Error);
+  expect(adUnit.error.message).toBe('Can\'t find a suitable media to play');
+  expect(adUnit.errorCode).toBe(403);
+  expect(errorHandler).toHaveBeenCalledTimes(1);
+  expect(errorHandler).toHaveBeenCalledWith(errorEvt, adUnit, adUnit.error);
+  expect(onErrorCallback).toHaveBeenCalledTimes(1);
+  expect(onErrorCallback).toHaveBeenCalledWith(adUnit, adUnit.error);
 });
 
 test('VastAdUnit run must select a mediaFile and update the src and the assetUri', () => {
@@ -335,6 +350,10 @@ test('VastAdUnit onComplete must call the passed callback once the ad has comple
   const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
   const callback = jest.fn();
 
+  adUnit.onComplete(() => {
+    throw new Error('boom');
+  });
+
   adUnit.onComplete(callback);
   adUnit.run();
 
@@ -354,16 +373,22 @@ test('VastAdUnit onError must complain if you don\'t pass a callback', () => {
 
 test('VastAdUnit onError must be called if there was an issue viewing the ad', () => {
   canPlay.mockReturnValue(true);
+  const {videoElement} = videoAdContainer;
   const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
   const callback = jest.fn();
+  const mediaError = new Error('media error');
 
+  videoElement.error = mediaError;
   adUnit.onError(callback);
   adUnit.run();
 
   expect(callback).not.toHaveBeenCalled();
 
-  videoAdContainer.videoElement.dispatchEvent(new Event('error'));
+  videoElement.dispatchEvent(new Event('error'));
   expect(callback).toHaveBeenCalledTimes(1);
+  expect(callback).toHaveBeenCalledWith(adUnit, mediaError);
+  expect(adUnit.error).toBe(mediaError);
+  expect(adUnit.errorCode).toBe(405);
 });
 
 test('VastAdUnit on progress must update the contentPlayhead', () => {
