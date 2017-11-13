@@ -1,6 +1,11 @@
+import {
+  getClickThrough
+} from 'mol-vast-selectors';
 import pixelTracker from './helpers/pixelTracker';
 import trackError from './helpers/trackError';
+import createLinearEventTracker from './helpers/createLinearEventTracker';
 import {
+  clickThrough,
   error
 } from './linearEvents';
 
@@ -13,7 +18,6 @@ import {
 
   VAST LINEAR TRACKING EVENTS
 
-  * clickThrough, <= emit called with eventName and adUint
   * complete,  <= emit called with eventName and adUint
   * firstQuartile,  <= emit called with eventName and adUint
   * iconClick, <= emit called with eventName, adUnit, iconDefinition
@@ -34,8 +38,10 @@ import {
 
   ALREADY SUPPORTED
   * error, <= it will be called with an error object or undefined
+  * clickThrough, <= emit called with eventName and adUint
   */
 const linearTrackers = {
+  [clickThrough]: createLinearEventTracker(getClickThrough),
   [error]: trackError
 };
 
