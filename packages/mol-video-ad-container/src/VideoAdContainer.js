@@ -54,8 +54,9 @@ class VideoAdContainer {
 
     placeholder.appendChild(this.element);
 
-    // TODO: If the video element has a parentNode we should not modify its DOMTree
-    this.element.appendChild(this.videoElement);
+    if (!isVideoElement(videoElement)) {
+      this.element.appendChild(this.videoElement);
+    }
   }
 
   /**
