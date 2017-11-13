@@ -37,7 +37,7 @@ const vastChain = [
 ];
 
 test('trackError must track the errors using pixelTracker fn', () => {
-  trackError(vastChain);
+  trackError(vastChain, {errorCode: vastChain[0].errorCode});
 
   expect(pixelTracker).toHaveBeenCalledTimes(2);
   expect(pixelTracker).toHaveBeenCalledWith(getVastErrorURI(noAdParsedXML), {ERRORCODE: 203});
@@ -47,7 +47,10 @@ test('trackError must track the errors using pixelTracker fn', () => {
 test('trackError must accept an optional track funnction', () => {
   const mockTrack = jest.fn();
 
-  trackError(vastChain, {tracker: mockTrack});
+  trackError(vastChain, {
+    errorCode: vastChain[0].errorCode,
+    tracker: mockTrack
+  });
 
   expect(pixelTracker).not.toHaveBeenCalled();
   expect(mockTrack).toHaveBeenCalledTimes(2);

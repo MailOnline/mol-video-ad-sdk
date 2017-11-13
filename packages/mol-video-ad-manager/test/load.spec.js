@@ -85,7 +85,9 @@ test('load must track the errors', async () => {
   expect(requestAd).toHaveBeenCalledTimes(1);
   expect(requestAd).toBeCalledWith(adTag, options);
   expect(trackError).toHaveBeenCalledTimes(1);
-  expect(trackError).toHaveBeenCalledWith(errorVastChain, {});
+  expect(trackError).toHaveBeenCalledWith(errorVastChain, {
+    errorCode: errorVastChain[0].errorCode
+  });
 });
 
 test('load must pass the optional track to the trackErrors fn', async () => {
@@ -100,5 +102,8 @@ test('load must pass the optional track to the trackErrors fn', async () => {
   expect(requestAd).toHaveBeenCalledTimes(1);
   expect(requestAd).toBeCalledWith(adTag, options);
   expect(trackError).toHaveBeenCalledTimes(1);
-  expect(trackError).toHaveBeenCalledWith(errorVastChain, {tracker: options.tracker});
+  expect(trackError).toHaveBeenCalledWith(errorVastChain, {
+    errorCode: errorVastChain[0].errorCode,
+    tracker: options.tracker
+  });
 });

@@ -84,7 +84,9 @@ test('loadNext must track whatever error may have happened', async () => {
   expect(requestNextAd).toHaveBeenCalledTimes(1);
   expect(requestNextAd).toBeCalledWith(successVastChain, options);
   expect(trackError).toHaveBeenCalledTimes(1);
-  expect(trackError).toHaveBeenCalledWith(errorVastChain, {});
+  expect(trackError).toHaveBeenCalledWith(errorVastChain, {
+    errorCode: errorVastChain[0].errorCode
+  });
 });
 
 test('loadNext must accept an optional tracker function to track the error', async () => {
@@ -98,6 +100,9 @@ test('loadNext must accept an optional tracker function to track the error', asy
   expect(requestNextAd).toHaveBeenCalledTimes(1);
   expect(requestNextAd).toBeCalledWith(successVastChain, options);
   expect(trackError).toHaveBeenCalledTimes(1);
-  expect(trackError).toHaveBeenCalledWith(errorVastChain, {tracker: options.tracker});
+  expect(trackError).toHaveBeenCalledWith(errorVastChain, {
+    errorCode: errorVastChain[0].errorCode,
+    tracker: options.tracker
+  });
 });
 

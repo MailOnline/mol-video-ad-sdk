@@ -35,7 +35,10 @@ const loadNext = async (VASTChain, options = {}) => {
   if (lastVastResponse && Boolean(lastVastResponse.errorCode)) {
     const {tracker} = options;
 
-    trackError(vastChain, {tracker});
+    trackError(vastChain, {
+      errorCode: lastVastResponse.errorCode,
+      tracker
+    });
   }
 
   return vastChain;
