@@ -49,3 +49,9 @@ test('parseMacro must not provide the TIMESTAMP variable if provided', () => {
 
   expect(parseMacro(macro, {TIMESTAMP: 'today'})).toBe('https://test.example.com/today');
 });
+
+test('parseMacro must accept keys in lowercase', () => {
+  const macro = 'https://test.example.com/[CACHEBUSTING]';
+
+  expect(parseMacro(macro, {cachebusting: 'foo'})).toBe('https://test.example.com/foo');
+});
