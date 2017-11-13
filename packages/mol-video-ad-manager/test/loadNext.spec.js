@@ -9,11 +9,11 @@ import {
   vastInlineXML
 } from 'mol-vast-fixtures';
 import {requestNextAd} from 'mol-vast-loader';
+import {trackError} from 'mol-video-ad-tracker';
 import loadNext from '../src/loadNext';
-import trackError from '../src/helpers/trackError';
 
 jest.mock('mol-vast-loader', () => ({requestNextAd: jest.fn()}));
-jest.mock('../src/helpers/trackError', () => jest.fn());
+jest.mock('mol-video-ad-tracker', () => ({trackError: jest.fn()}));
 
 const errorVastChain = [
   {

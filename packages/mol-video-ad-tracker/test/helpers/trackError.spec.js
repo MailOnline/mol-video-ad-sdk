@@ -9,10 +9,10 @@ import {
   getAdErrorURI,
   getVastErrorURI
 } from 'mol-vast-selectors';
-import {track} from 'mol-video-ad-tracker';
+import track from '../../src/track';
 import trackError from '../../src/helpers/trackError';
 
-jest.mock('mol-video-ad-tracker', () => ({track: jest.fn()}));
+jest.mock('../../src/track', () => jest.fn());
 
 afterEach(() => {
   track.mockClear();

@@ -1,5 +1,5 @@
 import {requestNextAd} from 'mol-vast-loader';
-import trackError from './helpers/trackError';
+import {trackError} from 'mol-video-ad-tracker';
 
 /**
  * Loads the next ad in the VAST Chain.

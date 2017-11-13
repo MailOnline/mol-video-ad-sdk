@@ -1,8 +1,8 @@
-import {track} from 'mol-video-ad-tracker';
 import {
   getAdErrorURI,
   getVastErrorURI
 } from 'mol-vast-selectors';
+import track from '../track';
 
 const trackError = (vastChain, doTrack = track) => {
   const ERRORCODE = vastChain[0].errorCode;
