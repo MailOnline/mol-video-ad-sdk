@@ -1,27 +1,28 @@
 import trackLinearEvent from '../src/trackLinearEvent';
+import {
+  error
+} from '../src/linearEvents';
 import pixelTracker from '../src/helpers/pixelTracker';
-import linearTrackers from '../src/helpers/linearTrackers';
+import trackError from '../src/helpers/trackError';
 
-jest.mock('../src/helpers/linearTrackers', () => ({
-  test: jest.fn()
-}));
+jest.mock('../src/helpers/trackError', () => jest.fn());
 
 afterEach(() => {
-  linearTrackers.test.mockClear();
+  trackError.mockClear();
 });
 
-test('trackLinearEvent must track the any linear event with the default pixelTracker', () => {
+test('trackLinearEvent must track the error linear event with the default pixelTracker', () => {
   const vastChain = [];
   const data = {};
   const errorCode = 900;
 
-  trackLinearEvent('test', vastChain, {
+  trackLinearEvent(error, vastChain, {
     data,
     errorCode
   });
 
-  expect(linearTrackers.test).toHaveBeenCalledTimes(1);
-  expect(linearTrackers.test).toHaveBeenCalledWith(vastChain, {
+  expect(trackError).toHaveBeenCalledTimes(1);
+  expect(trackError).toHaveBeenCalledWith(vastChain, {
     data,
     errorCode,
     tracker: pixelTracker
@@ -33,13 +34,13 @@ test('trackLinearEvent must be possible to pass a custom tracker to the linear t
   const data = {};
   const customTracker = () => {};
 
-  trackLinearEvent('test', vastChain, {
+  trackLinearEvent(error, vastChain, {
     data,
     tracker: customTracker
   });
 
-  expect(linearTrackers.test).toHaveBeenCalledTimes(1);
-  expect(linearTrackers.test).toHaveBeenCalledWith(vastChain, {
+  expect(trackError).toHaveBeenCalledTimes(1);
+  expect(trackError).toHaveBeenCalledWith(vastChain, {
     data,
     errorCode: undefined,
     tracker: customTracker
@@ -58,6 +59,5 @@ test('trackLinearEvent must log an error if the the event can\'t be tracked', ()
     logger
   });
 
-  expect(linearTrackers.test).toHaveBeenCalledTimes(0);
   expect(logger.error).toHaveBeenCalledWith('Event \'wrongEvent\' is not trackable');
 });
