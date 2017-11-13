@@ -1,11 +1,11 @@
 import linearEvents from './linearEvents';
 import trackLinearEvent from './trackLinearEvent';
-import macrosTracker from './helpers/macrosTracker';
+import pixelTracker from './helpers/pixelTracker';
 import trackError from './helpers/trackError';
 
 export {
   linearEvents,
-  macrosTracker,
+  pixelTracker,
   trackLinearEvent,
   trackError
 };

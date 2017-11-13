@@ -9,13 +9,13 @@ import {
   getAdErrorURI,
   getVastErrorURI
 } from 'mol-vast-selectors';
-import macrosTracker from '../../src/helpers/macrosTracker';
+import pixelTracker from '../../src/helpers/pixelTracker';
 import trackError from '../../src/helpers/trackError';
 
-jest.mock('../../src/helpers/macrosTracker', () => jest.fn());
+jest.mock('../../src/helpers/pixelTracker', () => jest.fn());
 
 afterEach(() => {
-  macrosTracker.mockClear();
+  pixelTracker.mockClear();
 });
 
 const vastChain = [
@@ -36,12 +36,12 @@ const vastChain = [
   }
 ];
 
-test('trackError must track the errors using macrosTracker fn', () => {
+test('trackError must track the errors using pixelTracker fn', () => {
   trackError(vastChain);
 
-  expect(macrosTracker).toHaveBeenCalledTimes(2);
-  expect(macrosTracker).toHaveBeenCalledWith(getVastErrorURI(noAdParsedXML), {ERRORCODE: 203});
-  expect(macrosTracker).toHaveBeenCalledWith(getAdErrorURI(wrapperAd), {ERRORCODE: 203});
+  expect(pixelTracker).toHaveBeenCalledTimes(2);
+  expect(pixelTracker).toHaveBeenCalledWith(getVastErrorURI(noAdParsedXML), {ERRORCODE: 203});
+  expect(pixelTracker).toHaveBeenCalledWith(getAdErrorURI(wrapperAd), {ERRORCODE: 203});
 });
 
 test('trackError must accept an optional track funnction', () => {
@@ -49,7 +49,7 @@ test('trackError must accept an optional track funnction', () => {
 
   trackError(vastChain, {tracker: mockTrack});
 
-  expect(macrosTracker).not.toHaveBeenCalled();
+  expect(pixelTracker).not.toHaveBeenCalled();
   expect(mockTrack).toHaveBeenCalledTimes(2);
   expect(mockTrack).toHaveBeenCalledWith(getVastErrorURI(noAdParsedXML), {ERRORCODE: 203});
   expect(mockTrack).toHaveBeenCalledWith(getAdErrorURI(wrapperAd), {ERRORCODE: 203});

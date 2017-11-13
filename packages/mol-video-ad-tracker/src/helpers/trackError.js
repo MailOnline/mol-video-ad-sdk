@@ -2,9 +2,9 @@ import {
   getAdErrorURI,
   getVastErrorURI
 } from 'mol-vast-selectors';
-import macrosTracker from './macrosTracker';
+import pixelTracker from './pixelTracker';
 
-const trackError = (vastChain, {tracker = macrosTracker} = {}) => {
+const trackError = (vastChain, {tracker = pixelTracker} = {}) => {
   const ERRORCODE = vastChain[0].errorCode;
   const errorURIs = [];
 
