@@ -40,8 +40,8 @@ test('trackError must track the errors using pixelTracker fn', () => {
   trackError(vastChain, {errorCode: vastChain[0].errorCode});
 
   expect(pixelTracker).toHaveBeenCalledTimes(2);
-  expect(pixelTracker).toHaveBeenCalledWith(getVastErrorURI(noAdParsedXML), {ERRORCODE: 203});
-  expect(pixelTracker).toHaveBeenCalledWith(getAdErrorURI(wrapperAd), {ERRORCODE: 203});
+  expect(pixelTracker).toHaveBeenCalledWith(getVastErrorURI(noAdParsedXML), {errorCode: 203});
+  expect(pixelTracker).toHaveBeenCalledWith(getAdErrorURI(wrapperAd), {errorCode: 203});
 });
 
 test('trackError must accept an optional track funnction', () => {
@@ -54,6 +54,6 @@ test('trackError must accept an optional track funnction', () => {
 
   expect(pixelTracker).not.toHaveBeenCalled();
   expect(mockTrack).toHaveBeenCalledTimes(2);
-  expect(mockTrack).toHaveBeenCalledWith(getVastErrorURI(noAdParsedXML), {ERRORCODE: 203});
-  expect(mockTrack).toHaveBeenCalledWith(getAdErrorURI(wrapperAd), {ERRORCODE: 203});
+  expect(mockTrack).toHaveBeenCalledWith(getVastErrorURI(noAdParsedXML), {errorCode: 203});
+  expect(mockTrack).toHaveBeenCalledWith(getAdErrorURI(wrapperAd), {errorCode: 203});
 });

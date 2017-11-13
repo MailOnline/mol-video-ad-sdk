@@ -5,7 +5,6 @@ import {
 import pixelTracker from './pixelTracker';
 
 const trackError = (vastChain, {errorCode, tracker = pixelTracker} = {}) => {
-  const ERRORCODE = errorCode;
   const errorURIs = [];
 
   vastChain.forEach(({ad, parsedXML}) => {
@@ -16,7 +15,7 @@ const trackError = (vastChain, {errorCode, tracker = pixelTracker} = {}) => {
     }
   });
 
-  errorURIs.forEach((macro) => tracker(macro, {ERRORCODE}));
+  errorURIs.forEach((macro) => tracker(macro, {errorCode}));
 };
 
 export default trackError;
