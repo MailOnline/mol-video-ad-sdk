@@ -1,4 +1,4 @@
-import parseMacro from './helpers/parseMacro';
+import parseMacro from './parseMacro';
 
 /**
  * Create a list of tracking images with the passed URL macros.
@@ -8,7 +8,7 @@ import parseMacro from './helpers/parseMacro';
  * @returns {Array} - Array of Image object whose sources are the parsed URLMacros.
  * @static
  */
-const track = (URLMacros = [], data = {}) => {
+const trackMacros = (URLMacros = [], data = {}) => {
   const sources = URLMacros.map((urlMacro) => parseMacro(urlMacro, data));
 
   return sources.map((source) => {
@@ -20,5 +20,5 @@ const track = (URLMacros = [], data = {}) => {
   });
 };
 
-export default track;
+export default trackMacros;
 
