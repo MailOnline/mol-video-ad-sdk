@@ -10,7 +10,7 @@ import onImpression from './onImpression';
 import onProgress from './onProgress';
 import onClickThrough from './onClickThrough';
 
-export default [
+const handlers = [
   onClickThrough,
   onError,
   onFullscreenChange,
@@ -22,3 +22,5 @@ export default [
   onTimeUpdate,
   onVolumeChange
 ];
+
+export default handlers;

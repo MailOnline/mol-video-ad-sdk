@@ -32,25 +32,25 @@ class VideoAdContainer {
     }
 
     /**
-      Context the ad will run on. I.E. The `window` of the ads runing environment.
-
-      @name VideoAdContainer#context
-    */
+     * Context the ad will run on. I.E. The `window` of the ads runing environment.
+     *
+     * @name VideoAdContainer#context
+     */
     this.context = window;
 
     /**
-      Element node that will expand using all the available space on the placeholder element
-
-      @name VideoAdContainer#element
-      @type HTMLElement
-    */
+     * Element node that will expand using all the available space on the placeholder element
+     *
+     * @name VideoAdContainer#element
+     * @type HTMLElement
+     */
     this.element = createAdContainer();
 
     /**
-      The video element that will play the video ad.
-
-      @name VideoAdContainer#videoElement
-      @type HTMLVideoElement
+     * The video element that will play the video ad.
+     *
+     * @name VideoAdContainer#videoElement
+     * @type HTMLVideoElement
     */
     this.videoElement = isVideoElement(videoElement) ? videoElement : createAdVideoElement();
 

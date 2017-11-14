@@ -37,6 +37,7 @@ beforeEach(() => {
       XML: vastWrapperXML
     }
   ];
+
   videoAdContainer = new VideoAdContainer(document.createElement('DIV'));
 });
 
@@ -45,8 +46,10 @@ afterEach(() => {
   videoAdContainer = null;
 });
 
-test('createVideoAdUnit must return a VideoAdUnit', () => {
-  expect(createVideoAdUnit(vastChain, videoAdContainer)).resolves.toBeInstanceOf(VastAdUnit);
+test('createVideoAdUnit must return a VideoAdUnit', async () => {
+  const adUnit = await createVideoAdUnit(vastChain, videoAdContainer);
+
+  expect(adUnit).toBeInstanceOf(VastAdUnit);
 });
 
 test('createVideoAdUnit must track the adUnit linear events');

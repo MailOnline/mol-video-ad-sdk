@@ -136,7 +136,7 @@ test('VideoAdContainer onResize must call the callback whenever the element resi
   expect(callback).toHaveBeenCalledTimes(2);
 });
 
-test('videoAdContainer onResize must return a stop function', async () => {
+test('VideoAdContainer onResize must return a stop function', async () => {
   const videoAdContainer = new VideoAdContainer(placeholder);
 
   await videoAdContainer.ready();

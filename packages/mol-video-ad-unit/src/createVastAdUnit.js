@@ -6,7 +6,7 @@ const createVastAdUnit = (vastAdChain, videoAdContainer, options = {}) => {
     throw new TypeError('Invalid VastAdChain');
   }
 
-  if (!(videoAdContainer instanceof VideoAdContainer)) {
+  if (!(videoAdContainer.constructor.name === VideoAdContainer.name)) {
     throw new TypeError('Invalid VideoAdContainer');
   }
 

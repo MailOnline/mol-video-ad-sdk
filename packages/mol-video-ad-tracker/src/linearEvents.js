@@ -21,7 +21,7 @@ export const unmute = 'unmute';
 export const iconClick = 'iconClick';
 export const iconView = 'iconView';
 
-export default {
+const linearEvents = {
   acceptInvitationLinear,
   clickThrough,
   complete,
@@ -46,3 +46,4 @@ export default {
   unmute
 };
 
+export default linearEvents;

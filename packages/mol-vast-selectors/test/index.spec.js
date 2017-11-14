@@ -435,6 +435,6 @@ test('getSkipoffset must return null if there none', () => {
   expect(getSkipoffset(wrapperAd)).toEqual(null);
 });
 
-test('getSkipoffset must return the parset skipoffset', () => {
+test('getSkipoffset must return the parsed skipoffset', () => {
   expect(getSkipoffset(inlineAd)).toEqual(5000);
 });

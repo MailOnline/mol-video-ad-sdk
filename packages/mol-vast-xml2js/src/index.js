@@ -24,4 +24,5 @@ export {
  * @returns {Object} - Returns the parsed xml as a js object.
  * @static
  */
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (xml) => xml2js(xml, {compact: false});
