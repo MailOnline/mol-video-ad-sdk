@@ -1,5 +1,28 @@
+import {
+  wrapperParsedXML,
+  inlineAd,
+  inlineParsedXML,
+  vastInlineXML,
+  vastPodXML
+} from 'mol-vast-fixtures';
+import {getFirstAd} from 'mol-vast-selectors';
 import trackLinearEvent from '../src/trackLinearEvent';
 import {
+  clickThrough,
+  complete,
+  firstQuartile,
+  fullscreen,
+  midpoint,
+  mute,
+  pause,
+  playerCollapse,
+  playerExpand,
+  resume,
+  rewind,
+  skip,
+  start,
+  thirdQuartile,
+  unmute,
   error
 } from '../src/linearEvents';
 import pixelTracker from '../src/helpers/pixelTracker';
@@ -7,12 +30,29 @@ import trackError from '../src/helpers/trackError';
 
 jest.mock('../src/helpers/trackError', () => jest.fn());
 
+const vastChain = [
+  {
+    ad: inlineAd,
+    error: null,
+    errorCode: null,
+    parsedXML: inlineParsedXML,
+    requestTag: 'https://test.example.com/vastadtaguri',
+    XML: vastInlineXML
+  },
+  {
+    ad: getFirstAd(wrapperParsedXML),
+    errorCode: null,
+    parsedXML: wrapperParsedXML,
+    requestTag: 'http://adtag.test.example.com',
+    XML: vastPodXML
+  }
+];
+
 afterEach(() => {
   trackError.mockClear();
 });
 
 test('trackLinearEvent must track the error linear event with the default pixelTracker', () => {
-  const vastChain = [];
   const data = {};
   const errorCode = 900;
 
@@ -23,14 +63,12 @@ test('trackLinearEvent must track the error linear event with the default pixelT
 
   expect(trackError).toHaveBeenCalledTimes(1);
   expect(trackError).toHaveBeenCalledWith(vastChain, {
-    data,
-    errorCode,
+    data: {errorCode},
     tracker: pixelTracker
   });
 });
 
 test('trackLinearEvent must be possible to pass a custom tracker to the linear trackers', () => {
-  const vastChain = [];
   const data = {};
   const customTracker = () => {};
 
@@ -48,7 +86,6 @@ test('trackLinearEvent must be possible to pass a custom tracker to the linear t
 });
 
 test('trackLinearEvent must log an error if the the event can\'t be tracked', () => {
-  const vastChain = [];
   const data = {};
   const logger = {
     error: jest.fn()
@@ -60,4 +97,47 @@ test('trackLinearEvent must log an error if the the event can\'t be tracked', ()
   });
 
   expect(logger.error).toHaveBeenCalledWith('Event \'wrongEvent\' is not trackable');
+});
+
+test(`trackLinearEvent must track ${clickThrough} linear event with the default pixelTracker`, () => {
+  const data = {};
+  const tracker = jest.fn();
+
+  trackLinearEvent(clickThrough, vastChain, {
+    data,
+    tracker
+  });
+
+  expect(tracker).toHaveBeenCalledTimes(1);
+  expect(tracker).toHaveBeenCalledWith('https://test.example.com/clickthrough', {});
+});
+
+[
+  start,
+  complete,
+  firstQuartile,
+  midpoint,
+  playerCollapse,
+  playerExpand,
+  thirdQuartile,
+  mute,
+  unmute,
+  rewind,
+  pause,
+  resume,
+  fullscreen,
+  skip
+].forEach((event) => {
+  test(`trackLinearEvent must track ${event} linear event with the default pixelTracker`, () => {
+    const data = {};
+    const tracker = jest.fn();
+
+    trackLinearEvent(event, vastChain, {
+      data,
+      tracker
+    });
+
+    expect(tracker).toHaveBeenCalledWith(`https://test.example.com/${event}`, {});
+    expect(tracker).toHaveBeenCalledWith(`https://test.example.com/${event}2`, {});
+  });
 });

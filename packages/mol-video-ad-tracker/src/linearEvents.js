@@ -10,6 +10,7 @@ export const otherAdInteraction = 'otherAdInteraction';
 export const pause = 'pause';
 export const playerCollapse = 'playerCollapse';
 export const playerExpand = 'playerExpand';
+export const fullscreen = 'fullscreen';
 export const progress = 'progress';
 export const resume = 'resume';
 export const rewind = 'rewind';
@@ -27,6 +28,7 @@ const linearEvents = {
   complete,
   error,
   firstQuartile,
+  fullscreen,
   iconClick,
   iconView,
   impression,

@@ -237,12 +237,12 @@ test('getLinearTrackingEvents must return the linear tracking events', () => {
     {
       event: 'firstQuartile',
       offset: undefined,
-      uri: 'https://test.example.com/firstquartile'
+      uri: 'https://test.example.com/firstQuartile'
     },
     {
       event: 'firstQuartile',
       offset: undefined,
-      uri: 'https://test.example.com/firstquartile2'
+      uri: 'https://test.example.com/firstQuartile2'
     },
     {
       event: 'midpoint',
@@ -257,12 +257,12 @@ test('getLinearTrackingEvents must return the linear tracking events', () => {
     {
       event: 'thirdQuartile',
       offset: undefined,
-      uri: 'https://test.example.com/thirdquartile'
+      uri: 'https://test.example.com/thirdQuartile'
     },
     {
       event: 'thirdQuartile',
       offset: undefined,
-      uri: 'https://test.example.com/thirdquartile2'
+      uri: 'https://test.example.com/thirdQuartile2'
     },
     {
       event: 'complete',
@@ -273,6 +273,26 @@ test('getLinearTrackingEvents must return the linear tracking events', () => {
       event: 'complete',
       offset: undefined,
       uri: 'https://test.example.com/complete2'
+    },
+    {
+      event: 'playerExpand',
+      offset: undefined,
+      uri: 'https://test.example.com/playerExpand'
+    },
+    {
+      event: 'playerExpand',
+      offset: undefined,
+      uri: 'https://test.example.com/playerExpand2'
+    },
+    {
+      event: 'playerCollapse',
+      offset: undefined,
+      uri: 'https://test.example.com/playerCollapse'
+    },
+    {
+      event: 'playerCollapse',
+      offset: undefined,
+      uri: 'https://test.example.com/playerCollapse2'
     },
     {
       event: 'mute',
@@ -303,6 +323,16 @@ test('getLinearTrackingEvents must return the linear tracking events', () => {
       event: 'rewind',
       offset: undefined,
       uri: 'https://test.example.com/rewind2'
+    },
+    {
+      event: 'skip',
+      offset: undefined,
+      uri: 'https://test.example.com/skip'
+    },
+    {
+      event: 'skip',
+      offset: undefined,
+      uri: 'https://test.example.com/skip2'
     },
     {
       event: 'pause',

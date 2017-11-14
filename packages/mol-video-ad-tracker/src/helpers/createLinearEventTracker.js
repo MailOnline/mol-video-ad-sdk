@@ -4,10 +4,21 @@ const createLinearEventTracker = (vastChainSelector) => (vastChain, {data, track
   const eventUris = [];
 
   vastChain.forEach(({ad}) => {
-    const uri = vastChainSelector(ad);
+    const value = vastChainSelector(ad);
 
-    if (Boolean(uri)) {
-      eventUris.push(uri);
+    if (Boolean(value)) {
+      switch (true) {
+      case typeof value === 'string': {
+        eventUris.push(value);
+        break;
+      }
+      case Array.isArray(value): {
+        const uris = value.map(({uri}) => uri);
+
+        eventUris.push(...uris);
+        break;
+      }
+      }
     }
   });
 

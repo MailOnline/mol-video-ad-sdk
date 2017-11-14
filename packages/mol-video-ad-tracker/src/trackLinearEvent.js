@@ -9,6 +9,7 @@ import {
   clickThrough,
   complete,
   firstQuartile,
+  fullscreen,
   midpoint,
   mute,
   pause,
@@ -38,10 +39,13 @@ import {
   * progress, <= emit called with eventName, adUint and {accumulated: NUMBER, contentplayhead: FORMATED_STRING}
 
   ALREADY SUPPORTED
+
+  ALREADY TESTED
   * error, <= it will be called with an error object or undefined
   * clickThrough, <= emit called with eventName and adUint
   * complete,  <= emit called with eventName and adUint
   * firstQuartile,  <= emit called with eventName and adUint
+  * fullscreen,  <= emit called with eventName and adUint
   * midpoint,  <= emit called with eventName and adUint
   * mute, <= emit called with eventName and adUint
   * pause,  <= emit called with eventName and adUint
@@ -49,10 +53,10 @@ import {
   * playerExpand, <= emit called with eventName and adUint
   * resume, <= emit called with eventName and adUint
   * rewind, <= emit called with eventName and adUint
-  * skip, <= emit called with eventName and adUint
   * start, <= emit called with eventName and adUint
   * thirdQuartile,  <= emit called with eventName and adUint
   * unmute <= emit called with eventName and adUint
+  * skip, <= emit called with eventName and adUint
   */
 
 const linearTrakingEventSelector = (event) => (ad) => getLinearTrackingEvents(ad, event);
@@ -61,6 +65,7 @@ const linearTrackers = {
   [complete]: createLinearEventTracker(linearTrakingEventSelector(complete)),
   [error]: trackError,
   [firstQuartile]: createLinearEventTracker(linearTrakingEventSelector(firstQuartile)),
+  [fullscreen]: createLinearEventTracker(linearTrakingEventSelector(fullscreen)),
   [midpoint]: createLinearEventTracker(linearTrakingEventSelector(midpoint)),
   [mute]: createLinearEventTracker(linearTrakingEventSelector(mute)),
   [pause]: createLinearEventTracker(linearTrakingEventSelector(pause)),
@@ -79,8 +84,10 @@ const trackLinearEvent = (event, vastChain, {data, errorCode, tracker = pixelTra
 
   if (linearTracker) {
     linearTracker(vastChain, {
-      data,
-      errorCode,
+      data: {
+        ...data,
+        errorCode
+      },
       tracker
     });
   } else {

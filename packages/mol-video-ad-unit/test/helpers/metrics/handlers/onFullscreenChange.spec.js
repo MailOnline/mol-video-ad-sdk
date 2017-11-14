@@ -2,6 +2,7 @@ import {linearEvents} from 'mol-video-ad-tracker';
 import onFullscreenChange from '../../../../src/helpers/metrics/handlers/onFullscreenChange';
 
 const {
+  fullscreen,
   playerCollapse,
   playerExpand
 } = linearEvents;
@@ -12,8 +13,9 @@ test('onFullscreenChange must call playerExpand on when going fullscreen and pla
 
   document.fullscreenElement = document.createElement('VIDEO');
   document.dispatchEvent(new Event('fullscreenchange'));
-  expect(callback).toHaveBeenCalledTimes(1);
+  expect(callback).toHaveBeenCalledTimes(2);
   expect(callback).toHaveBeenCalledWith(playerExpand);
+  expect(callback).toHaveBeenCalledWith(fullscreen);
 
   callback.mockClear();
   document.fullscreenElement = null;
