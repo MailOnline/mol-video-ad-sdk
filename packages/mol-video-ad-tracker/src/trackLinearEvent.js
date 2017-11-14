@@ -1,11 +1,25 @@
 import {
-  getClickThrough
+  getClickThrough,
+  getLinearTrackingEvents
 } from 'mol-vast-selectors';
 import pixelTracker from './helpers/pixelTracker';
 import trackError from './helpers/trackError';
 import createLinearEventTracker from './helpers/createLinearEventTracker';
 import {
   clickThrough,
+  complete,
+  firstQuartile,
+  midpoint,
+  mute,
+  pause,
+  playerCollapse,
+  playerExpand,
+  resume,
+  rewind,
+  skip,
+  start,
+  thirdQuartile,
+  unmute,
   error
 } from './linearEvents';
 
@@ -18,31 +32,46 @@ import {
 
   VAST LINEAR TRACKING EVENTS
 
+  * impression,  <= emit called with eventName and adUint
+  * iconView, <= emit called with eventName, adUnit, iconDefinition
+  * iconClick, <= emit called with eventName, adUnit, iconDefinition
+  * progress, <= emit called with eventName, adUint and {accumulated: NUMBER, contentplayhead: FORMATED_STRING}
+
+  ALREADY SUPPORTED
+  * error, <= it will be called with an error object or undefined
+  * clickThrough, <= emit called with eventName and adUint
   * complete,  <= emit called with eventName and adUint
   * firstQuartile,  <= emit called with eventName and adUint
-  * iconClick, <= emit called with eventName, adUnit, iconDefinition
-  * iconView, <= emit called with eventName, adUnit, iconDefinition
-  * impression,  <= emit called with eventName and adUint
   * midpoint,  <= emit called with eventName and adUint
   * mute, <= emit called with eventName and adUint
   * pause,  <= emit called with eventName and adUint
   * playerCollapse, <= emit called with eventName and adUint
   * playerExpand, <= emit called with eventName and adUint
-  * progress, <= emit called with eventName, adUint and {accumulated: NUMBER, contentplayhead: FORMATED_STRING}
   * resume, <= emit called with eventName and adUint
   * rewind, <= emit called with eventName and adUint
   * skip, <= emit called with eventName and adUint
   * start, <= emit called with eventName and adUint
   * thirdQuartile,  <= emit called with eventName and adUint
   * unmute <= emit called with eventName and adUint
-
-  ALREADY SUPPORTED
-  * error, <= it will be called with an error object or undefined
-  * clickThrough, <= emit called with eventName and adUint
   */
+
+const linearTrakingEventSelector = (event) => (ad) => getLinearTrackingEvents(ad, event);
 const linearTrackers = {
   [clickThrough]: createLinearEventTracker(getClickThrough),
-  [error]: trackError
+  [complete]: createLinearEventTracker(linearTrakingEventSelector(complete)),
+  [error]: trackError,
+  [firstQuartile]: createLinearEventTracker(linearTrakingEventSelector(firstQuartile)),
+  [midpoint]: createLinearEventTracker(linearTrakingEventSelector(midpoint)),
+  [mute]: createLinearEventTracker(linearTrakingEventSelector(mute)),
+  [pause]: createLinearEventTracker(linearTrakingEventSelector(pause)),
+  [playerCollapse]: createLinearEventTracker(linearTrakingEventSelector(playerCollapse)),
+  [playerExpand]: createLinearEventTracker(linearTrakingEventSelector(playerExpand)),
+  [resume]: createLinearEventTracker(linearTrakingEventSelector(resume)),
+  [rewind]: createLinearEventTracker(linearTrakingEventSelector(rewind)),
+  [skip]: createLinearEventTracker(linearTrakingEventSelector(skip)),
+  [start]: createLinearEventTracker(linearTrakingEventSelector(start)),
+  [thirdQuartile]: createLinearEventTracker(linearTrakingEventSelector(thirdQuartile)),
+  [unmute]: createLinearEventTracker(linearTrakingEventSelector(unmute))
 };
 
 const trackLinearEvent = (event, vastChain, {data, errorCode, tracker = pixelTracker, logger = console} = {}) => {
