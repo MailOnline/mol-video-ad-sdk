@@ -189,8 +189,6 @@ test('trackLinearEvent must track iconViews', () => {
   expect(tracker).toHaveBeenCalledWith('https://test.example.com/iconView', data);
 });
 
-// TODO: TRACK PROGRES TAKING THE OFFSET INTO ACCOUNT
-
 test('trackLinearEvent must track progress', () => {
   const data = {
     progressUri: 'https://test.example.com/progress'
