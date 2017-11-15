@@ -3,6 +3,7 @@ import {linearEvents} from 'mol-video-ad-tracker';
 import Emitter from 'mol-tiny-emitter';
 import {
   getClickThrough,
+  getLinearTrackingEvents,
   getMediaFiles,
   getSkipoffset
 } from 'mol-vast-selectors';
@@ -41,12 +42,27 @@ const onErrorCallbacks = Symbol('onErrorCallbacks');
 const onCompleteCallbacks = Symbol('onCompleteCallbacks');
 const removeMetrichandlers = Symbol('removeMetrichandlers');
 const removeIcons = Symbol('removeIcons');
+const getProgressEvents = (vastChain) => vastChain.map(({ad}) => ad)
+  .reduce((accumulated, ad) => {
+    const events = getLinearTrackingEvents(ad, progress) || [];
+
+    return [
+      ...accumulated,
+      ...events
+    ];
+  }, [])
+  .map(({offset, uri}) => ({
+    offset,
+    uri
+  }));
 
 class VastAdUnit extends Emitter {
   constructor (vastAdChain, videoAdContainer, {hooks = {}, logger = console} = {}) {
     super(logger);
 
     this.hooks = hooks;
+
+    // TODO: Rename vastAdChain to vast chain
     this.vastAdChain = vastAdChain;
     this.videoAdContainer = videoAdContainer;
     this.error = null;
@@ -65,6 +81,7 @@ class VastAdUnit extends Emitter {
     const media = mediaFiles && findBestMedia(videoElement, mediaFiles, element);
     const skipoffset = getSkipoffset(inlineAd);
     const clickThroughUrl = getClickThrough(inlineAd);
+    const progressEvents = getProgressEvents(this.vastAdChain);
 
     const handleMetric = (event, data) => {
       switch (event) {
@@ -97,6 +114,7 @@ class VastAdUnit extends Emitter {
       // eslint-disable-next-line object-property-newline
       this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, handleMetric, {
         clickThroughUrl,
+        progressEvents,
         skipoffset,
         ...this.hooks
       });

@@ -173,7 +173,7 @@ test('VastAdUnit run must select the best media to play', () => {
   expect(adUnit.assetUri).toBe('https://test.example.com/test1920x1080.mp4');
 });
 
-test('VastAdUnit run must start the metric listeners', () => {
+test('VastAdUnit run must start the metric listeners passing the needed data', () => {
   metricHandlers.forEach((handler) => handler.mockClear());
   canPlay.mockReturnValue(true);
   const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
@@ -187,6 +187,23 @@ test('VastAdUnit run must start the metric listeners', () => {
       expect.any(Function),
       {
         clickThroughUrl: 'https://test.example.com/clickthrough',
+        progressEvents: [{offset: 5000,
+          uri: 'https://test.example.com/progress'
+        },
+        {
+          offset: '15%',
+          uri: 'https://test.example.com/progress2'
+        },
+        {
+          offset: 5000,
+          uri: 'https://test.example.com/progress'
+        },
+        {
+          offset: '15%',
+          uri: 'https://test.example.com/progress2'
+        }
+
+        ],
         skipoffset: 5000
       }
     );
@@ -211,6 +228,7 @@ test('VastAdUnit must be possible to pass a createSkipOffset hook to the handler
       {
         clickThroughUrl: 'https://test.example.com/clickthrough',
         createSkipOffset,
+        progressEvents: expect.any(Array),
         skipoffset: 5000
       }
     );
