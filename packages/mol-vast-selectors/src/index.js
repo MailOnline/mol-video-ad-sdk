@@ -218,6 +218,27 @@ export const getAdErrorURI = (ad) => {
   return null;
 };
 
+/**
+ * Gets the Impression URI of the passed ad.
+ *
+ * @param {Object} ad - VAST ad object.
+ * @returns {String/null} - Vast ad Impression URI or null otherwise.
+ * @static
+ */
+export const getImpressionUri = (ad) => {
+  const adTypeElement = ad && getFirstChild(ad);
+
+  if (adTypeElement) {
+    const impression = get(adTypeElement, 'Impression');
+
+    if (impression) {
+      return getText(impression);
+    }
+  }
+
+  return null;
+};
+
 export const getMediaFiles = (ad) => {
   const creativeElement = ad && getLinearCreative(ad);
 
