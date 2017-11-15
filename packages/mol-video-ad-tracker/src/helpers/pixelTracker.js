@@ -1,23 +1,19 @@
 import parseMacro from './parseMacro';
 
 /**
- * Create a list of tracking images with the passed URL macros.
+ * Create a tracking image with the passed URL macro.
  *
- * @param {Array} URLMacros - Array of URL Macros that need to be tracked.
+ * @param {string} URLMacro - URL Macro that need to be tracked.
  * @param {Object} data - Data Object with the macros's variables.
- * @returns {Array} - Array of Image object whose sources are the parsed URLMacros.
+ * @returns {HTMLImageElement} - Image element whose source is the parsed URLMacro.
  * @static
  */
-const pixelTracker = (URLMacros = [], data = {}) => {
-  const sources = URLMacros.map((urlMacro) => parseMacro(urlMacro, data));
+const pixelTracker = (URLMacro, data = {}) => {
+  const img = new Image();
 
-  return sources.map((source) => {
-    const img = new Image();
+  img.src = parseMacro(URLMacro, data);
 
-    img.src = source;
-
-    return img;
-  });
+  return img;
 };
 
 export default pixelTracker;
