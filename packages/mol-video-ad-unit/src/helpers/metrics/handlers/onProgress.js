@@ -7,17 +7,19 @@ const secondsToMilliseconds = (seconds) => seconds * 1000;
 
 const onProgress = ({videoElement}, callback) => {
   const previousCurrentTime = secondsToMilliseconds(videoElement.currentTime);
-  let accumulatedProgress = 0;
+  let playedMs = 0;
 
   const progressHandler = () => {
-    const currentTime = videoElement.currentTime;
+    const {currentTime, duration} = videoElement;
+    const durationInMs = secondsToMilliseconds(duration);
     const delta = Math.abs(currentTime - previousCurrentTime);
 
-    accumulatedProgress += secondsToMilliseconds(delta);
+    playedMs += secondsToMilliseconds(delta);
 
     callback(progress, {
-      accumulated: accumulatedProgress,
-      contentplayhead: formatProgress(accumulatedProgress)
+      contentplayhead: formatProgress(playedMs),
+      playedMs,
+      playedPercentage: playedMs * 100 / durationInMs
     });
   };
 

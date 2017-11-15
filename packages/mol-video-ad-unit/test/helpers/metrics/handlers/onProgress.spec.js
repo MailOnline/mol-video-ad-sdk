@@ -7,7 +7,7 @@ let videoElement;
 beforeEach(() => {
   videoElement = document.createElement('VIDEO');
   Object.defineProperty(videoElement, 'duration', {
-    value: 100,
+    value: 200,
     writable: true
   });
   Object.defineProperty(videoElement, 'currentTime', {
@@ -28,8 +28,9 @@ test('onProgress call the callback with the progress', () => {
   videoElement.dispatchEvent(new Event('timeupdate'));
   expect(callback).toHaveBeenCalledTimes(1);
   expect(callback).toHaveBeenCalledWith(progress, expect.objectContaining({
-    accumulated: 10000,
-    contentplayhead: '00:00:10.000'
+    contentplayhead: '00:00:10.000',
+    playedMs: 10000,
+    playedPercentage: 5
   }));
   callback.mockClear();
 
@@ -37,8 +38,9 @@ test('onProgress call the callback with the progress', () => {
   videoElement.dispatchEvent(new Event('timeupdate'));
   expect(callback).toHaveBeenCalledTimes(1);
   expect(callback).toHaveBeenCalledWith(progress, expect.objectContaining({
-    accumulated: 20000,
-    contentplayhead: '00:00:20.000'
+    contentplayhead: '00:00:20.000',
+    playedMs: 20000,
+    playedPercentage: 10
   }));
   callback.mockClear();
 
@@ -46,8 +48,9 @@ test('onProgress call the callback with the progress', () => {
   videoElement.dispatchEvent(new Event('timeupdate'));
   expect(callback).toHaveBeenCalledTimes(1);
   expect(callback).toHaveBeenCalledWith(progress, expect.objectContaining({
-    accumulated: 120000,
-    contentplayhead: '00:02:00.000'
+    contentplayhead: '00:02:00.000',
+    playedMs: 120000,
+    playedPercentage: 60
   }));
   callback.mockClear();
 
