@@ -12,6 +12,8 @@ import {
   complete,
   firstQuartile,
   impression,
+  iconClick,
+  iconView,
   fullscreen,
   midpoint,
   mute,
@@ -154,4 +156,34 @@ test('trackLinearEvent must track impression linear event with the default pixel
 
   expect(tracker).toHaveBeenCalledTimes(2);
   expect(tracker).toHaveBeenCalledWith('https://test.example.com/impression', {});
+});
+
+test('trackLinearEvent must track iconClicks', () => {
+  const data = {
+    iconClickTracking: 'https://test.example.com/iconClick'
+  };
+  const tracker = jest.fn();
+
+  trackLinearEvent(iconClick, vastChain, {
+    data,
+    tracker
+  });
+
+  expect(tracker).toHaveBeenCalledTimes(1);
+  expect(tracker).toHaveBeenCalledWith('https://test.example.com/iconClick', data);
+});
+
+test('trackLinearEvent must track iconViews', () => {
+  const data = {
+    iconViewTracking: 'https://test.example.com/iconView'
+  };
+  const tracker = jest.fn();
+
+  trackLinearEvent(iconView, vastChain, {
+    data,
+    tracker
+  });
+
+  expect(tracker).toHaveBeenCalledTimes(1);
+  expect(tracker).toHaveBeenCalledWith('https://test.example.com/iconView', data);
 });

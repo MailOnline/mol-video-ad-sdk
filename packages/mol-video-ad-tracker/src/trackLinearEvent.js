@@ -5,6 +5,8 @@ import {
 } from 'mol-vast-selectors';
 import pixelTracker from './helpers/pixelTracker';
 import trackError from './helpers/trackError';
+import trackIconView from './helpers/trackIconView';
+import trackIconClick from './helpers/trackIconClick';
 import createLinearEventTracker from './helpers/createLinearEventTracker';
 import {
   clickThrough,
@@ -12,6 +14,8 @@ import {
   firstQuartile,
   fullscreen,
   impression,
+  iconClick,
+  iconView,
   midpoint,
   mute,
   pause,
@@ -34,10 +38,6 @@ import {
   * timeSpentViewing, <= Not used in VAST maybe for VPAID?
 
   VAST LINEAR TRACKING EVENTS
-
-  * impression,  <= emit called with eventName and adUint
-  * iconView, <= emit called with eventName, adUnit, iconDefinition
-  * iconClick, <= emit called with eventName, adUnit, iconDefinition
   * progress, <= emit called with eventName, adUint and {accumulated: NUMBER, contentplayhead: FORMATED_STRING}
 
   ALREADY SUPPORTED
@@ -48,6 +48,9 @@ import {
   * complete,  <= emit called with eventName and adUint
   * firstQuartile,  <= emit called with eventName and adUint
   * fullscreen,  <= emit called with eventName and adUint
+  * impression,  <= emit called with eventName and adUint
+  * iconView, <= emit called with eventName, adUnit, iconDefinition
+  * iconClick, <= emit called with eventName, adUnit, iconDefinition
   * midpoint,  <= emit called with eventName and adUint
   * mute, <= emit called with eventName and adUint
   * pause,  <= emit called with eventName and adUint
@@ -68,6 +71,8 @@ const linearTrackers = {
   [error]: trackError,
   [firstQuartile]: createLinearEventTracker(linearTrakingEventSelector(firstQuartile)),
   [fullscreen]: createLinearEventTracker(linearTrakingEventSelector(fullscreen)),
+  [iconClick]: trackIconClick,
+  [iconView]: trackIconView,
   [impression]: createLinearEventTracker(getImpressionUri),
   [midpoint]: createLinearEventTracker(linearTrakingEventSelector(midpoint)),
   [mute]: createLinearEventTracker(linearTrakingEventSelector(mute)),
