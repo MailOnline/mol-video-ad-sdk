@@ -1,5 +1,6 @@
 import {
   getClickThrough,
+  getImpressionUri,
   getLinearTrackingEvents
 } from 'mol-vast-selectors';
 import pixelTracker from './helpers/pixelTracker';
@@ -10,6 +11,7 @@ import {
   complete,
   firstQuartile,
   fullscreen,
+  impression,
   midpoint,
   mute,
   pause,
@@ -66,6 +68,7 @@ const linearTrackers = {
   [error]: trackError,
   [firstQuartile]: createLinearEventTracker(linearTrakingEventSelector(firstQuartile)),
   [fullscreen]: createLinearEventTracker(linearTrakingEventSelector(fullscreen)),
+  [impression]: createLinearEventTracker(getImpressionUri),
   [midpoint]: createLinearEventTracker(linearTrakingEventSelector(midpoint)),
   [mute]: createLinearEventTracker(linearTrakingEventSelector(mute)),
   [pause]: createLinearEventTracker(linearTrakingEventSelector(pause)),

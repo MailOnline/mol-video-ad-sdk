@@ -11,6 +11,7 @@ import {
   clickThrough,
   complete,
   firstQuartile,
+  impression,
   fullscreen,
   midpoint,
   mute,
@@ -140,4 +141,17 @@ test(`trackLinearEvent must track ${clickThrough} linear event with the default 
     expect(tracker).toHaveBeenCalledWith(`https://test.example.com/${event}`, {});
     expect(tracker).toHaveBeenCalledWith(`https://test.example.com/${event}2`, {});
   });
+});
+
+test('trackLinearEvent must track impression linear event with the default pixelTracker', () => {
+  const data = {};
+  const tracker = jest.fn();
+
+  trackLinearEvent(impression, vastChain, {
+    data,
+    tracker
+  });
+
+  expect(tracker).toHaveBeenCalledTimes(2);
+  expect(tracker).toHaveBeenCalledWith('https://test.example.com/impression', {});
 });
