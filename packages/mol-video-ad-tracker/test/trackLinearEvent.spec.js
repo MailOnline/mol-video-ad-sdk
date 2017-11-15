@@ -20,6 +20,7 @@ import {
   pause,
   playerCollapse,
   playerExpand,
+  progress,
   resume,
   rewind,
   skip,
@@ -186,4 +187,21 @@ test('trackLinearEvent must track iconViews', () => {
 
   expect(tracker).toHaveBeenCalledTimes(1);
   expect(tracker).toHaveBeenCalledWith('https://test.example.com/iconView', data);
+});
+
+// TODO: TRACK PROGRES TAKING THE OFFSET INTO ACCOUNT
+
+test('trackLinearEvent must track progress', () => {
+  const data = {
+    progressUri: 'https://test.example.com/progress'
+  };
+  const tracker = jest.fn();
+
+  trackLinearEvent(progress, vastChain, {
+    data,
+    tracker
+  });
+
+  expect(tracker).toHaveBeenCalledTimes(1);
+  expect(tracker).toHaveBeenCalledWith('https://test.example.com/progress', data);
 });

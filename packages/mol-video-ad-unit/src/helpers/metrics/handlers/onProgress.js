@@ -5,6 +5,7 @@ import formatProgress from '../../utils/formatProgress';
 const {progress} = linearEvents;
 const secondsToMilliseconds = (seconds) => seconds * 1000;
 
+// TODO: PROGRESS SHOULD BE TRIGGERED PER EVENT
 const onProgress = ({videoElement}, callback) => {
   const previousCurrentTime = secondsToMilliseconds(videoElement.currentTime);
   let playedMs = 0;
