@@ -5,17 +5,13 @@ import {
 import pixelTracker from './pixelTracker';
 
 const trackError = (vastChain, {errorCode, tracker = pixelTracker} = {}) => {
-  const errorURIs = [];
-
   vastChain.forEach(({ad, parsedXML}) => {
     const errorURI = getAdErrorURI(ad) || getVastErrorURI(parsedXML);
 
     if (Boolean(errorURI)) {
-      errorURIs.push(errorURI);
+      tracker(errorURI, {errorCode});
     }
   });
-
-  errorURIs.forEach((macro) => tracker(macro, {errorCode}));
 };
 
 export default trackError;
