@@ -33,7 +33,7 @@ import {
 } from './linearEvents';
 
 /*
-  * TODO: PENDING LINEAR TRACKING EVENTS
+  * NOTE: PENDING LINEAR TRACKING EVENTS
   * acceptInvitationLinear, <= Not used in VAST maybe for VPAID
   * otherAdInteraction, <= Not used in VAST maybe for VPAID?
   * timeSpentViewing, <= Not used in VAST maybe for VPAID?
