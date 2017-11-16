@@ -8,7 +8,16 @@ import {
   wrapperAd,
   inlineAd
 } from 'mol-vast-fixtures';
+import {
+  linearEvents,
+  trackLinearEvent
+} from 'mol-video-ad-tracker';
 import createVideoAdUnit from '../src/createVideoAdUnit';
+
+jest.mock('mol-video-ad-tracker', () => ({
+  ...require.requireActual('mol-video-ad-tracker'),
+  trackLinearEvent: jest.fn()
+}));
 
 let vastChain;
 let videoAdContainer;
@@ -52,4 +61,25 @@ test('createVideoAdUnit must return a VideoAdUnit', async () => {
   expect(adUnit).toBeInstanceOf(VastAdUnit);
 });
 
-test('createVideoAdUnit must track the adUnit linear events');
+Object.values(linearEvents).forEach((event) => {
+  test(`createVideoAdUnit must track the ${event} linear events`, async () => {
+    const adUnit = await createVideoAdUnit(vastChain, videoAdContainer);
+    const data = {
+      progressUri: 'http://test.example.com/progress'
+    };
+    const eventPromise = new Promise((resolve) => adUnit.on(event, resolve));
+
+    adUnit.errorCode = 999;
+    adUnit.emit(event, event, adUnit, data);
+
+    await eventPromise;
+
+    expect(trackLinearEvent).toHaveBeenCalledTimes(1);
+    expect(trackLinearEvent).toHaveBeenCalledWith(event, {
+      data,
+      errorCode: adUnit.errorCode
+    });
+
+    trackLinearEvent.mockClear();
+  });
+});
