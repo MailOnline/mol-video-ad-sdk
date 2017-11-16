@@ -45,8 +45,6 @@ jest.mock('../src/helpers/icons/index.js', () => ({
 let vastAdChain;
 let videoAdContainer;
 
-const createProgressEvent = (data) => new CustomEvent('progress', {detail: data});
-
 beforeEach(async () => {
   vastAdChain = [
     {
@@ -96,12 +94,12 @@ test('VastAdUnit must set the initial state with the data passed to the construc
   expect(adUnit.error).toEqual(null);
   expect(adUnit.errorCode).toEqual(null);
   expect(adUnit.assetUri).toEqual(null);
-  expect(adUnit.contentplayhead).toEqual(null);
 });
 
 test('VastAdUnit emit an error if there is no suitable mediaFile to play', async () => {
   canPlay.mockReturnValue(false);
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer, {logger: {error: () => {}}
+  });
   const errorHandler = jest.fn();
   const onErrorCallback = jest.fn();
   const errorPromise = new Promise((resolve) => {
@@ -365,7 +363,7 @@ test('VastAdUnit onComplete must complain if you don\'t pass a callback', () => 
 
 test('VastAdUnit onComplete must call the passed callback once the ad has completed', () => {
   canPlay.mockReturnValue(true);
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer, {logger: {error: () => {}}});
   const callback = jest.fn();
 
   adUnit.onComplete(() => {
@@ -409,19 +407,6 @@ test('VastAdUnit onError must be called if there was an issue viewing the ad', (
   expect(adUnit.errorCode).toBe(405);
 });
 
-test('VastAdUnit on progress must update the contentPlayhead', () => {
-  canPlay.mockReturnValue(true);
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
-
-  adUnit.run();
-  videoAdContainer.videoElement.dispatchEvent(createProgressEvent({
-    accumulated: 1,
-    contentplayhead: '00:00:01.000'
-  }));
-
-  expect(adUnit.contentplayhead).toBe('00:00:01.000');
-});
-
 test('VastAdUnit must emit whatever metric event happens', async () => {
   canPlay.mockReturnValue(true);
   const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
@@ -457,7 +442,6 @@ test('VastAdUnit destroy must remove the src from the videoElement, stop the met
   expect(adUnit.error).toEqual(null);
   expect(adUnit.errorCode).toEqual(null);
   expect(adUnit.assetUri).toEqual(null);
-  expect(adUnit.contentplayhead).toEqual(null);
   expect(mockStopMetricHandler).toHaveBeenCalledTimes(metricHandlers.length);
 });
 

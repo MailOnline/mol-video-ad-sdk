@@ -68,7 +68,6 @@ class VastAdUnit extends Emitter {
     this.error = null;
     this.errorCode = null;
     this.assetUri = null;
-    this.contentplayhead = null;
     this[onErrorCallbacks] = [];
     this[onCompleteCallbacks] = [];
   }
@@ -86,9 +85,6 @@ class VastAdUnit extends Emitter {
     const handleMetric = (event, data) => {
       switch (event) {
       case progress: {
-        const {contentplayhead} = data;
-
-        this.contentplayhead = contentplayhead;
         this[onErrorCallbacks].forEach((callback) => callback(this, data));
         break;
       }
@@ -170,7 +166,6 @@ class VastAdUnit extends Emitter {
     this.error = null;
     this.errorCode = null;
     this.assetUri = null;
-    this.contentplayhead = null;
     this[onErrorCallbacks] = null;
     this[onCompleteCallbacks] = null;
     this[removeMetrichandlers] = null;

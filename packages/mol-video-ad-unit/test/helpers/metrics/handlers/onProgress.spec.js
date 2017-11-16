@@ -20,47 +20,116 @@ afterEach(() => {
   videoElement = null;
 });
 
-test('onProgress call the callback with the progress', () => {
+test('onProgress must call the callback with uri of the event that fullfilled the offset', () => {
   const callback = jest.fn();
-  const disconnect = onProgress({videoElement}, callback);
+  const progressEvents = [
+    {
+      offset: 5000,
+      uri: 'http://test.example.com/progress2'
+    },
+    {
+      offset: 'invalid offset',
+      uri: 'http://test.example.com/progress3'
+    },
+    {
+      offset: 10000
+    },
+    {
+      offset: '10%',
+      uri: 'http://test.example.com/progress1'
+    },
+    {
+      offset: '50%',
+      uri: 'http://test.example.com/progress4'
+    }
+  ];
+  const disconnect = onProgress({videoElement}, callback, {progressEvents});
 
-  videoElement.currentTime = 10;
+  videoElement.currentTime = 5;
   videoElement.dispatchEvent(new Event('timeupdate'));
+
   expect(callback).toHaveBeenCalledTimes(1);
   expect(callback).toHaveBeenCalledWith(progress, expect.objectContaining({
-    contentplayhead: '00:00:10.000',
-    playedMs: 10000,
-    playedPercentage: 5
+    contentplayhead: '00:00:05.000',
+    progressUri: progressEvents[0].uri
   }));
   callback.mockClear();
 
   videoElement.currentTime = 10;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+  expect(callback).toHaveBeenCalledTimes(0);
+  callback.mockClear();
+
+  videoElement.currentTime = 20;
   videoElement.dispatchEvent(new Event('timeupdate'));
   expect(callback).toHaveBeenCalledTimes(1);
   expect(callback).toHaveBeenCalledWith(progress, expect.objectContaining({
     contentplayhead: '00:00:20.000',
-    playedMs: 20000,
-    playedPercentage: 10
-  }));
-  callback.mockClear();
-
-  videoElement.currentTime = 100;
-  videoElement.dispatchEvent(new Event('timeupdate'));
-  expect(callback).toHaveBeenCalledTimes(1);
-  expect(callback).toHaveBeenCalledWith(progress, expect.objectContaining({
-    contentplayhead: '00:02:00.000',
-    playedMs: 120000,
-    playedPercentage: 60
+    progressUri: progressEvents[3].uri
   }));
   callback.mockClear();
 
   disconnect();
 
-  videoElement.currentTime = 50;
+  videoElement.currentTime = 100;
   videoElement.dispatchEvent(new Event('timeupdate'));
-  videoElement.currentTime = 25;
-  videoElement.dispatchEvent(new Event('timeupdate'));
-  videoElement.currentTime = 10;
-
   expect(callback).toHaveBeenCalledTimes(0);
+  callback.mockClear();
+
+  videoElement.currentTime = videoElement.duration;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+  expect(callback).toHaveBeenCalledTimes(0);
+  callback.mockClear();
 });
+
+test('onProgress must not call the callback if all the events have been called', () => {
+  const callback = jest.fn();
+  const progressEvents = [
+    {
+      offset: 5000,
+      uri: 'http://test.example.com/progress2'
+    },
+    {
+      offset: 10000
+    }
+  ];
+
+  onProgress({videoElement}, callback, {progressEvents});
+
+  videoElement.currentTime = 5;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+
+  expect(callback).toHaveBeenCalledTimes(1);
+  expect(callback).toHaveBeenCalledWith(progress, expect.objectContaining({
+    contentplayhead: '00:00:05.000',
+    progressUri: progressEvents[0].uri
+  }));
+  callback.mockClear();
+
+  videoElement.currentTime = 100;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+  expect(callback).toHaveBeenCalledTimes(0);
+  callback.mockClear();
+
+  videoElement.currentTime = videoElement.duration;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+  expect(callback).toHaveBeenCalledTimes(0);
+  callback.mockClear();
+});
+
+test('onProgress must do nothing if you don\'t pass progress events', () => {
+  const callback = jest.fn();
+
+  onProgress({videoElement}, callback);
+
+  videoElement.currentTime = 100;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+  expect(callback).toHaveBeenCalledTimes(0);
+  callback.mockClear();
+
+  videoElement.currentTime = videoElement.duration;
+  videoElement.dispatchEvent(new Event('timeupdate'));
+  expect(callback).toHaveBeenCalledTimes(0);
+  callback.mockClear();
+});
+
