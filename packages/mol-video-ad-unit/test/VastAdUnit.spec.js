@@ -42,11 +42,11 @@ jest.mock('../src/helpers/icons/index.js', () => ({
   retrieveIcons: jest.fn()
 }));
 
-let vastAdChain;
+let vastChain;
 let videoAdContainer;
 
 beforeEach(async () => {
-  vastAdChain = [
+  vastChain = [
     {
       ad: inlineAd,
       errorCode: null,
@@ -79,7 +79,7 @@ beforeEach(async () => {
 });
 
 afterEach(() => {
-  vastAdChain = null;
+  vastChain = null;
   videoAdContainer = null;
 
   addIcons.mockClear();
@@ -87,9 +87,9 @@ afterEach(() => {
 });
 
 test('VastAdUnit must set the initial state with the data passed to the constructor', () => {
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
-  expect(adUnit.vastAdChain).toBe(vastAdChain);
+  expect(adUnit.vastChain).toBe(vastChain);
   expect(adUnit.videoAdContainer).toBe(videoAdContainer);
   expect(adUnit.error).toEqual(null);
   expect(adUnit.errorCode).toEqual(null);
@@ -98,7 +98,7 @@ test('VastAdUnit must set the initial state with the data passed to the construc
 
 test('VastAdUnit emit an error if there is no suitable mediaFile to play', async () => {
   canPlay.mockReturnValue(false);
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer, {logger: {error: () => {}}
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer, {logger: {error: () => {}}
   });
   const errorHandler = jest.fn();
   const onErrorCallback = jest.fn();
@@ -127,7 +127,7 @@ test('VastAdUnit emit an error if there is no suitable mediaFile to play', async
 
 test('VastAdUnit run must select a mediaFile and update the src and the assetUri', () => {
   canPlay.mockReturnValue(true);
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.run();
 
@@ -144,7 +144,7 @@ test('VastAdUnit run must select the best media to play', () => {
     }),
     writable: true
   });
-  let adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  let adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.run();
 
@@ -154,7 +154,7 @@ test('VastAdUnit run must select the best media to play', () => {
     height: 300,
     width: 200
   });
-  adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.run();
 
@@ -164,7 +164,7 @@ test('VastAdUnit run must select the best media to play', () => {
     height: 1000,
     width: 2000
   });
-  adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.run();
 
@@ -174,7 +174,7 @@ test('VastAdUnit run must select the best media to play', () => {
 test('VastAdUnit run must start the metric listeners passing the needed data', () => {
   metricHandlers.forEach((handler) => handler.mockClear());
   canPlay.mockReturnValue(true);
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.run();
 
@@ -212,7 +212,7 @@ test('VastAdUnit must be possible to pass a createSkipOffset hook to the handler
   metricHandlers.forEach((handler) => handler.mockClear());
   canPlay.mockReturnValue(true);
   const createSkipOffset = jest.fn();
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer, {
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer, {
     hooks: {createSkipOffset}
   });
 
@@ -238,7 +238,7 @@ test('VastAdUnit run must play the selected mediaFile', () => {
   Object.defineProperty(videoAdContainer.videoElement, 'play', {
     value: jest.fn()
   });
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.run();
 
@@ -253,7 +253,7 @@ test('VastAdUnit run must add the icons of the vastChain', () => {
     xPosition: 'left',
     yPosition: 'top'
   }];
-  let adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  let adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.run();
 
@@ -261,7 +261,7 @@ test('VastAdUnit run must add the icons of the vastChain', () => {
   expect(addIcons).not.toHaveBeenCalled();
 
   retrieveIcons.mockImplementation(() => icons);
-  adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.run();
 
@@ -284,7 +284,7 @@ test('VastAdUnit passed iconView must emit iconView passing the event, this and 
     xPosition: 'left',
     yPosition: 'top'
   }];
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   retrieveIcons.mockImplementation(() => icons);
   adUnit.run();
@@ -314,7 +314,7 @@ test('VastAdUnit passed iconClick must emiit iconClick passing the event, this a
     xPosition: 'left',
     yPosition: 'top'
   }];
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   retrieveIcons.mockImplementation(() => icons);
   adUnit.run();
@@ -341,7 +341,7 @@ test('VastAdUnit cancel must stop the ad video and destroy the ad unit', () => {
   Object.defineProperty(videoAdContainer.videoElement, 'pause', {
     value: jest.fn()
   });
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.destroy = jest.fn();
   adUnit.run();
@@ -355,7 +355,7 @@ test('VastAdUnit cancel must stop the ad video and destroy the ad unit', () => {
 
 test('VastAdUnit onComplete must complain if you don\'t pass a callback', () => {
   canPlay.mockReturnValue(true);
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   expect(() => adUnit.onComplete()).toThrow(TypeError);
   expect(() => adUnit.onComplete()).toThrow('Expected a callback function');
@@ -363,7 +363,7 @@ test('VastAdUnit onComplete must complain if you don\'t pass a callback', () => 
 
 test('VastAdUnit onComplete must call the passed callback once the ad has completed', () => {
   canPlay.mockReturnValue(true);
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer, {logger: {error: () => {}}});
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer, {logger: {error: () => {}}});
   const callback = jest.fn();
 
   adUnit.onComplete(() => {
@@ -381,7 +381,7 @@ test('VastAdUnit onComplete must call the passed callback once the ad has comple
 
 test('VastAdUnit onError must complain if you don\'t pass a callback', () => {
   canPlay.mockReturnValue(true);
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   expect(() => adUnit.onError()).toThrow(TypeError);
   expect(() => adUnit.onError()).toThrow('Expected a callback function');
@@ -390,7 +390,7 @@ test('VastAdUnit onError must complain if you don\'t pass a callback', () => {
 test('VastAdUnit onError must be called if there was an issue viewing the ad', () => {
   canPlay.mockReturnValue(true);
   const {videoElement} = videoAdContainer;
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
   const callback = jest.fn();
   const mediaError = new Error('media error');
 
@@ -409,7 +409,7 @@ test('VastAdUnit onError must be called if there was an issue viewing the ad', (
 
 test('VastAdUnit must emit whatever metric event happens', async () => {
   canPlay.mockReturnValue(true);
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   const promise = new Promise((resolve) => {
     adUnit.on('custom', (...args) => {
@@ -431,13 +431,13 @@ test('VastAdUnit must emit whatever metric event happens', async () => {
 
 test('VastAdUnit destroy must remove the src from the videoElement, stop the metric handlers and set state to null', () => {
   canPlay.mockReturnValue(true);
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.run();
   adUnit.destroy();
 
   expect(videoAdContainer.videoElement.src).toBe('');
-  expect(adUnit.vastAdChain).toEqual(null);
+  expect(adUnit.vastChain).toEqual(null);
   expect(adUnit.videoAdContainer).toEqual(null);
   expect(adUnit.error).toEqual(null);
   expect(adUnit.errorCode).toEqual(null);
@@ -448,7 +448,7 @@ test('VastAdUnit destroy must remove the src from the videoElement, stop the met
 test('VastAdUnit destroy must remove the icons of the vastChain', () => {
   canPlay.mockReturnValue(true);
 
-  const adUnit = new VastAdUnit(vastAdChain, videoAdContainer);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
   const removeIconMock = jest.fn();
 
   retrieveIcons.mockImplementation(() => [{

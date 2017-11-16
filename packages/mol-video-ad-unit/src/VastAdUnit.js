@@ -30,7 +30,7 @@ const findBestMedia = (videoElement, mediaFiles, container) => {
   return sortedMediaFiles[0];
 };
 
-const safeCallback = (callback, logger = console) => (...args) => {
+const safeCallback = (callback, logger) => (...args) => {
   try {
     // eslint-disable-next-line callback-return
     callback(...args);
@@ -57,13 +57,12 @@ const getProgressEvents = (vastChain) => vastChain.map(({ad}) => ad)
   }));
 
 class VastAdUnit extends Emitter {
-  constructor (vastAdChain, videoAdContainer, {hooks = {}, logger = console} = {}) {
+  constructor (vastChain, videoAdContainer, {hooks = {}, logger = console} = {}) {
     super(logger);
 
     this.hooks = hooks;
 
-    // TODO: Rename vastAdChain to vast chain
-    this.vastAdChain = vastAdChain;
+    this.vastChain = vastChain;
     this.videoAdContainer = videoAdContainer;
     this.error = null;
     this.errorCode = null;
@@ -75,19 +74,15 @@ class VastAdUnit extends Emitter {
   run () {
     const videoAdContainer = this.videoAdContainer;
     const {videoElement, element} = videoAdContainer;
-    const inlineAd = this.vastAdChain[0].ad;
+    const inlineAd = this.vastChain[0].ad;
     const mediaFiles = getMediaFiles(inlineAd);
     const media = mediaFiles && findBestMedia(videoElement, mediaFiles, element);
     const skipoffset = getSkipoffset(inlineAd);
     const clickThroughUrl = getClickThrough(inlineAd);
-    const progressEvents = getProgressEvents(this.vastAdChain);
+    const progressEvents = getProgressEvents(this.vastChain);
 
     const handleMetric = (event, data) => {
       switch (event) {
-      case progress: {
-        this[onErrorCallbacks].forEach((callback) => callback(this, data));
-        break;
-      }
       case complete: {
         this[onCompleteCallbacks].forEach((callback) => callback(this));
         break;
@@ -115,7 +110,7 @@ class VastAdUnit extends Emitter {
         ...this.hooks
       });
 
-      const icons = retrieveIcons(this.vastAdChain);
+      const icons = retrieveIcons(this.vastChain);
 
       if (icons) {
         this[removeIcons] = addIcons(icons, {
@@ -161,7 +156,7 @@ class VastAdUnit extends Emitter {
     this.videoAdContainer.videoElement.src = '';
     this[removeMetrichandlers]();
 
-    this.vastAdChain = null;
+    this.vastChain = null;
     this.videoAdContainer = null;
     this.error = null;
     this.errorCode = null;
