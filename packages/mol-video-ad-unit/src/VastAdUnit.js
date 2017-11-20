@@ -1,14 +1,9 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
 import {linearEvents} from 'mol-video-ad-tracker';
 import Emitter from 'mol-tiny-emitter';
-import {
-  getClickThrough,
-  getSkipoffset
-} from 'mol-vast-selectors';
 import findBestMedia from './helpers/media/findBestMedia';
 import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';
 import setupIcons from './helpers/icons/setupIcons';
-import getProgressEvents from './helpers/progress/getProgressEvents';
 import safeCallback from './helpers/safeCallback';
 
 const {
@@ -61,26 +56,23 @@ class VastAdUnit extends Emitter {
   }
 
   run () {
-    const videoAdContainer = this.videoAdContainer;
-    const {videoElement, element} = videoAdContainer;
+    this[removeMetrichandlers] = setupMetricHandlers({
+      hooks: this.hooks,
+      vastChain: this.vastChain,
+      videoAdContainer: this.videoAdContainer
+    }, this.handleMetric);
+
+    this.start();
+  }
+
+  start () {
     const inlineAd = this.vastChain[0].ad;
+    const {videoElement, element} = this.videoAdContainer;
     const media = findBestMedia(inlineAd, videoElement, element);
-    const skipoffset = getSkipoffset(inlineAd);
-    const clickThroughUrl = getClickThrough(inlineAd);
-    const progressEvents = getProgressEvents(this.vastChain);
 
     if (Boolean(media)) {
       videoElement.src = media.src;
       this.assetUri = media.src;
-
-      // eslint-disable-next-line object-property-newline
-      this[removeMetrichandlers] = setupMetricHandlers(videoAdContainer, this.handleMetric, {
-        clickThroughUrl,
-        progressEvents,
-        skipoffset,
-        ...this.hooks
-      });
-
       videoElement.play();
     } else {
       const adUnitError = new Error('Can\'t find a suitable media to play');
