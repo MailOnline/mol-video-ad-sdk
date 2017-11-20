@@ -17,6 +17,7 @@ const onErrorCallbacks = Symbol('onErrorCallbacks');
 const onCompleteCallbacks = Symbol('onCompleteCallbacks');
 const removeMetrichandlers = Symbol('removeMetrichandlers');
 const removeIcons = Symbol('removeIcons');
+const started = Symbol('started');
 
 class VastAdUnit extends Emitter {
   [onErrorCallbacks] = [];
@@ -61,7 +62,10 @@ class VastAdUnit extends Emitter {
   }
 
   start () {
-    // TODO: ENSURE IT IS ONLY CALLED ONCE
+    if (this[started]) {
+      return;
+    }
+
     const inlineAd = this.vastChain[0].ad;
     const {videoElement, element} = this.videoAdContainer;
     const media = findBestMedia(inlineAd, videoElement, element);
@@ -76,6 +80,8 @@ class VastAdUnit extends Emitter {
       adUnitError.errorCode = 403;
       this.handleMetric(errorEvt, adUnitError);
     }
+
+    this[started] = true;
   }
 
   // TODO: add pause and resume method

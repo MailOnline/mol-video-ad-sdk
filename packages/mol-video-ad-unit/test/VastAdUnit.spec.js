@@ -332,6 +332,20 @@ test('VastAdUnit start must play the selected mediaFile', () => {
   expect(videoAdContainer.videoElement.play).toHaveBeenCalledTimes(1);
 });
 
+test('VastAdUnit start must do nothing on a second play', () => {
+  canPlay.mockReturnValue(true);
+  Object.defineProperty(videoAdContainer.videoElement, 'play', {
+    value: jest.fn()
+  });
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+  adUnit.start();
+  adUnit.start();
+  adUnit.start();
+
+  expect(videoAdContainer.videoElement.play).toHaveBeenCalledTimes(1);
+});
+
 test('VastAdUnit cancel must stop the ad video and destroy the ad unit', () => {
   canPlay.mockReturnValue(true);
   Object.defineProperty(videoAdContainer.videoElement, 'pause', {
