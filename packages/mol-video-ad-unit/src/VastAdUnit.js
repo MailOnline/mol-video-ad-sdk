@@ -24,26 +24,8 @@ const removeMetrichandlers = Symbol('removeMetrichandlers');
 const removeIcons = Symbol('removeIcons');
 
 class VastAdUnit extends Emitter {
-  constructor (vastChain, videoAdContainer, {hooks = {}, logger = console} = {}) {
-    super(logger);
-
-    this.hooks = hooks;
-
-    this.vastChain = vastChain;
-    this.videoAdContainer = videoAdContainer;
-    this.error = null;
-    this.errorCode = null;
-    this.assetUri = null;
-    this[onErrorCallbacks] = [];
-    this[onCompleteCallbacks] = [];
-    this[removeIcons] = setupIcons(this.vastChain, {
-      logger: this.logger,
-      onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
-      onIconView: (icon) => this.emit(iconView, iconView, this, icon),
-      videoAdContainer: this.videoAdContainer
-    });
-  }
-
+  [onErrorCallbacks] = [];
+  [onCompleteCallbacks] = [];
   handleMetric = (event, data) => {
     switch (event) {
     case complete: {
@@ -59,6 +41,23 @@ class VastAdUnit extends Emitter {
     }
 
     this.emit(event, event, this, data);
+  }
+  error = null;
+  errorCode = null;
+  assetUri = null;
+
+  constructor (vastChain, videoAdContainer, {hooks = {}, logger = console} = {}) {
+    super(logger);
+
+    this.hooks = hooks;
+    this.vastChain = vastChain;
+    this.videoAdContainer = videoAdContainer;
+    this[removeIcons] = setupIcons(this.vastChain, {
+      logger: this.logger,
+      onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
+      onIconView: (icon) => this.emit(iconView, iconView, this, icon),
+      videoAdContainer: this.videoAdContainer
+    });
   }
 
   run () {
