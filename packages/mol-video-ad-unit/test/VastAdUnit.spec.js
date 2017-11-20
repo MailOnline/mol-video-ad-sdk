@@ -80,6 +80,7 @@ afterEach(() => {
 
   addIcons.mockClear();
   retrieveIcons.mockClear();
+  mockStopMetricHandler.mockClear();
 });
 
 test('VastAdUnit must set the initial state with the data passed to the constructor', () => {
@@ -344,6 +345,25 @@ test('VastAdUnit start must do nothing on a second play', () => {
   adUnit.start();
 
   expect(videoAdContainer.videoElement.play).toHaveBeenCalledTimes(1);
+});
+
+[
+  'start',
+  'cancel',
+  'onError',
+  'onComplete'
+].forEach((method) => {
+  test(`VastAdUnit ${method} must throw if you try to start a destroyed adUnit`, () => {
+    canPlay.mockReturnValue(true);
+    Object.defineProperty(videoAdContainer.videoElement, 'play', {
+      value: jest.fn()
+    });
+    const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+    adUnit.destroy();
+
+    expect(() => adUnit[method]()).toThrowError('VastAdUnit has been destroyed');
+  });
 });
 
 test('VastAdUnit cancel must stop the ad video and destroy the ad unit', () => {

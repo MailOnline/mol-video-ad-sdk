@@ -18,10 +18,19 @@ const onCompleteCallbacks = Symbol('onCompleteCallbacks');
 const removeMetrichandlers = Symbol('removeMetrichandlers');
 const removeIcons = Symbol('removeIcons');
 const started = Symbol('started');
+const destroyed = Symbol('destroyed');
+const throwIfDestroyed = Symbol('throwIfDestroyed');
 
 class VastAdUnit extends Emitter {
+  [destroyed] = false;
+  [started] = false;
   [onErrorCallbacks] = [];
   [onCompleteCallbacks] = [];
+  [throwIfDestroyed] () {
+    if (this.isDestroyed()) {
+      throw new Error('VastAdUnit has been destroyed');
+    }
+  }
   handleMetric = (event, data) => {
     switch (event) {
     case complete: {
@@ -62,6 +71,8 @@ class VastAdUnit extends Emitter {
   }
 
   start () {
+    this[throwIfDestroyed]();
+
     if (this[started]) {
       return;
     }
@@ -84,16 +95,17 @@ class VastAdUnit extends Emitter {
     this[started] = true;
   }
 
-  // TODO: add pause and resume method
   cancel () {
-    // TODO: SHOULD THROW IF CALLED AFTER DESTROY
+    this[throwIfDestroyed]();
+
     const videoElement = this.videoAdContainer.videoElement;
 
     videoElement.pause();
   }
 
   onComplete (callback) {
-    // TODO: SHOULD THROW IF CALLED AFTER DESTROY
+    this[throwIfDestroyed]();
+
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
     }
@@ -102,12 +114,17 @@ class VastAdUnit extends Emitter {
   }
 
   onError (callback) {
-    // TODO: SHOULD THROW IF CALLED AFTER DESTROY
+    this[throwIfDestroyed]();
+
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
     }
 
     this[onErrorCallbacks].push(safeCallback(callback, this.logger));
+  }
+
+  isDestroyed () {
+    return this[destroyed];
   }
 
   destroy () {
@@ -126,6 +143,8 @@ class VastAdUnit extends Emitter {
     if (this[removeIcons]) {
       this[removeIcons]();
     }
+
+    this[destroyed] = true;
   }
 }
 
