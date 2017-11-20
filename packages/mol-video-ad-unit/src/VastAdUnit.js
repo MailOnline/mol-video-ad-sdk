@@ -9,6 +9,7 @@ import findBestMedia from './helpers/media/findBestMedia';
 import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';
 import setupIcons from './helpers/icons/setupIcons';
 import getProgressEvents from './helpers/progress/getProgressEvents';
+import safeCallback from './helpers/safeCallback';
 
 const {
   complete,
@@ -17,14 +18,6 @@ const {
   error: errorEvt
 } = linearEvents;
 
-const safeCallback = (callback, logger) => (...args) => {
-  try {
-    // eslint-disable-next-line callback-return
-    callback(...args);
-  } catch (error) {
-    logger.error(error);
-  }
-};
 const onErrorCallbacks = Symbol('onErrorCallbacks');
 const onCompleteCallbacks = Symbol('onCompleteCallbacks');
 const removeMetrichandlers = Symbol('removeMetrichandlers');
