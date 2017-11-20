@@ -444,7 +444,6 @@ test('VastAdUnit destroy must remove the src from the videoElement, stop the met
 test('VastAdUnit destroy must remove the icons of the vastChain', () => {
   canPlay.mockReturnValue(true);
 
-  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
   const removeIconMock = jest.fn();
 
   retrieveIcons.mockImplementation(() => [{
@@ -455,6 +454,7 @@ test('VastAdUnit destroy must remove the icons of the vastChain', () => {
   }]);
 
   addIcons.mockImplementation(() => removeIconMock);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.run();
   adUnit.destroy();

@@ -66,6 +66,13 @@ class VastAdUnit extends Emitter {
     this.assetUri = null;
     this[onErrorCallbacks] = [];
     this[onCompleteCallbacks] = [];
+
+    this[removeIcons] = setupIcons(this.vastChain, {
+      logger: this.logger,
+      onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
+      onIconView: (icon) => this.emit(iconView, iconView, this, icon),
+      videoAdContainer: this.videoAdContainer
+    });
   }
 
   run () {
@@ -105,13 +112,6 @@ class VastAdUnit extends Emitter {
         progressEvents,
         skipoffset,
         ...this.hooks
-      });
-
-      this[removeIcons] = setupIcons(this.vastChain, {
-        logger: this.logger,
-        onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
-        onIconView: (icon) => this.emit(iconView, iconView, this, icon),
-        videoAdContainer: this.videoAdContainer
       });
 
       videoElement.play();
