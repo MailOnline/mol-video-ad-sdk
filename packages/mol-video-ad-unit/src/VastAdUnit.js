@@ -60,10 +60,6 @@ class VastAdUnit extends Emitter {
     }, this.handleMetric);
   }
 
-  run () {
-    this.start();
-  }
-
   start () {
     const inlineAd = this.vastChain[0].ad;
     const {videoElement, element} = this.videoAdContainer;
