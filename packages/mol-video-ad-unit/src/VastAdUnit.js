@@ -10,10 +10,7 @@ import {
 import canPlay from './helpers/utils/canPlay';
 import sortMediaByBestFit from './helpers/utils/sortMediaByBestFit';
 import initMetricHandlers from './helpers/metrics/initMetricHandlers';
-import {
-  addIcons,
-  retrieveIcons
-} from './helpers/icons';
+import setupIcons from './helpers/icons/setupIcons';
 
 const {
   complete,
@@ -110,16 +107,12 @@ class VastAdUnit extends Emitter {
         ...this.hooks
       });
 
-      const icons = retrieveIcons(this.vastChain);
-
-      if (icons) {
-        this[removeIcons] = addIcons(icons, {
-          logger: this.logger,
-          onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
-          onIconView: (icon) => this.emit(iconView, iconView, this, icon),
-          videoAdContainer: this.videoAdContainer
-        });
-      }
+      this[removeIcons] = setupIcons(this.vastChain, {
+        logger: this.logger,
+        onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
+        onIconView: (icon) => this.emit(iconView, iconView, this, icon),
+        videoAdContainer: this.videoAdContainer
+      });
 
       videoElement.play();
     } else {

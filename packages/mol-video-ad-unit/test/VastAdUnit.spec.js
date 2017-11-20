@@ -12,10 +12,8 @@ import {createVideoAdContainer} from 'mol-video-ad-container';
 import VastAdUnit from '../src/VastAdUnit';
 import canPlay from '../src/helpers/utils/canPlay';
 import metricHandlers from '../src/helpers/metrics/handlers';
-import {
-  addIcons,
-  retrieveIcons
-} from '../src/helpers/icons';
+import addIcons from '../src/helpers/icons/addIcons';
+import retrieveIcons from '../src/helpers/icons/retrieveIcons';
 
 const {
   iconClick,
@@ -37,10 +35,8 @@ jest.mock('../src/helpers/metrics/handlers/index.js', () => [
   jest.fn(() => mockStopMetricHandler)
 ]);
 
-jest.mock('../src/helpers/icons/index.js', () => ({
-  addIcons: jest.fn(),
-  retrieveIcons: jest.fn()
-}));
+jest.mock('../src/helpers/icons/addIcons.js', () => jest.fn());
+jest.mock('../src/helpers/icons/retrieveIcons.js', () => jest.fn());
 
 let vastChain;
 let videoAdContainer;
