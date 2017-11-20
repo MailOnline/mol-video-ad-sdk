@@ -36,13 +36,29 @@ class VastAdUnit extends Emitter {
     this.assetUri = null;
     this[onErrorCallbacks] = [];
     this[onCompleteCallbacks] = [];
-
     this[removeIcons] = setupIcons(this.vastChain, {
       logger: this.logger,
       onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
       onIconView: (icon) => this.emit(iconView, iconView, this, icon),
       videoAdContainer: this.videoAdContainer
     });
+  }
+
+  handleMetric = (event, data) => {
+    switch (event) {
+    case complete: {
+      this[onCompleteCallbacks].forEach((callback) => callback(this));
+      break;
+    }
+    case errorEvt: {
+      this.error = data;
+      this.errorCode = this.error && this.error.errorCode ? this.error.errorCode : 405;
+      this[onErrorCallbacks].forEach((callback) => callback(this, this.error));
+      break;
+    }
+    }
+
+    this.emit(event, event, this, data);
   }
 
   run () {
@@ -54,29 +70,12 @@ class VastAdUnit extends Emitter {
     const clickThroughUrl = getClickThrough(inlineAd);
     const progressEvents = getProgressEvents(this.vastChain);
 
-    const handleMetric = (event, data) => {
-      switch (event) {
-      case complete: {
-        this[onCompleteCallbacks].forEach((callback) => callback(this));
-        break;
-      }
-      case errorEvt: {
-        this.error = data;
-        this.errorCode = this.error && this.error.errorCode ? this.error.errorCode : 405;
-        this[onErrorCallbacks].forEach((callback) => callback(this, this.error));
-        break;
-      }
-      }
-
-      this.emit(event, event, this, data);
-    };
-
     if (Boolean(media)) {
       videoElement.src = media.src;
       this.assetUri = media.src;
 
       // eslint-disable-next-line object-property-newline
-      this[removeMetrichandlers] = setupMetricHandlers(videoAdContainer, handleMetric, {
+      this[removeMetrichandlers] = setupMetricHandlers(videoAdContainer, this.handleMetric, {
         clickThroughUrl,
         progressEvents,
         skipoffset,
@@ -88,7 +87,7 @@ class VastAdUnit extends Emitter {
       const adUnitError = new Error('Can\'t find a suitable media to play');
 
       adUnitError.errorCode = 403;
-      handleMetric(errorEvt, adUnitError);
+      this.handleMetric(errorEvt, adUnitError);
     }
   }
 
