@@ -12,20 +12,26 @@
       <TrackingEvents>
        <Tracking event="start"><![CDATA[https://test.example.com/start]]></Tracking>
        <Tracking event="start"><![CDATA[https://test.example.com/start2]]></Tracking>
-       <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstquartile]]></Tracking>
-       <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstquartile2]]></Tracking>
+       <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstQuartile]]></Tracking>
+       <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstQuartile2]]></Tracking>
        <Tracking event="midpoint"><![CDATA[https://test.example.com/midpoint]]></Tracking>
        <Tracking event="midpoint"><![CDATA[https://test.example.com/midpoint2]]></Tracking>
-       <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdquartile]]></Tracking>
-       <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdquartile2]]></Tracking>
+       <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdQuartile]]></Tracking>
+       <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdQuartile2]]></Tracking>
        <Tracking event="complete"><![CDATA[https://test.example.com/complete]]></Tracking>
        <Tracking event="complete"><![CDATA[https://test.example.com/complete2]]></Tracking>
+       <Tracking event="playerExpand"><![CDATA[https://test.example.com/playerExpand]]></Tracking>
+       <Tracking event="playerExpand"><![CDATA[https://test.example.com/playerExpand2]]></Tracking>
+       <Tracking event="playerCollapse"><![CDATA[https://test.example.com/playerCollapse]]></Tracking>
+       <Tracking event="playerCollapse"><![CDATA[https://test.example.com/playerCollapse2]]></Tracking>
        <Tracking event="mute"><![CDATA[https://test.example.com/mute]]></Tracking>
        <Tracking event="mute"><![CDATA[https://test.example.com/mute2]]></Tracking>
        <Tracking event="unmute"><![CDATA[https://test.example.com/unmute]]></Tracking>
        <Tracking event="unmute"><![CDATA[https://test.example.com/unmute2]]></Tracking>
        <Tracking event="rewind"><![CDATA[https://test.example.com/rewind]]></Tracking>
        <Tracking event="rewind"><![CDATA[https://test.example.com/rewind2]]></Tracking>
+       <Tracking event="skip"><![CDATA[https://test.example.com/skip]]></Tracking>
+       <Tracking event="skip"><![CDATA[https://test.example.com/skip2]]></Tracking>
        <Tracking event="pause"><![CDATA[https://test.example.com/pause]]></Tracking>
        <Tracking event="pause"><![CDATA[https://test.example.com/pause2]]></Tracking>
        <Tracking event="progress" offset="00:00:05"><![CDATA[https://test.example.com/progress]]></Tracking>

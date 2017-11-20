@@ -9,7 +9,12 @@
   "files": [
     "src"
   ],
+  "peerDependencies": {
+    "mol-vast-selectors": "^0.1.0"
+  },
   "devDependencies": {
-    "mockdate": "^2.0.2"
+    "mockdate": "^2.0.2",
+    "mol-vast-selectors": "^0.1.0",
+    "mol-vast-fixtures": "^0.1.0"
   }
 }

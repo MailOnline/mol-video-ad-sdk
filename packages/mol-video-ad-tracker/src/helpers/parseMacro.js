@@ -1,3 +1,13 @@
+const toUpperKeys = (map) => {
+  const upperKeysMap = {};
+
+  Object.keys(map).forEach((key) => {
+    upperKeysMap[key.toUpperCase()] = map[key];
+  });
+
+  return upperKeysMap;
+};
+
 /**
  * Parses the passed macro with the passed data and returns the resulting parsed Macro.
  * If no CACHEBUSTING property is passed in the data it will generate a random one on its own.
@@ -8,19 +18,20 @@
  * @returns {string} - The parsed macro.
  * @static
  */
-const parseMacro = (macro, data) => {
+const parseMacro = (macro, data = {}) => {
   let parsedMacro = macro;
+  const macroData = toUpperKeys(data);
 
-  if (!Boolean(data.CACHEBUSTING)) {
-    data.CACHEBUSTING = Math.round(Math.random() * 1.0e+10);
+  if (!Boolean(macroData.CACHEBUSTING)) {
+    macroData.CACHEBUSTING = Math.round(Math.random() * 1.0e+10);
   }
 
-  if (!Boolean(data.TIMESTAMP)) {
-    data.TIMESTAMP = new Date().toISOString();
+  if (!Boolean(macroData.TIMESTAMP)) {
+    macroData.TIMESTAMP = new Date().toISOString();
   }
 
-  Object.keys(data).forEach((key) => {
-    const value = encodeURIComponent(data[key]);
+  Object.keys(macroData).forEach((key) => {
+    const value = encodeURIComponent(macroData[key]);
 
     parsedMacro = parsedMacro.replace(new RegExp('\\[' + key + '\\]', 'gm'), value);
   });

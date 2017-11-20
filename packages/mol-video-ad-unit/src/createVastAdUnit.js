@@ -6,7 +6,8 @@ const createVastAdUnit = (vastAdChain, videoAdContainer, options = {}) => {
     throw new TypeError('Invalid VastAdChain');
   }
 
-  if (!(videoAdContainer instanceof VideoAdContainer)) {
+  // We are not using instanceOf until https://github.com/facebook/jest/issues/4892 gets solved
+  if (!(videoAdContainer.constructor.name === VideoAdContainer.name)) {
     throw new TypeError('Invalid VideoAdContainer');
   }
 

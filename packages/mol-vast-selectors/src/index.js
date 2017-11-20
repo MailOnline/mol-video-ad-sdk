@@ -41,10 +41,10 @@ export const compareBySequence = (itemA, itemB) => {
  * @static
  */
 export const getAds = (parsedVAST) => {
-  const vastElement = get(parsedVAST, 'VAST');
-  const ads = getAll(vastElement, 'Ad');
+  const vastElement = parsedVAST && get(parsedVAST, 'VAST');
+  const ads = vastElement && getAll(vastElement, 'Ad');
 
-  if (ads.length > 0) {
+  if (ads && ads.length > 0) {
     return ads;
   }
 
@@ -218,6 +218,27 @@ export const getAdErrorURI = (ad) => {
   return null;
 };
 
+/**
+ * Gets the Impression URI of the passed ad.
+ *
+ * @param {Object} ad - VAST ad object.
+ * @returns {String/null} - Vast ad Impression URI or null otherwise.
+ * @static
+ */
+export const getImpressionUri = (ad) => {
+  const adTypeElement = ad && getFirstChild(ad);
+
+  if (adTypeElement) {
+    const impression = get(adTypeElement, 'Impression');
+
+    if (impression) {
+      return getText(impression);
+    }
+  }
+
+  return null;
+};
+
 export const getMediaFiles = (ad) => {
   const creativeElement = ad && getLinearCreative(ad);
 
@@ -269,7 +290,7 @@ export const getMediaFiles = (ad) => {
   return null;
 };
 
-export const getLinearTrackingEvents = (ad) => {
+export const getLinearTrackingEvents = (ad, eventName) => {
   const creativeElement = ad && getLinearCreative(ad);
 
   if (creativeElement) {
@@ -278,7 +299,7 @@ export const getLinearTrackingEvents = (ad) => {
     const trackinEventElements = trackingEventsElement && getAll(trackingEventsElement, 'Tracking');
 
     if (trackinEventElements && trackinEventElements.length > 0) {
-      return trackinEventElements.map((trackinEventElement) => {
+      const trackingEvents = trackinEventElements.map((trackinEventElement) => {
         const {event, offset} = getAttributes(trackinEventElement);
         const uri = getText(trackinEventElement);
 
@@ -288,34 +309,16 @@ export const getLinearTrackingEvents = (ad) => {
           uri
         };
       });
-    }
-  }
 
-  return null;
-};
+      if (eventName) {
+        const filteredEvents = trackingEvents.filter(({event}) => event === eventName);
 
-export const getLinearProgressEvents = (ad) => {
-  const trackinEvents = ad && getLinearTrackingEvents(ad);
-
-  if (trackinEvents) {
-    const progressEvents = trackinEvents.filter(({event}) => event === 'progress');
-
-    if (progressEvents.length > 0) {
-      return progressEvents;
-    }
-  }
-
-  return null;
-};
-
-export const getLinearTimeSpentViewingEvents = (ad) => {
-  const trackinEvents = ad && getLinearTrackingEvents(ad);
-
-  if (trackinEvents) {
-    const timeSpentViewingEvents = trackinEvents.filter(({event}) => event === 'timeSpentViewing');
-
-    if (timeSpentViewingEvents.length > 0) {
-      return timeSpentViewingEvents;
+        if (filteredEvents.length > 0) {
+          return filteredEvents;
+        }
+      } else {
+        return trackingEvents;
+      }
     }
   }
 

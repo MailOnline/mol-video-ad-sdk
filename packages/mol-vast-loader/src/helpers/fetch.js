@@ -1,7 +1,7 @@
 /* eslint-disable filenames/match-exported, import/no-unassigned-import */
 import 'whatwg-fetch';
 
-export default async (endpoint, options = {}) => {
+const fetch = async (endpoint, options = {}) => {
   const defaults = {
     credentials: 'include'
   };
@@ -17,3 +17,5 @@ export default async (endpoint, options = {}) => {
 
   return response;
 };
+
+export default fetch;

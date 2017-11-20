@@ -1,8 +1,9 @@
+/** Tiny Emitter implementation. */
 class Emitter {
   /**
-   * Emitter constructor.
+   * Create an Emitter instance.
    *
-   * @param {Object} logger - Optional logger instance. Must comply to the [Console api](https://developer.mozilla.org/es/docs/Web/API/Console).
+   * @param {Object} logger - Optional logger instance. Must comply to the [Console interface](https://developer.mozilla.org/es/docs/Web/API/Console).
    */
   constructor (logger) {
     this.evts = {};

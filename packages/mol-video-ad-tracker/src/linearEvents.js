@@ -10,6 +10,7 @@ export const otherAdInteraction = 'otherAdInteraction';
 export const pause = 'pause';
 export const playerCollapse = 'playerCollapse';
 export const playerExpand = 'playerExpand';
+export const fullscreen = 'fullscreen';
 export const progress = 'progress';
 export const resume = 'resume';
 export const rewind = 'rewind';
@@ -21,12 +22,13 @@ export const unmute = 'unmute';
 export const iconClick = 'iconClick';
 export const iconView = 'iconView';
 
-export default {
+const linearEvents = {
   acceptInvitationLinear,
   clickThrough,
   complete,
   error,
   firstQuartile,
+  fullscreen,
   iconClick,
   iconView,
   impression,
@@ -46,3 +48,4 @@ export default {
   unmute
 };
 
+export default linearEvents;

@@ -12,9 +12,8 @@ import {
   getClickThrough,
   getClickTracking,
   getFirstAd,
-  getLinearProgressEvents,
+  getImpressionUri,
   getLinearTrackingEvents,
-  getLinearTimeSpentViewingEvents,
   getMediaFiles,
   getSkipoffset,
   getVASTAdTagURI,
@@ -40,6 +39,8 @@ test('getAds must return the ads of the passed adResponse or null otherwise', ()
   expect(getAds(wrapperParsedXML)).toEqual([wrapperAd]);
   expect(getAds(noAdParsedXML)).toBe(null);
   expect(getAds({})).toBe(null);
+  expect(getAds(null)).toBe(null);
+  expect(getAds()).toBe(null);
 });
 
 test('getFirstAd must return the first ad of the passed adResponse or null otherwise', () => {
@@ -79,6 +80,8 @@ test('hasAdPod must return true if the passed ads have an ad pod and false other
   expect(hasAdPod(podParsedXML)).toBe(true);
   expect(hasAdPod(inlineParsedXML)).toBe(false);
   expect(hasAdPod({})).toBe(false);
+  expect(hasAdPod(null)).toBe(false);
+  expect(hasAdPod()).toBe(false);
 });
 
 test('hasAdPod must return false if the there is only one ad with a sequence', () => {
@@ -139,6 +142,14 @@ test('getAdErrorURI must return the error uri of the inline/wrapper or null if m
   expect(getAdErrorURI()).toEqual(null);
   expect(getAdErrorURI(null)).toEqual(null);
   expect(getAdErrorURI({})).toEqual(null);
+});
+
+test('getImpressionUri must return the error uri of the inline/wrapper or null if missing', () => {
+  expect(getImpressionUri(inlineAd)).toBe('https://test.example.com/impression');
+  expect(getImpressionUri(wrapperAd)).toBe('https://test.example.com/impression');
+  expect(getImpressionUri()).toEqual(null);
+  expect(getImpressionUri(null)).toEqual(null);
+  expect(getImpressionUri({})).toEqual(null);
 });
 
 test('getMediaFiles must return null for wrong ads', () => {
@@ -235,12 +246,12 @@ test('getLinearTrackingEvents must return the linear tracking events', () => {
     {
       event: 'firstQuartile',
       offset: undefined,
-      uri: 'https://test.example.com/firstquartile'
+      uri: 'https://test.example.com/firstQuartile'
     },
     {
       event: 'firstQuartile',
       offset: undefined,
-      uri: 'https://test.example.com/firstquartile2'
+      uri: 'https://test.example.com/firstQuartile2'
     },
     {
       event: 'midpoint',
@@ -255,12 +266,12 @@ test('getLinearTrackingEvents must return the linear tracking events', () => {
     {
       event: 'thirdQuartile',
       offset: undefined,
-      uri: 'https://test.example.com/thirdquartile'
+      uri: 'https://test.example.com/thirdQuartile'
     },
     {
       event: 'thirdQuartile',
       offset: undefined,
-      uri: 'https://test.example.com/thirdquartile2'
+      uri: 'https://test.example.com/thirdQuartile2'
     },
     {
       event: 'complete',
@@ -271,6 +282,26 @@ test('getLinearTrackingEvents must return the linear tracking events', () => {
       event: 'complete',
       offset: undefined,
       uri: 'https://test.example.com/complete2'
+    },
+    {
+      event: 'playerExpand',
+      offset: undefined,
+      uri: 'https://test.example.com/playerExpand'
+    },
+    {
+      event: 'playerExpand',
+      offset: undefined,
+      uri: 'https://test.example.com/playerExpand2'
+    },
+    {
+      event: 'playerCollapse',
+      offset: undefined,
+      uri: 'https://test.example.com/playerCollapse'
+    },
+    {
+      event: 'playerCollapse',
+      offset: undefined,
+      uri: 'https://test.example.com/playerCollapse2'
     },
     {
       event: 'mute',
@@ -301,6 +332,16 @@ test('getLinearTrackingEvents must return the linear tracking events', () => {
       event: 'rewind',
       offset: undefined,
       uri: 'https://test.example.com/rewind2'
+    },
+    {
+      event: 'skip',
+      offset: undefined,
+      uri: 'https://test.example.com/skip'
+    },
+    {
+      event: 'skip',
+      offset: undefined,
+      uri: 'https://test.example.com/skip2'
     },
     {
       event: 'pause',
@@ -385,15 +426,12 @@ test('getLinearTrackingEvents must return the linear tracking events', () => {
   ]);
 });
 
-test('getLinearProgressEvents must return null if there are no progress tracking events', () => {
-  expect(getLinearProgressEvents()).toEqual(null);
-  expect(getLinearProgressEvents(null)).toEqual(null);
-  expect(getLinearProgressEvents({})).toEqual(null);
-  expect(getLinearProgressEvents(inlineAd)).toEqual(null);
+test('getLinearTrackingEvents must return null if you filter by event and are no tracking events after filtering', () => {
+  expect(getLinearTrackingEvents(inlineAd, 'progress')).toEqual(null);
 });
 
-test('getLinearProgressEvents must return the linear progress events', () => {
-  expect(getLinearProgressEvents(wrapperAd)).toEqual([
+test('getLinearTrackingEvents must return the linear progress events if you filter by progress', () => {
+  expect(getLinearTrackingEvents(wrapperAd, 'progress')).toEqual([
     {
       event: 'progress',
       offset: 5000,
@@ -403,28 +441,6 @@ test('getLinearProgressEvents must return the linear progress events', () => {
       event: 'progress',
       offset: '15%',
       uri: 'https://test.example.com/progress2'
-    }
-  ]);
-});
-
-test('getLinearTimeSpentViewingEvents must return null if there are no timeSpentViewing tracking events', () => {
-  expect(getLinearTimeSpentViewingEvents()).toEqual(null);
-  expect(getLinearTimeSpentViewingEvents(null)).toEqual(null);
-  expect(getLinearTimeSpentViewingEvents({})).toEqual(null);
-  expect(getLinearTimeSpentViewingEvents(wrapperAd)).toEqual(null);
-});
-
-test('getLinearTimeSpentViewingEvents must return the linear timeSpentViewing events', () => {
-  expect(getLinearTimeSpentViewingEvents(inlineAd)).toEqual([
-    {
-      event: 'timeSpentViewing',
-      offset: 5000,
-      uri: 'https://test.example.com/timeSpentViewing'
-    },
-    {
-      event: 'timeSpentViewing',
-      offset: '15%',
-      uri: 'https://test.example.com/timeSpentViewing2'
     }
   ]);
 });
@@ -458,6 +474,6 @@ test('getSkipoffset must return null if there none', () => {
   expect(getSkipoffset(wrapperAd)).toEqual(null);
 });
 
-test('getSkipoffset must return the parset skipoffset', () => {
+test('getSkipoffset must return the parsed skipoffset', () => {
   expect(getSkipoffset(inlineAd)).toEqual(5000);
 });

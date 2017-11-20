@@ -1,6 +1,6 @@
 # mol-video-ad-manager
 
-> Takes care of loading and runing a video ad.
+> SDK to load and play video ads.
 
 ## See also
 * [Root README](../../README.md)

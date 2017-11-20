@@ -9,11 +9,11 @@ import {
   vastInlineXML
 } from 'mol-vast-fixtures';
 import {requestAd} from 'mol-vast-loader';
+import {trackError} from 'mol-video-ad-tracker';
 import load from '../src/load';
-import trackError from '../src/helpers/trackError';
 
 jest.mock('mol-vast-loader', () => ({requestAd: jest.fn()}));
-jest.mock('../src/helpers/trackError', () => jest.fn());
+jest.mock('mol-video-ad-tracker', () => ({trackError: jest.fn()}));
 
 const errorVastChain = [
   {
@@ -57,6 +57,12 @@ afterEach(() => {
   trackError.mockClear();
 });
 
+test('load must throw if you don\'t pass a valid adTag', () => {
+  expect(load()).rejects.toBeInstanceOf(TypeError);
+  expect(load('')).rejects.toBeInstanceOf(TypeError);
+  expect(load({})).rejects.toBeInstanceOf(TypeError);
+});
+
 test('load must return the vastChain', async () => {
   requestAd.mockReturnValueOnce(Promise.resolve(successVastChain));
   const adTag = 'test.example.com/adTag';
@@ -79,14 +85,16 @@ test('load must track the errors', async () => {
   expect(requestAd).toHaveBeenCalledTimes(1);
   expect(requestAd).toBeCalledWith(adTag, options);
   expect(trackError).toHaveBeenCalledTimes(1);
-  expect(trackError).toHaveBeenCalledWith(errorVastChain, undefined);
+  expect(trackError).toHaveBeenCalledWith(errorVastChain, {
+    errorCode: errorVastChain[0].errorCode
+  });
 });
 
 test('load must pass the optional track to the trackErrors fn', async () => {
   requestAd.mockReturnValueOnce(Promise.resolve(errorVastChain));
   const adTag = 'test.example.com/adTag';
   const options = {
-    track: () => {}
+    tracker: () => {}
   };
   const vastChain = await load(adTag, options);
 
@@ -94,5 +102,8 @@ test('load must pass the optional track to the trackErrors fn', async () => {
   expect(requestAd).toHaveBeenCalledTimes(1);
   expect(requestAd).toBeCalledWith(adTag, options);
   expect(trackError).toHaveBeenCalledTimes(1);
-  expect(trackError).toHaveBeenCalledWith(errorVastChain, options.track);
+  expect(trackError).toHaveBeenCalledWith(errorVastChain, {
+    errorCode: errorVastChain[0].errorCode,
+    tracker: options.tracker
+  });
 });
