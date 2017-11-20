@@ -19,6 +19,7 @@ const {
   progress,
   error: errorEvt
 } = linearEvents;
+
 const findBestMedia = (videoElement, mediaFiles, container) => {
   const screenRect = container.getBoundingClientRect();
   const suportedMediaFiles = mediaFiles.filter((mediaFile) => canPlay(videoElement, mediaFile));

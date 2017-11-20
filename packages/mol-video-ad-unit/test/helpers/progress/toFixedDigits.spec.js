@@ -1,4 +1,4 @@
-import toFixedDigits from '../../../src/helpers/utils/toFixedDigits';
+import toFixedDigits from '../../../src/helpers/progress/toFixedDigits';
 
 test('toFixedDigits must add zeros if missing to the passed number', () => {
   expect(toFixedDigits(2, 3)).toBe('002');
