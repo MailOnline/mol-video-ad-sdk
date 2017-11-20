@@ -9,7 +9,7 @@ import {
 } from 'mol-vast-selectors';
 import canPlay from './helpers/utils/canPlay';
 import sortMediaByBestFit from './helpers/utils/sortMediaByBestFit';
-import initMetricHandlers from './helpers/metrics/initMetricHandlers';
+import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';
 import setupIcons from './helpers/icons/setupIcons';
 
 const {
@@ -107,7 +107,7 @@ class VastAdUnit extends Emitter {
       this.assetUri = media.src;
 
       // eslint-disable-next-line object-property-newline
-      this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, handleMetric, {
+      this[removeMetrichandlers] = setupMetricHandlers(videoAdContainer, handleMetric, {
         clickThroughUrl,
         progressEvents,
         skipoffset,
