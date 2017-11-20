@@ -53,15 +53,14 @@ class VastAdUnit extends Emitter {
       onIconView: (icon) => this.emit(iconView, iconView, this, icon),
       videoAdContainer
     });
-  }
-
-  run () {
     this[removeMetrichandlers] = setupMetricHandlers({
       hooks: this.hooks,
       vastChain: this.vastChain,
       videoAdContainer: this.videoAdContainer
     }, this.handleMetric);
+  }
 
+  run () {
     this.start();
   }
 
