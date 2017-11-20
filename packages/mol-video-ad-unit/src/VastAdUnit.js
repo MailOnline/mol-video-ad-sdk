@@ -61,6 +61,7 @@ class VastAdUnit extends Emitter {
   }
 
   start () {
+    // TODO: ENSURE IT IS ONLY CALLED ONCE
     const inlineAd = this.vastChain[0].ad;
     const {videoElement, element} = this.videoAdContainer;
     const media = findBestMedia(inlineAd, videoElement, element);
@@ -77,13 +78,16 @@ class VastAdUnit extends Emitter {
     }
   }
 
+  // TODO: add pause and resume method
   cancel () {
+    // TODO: SHOULD THROW IF CALLED AFTER DESTROY
     const videoElement = this.videoAdContainer.videoElement;
 
     videoElement.pause();
   }
 
   onComplete (callback) {
+    // TODO: SHOULD THROW IF CALLED AFTER DESTROY
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
     }
@@ -92,6 +96,7 @@ class VastAdUnit extends Emitter {
   }
 
   onError (callback) {
+    // TODO: SHOULD THROW IF CALLED AFTER DESTROY
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
     }
