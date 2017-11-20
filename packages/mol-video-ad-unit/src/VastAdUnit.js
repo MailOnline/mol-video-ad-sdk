@@ -52,11 +52,11 @@ class VastAdUnit extends Emitter {
     this.hooks = hooks;
     this.vastChain = vastChain;
     this.videoAdContainer = videoAdContainer;
-    this[removeIcons] = setupIcons(this.vastChain, {
-      logger: this.logger,
+    this[removeIcons] = setupIcons(vastChain, {
+      logger,
       onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
       onIconView: (icon) => this.emit(iconView, iconView, this, icon),
-      videoAdContainer: this.videoAdContainer
+      videoAdContainer
     });
   }
 
