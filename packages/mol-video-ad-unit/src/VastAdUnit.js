@@ -3,11 +3,9 @@ import {linearEvents} from 'mol-video-ad-tracker';
 import Emitter from 'mol-tiny-emitter';
 import {
   getClickThrough,
-  getMediaFiles,
   getSkipoffset
 } from 'mol-vast-selectors';
-import canPlay from './helpers/media/canPlay';
-import sortMediaByBestFit from './helpers/media/sortMediaByBestFit';
+import findBestMedia from './helpers/media/findBestMedia';
 import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';
 import setupIcons from './helpers/icons/setupIcons';
 import getProgressEvents from './helpers/progress/getProgressEvents';
@@ -18,14 +16,6 @@ const {
   iconView,
   error: errorEvt
 } = linearEvents;
-
-const findBestMedia = (videoElement, mediaFiles, container) => {
-  const screenRect = container.getBoundingClientRect();
-  const suportedMediaFiles = mediaFiles.filter((mediaFile) => canPlay(videoElement, mediaFile));
-  const sortedMediaFiles = sortMediaByBestFit(suportedMediaFiles, screenRect);
-
-  return sortedMediaFiles[0];
-};
 
 const safeCallback = (callback, logger) => (...args) => {
   try {
@@ -66,8 +56,7 @@ class VastAdUnit extends Emitter {
     const videoAdContainer = this.videoAdContainer;
     const {videoElement, element} = videoAdContainer;
     const inlineAd = this.vastChain[0].ad;
-    const mediaFiles = getMediaFiles(inlineAd);
-    const media = mediaFiles && findBestMedia(videoElement, mediaFiles, element);
+    const media = findBestMedia(inlineAd, videoElement, element);
     const skipoffset = getSkipoffset(inlineAd);
     const clickThroughUrl = getClickThrough(inlineAd);
     const progressEvents = getProgressEvents(this.vastChain);
