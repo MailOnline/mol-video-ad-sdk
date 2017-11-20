@@ -1,4 +1,4 @@
-import canPlay from '../../../src/helpers/utils/canPlay';
+import canPlay from '../../../src/helpers/media/canPlay';
 
 test('canPlay must delate on the video element to know if the mediaFile is supported', () => {
   let supported = true;

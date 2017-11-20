@@ -7,8 +7,8 @@ import {
   getMediaFiles,
   getSkipoffset
 } from 'mol-vast-selectors';
-import canPlay from './helpers/utils/canPlay';
-import sortMediaByBestFit from './helpers/utils/sortMediaByBestFit';
+import canPlay from './helpers/media/canPlay';
+import sortMediaByBestFit from './helpers/media/sortMediaByBestFit';
 import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';
 import setupIcons from './helpers/icons/setupIcons';
 

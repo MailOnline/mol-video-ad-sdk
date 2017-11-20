@@ -10,7 +10,7 @@ import {
 } from 'mol-vast-fixtures';
 import {createVideoAdContainer} from 'mol-video-ad-container';
 import VastAdUnit from '../src/VastAdUnit';
-import canPlay from '../src/helpers/utils/canPlay';
+import canPlay from '../src/helpers/media/canPlay';
 import metricHandlers from '../src/helpers/metrics/handlers';
 import addIcons from '../src/helpers/icons/addIcons';
 import retrieveIcons from '../src/helpers/icons/retrieveIcons';
@@ -22,7 +22,7 @@ const {
 } = linearEvents;
 const mockStopMetricHandler = jest.fn();
 
-jest.mock('../src/helpers/utils/canPlay.js', () => jest.fn());
+jest.mock('../src/helpers/media/canPlay.js', () => jest.fn());
 jest.mock('../src/helpers/metrics/handlers/index.js', () => [
   jest.fn(({videoElement}, callback) => {
     videoElement.addEventListener('ended', () => callback('complete'));
