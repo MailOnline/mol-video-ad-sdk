@@ -3,7 +3,6 @@ import {linearEvents} from 'mol-video-ad-tracker';
 import Emitter from 'mol-tiny-emitter';
 import {
   getClickThrough,
-  getLinearTrackingEvents,
   getMediaFiles,
   getSkipoffset
 } from 'mol-vast-selectors';
@@ -11,12 +10,12 @@ import canPlay from './helpers/media/canPlay';
 import sortMediaByBestFit from './helpers/media/sortMediaByBestFit';
 import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';
 import setupIcons from './helpers/icons/setupIcons';
+import getProgressEvents from './helpers/progress/getProgressEvents';
 
 const {
   complete,
   iconClick,
   iconView,
-  progress,
   error: errorEvt
 } = linearEvents;
 
@@ -40,19 +39,6 @@ const onErrorCallbacks = Symbol('onErrorCallbacks');
 const onCompleteCallbacks = Symbol('onCompleteCallbacks');
 const removeMetrichandlers = Symbol('removeMetrichandlers');
 const removeIcons = Symbol('removeIcons');
-const getProgressEvents = (vastChain) => vastChain.map(({ad}) => ad)
-  .reduce((accumulated, ad) => {
-    const events = getLinearTrackingEvents(ad, progress) || [];
-
-    return [
-      ...accumulated,
-      ...events
-    ];
-  }, [])
-  .map(({offset, uri}) => ({
-    offset,
-    uri
-  }));
 
 class VastAdUnit extends Emitter {
   constructor (vastChain, videoAdContainer, {hooks = {}, logger = console} = {}) {
