@@ -8,6 +8,7 @@ import {
 } from 'mol-vast-xml2js';
 import parseOffset from './helpers/parseOffset';
 import getLinearCreative from './helpers/getLinearCreative';
+import getLinearTrackingEvents from './getLinearTrackingEvents';
 import getIcons from './getIcons';
 
 export const getBooleanValue = (val) => {
@@ -290,41 +291,6 @@ export const getMediaFiles = (ad) => {
   return null;
 };
 
-export const getLinearTrackingEvents = (ad, eventName) => {
-  const creativeElement = ad && getLinearCreative(ad);
-
-  if (creativeElement) {
-    const linearElement = get(creativeElement, 'Linear');
-    const trackingEventsElement = linearElement && get(linearElement, 'TrackingEvents');
-    const trackinEventElements = trackingEventsElement && getAll(trackingEventsElement, 'Tracking');
-
-    if (trackinEventElements && trackinEventElements.length > 0) {
-      const trackingEvents = trackinEventElements.map((trackinEventElement) => {
-        const {event, offset} = getAttributes(trackinEventElement);
-        const uri = getText(trackinEventElement);
-
-        return {
-          event,
-          offset: offset && parseOffset(offset),
-          uri
-        };
-      });
-
-      if (eventName) {
-        const filteredEvents = trackingEvents.filter(({event}) => event === eventName);
-
-        if (filteredEvents.length > 0) {
-          return filteredEvents;
-        }
-      } else {
-        return trackingEvents;
-      }
-    }
-  }
-
-  return null;
-};
-
 const getVideoClicksElement = (ad) => {
   const creativeElement = ad && getLinearCreative(ad);
   const linearElement = creativeElement && get(creativeElement, 'Linear');
@@ -371,4 +337,7 @@ export const getSkipoffset = (ad) => {
   return null;
 };
 
-export {getIcons};
+export {
+  getIcons,
+  getLinearTrackingEvents
+};
