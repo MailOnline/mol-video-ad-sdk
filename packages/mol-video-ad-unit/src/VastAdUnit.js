@@ -13,47 +13,43 @@ const {
   error: errorEvt
 } = linearEvents;
 
-const removeMetrichandlers = Symbol('removeMetrichandlers');
-const removeIcons = Symbol('removeIcons');
-const throwIfDestroyed = Symbol('throwIfDestroyed');
-const throwIfNotStarted = Symbol('throwIfNotStarted');
 const hidden = Symbol('hidden');
 
 class VastAdUnit extends Emitter {
   [hidden] = {
     destroyed: false,
+    handleMetric: (event, data) => {
+      switch (event) {
+      case complete: {
+        this[hidden].onCompleteCallbacks.forEach((callback) => callback(this));
+        break;
+      }
+      case errorEvt: {
+        this.error = data;
+        this.errorCode = this.error && this.error.errorCode ? this.error.errorCode : 405;
+        this[hidden].onErrorCallbacks.forEach((callback) => callback(this, this.error));
+        break;
+      }
+      }
+
+      this.emit(event, event, this, data);
+    },
     onCompleteCallbacks: [],
+    onDestroyCallbacks: [],
     onErrorCallbacks: [],
-    started: false
+    started: false,
+    throwIfDestroyed: () => {
+      if (this.isDestroyed()) {
+        throw new Error('VastAdUnit has been destroyed');
+      }
+    },
+    throwIfNotStarted: () => {
+      if (!this.isStarted()) {
+        throw new Error('VastAdUnit has not started');
+      }
+    }
   };
 
-  [throwIfDestroyed] () {
-    if (this.isDestroyed()) {
-      throw new Error('VastAdUnit has been destroyed');
-    }
-  }
-  [throwIfNotStarted] () {
-    if (!this.isStarted()) {
-      throw new Error('VastAdUnit has not started');
-    }
-  }
-
-  handleMetric = (event, data) => {
-    switch (event) {
-    case complete: {
-      this[hidden].onCompleteCallbacks.forEach((callback) => callback(this));
-      break;
-    }
-    case errorEvt: {
-      this.error = data;
-      this.errorCode = this.error && this.error.errorCode ? this.error.errorCode : 405;
-      this[hidden].onErrorCallbacks.forEach((callback) => callback(this, this.error));
-      break;
-    }
-    }
-
-    this.emit(event, event, this, data);
-  }
   error = null;
   errorCode = null;
   assetUri = null;
@@ -61,24 +57,37 @@ class VastAdUnit extends Emitter {
   constructor (vastChain, videoAdContainer, {hooks = {}, logger = console} = {}) {
     super(logger);
 
+    const {
+      handleMetric,
+      onDestroyCallbacks
+    } = this[hidden];
+
     this.hooks = hooks;
     this.vastChain = vastChain;
     this.videoAdContainer = videoAdContainer;
-    this[removeIcons] = setupIcons(vastChain, {
+
+    const removeIcons = setupIcons(vastChain, {
       logger,
       onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
       onIconView: (icon) => this.emit(iconView, iconView, this, icon),
       videoAdContainer
     });
-    this[removeMetrichandlers] = setupMetricHandlers({
+
+    const removeMetrichandlers = setupMetricHandlers({
       hooks: this.hooks,
       vastChain: this.vastChain,
       videoAdContainer: this.videoAdContainer
-    }, this.handleMetric);
+    }, handleMetric);
+
+    if (removeIcons) {
+      onDestroyCallbacks.push(removeIcons);
+    }
+
+    onDestroyCallbacks.push(removeMetrichandlers);
   }
 
   start () {
-    this[throwIfDestroyed]();
+    this[hidden].throwIfDestroyed();
 
     if (this.isStarted()) {
       return;
@@ -96,15 +105,15 @@ class VastAdUnit extends Emitter {
       const adUnitError = new Error('Can\'t find a suitable media to play');
 
       adUnitError.errorCode = 403;
-      this.handleMetric(errorEvt, adUnitError);
+      this[hidden].handleMetric(errorEvt, adUnitError);
     }
 
     this[hidden].started = true;
   }
 
   resume () {
-    this[throwIfDestroyed]();
-    this[throwIfNotStarted]();
+    this[hidden].throwIfDestroyed();
+    this[hidden].throwIfNotStarted();
 
     const {videoElement} = this.videoAdContainer;
 
@@ -112,8 +121,8 @@ class VastAdUnit extends Emitter {
   }
 
   pause () {
-    this[throwIfDestroyed]();
-    this[throwIfNotStarted]();
+    this[hidden].throwIfDestroyed();
+    this[hidden].throwIfNotStarted();
 
     const {videoElement} = this.videoAdContainer;
 
@@ -121,7 +130,7 @@ class VastAdUnit extends Emitter {
   }
 
   cancel () {
-    this[throwIfDestroyed]();
+    this[hidden].throwIfDestroyed();
 
     const videoElement = this.videoAdContainer.videoElement;
 
@@ -129,7 +138,7 @@ class VastAdUnit extends Emitter {
   }
 
   onComplete (callback) {
-    this[throwIfDestroyed]();
+    this[hidden].throwIfDestroyed();
 
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
@@ -139,7 +148,7 @@ class VastAdUnit extends Emitter {
   }
 
   onError (callback) {
-    this[throwIfDestroyed]();
+    this[hidden].throwIfDestroyed();
 
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
@@ -158,20 +167,15 @@ class VastAdUnit extends Emitter {
 
   destroy () {
     this.videoAdContainer.videoElement.src = '';
-    this[removeMetrichandlers]();
+    this[hidden].onDestroyCallbacks.forEach((callback) => callback());
 
     this.vastChain = null;
     this.videoAdContainer = null;
     this.error = null;
     this.errorCode = null;
     this.assetUri = null;
-    this[removeMetrichandlers] = null;
 
     this[hidden].destroyed = true;
-
-    if (this[removeIcons]) {
-      this[removeIcons]();
-    }
   }
 }
 
