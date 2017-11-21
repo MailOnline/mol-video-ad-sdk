@@ -349,15 +349,13 @@ test('VastAdUnit start must do nothing on a second play', () => {
 
 [
   'start',
+  'resume',
+  'pause',
   'cancel',
   'onError',
   'onComplete'
 ].forEach((method) => {
   test(`VastAdUnit ${method} must throw if you try to start a destroyed adUnit`, () => {
-    canPlay.mockReturnValue(true);
-    Object.defineProperty(videoAdContainer.videoElement, 'play', {
-      value: jest.fn()
-    });
     const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
     adUnit.destroy();
@@ -494,4 +492,30 @@ test('VastAdUnit destroy must remove the icons of the vastChain', () => {
   adUnit.destroy();
 
   expect(removeIconMock).toHaveBeenCalledTimes(1);
+});
+
+[
+  ['resume', 'play'],
+  ['pause', 'pause']
+].forEach(([method, vpMethod]) => {
+  test(`VastAdUnit ${method} must throw if the ad unit has not started`, () => {
+    const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+    expect(() => adUnit[method]()).toThrowError('VastAdUnit has not started');
+  });
+
+  test(`VastAdUnit ${method} must call ${vpMethod} on the video element`, () => {
+    canPlay.mockReturnValue(true);
+    Object.defineProperty(videoAdContainer.videoElement, vpMethod, {
+      value: jest.fn()
+    });
+
+    const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+    adUnit.start();
+    videoAdContainer.videoElement[vpMethod].mockClear();
+
+    adUnit[method]();
+    expect(videoAdContainer.videoElement[vpMethod]).toHaveBeenCalledTimes(1);
+  });
 });

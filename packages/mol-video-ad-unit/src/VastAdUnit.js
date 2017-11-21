@@ -20,17 +20,25 @@ const removeIcons = Symbol('removeIcons');
 const started = Symbol('started');
 const destroyed = Symbol('destroyed');
 const throwIfDestroyed = Symbol('throwIfDestroyed');
+const throwIfNotStarted = Symbol('throwIfNotStarted');
 
 class VastAdUnit extends Emitter {
   [destroyed] = false;
   [started] = false;
   [onErrorCallbacks] = [];
   [onCompleteCallbacks] = [];
+
   [throwIfDestroyed] () {
     if (this.isDestroyed()) {
       throw new Error('VastAdUnit has been destroyed');
     }
   }
+  [throwIfNotStarted] () {
+    if (!this.isStarted()) {
+      throw new Error('VastAdUnit has not started');
+    }
+  }
+
   handleMetric = (event, data) => {
     switch (event) {
     case complete: {
@@ -95,6 +103,24 @@ class VastAdUnit extends Emitter {
     this[started] = true;
   }
 
+  resume () {
+    this[throwIfDestroyed]();
+    this[throwIfNotStarted]();
+
+    const {videoElement} = this.videoAdContainer;
+
+    videoElement.play();
+  }
+
+  pause () {
+    this[throwIfDestroyed]();
+    this[throwIfNotStarted]();
+
+    const {videoElement} = this.videoAdContainer;
+
+    videoElement.pause();
+  }
+
   cancel () {
     this[throwIfDestroyed]();
 
@@ -125,6 +151,10 @@ class VastAdUnit extends Emitter {
 
   isDestroyed () {
     return this[destroyed];
+  }
+
+  isStarted () {
+    return this[started];
   }
 
   destroy () {
