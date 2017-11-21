@@ -9,8 +9,11 @@
   "files": [
     "src"
   ],
+  "peerDependencies": {
+    "mol-vast-xml2js": "^0.1.0"
+  },
   "devDependencies": {
     "mol-vast-xml2js": "^0.1.0",
-    "mol-vast-fixtures": "0.1.0"
+    "mol-vast-fixtures": "^0.1.0"
   }
 }

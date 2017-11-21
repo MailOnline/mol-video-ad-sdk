@@ -1,173 +1,181 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
 import {linearEvents} from 'mol-video-ad-tracker';
 import Emitter from 'mol-tiny-emitter';
-import {
-  getClickThrough,
-  getLinearTrackingEvents,
-  getMediaFiles,
-  getSkipoffset
-} from 'mol-vast-selectors';
-import canPlay from './helpers/utils/canPlay';
-import sortMediaByBestFit from './helpers/utils/sortMediaByBestFit';
-import initMetricHandlers from './helpers/metrics/initMetricHandlers';
-import {
-  addIcons,
-  retrieveIcons
-} from './helpers/icons';
+import findBestMedia from './helpers/media/findBestMedia';
+import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';
+import setupIcons from './helpers/icons/setupIcons';
+import safeCallback from './helpers/safeCallback';
 
 const {
   complete,
   iconClick,
   iconView,
-  progress,
   error: errorEvt
 } = linearEvents;
-const findBestMedia = (videoElement, mediaFiles, container) => {
-  const screenRect = container.getBoundingClientRect();
-  const suportedMediaFiles = mediaFiles.filter((mediaFile) => canPlay(videoElement, mediaFile));
-  const sortedMediaFiles = sortMediaByBestFit(suportedMediaFiles, screenRect);
 
-  return sortedMediaFiles[0];
-};
-
-const safeCallback = (callback, logger) => (...args) => {
-  try {
-    // eslint-disable-next-line callback-return
-    callback(...args);
-  } catch (error) {
-    logger.error(error);
-  }
-};
-const onErrorCallbacks = Symbol('onErrorCallbacks');
-const onCompleteCallbacks = Symbol('onCompleteCallbacks');
-const removeMetrichandlers = Symbol('removeMetrichandlers');
-const removeIcons = Symbol('removeIcons');
-const getProgressEvents = (vastChain) => vastChain.map(({ad}) => ad)
-  .reduce((accumulated, ad) => {
-    const events = getLinearTrackingEvents(ad, progress) || [];
-
-    return [
-      ...accumulated,
-      ...events
-    ];
-  }, [])
-  .map(({offset, uri}) => ({
-    offset,
-    uri
-  }));
+const hidden = Symbol('hidden');
 
 class VastAdUnit extends Emitter {
-  constructor (vastChain, videoAdContainer, {hooks = {}, logger = console} = {}) {
-    super(logger);
-
-    this.hooks = hooks;
-
-    this.vastChain = vastChain;
-    this.videoAdContainer = videoAdContainer;
-    this.error = null;
-    this.errorCode = null;
-    this.assetUri = null;
-    this[onErrorCallbacks] = [];
-    this[onCompleteCallbacks] = [];
-  }
-
-  run () {
-    const videoAdContainer = this.videoAdContainer;
-    const {videoElement, element} = videoAdContainer;
-    const inlineAd = this.vastChain[0].ad;
-    const mediaFiles = getMediaFiles(inlineAd);
-    const media = mediaFiles && findBestMedia(videoElement, mediaFiles, element);
-    const skipoffset = getSkipoffset(inlineAd);
-    const clickThroughUrl = getClickThrough(inlineAd);
-    const progressEvents = getProgressEvents(this.vastChain);
-
-    const handleMetric = (event, data) => {
+  [hidden] = {
+    destroyed: false,
+    handleMetric: (event, data) => {
       switch (event) {
       case complete: {
-        this[onCompleteCallbacks].forEach((callback) => callback(this));
+        this[hidden].onCompleteCallbacks.forEach((callback) => callback(this));
         break;
       }
       case errorEvt: {
         this.error = data;
         this.errorCode = this.error && this.error.errorCode ? this.error.errorCode : 405;
-        this[onErrorCallbacks].forEach((callback) => callback(this, this.error));
+        this[hidden].onErrorCallbacks.forEach((callback) => callback(this, this.error));
         break;
       }
       }
 
       this.emit(event, event, this, data);
-    };
+    },
+    onCompleteCallbacks: [],
+    onDestroyCallbacks: [],
+    onErrorCallbacks: [],
+    started: false,
+    throwIfDestroyed: () => {
+      if (this.isDestroyed()) {
+        throw new Error('VastAdUnit has been destroyed');
+      }
+    },
+    throwIfNotStarted: () => {
+      if (!this.isStarted()) {
+        throw new Error('VastAdUnit has not started');
+      }
+    }
+  };
+
+  error = null;
+  errorCode = null;
+  assetUri = null;
+
+  constructor (vastChain, videoAdContainer, {hooks = {}, logger = console} = {}) {
+    super(logger);
+
+    const {
+      handleMetric,
+      onDestroyCallbacks
+    } = this[hidden];
+
+    this.hooks = hooks;
+    this.vastChain = vastChain;
+    this.videoAdContainer = videoAdContainer;
+
+    const removeIcons = setupIcons(vastChain, {
+      logger,
+      onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
+      onIconView: (icon) => this.emit(iconView, iconView, this, icon),
+      videoAdContainer
+    });
+
+    const removeMetrichandlers = setupMetricHandlers({
+      hooks: this.hooks,
+      vastChain: this.vastChain,
+      videoAdContainer: this.videoAdContainer
+    }, handleMetric);
+
+    if (removeIcons) {
+      onDestroyCallbacks.push(removeIcons);
+    }
+
+    onDestroyCallbacks.push(removeMetrichandlers);
+  }
+
+  start () {
+    this[hidden].throwIfDestroyed();
+
+    if (this.isStarted()) {
+      return;
+    }
+
+    const inlineAd = this.vastChain[0].ad;
+    const {videoElement, element} = this.videoAdContainer;
+    const media = findBestMedia(inlineAd, videoElement, element);
 
     if (Boolean(media)) {
       videoElement.src = media.src;
       this.assetUri = media.src;
-
-      // eslint-disable-next-line object-property-newline
-      this[removeMetrichandlers] = initMetricHandlers(videoAdContainer, handleMetric, {
-        clickThroughUrl,
-        progressEvents,
-        skipoffset,
-        ...this.hooks
-      });
-
-      const icons = retrieveIcons(this.vastChain);
-
-      if (icons) {
-        this[removeIcons] = addIcons(icons, {
-          logger: this.logger,
-          onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
-          onIconView: (icon) => this.emit(iconView, iconView, this, icon),
-          videoAdContainer: this.videoAdContainer
-        });
-      }
-
       videoElement.play();
     } else {
       const adUnitError = new Error('Can\'t find a suitable media to play');
 
       adUnitError.errorCode = 403;
-      handleMetric(errorEvt, adUnitError);
+      this[hidden].handleMetric(errorEvt, adUnitError);
     }
+
+    this[hidden].started = true;
+  }
+
+  resume () {
+    this[hidden].throwIfDestroyed();
+    this[hidden].throwIfNotStarted();
+
+    const {videoElement} = this.videoAdContainer;
+
+    videoElement.play();
+  }
+
+  pause () {
+    this[hidden].throwIfDestroyed();
+    this[hidden].throwIfNotStarted();
+
+    const {videoElement} = this.videoAdContainer;
+
+    videoElement.pause();
   }
 
   cancel () {
+    this[hidden].throwIfDestroyed();
+
     const videoElement = this.videoAdContainer.videoElement;
 
     videoElement.pause();
   }
 
   onComplete (callback) {
+    this[hidden].throwIfDestroyed();
+
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
     }
 
-    this[onCompleteCallbacks].push(safeCallback(callback, this.logger));
+    this[hidden].onCompleteCallbacks.push(safeCallback(callback, this.logger));
   }
 
   onError (callback) {
+    this[hidden].throwIfDestroyed();
+
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
     }
 
-    this[onErrorCallbacks].push(safeCallback(callback, this.logger));
+    this[hidden].onErrorCallbacks.push(safeCallback(callback, this.logger));
+  }
+
+  isDestroyed () {
+    return this[hidden].destroyed;
+  }
+
+  isStarted () {
+    return this[hidden].started;
   }
 
   destroy () {
     this.videoAdContainer.videoElement.src = '';
-    this[removeMetrichandlers]();
+    this[hidden].onDestroyCallbacks.forEach((callback) => callback());
 
     this.vastChain = null;
     this.videoAdContainer = null;
     this.error = null;
     this.errorCode = null;
     this.assetUri = null;
-    this[onErrorCallbacks] = null;
-    this[onCompleteCallbacks] = null;
-    this[removeMetrichandlers] = null;
 
-    if (this[removeIcons]) {
-      this[removeIcons]();
-    }
+    this[hidden].destroyed = true;
   }
 }
 
