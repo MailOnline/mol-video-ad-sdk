@@ -13,20 +13,19 @@ const {
   error: errorEvt
 } = linearEvents;
 
-const onErrorCallbacks = Symbol('onErrorCallbacks');
-const onCompleteCallbacks = Symbol('onCompleteCallbacks');
 const removeMetrichandlers = Symbol('removeMetrichandlers');
 const removeIcons = Symbol('removeIcons');
-const started = Symbol('started');
-const destroyed = Symbol('destroyed');
 const throwIfDestroyed = Symbol('throwIfDestroyed');
 const throwIfNotStarted = Symbol('throwIfNotStarted');
+const hidden = Symbol('hidden');
 
 class VastAdUnit extends Emitter {
-  [destroyed] = false;
-  [started] = false;
-  [onErrorCallbacks] = [];
-  [onCompleteCallbacks] = [];
+  [hidden] = {
+    destroyed: false,
+    onCompleteCallbacks: [],
+    onErrorCallbacks: [],
+    started: false
+  };
 
   [throwIfDestroyed] () {
     if (this.isDestroyed()) {
@@ -42,13 +41,13 @@ class VastAdUnit extends Emitter {
   handleMetric = (event, data) => {
     switch (event) {
     case complete: {
-      this[onCompleteCallbacks].forEach((callback) => callback(this));
+      this[hidden].onCompleteCallbacks.forEach((callback) => callback(this));
       break;
     }
     case errorEvt: {
       this.error = data;
       this.errorCode = this.error && this.error.errorCode ? this.error.errorCode : 405;
-      this[onErrorCallbacks].forEach((callback) => callback(this, this.error));
+      this[hidden].onErrorCallbacks.forEach((callback) => callback(this, this.error));
       break;
     }
     }
@@ -81,7 +80,7 @@ class VastAdUnit extends Emitter {
   start () {
     this[throwIfDestroyed]();
 
-    if (this[started]) {
+    if (this.isStarted()) {
       return;
     }
 
@@ -100,7 +99,7 @@ class VastAdUnit extends Emitter {
       this.handleMetric(errorEvt, adUnitError);
     }
 
-    this[started] = true;
+    this[hidden].started = true;
   }
 
   resume () {
@@ -136,7 +135,7 @@ class VastAdUnit extends Emitter {
       throw new TypeError('Expected a callback function');
     }
 
-    this[onCompleteCallbacks].push(safeCallback(callback, this.logger));
+    this[hidden].onCompleteCallbacks.push(safeCallback(callback, this.logger));
   }
 
   onError (callback) {
@@ -146,15 +145,15 @@ class VastAdUnit extends Emitter {
       throw new TypeError('Expected a callback function');
     }
 
-    this[onErrorCallbacks].push(safeCallback(callback, this.logger));
+    this[hidden].onErrorCallbacks.push(safeCallback(callback, this.logger));
   }
 
   isDestroyed () {
-    return this[destroyed];
+    return this[hidden].destroyed;
   }
 
   isStarted () {
-    return this[started];
+    return this[hidden].started;
   }
 
   destroy () {
@@ -166,15 +165,13 @@ class VastAdUnit extends Emitter {
     this.error = null;
     this.errorCode = null;
     this.assetUri = null;
-    this[onErrorCallbacks] = null;
-    this[onCompleteCallbacks] = null;
     this[removeMetrichandlers] = null;
+
+    this[hidden].destroyed = true;
 
     if (this[removeIcons]) {
       this[removeIcons]();
     }
-
-    this[destroyed] = true;
   }
 }
 

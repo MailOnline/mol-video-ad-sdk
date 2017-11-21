@@ -355,7 +355,7 @@ test('VastAdUnit start must do nothing on a second play', () => {
   'onError',
   'onComplete'
 ].forEach((method) => {
-  test(`VastAdUnit ${method} must throw if you try to start a destroyed adUnit`, () => {
+  test(`VastAdUnit ${method} must throw if you call it on a destroyed adUnit`, () => {
     const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
     adUnit.destroy();
