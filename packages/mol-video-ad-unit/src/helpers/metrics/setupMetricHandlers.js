@@ -1,5 +1,4 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
-
 import {
   getClickThrough,
   getSkipoffset

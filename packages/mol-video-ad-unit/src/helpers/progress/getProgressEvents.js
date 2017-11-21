@@ -1,8 +1,5 @@
-// TODO: move this method to mol-vast-selectors
-import {
-  getLinearTrackingEvents
-} from 'mol-vast-selectors';
 import {linearEvents} from 'mol-video-ad-tracker';
+import {getLinearTrackingEvents} from 'mol-vast-selectors';
 
 const {
   progress
