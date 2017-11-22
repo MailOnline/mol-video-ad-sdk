@@ -1,0 +1,29 @@
+{
+  "name": "mol-video-ad-react-component",
+  "version": "0.1.0",
+  "description": "React component that loads video-ads using mol-video-ad-sdk",
+  "author": "MailOnline <fe@mailonline.co.uk>",
+  "browser": "src/index.js",
+  "main": "src/index.js",
+  "license": "UNLICENSED",
+  "scripts": {
+    "storybook": "start-storybook -p 9001 -c .storybook"
+  },
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "mol-video-ad-sdk": "^0.1.0",
+    "reac": "0.0.0",
+    "react-dom": "^16.1.1"
+  },
+  "peerDependencies": {
+    "react": "^16.1.1"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^3.2.16",
+    "@storybook/react": "^3.2.16",
+    "mol-vast-fixtures": "^0.1.0",
+    "react": "^16.1.1"
+  }
+}
