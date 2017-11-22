@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <style>
+        .icon {
+          background-color: rebeccapurple;
+          width: 100%;
+          height: 100%;
+        }
+      </style>
+      <script>
+        const qsToObj = (search) => {
+          var search = search.substring(1);
+          return JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
+        };
+        const updateStyles = (element, styles) => {
+          Object.entries(styles).forEach(([rule, value]) => {
+            element.style[rule] = value;
+          });
+        };
+        const icon = document.querySelector('.icon');
+        const styles = qsToObj(window.location.search);
+
+        updateStyles(icon, styles);
+      </script>
+    </head>
+    <body>
+      <div class="icon">
+      </div>
+    </body>
+  </html>

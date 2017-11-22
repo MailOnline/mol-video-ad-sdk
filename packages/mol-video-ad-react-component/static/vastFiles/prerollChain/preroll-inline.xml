@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<VAST version="4.0">
+  <Ad id="abc123">
+    <InLine>
+      <AdSystem version="1.0">MOL</AdSystem>
+      <AdTitle>MOL VAST 4.0 Preroll Inline</AdTitle>
+      <Error>https://test.example.com/error</Error>
+      <Impression>https://test.example.com/impression</Impression>
+      <Category authority="IAB">Inline Video</Category>
+      <Description>MOL VAST 4.0 Preroll Inline</Description>
+      <Advertiser>MOL</Advertiser>
+      <Survey type="text/javascript">https://test.example.com/survey.js</Survey>
+      <Extensions/>
+      <ViewableImpression>
+        <Viewable>https://test.example.com/viewable</Viewable>
+        <NotViewable>https://test.example.com/notViewable</NotViewable>
+        <ViewUndetermined>https://test.example.com/notDetermined</ViewUndetermined>
+      </ViewableImpression>
+      <Creatives>
+        <Creative adId="abc123" apiFramework="mol-api">
+          <UniversalAdId idValue="unknown">unknown</UniversalAdId>
+          <CreativeExtensions>
+            <CreativeExtension>
+              <Custom>This is custom stuff</Custom>
+            </CreativeExtension>
+          </CreativeExtensions>
+          <Linear skipoffset="00:00:05" >
+            <Duration>00:00:30</Duration>
+            <TrackingEvents>
+              <Tracking event="start"><![CDATA[https://test.example.com/start]]></Tracking>
+              <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstQuartile]]></Tracking>
+              <Tracking event="midpoint"><![CDATA[https://test.example.com/midpoint]]></Tracking>
+              <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdQuartile]]></Tracking>
+              <Tracking event="complete"><![CDATA[https://test.example.com/complete]]></Tracking>
+              <Tracking event="playerExpand"><![CDATA[https://test.example.com/playerExpand]]></Tracking>
+              <Tracking event="playerCollapse"><![CDATA[https://test.example.com/playerCollapse]]></Tracking>
+              <Tracking event="mute"><![CDATA[https://test.example.com/mute]]></Tracking>
+              <Tracking event="unmute"><![CDATA[https://test.example.com/unmute]]></Tracking>
+              <Tracking event="rewind"><![CDATA[https://test.example.com/rewind]]></Tracking>
+              <Tracking event="skip"><![CDATA[https://test.example.com/skip]]></Tracking>
+              <Tracking event="pause"><![CDATA[https://test.example.com/pause]]></Tracking>
+              <Tracking event="progress" offset="00:00:05"><![CDATA[https://test.example.com/progress]]></Tracking>
+              <Tracking event="resume"><![CDATA[https://test.example.com/resume]]></Tracking>
+              <Tracking event="fullscreen"><![CDATA[https://test.example.com/fullscreen]]></Tracking>
+              <Tracking event="creativeView"><![CDATA[https://test.example.com/creativeview]]></Tracking>
+              <Tracking event="exitFullscreen"><![CDATA[https://test.example.com/exitfullscreen]]></Tracking>
+              <Tracking event="exitFullscreen"><![CDATA[https://test.example.com/exitfullscreen]]></Tracking>
+              <Tracking event="acceptInvitationLinear"><![CDATA[https://test.example.com/acceptinvitationlinear]]></Tracking>
+              <Tracking event="closeLinear"><![CDATA[https://test.example.com/closelinear]]></Tracking>
+            </TrackingEvents>
+            <VideoClicks>
+              <ClickThrough>https://test.example.com/clickthrough</ClickThrough>
+              <ClickTracking>https://test.example.com/clicktracking</ClickTracking>
+            </VideoClicks>
+            <MediaFiles>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="1920" height="1080" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/1920x1080.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="768" height="432" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/768x432.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="640" height="362" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/640x362.mp4</MediaFile>
+            </MediaFiles>
+            <Icons>
+              <Icon program="MOL_HTML" width="20px" height="20" xPosition="left" yPosition="top" duration="00:00:30" offset="00:00:05" pxratio="1">
+                <HTMLResource>http://localhost:9001/icons/html/red.html</HTMLResource>
+                <IconClicks>
+                  <IconClickThrough>https://test.example.com/icons/html/red/iconClickThrough</IconClickThrough>
+                  <IconClickTracking>https://test.example.com/icons/html/red/iconClickTracking</IconClickTracking>
+                </IconClicks>
+                <IconViewTracking>https://test.example.com/icons/html/red/iconViewTracking</IconViewTracking>
+              </Icon>
+              <Icon program="MOL_IFRAME" width="20px" height="20px" xPosition="right" yPosition="top" pxratio="1">
+                <IFrameResource>http://localhost:9001/icons/iframe/icon.html</IFrameResource>
+                <IconClicks>
+                  <IconClickThrough>https://test.example.com/icons/iframe/icon/iconClickThrough</IconClickThrough>
+                  <IconClickTracking>https://test.example.com/icons/iframe/icon/iconClickTracking</IconClickTracking>
+                </IconClicks>
+                <IconViewTracking>https://test.example.com/icons/iframe/icon/iconViewTracking</IconViewTracking>
+              </Icon>
+              <Icon program="MOL_STATIC_HTML5" width="40px" height="40px" xPosition="left" yPosition="botton" duration="00:00:30" offset="00:00:05" pxratio="1">
+                <StaticResource>http://localhost:9001/icons/static/html-5.png</StaticResource>
+                <IconClicks>
+                  <IconClickThrough>https://test.example.com/icons/static/html-5/iconClickThrough</IconClickThrough>
+                  <IconClickTracking>https://test.example.com/icons/static/html-5/iconClickTracking</IconClickTracking>
+                </IconClicks>
+                <IconViewTracking>https://test.example.com/icons/static/html-5/iconViewTracking</IconViewTracking>
+              </Icon>
+            </Icons>
+          </Linear>
+        </Creative>
+      </Creatives>
+    </InLine>
+  </Ad>
+</VAST>
