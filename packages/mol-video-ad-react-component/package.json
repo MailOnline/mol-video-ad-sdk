@@ -7,7 +7,7 @@
   "main": "src/index.js",
   "license": "UNLICENSED",
   "scripts": {
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "storybook": "start-storybook -s ./static -p 9001 -c .storybook"
   },
   "files": [
     "src"
