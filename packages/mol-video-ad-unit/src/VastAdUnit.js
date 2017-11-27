@@ -22,12 +22,14 @@ class VastAdUnit extends Emitter {
       switch (event) {
       case complete: {
         this[hidden].onCompleteCallbacks.forEach((callback) => callback(this));
+        this.finish();
+
         break;
       }
       case errorEvt: {
         this.error = data;
         this.errorCode = this.error && this.error.errorCode ? this.error.errorCode : 405;
-        this[hidden].onErrorCallbacks.forEach((callback) => callback(this, this.error));
+        this[hidden].onErrorCallbacks.forEach((callback) => callback(this.error));
         break;
       }
       }
@@ -35,12 +37,12 @@ class VastAdUnit extends Emitter {
       this.emit(event, event, this, data);
     },
     onCompleteCallbacks: [],
-    onDestroyCallbacks: [],
     onErrorCallbacks: [],
+    onFinishCallbacks: [],
     started: false,
-    throwIfDestroyed: () => {
-      if (this.isDestroyed()) {
-        throw new Error('VastAdUnit has been destroyed');
+    throwIfFinished: () => {
+      if (this.isFinished()) {
+        throw new Error('VastAdUnit is finished');
       }
     },
     throwIfNotStarted: () => {
@@ -59,7 +61,7 @@ class VastAdUnit extends Emitter {
 
     const {
       handleMetric,
-      onDestroyCallbacks
+      onFinishCallbacks
     } = this[hidden];
 
     this.hooks = hooks;
@@ -80,14 +82,14 @@ class VastAdUnit extends Emitter {
     }, handleMetric);
 
     if (removeIcons) {
-      onDestroyCallbacks.push(removeIcons);
+      onFinishCallbacks.push(removeIcons);
     }
 
-    onDestroyCallbacks.push(removeMetrichandlers);
+    onFinishCallbacks.push(removeMetrichandlers);
   }
 
   start () {
-    this[hidden].throwIfDestroyed();
+    this[hidden].throwIfFinished();
 
     if (this.isStarted()) {
       return;
@@ -112,7 +114,7 @@ class VastAdUnit extends Emitter {
   }
 
   resume () {
-    this[hidden].throwIfDestroyed();
+    this[hidden].throwIfFinished();
     this[hidden].throwIfNotStarted();
 
     const {videoElement} = this.videoAdContainer;
@@ -121,7 +123,7 @@ class VastAdUnit extends Emitter {
   }
 
   pause () {
-    this[hidden].throwIfDestroyed();
+    this[hidden].throwIfFinished();
     this[hidden].throwIfNotStarted();
 
     const {videoElement} = this.videoAdContainer;
@@ -130,15 +132,17 @@ class VastAdUnit extends Emitter {
   }
 
   cancel () {
-    this[hidden].throwIfDestroyed();
+    this[hidden].throwIfFinished();
 
     const videoElement = this.videoAdContainer.videoElement;
 
     videoElement.pause();
+
+    this.finish();
   }
 
   onComplete (callback) {
-    this[hidden].throwIfDestroyed();
+    this[hidden].throwIfFinished();
 
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
@@ -148,7 +152,7 @@ class VastAdUnit extends Emitter {
   }
 
   onError (callback) {
-    this[hidden].throwIfDestroyed();
+    this[hidden].throwIfFinished();
 
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
@@ -157,25 +161,17 @@ class VastAdUnit extends Emitter {
     this[hidden].onErrorCallbacks.push(safeCallback(callback, this.logger));
   }
 
-  isDestroyed () {
-    return this[hidden].destroyed;
+  isFinished () {
+    return this[hidden].finished;
   }
 
   isStarted () {
     return this[hidden].started;
   }
 
-  destroy () {
-    this.videoAdContainer.videoElement.src = '';
-    this[hidden].onDestroyCallbacks.forEach((callback) => callback());
-
-    this.vastChain = null;
-    this.videoAdContainer = null;
-    this.error = null;
-    this.errorCode = null;
-    this.assetUri = null;
-
-    this[hidden].destroyed = true;
+  finish () {
+    this[hidden].onFinishCallbacks.forEach((callback) => callback());
+    this[hidden].finished = true;
   }
 }
 
