@@ -7,7 +7,7 @@
   "main": "src/index.js",
   "license": "UNLICENSED",
   "scripts": {
-    "storybook": "start-storybook -s ./static -p 9001 -c .storybook"
+    "storybook": "start-storybook -s ./static -p 9001"
   },
   "files": [
     "src"
@@ -21,7 +21,9 @@
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.16",
     "@storybook/react": "^3.2.16",
+    "babel-loader": "^7.1.2",
     "mol-vast-fixtures": "^0.1.0",
-    "react": "^16.1.1"
+    "react": "^16.1.1",
+    "webpack": "^3.8.1"
   }
 }
