@@ -14,11 +14,9 @@
   ],
   "dependencies": {
     "mol-video-ad-sdk": "^0.1.0",
-    "reac": "0.0.0",
-    "react-dom": "^16.1.1"
-  },
-  "peerDependencies": {
-    "react": "^16.1.1"
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "prop-types": "^15.6.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.16",
