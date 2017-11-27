@@ -6,14 +6,25 @@ import {
 
 const createVideoAdUnit = async (vastChain, videoAdContainer, options = {}) => {
   const adUnit = await createVastAdUnit(vastChain, videoAdContainer, options);
-  const {tracker} = options;
+  const {
+    onLinearEvent,
+    tracker
+  } = options;
 
   Object.values(linearEvents).forEach((linearEvent) =>
-    adUnit.on(linearEvent, (event, {errorCode}, data) => trackLinearEvent(event, {
-      data,
-      errorCode,
-      tracker
-    }))
+    adUnit.on(linearEvent, (event, {errorCode}, data) => {
+      const payload = {
+        data,
+        errorCode,
+        tracker
+      };
+
+      trackLinearEvent(event, payload);
+
+      if (typeof onLinearEvent === 'function') {
+        onLinearEvent(linearEvent, payload);
+      }
+    })
   );
 
   return adUnit;
