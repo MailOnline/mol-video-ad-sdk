@@ -29,6 +29,19 @@
     }
   },
   "babel": {
+    "env": {
+      "debug": false,
+      "test": {
+        "presets": [
+          "es2015",
+          "stage-3"
+        ],
+        "plugins": [
+          "transform-runtime",
+          "babel-plugin-transform-class-properties"
+        ]
+      }
+    },
     "presets": [
       [
         "env",
