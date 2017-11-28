@@ -81,8 +81,8 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "babel-register": "^6.24.1",
     "eslint": "^4.11.0",
@@ -94,7 +94,8 @@
     "jest-tap-reporter": "^1.6.0",
     "jsdoc": "^3.5.5",
     "lerna": "^2.5.1",
-    "mol-conventional-changelog": "^1.2.0"
+    "mol-conventional-changelog": "^1.2.0",
+    "stylelint-config-mailonline": "^3.0.2"
   },
   "jest": {
     "collectCoverageFrom": [
