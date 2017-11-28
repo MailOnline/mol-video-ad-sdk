@@ -1,5 +1,3 @@
-/* eslint-disable import/no-commonjs, import/unambiguous */
-const autoprefixer = require('autoprefixer')
 const cssLoaders = [
   {
     loader: 'style-loader'
@@ -17,17 +15,7 @@ const cssLoaders = [
     loader: 'postcss-loader',
     options: {
       config: {
-        plugins: [
-          autoprefixer({
-            browsers: [
-              '> 1%',
-              'last 3 versions',
-              'iOS > 6',
-              'ie > 9',
-              'not ie < 10'
-            ]
-          })
-        ]
+        path: './postcss.config.js'
       },
       sourceMap: true
     }
