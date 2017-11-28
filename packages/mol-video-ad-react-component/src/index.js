@@ -106,7 +106,12 @@ class MolVideoAd extends Component {
       children
     } = this.props;
 
-    return <div ref={this.ref}>
+    const style = {
+      height: '100%',
+      width: '100%'
+    };
+
+    return <div ref={this.ref} style={style}>
       {!this.state.ready && children}
     </div>;
   }
