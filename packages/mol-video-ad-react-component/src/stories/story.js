@@ -14,6 +14,7 @@ storiesOf('VideoAd', module)
           onLinearEvent={action('linearEvent')}
           onNonRecoverableError={action('NonRecoverableError')}
           onRecoverableError={action('RecoverableError')}
+          tracker={() => {}}
         >Loading ad ...</VideoAd>
       </div>
     </div>
