@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import loadVastChain from './helpers/loadVastChain';
 import rejectTimeout from './helpers/rejectTimeout';
 import startVideoAd from './helpers/startVideoAd';
+import makeCancelable from './helpers/makeCancelable';
 
 const noop = () => {};
 
@@ -52,9 +53,10 @@ class MolVideoAd extends Component {
 
   componentDidMount () {
     this.adUnitPromise = this.playAd();
+    this.stateUpdate = makeCancelable(this.adUnitPromise);
 
     // eslint-disable-next-line promise/always-return, promise/catch-or-return, promise/prefer-await-to-then
-    this.adUnitPromise.then(() => {
+    this.stateUpdate.promise.then(() => {
       // eslint-disable-next-line react/no-set-state
       this.setState({
         ready: true
@@ -63,7 +65,11 @@ class MolVideoAd extends Component {
   }
 
   async componentWillUnmount () {
-    const adUnit = await this.adUnitPromise;
+    if (this.stateUpdate.isPending()) {
+      this.stateUpdate.cancel();
+    }
+
+    const adUnit = await this.adUnitPromise.promise;
 
     if (adUnit && !adUnit.isFinished()) {
       adUnit.cancel();
@@ -113,8 +119,9 @@ class MolVideoAd extends Component {
       width: '100%'
     };
 
-    return <div ref={this.ref} style={style}>
+    return <div style={style}>
       {!this.state.ready && children}
+      <div ref={this.ref} />
     </div>;
   }
 }
