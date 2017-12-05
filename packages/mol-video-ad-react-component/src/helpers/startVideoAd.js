@@ -15,7 +15,7 @@ const startVideoAd = async (fetchVastChain, placeholder, options, timeout) => {
 
   try {
     vastChain = await fetchVastChain();
-    videoAdContainer = createVideoAdContainer(placeholder, options);
+    videoAdContainer = await createVideoAdContainer(placeholder, options);
     adUnit = await createVideoAdUnit(vastChain, videoAdContainer, options);
 
     const result = await Promise.race([

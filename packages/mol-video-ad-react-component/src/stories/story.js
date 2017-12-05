@@ -9,13 +9,12 @@ storiesOf('VideoAd', module)
     <div className={styles.videoContainer}>
       <div className={styles.videoPlaceholder}>
         <VideoAd
-          getTag={() => 'http://localhost:9001/vastFiles/prerollChain/'}
+          getTag={() => 'http://localhost:9001/vastFiles/prerollChain/start-wrapper.xml'}
           onComplete={action('complete')}
           onLinearEvent={action('linearEvent')}
           onNonRecoverableError={action('NonRecoverableError')}
           onRecoverableError={action('RecoverableError')}
-          timeout={10}
-        >Hello videoAd</VideoAd>
+        >Loading ad ...</VideoAd>
       </div>
     </div>
   );

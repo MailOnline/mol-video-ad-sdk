@@ -19,7 +19,7 @@ class MolVideoAd extends Component {
     tracker: undefined
   };
 
-  propTypes = {
+  static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node
@@ -65,7 +65,7 @@ class MolVideoAd extends Component {
   async componentWillUnmount () {
     const adUnit = await this.adUnitPromise;
 
-    if (!adUnit.isFinished()) {
+    if (adUnit && !adUnit.isFinished()) {
       adUnit.cancel();
     }
   }
@@ -98,6 +98,8 @@ class MolVideoAd extends Component {
     } catch (error) {
       logger.error('VideoAd Non recoberable error', error);
       onNonRecoverableError(error);
+
+      throw error;
     }
   }
 
