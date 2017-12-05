@@ -23,13 +23,13 @@ class VastAdUnit extends Emitter {
       case complete: {
         this[hidden].onCompleteCallbacks.forEach((callback) => callback(this));
         this.finish();
-
         break;
       }
       case errorEvt: {
         this.error = data;
         this.errorCode = this.error && this.error.errorCode ? this.error.errorCode : 405;
         this[hidden].onErrorCallbacks.forEach((callback) => callback(this.error));
+        this.finish();
         break;
       }
       }

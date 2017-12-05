@@ -405,6 +405,7 @@ test('VastAdUnit onComplete must call the passed callback once the ad has comple
 
   videoAdContainer.videoElement.dispatchEvent(new Event('ended'));
   expect(callback).toHaveBeenCalledTimes(1);
+  expect(adUnit.isFinished()).toBe(true);
 });
 
 test('VastAdUnit onError must complain if you don\'t pass a callback', () => {
@@ -433,6 +434,7 @@ test('VastAdUnit onError must be called if there was an issue viewing the ad', (
   expect(callback).toHaveBeenCalledWith(mediaError);
   expect(adUnit.error).toBe(mediaError);
   expect(adUnit.errorCode).toBe(405);
+  expect(adUnit.isFinished()).toBe(true);
 });
 
 test('VastAdUnit must emit whatever metric event happens', async () => {
