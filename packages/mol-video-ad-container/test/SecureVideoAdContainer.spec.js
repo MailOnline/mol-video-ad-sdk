@@ -102,7 +102,7 @@ test('SecureVideoAdContainer must be possible to add scripts to the iframe\'s', 
   expect(promise).resolves.toBe(script);
 });
 
-test('SecureVideoAdContainer destroy must remove the adContainer from the placeHolder and set the element reference to null', async () => {
+test('SecureVideoAdContainer destroy must remove the adContainer from the placeHolder', async () => {
   const secureVideoAdContainer = new SecureVideoAdContainer(placeholder);
 
   expect(secureVideoAdContainer.element).toBeInstanceOf(Element);
@@ -120,9 +120,6 @@ test('SecureVideoAdContainer destroy must remove the adContainer from the placeH
 
   secureVideoAdContainer.destroy();
 
-  expect(secureVideoAdContainer.element).toBe(null);
-  expect(secureVideoAdContainer.videoElement).toBe(null);
-  expect(secureVideoAdContainer.context).toBe(null);
   expect(placeholder.querySelector('.mol-video-ad-container')).toBe(null);
 });
 

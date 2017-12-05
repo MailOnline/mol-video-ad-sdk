@@ -14,6 +14,7 @@ const createAdContainer = () => {
 };
 const stopOnResizeObserver = Symbol('stopOnResizeObserver');
 const onResizeCallbacks = Symbol('onResizeCallbacks');
+const destroyed = Symbol('destroyed');
 
 /**
  * Contains everyting necesary to contain and create a video ad within a given placeholder Element.
@@ -59,6 +60,9 @@ class VideoAdContainer {
     if (!isVideoElement(videoElement)) {
       this.element.appendChild(this.videoElement);
     }
+
+    this[onResizeCallbacks] = [];
+    this[destroyed] = false;
   }
 
   /**
@@ -82,8 +86,9 @@ class VideoAdContainer {
     }
 
     if (!this[stopOnResizeObserver]) {
-      this[onResizeCallbacks] = [];
-      const callOnResizeCallbacks = () => this[onResizeCallbacks].forEach((onResizeCallback) => onResizeCallback());
+      const callOnResizeCallbacks = () => {
+        this[onResizeCallbacks].forEach((onResizeCallback) => onResizeCallback());
+      };
 
       this[stopOnResizeObserver] = onElementResize(this.element, callOnResizeCallbacks);
     }
@@ -122,17 +127,12 @@ class VideoAdContainer {
    * Destroys the VideoAdContainer.
    */
   destroy () {
-    this.element.parentNode.removeChild(this.element);
-    this.element = null;
-    this.context = null;
-    this.videoElement = null;
-
     if (this[stopOnResizeObserver]) {
       this[stopOnResizeObserver]();
-
-      this[onResizeCallbacks] = null;
-      this[stopOnResizeObserver] = null;
     }
+
+    this.element.parentNode.removeChild(this.element);
+    this[destroyed] = true;
   }
 
   /**
@@ -141,7 +141,7 @@ class VideoAdContainer {
    * @returns {boolean} - true if the container is destroyed and false otherwise.
    */
   isDestroyed () {
-    return !Boolean(this.element);
+    return this[destroyed];
   }
 
   /*

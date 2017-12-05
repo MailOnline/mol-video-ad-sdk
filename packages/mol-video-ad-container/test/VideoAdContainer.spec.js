@@ -77,7 +77,7 @@ test('VideoAdContainer must be possible to add scripts to the adContainer', () =
   expect(promise).resolves.toBe(script);
 });
 
-test('VideoAdContainer destroy must remove the adContainer from the placeHolder and set the element reference to null', () => {
+test('VideoAdContainer destroy must remove the adContainer from the placeHolder', () => {
   const videoAdContainer = new VideoAdContainer(placeholder);
 
   expect(videoAdContainer.element).toBeInstanceOf(Element);
@@ -86,8 +86,6 @@ test('VideoAdContainer destroy must remove the adContainer from the placeHolder 
 
   videoAdContainer.destroy();
 
-  expect(videoAdContainer.element).toBe(null);
-  expect(videoAdContainer.videoElement).toBe(null);
   expect(placeholder.querySelector('.mol-video-ad-container')).toBe(null);
 });
 

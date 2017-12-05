@@ -129,8 +129,6 @@ export default class SecureVideoAdContainer extends VideoAdContainer {
    */
   destroy () {
     super.destroy();
-
-    this[iframeElementKey] = null;
   }
 }
 
