@@ -76,7 +76,7 @@ Object.values(linearEvents).forEach((event) => {
     await eventPromise;
 
     expect(trackLinearEvent).toHaveBeenCalledTimes(1);
-    expect(trackLinearEvent).toHaveBeenCalledWith(event, {
+    expect(trackLinearEvent).toHaveBeenCalledWith(event, vastChain, {
       data,
       errorCode: adUnit.errorCode
     });
@@ -96,7 +96,7 @@ Object.values(linearEvents).forEach((event) => {
     await eventPromise;
 
     expect(onLinearEvent).toHaveBeenCalledTimes(1);
-    expect(onLinearEvent).toHaveBeenCalledWith(event, {
+    expect(onLinearEvent).toHaveBeenCalledWith(event, vastChain, {
       data,
       errorCode: adUnit.errorCode
     });

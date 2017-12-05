@@ -19,10 +19,10 @@ const createVideoAdUnit = async (vastChain, videoAdContainer, options = {}) => {
         tracker
       };
 
-      trackLinearEvent(event, payload);
+      trackLinearEvent(event, vastChain, payload);
 
       if (typeof onLinearEvent === 'function') {
-        onLinearEvent(linearEvent, payload);
+        onLinearEvent(linearEvent, vastChain, payload);
       }
     })
   );
