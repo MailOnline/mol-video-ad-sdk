@@ -9,8 +9,10 @@ const loadResource = (icon, {document, placeholder}) => new Promise((resolve, re
     const resourceErrorWait = waitFor(resourceElement, 'error');
     const resourceLoadWait = waitFor(resourceElement, 'load');
     const cleanUp = () => {
-      placeholder.removeChild(resourceElement);
-      resourceElement.style.zIndex = 0;
+      if (placeholder.contains(resourceElement)) {
+        placeholder.removeChild(resourceElement);
+        resourceElement.style.zIndex = 0;
+      }
     };
 
     resourceErrorWait.promise
