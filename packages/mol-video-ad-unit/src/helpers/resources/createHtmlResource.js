@@ -5,6 +5,7 @@ const createHtmlResource = (src, {document, data}) => {
   } = data;
   const iframeElement = document.createElement('IFRAME');
 
+  // TODO: should fetch the html fragment and appended to a div.
   iframeElement.src = src;
   iframeElement.sandbox = 'allow-forms';
 

@@ -74,6 +74,7 @@ class VideoAdContainer {
     return Promise.resolve(this);
   }
 
+  // TODO: THIS LOGIC DOES NOT BELONG TO THE AD CONTAINER
   /**
    * Will call the passed callback whenever the VideoAdContainer resizes.
    *
