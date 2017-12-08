@@ -58,7 +58,7 @@ test('loadResource must reject the promise if there is a problem loading the ico
     iconElement.dispatchEvent(new Event('error'));
     await promise;
   } catch (error) {
-    expect(error.message).toBe('Error loading icon');
+    expect(error.message).toBe('Error loading resource');
     expect(iconElement.style.zIndex).toBe('0');
     expect(placeholder.querySelector('.mock-resource-element')).toBeNull();
   }

@@ -10,6 +10,7 @@
     "src"
   ],
   "dependencies": {
+    "whatwg-fetch": "^2.0.3",
     "mol-video-ad-tracker": "^0.1.0",
     "mol-video-ad-container": "^0.1.0",
     "mol-vast-selectors": "^0.1.0",

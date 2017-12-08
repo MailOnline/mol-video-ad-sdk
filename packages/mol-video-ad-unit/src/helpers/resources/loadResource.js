@@ -20,7 +20,7 @@ const loadResource = (icon, {document, placeholder}) => new Promise((resolve, re
         resourceLoadWait.cancel();
         cleanUp();
 
-        reject(new Error('Error loading icon'));
+        reject(new Error('Error loading resource'));
       })
       .catch(noop);
 
