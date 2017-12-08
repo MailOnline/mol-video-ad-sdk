@@ -10,7 +10,8 @@
     "lint": "eslint --ignore-path .gitignore './**/*.js'",
     "precommit": "npm run lint",
     "prepush": "npm test",
-    "start": "echo \"This project has no start script\"",
+    "start-package": "cd packages/$START_PACKAGE && npm run storybook && cd -",
+    "start": "START_PACKAGE=mol-video-ad-react-component npm run start-package",
     "test": "NODE_ENV=test jest",
     "clean": "lerna clean; find . -type f -name 'package-lock.json' -delete; rm -r node_modules"
   },
