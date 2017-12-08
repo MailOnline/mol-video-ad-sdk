@@ -16,6 +16,8 @@ export const hasSpace = (newIcon, config) => {
 export const withinBoundaries = (newIcon, {placeholder}) => {
   const phRect = placeholder.getBoundingClientRect();
 
+  // console.log('[MVP-SDK] phRect', phRect);
+
   return newIcon.left >= 0 &&
     newIcon.left + newIcon.width <= phRect.width &&
     newIcon.top >= 0 &&
@@ -39,6 +41,19 @@ const overlap = (newIcon, drawnIcon) => {
 
 export const withoutOverlaps = (newIcon, {drawnIcons}) => !drawnIcons.some((drawnIcon) => overlap(newIcon, drawnIcon));
 
-const canBeRendered = (newIcon, config) => hasSpace(newIcon, config) && withinBoundaries(newIcon, config) && withoutOverlaps(newIcon, config);
+const canBeRendered = (newIcon, config) => {
+  const thereIsSpace = hasSpace(newIcon, config);
+  const isWithinTheContentArea = withinBoundaries(newIcon, config);
+  const doesNotOverlap = withoutOverlaps(newIcon, config);
+
+  // console.log('[MVP-SDK] icon', newIcon);
+
+  // console.log('[MVP-SDK] drawnIcons', config.drawnIcons);
+  // console.log('[MVP-SDK] hasSpace', thereIsSpace);
+  // console.log('[MVP-SDK] withinBoundaries', isWithinTheContentArea);
+  // console.log('[MVP-SDK] withoutOverlaps', doesNotOverlap);
+
+  return thereIsSpace && isWithinTheContentArea && doesNotOverlap;
+};
 
 export default canBeRendered;
