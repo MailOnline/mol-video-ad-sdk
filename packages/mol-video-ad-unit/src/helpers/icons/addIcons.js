@@ -62,6 +62,7 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
     }
 
     if (hasPendingIconRedraws(icons, videoElement)) {
+      // TODO: change logic to prevent unnecessary redraws
       once(videoElement, 'timeupdate', drawIcons);
     }
   };
