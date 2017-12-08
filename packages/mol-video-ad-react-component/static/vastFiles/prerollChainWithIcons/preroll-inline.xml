@@ -58,6 +58,22 @@
               <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="640" height="362" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/640x362.mp4</MediaFile>
             </MediaFiles>
             <Icons>
+              <Icon program="MOL_HTML" width="20px" height="20" xPosition="left" yPosition="top" duration="00:00:30" offset="00:00:05" pxratio="1">
+                <HTMLResource>http://localhost:9001/icons/html/red.html</HTMLResource>
+                <IconClicks>
+                  <IconClickThrough>https://test.example.com/icons/html/red/iconClickThrough</IconClickThrough>
+                  <IconClickTracking>https://test.example.com/icons/html/red/iconClickTracking</IconClickTracking>
+                </IconClicks>
+                <IconViewTracking>https://test.example.com/icons/html/red/iconViewTracking</IconViewTracking>
+              </Icon>
+              <Icon program="MOL_IFRAME" width="20px" height="20px" xPosition="right" yPosition="top" pxratio="1">
+                <IFrameResource>http://localhost:9001/icons/iframe/icon.html</IFrameResource>
+                <IconClicks>
+                  <IconClickThrough>https://test.example.com/icons/iframe/icon/iconClickThrough</IconClickThrough>
+                  <IconClickTracking>https://test.example.com/icons/iframe/icon/iconClickTracking</IconClickTracking>
+                </IconClicks>
+                <IconViewTracking>https://test.example.com/icons/iframe/icon/iconViewTracking</IconViewTracking>
+              </Icon>
               <Icon program="MOL_STATIC_HTML5" width="40px" height="40px" xPosition="left" yPosition="botton" duration="00:00:30" offset="00:00:05" pxratio="1">
                 <StaticResource>http://localhost:9001/icons/static/html-5.png</StaticResource>
                 <IconClicks>
