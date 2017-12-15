@@ -1,4 +1,3 @@
-import {onElementResize} from 'mol-element-observers';
 import loadScript from './helpers/loadScript';
 import createAdVideoElement from './helpers/createAdVideoElement';
 
@@ -12,8 +11,6 @@ const createAdContainer = () => {
 
   return adContainer;
 };
-const stopOnResizeObserver = Symbol('stopOnResizeObserver');
-const onResizeCallbacks = Symbol('onResizeCallbacks');
 const destroyed = Symbol('destroyed');
 
 /**
@@ -61,7 +58,6 @@ class VideoAdContainer {
       this.element.appendChild(this.videoElement);
     }
 
-    this[onResizeCallbacks] = [];
     this[destroyed] = false;
   }
 
@@ -72,33 +68,6 @@ class VideoAdContainer {
    */
   ready () {
     return Promise.resolve(this);
-  }
-
-  // TODO: THIS LOGIC DOES NOT BELONG TO THE AD CONTAINER
-  /**
-   * Will call the passed callback whenever the VideoAdContainer resizes.
-   *
-   * @param {Function} callback - To be call on resize.
-   */
-  // eslint-disable-next-line promise/prefer-await-to-callbacks
-  onResize (callback) {
-    if (this.isDestroyed()) {
-      throw new Error('VideoAdContainer has been destroyed');
-    }
-
-    if (!this[stopOnResizeObserver]) {
-      const callOnResizeCallbacks = () => {
-        this[onResizeCallbacks].forEach((onResizeCallback) => onResizeCallback());
-      };
-
-      this[stopOnResizeObserver] = onElementResize(this.element, callOnResizeCallbacks);
-    }
-
-    this[onResizeCallbacks].push(callback);
-
-    return () => {
-      this[onResizeCallbacks] = this[onResizeCallbacks].filter((onResizeCallback) => onResizeCallback !== callback);
-    };
   }
 
   /**
@@ -128,10 +97,6 @@ class VideoAdContainer {
    * Destroys the VideoAdContainer.
    */
   destroy () {
-    if (this[stopOnResizeObserver]) {
-      this[stopOnResizeObserver]();
-    }
-
     this.element.parentNode.removeChild(this.element);
     this[destroyed] = true;
   }

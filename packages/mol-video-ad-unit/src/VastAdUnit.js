@@ -173,6 +173,13 @@ class VastAdUnit extends Emitter {
     this[hidden].onFinishCallbacks.forEach((callback) => callback());
     this[hidden].finished = true;
   }
+
+  // TODO: TEST THIS LOGIC
+  resize () {
+    this.videoAdContainer.resize();
+
+    // TODO: FORCE REDRAW OF THE ICONS
+  }
 }
 
 export default VastAdUnit;

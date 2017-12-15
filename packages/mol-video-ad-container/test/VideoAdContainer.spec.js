@@ -1,9 +1,4 @@
-import {onElementResize} from 'mol-element-observers';
 import VideoAdContainer from '../src/VideoAdContainer';
-
-jest.mock('mol-element-observers', () => ({
-  onElementResize: jest.fn()
-}));
 
 let placeholder;
 
@@ -14,7 +9,6 @@ beforeEach(() => {
 
 afterEach(() => {
   document.body.removeChild(placeholder);
-  onElementResize.mockClear();
 });
 
 test('VideoAdContainer must complain if you don\'t pass a placeholder element', () => {
@@ -111,49 +105,4 @@ test('VideoAdContainer resize must do nothing', () => {
   const videoAdContainer = new VideoAdContainer(placeholder);
 
   expect(() => videoAdContainer.resize()).not.toThrowError();
-});
-
-test('VideoAdContainer onResize must call the callback whenever the element resizes', async () => {
-  const videoAdContainer = new VideoAdContainer(placeholder);
-
-  await videoAdContainer.ready();
-
-  const adContainerElement = videoAdContainer.element;
-  const callback = jest.fn();
-
-  videoAdContainer.onResize(callback);
-
-  expect(onElementResize).toHaveBeenCalledWith(adContainerElement, expect.any(Function));
-
-  const onResizeHandler = onElementResize.mock.calls[0][1];
-
-  expect(callback).not.toHaveBeenCalled();
-  onResizeHandler();
-  expect(callback).toHaveBeenCalled();
-  onResizeHandler();
-  expect(callback).toHaveBeenCalledTimes(2);
-});
-
-test('VideoAdContainer onResize must return a stop function', async () => {
-  const videoAdContainer = new VideoAdContainer(placeholder);
-
-  await videoAdContainer.ready();
-
-  const adContainerElement = videoAdContainer.element;
-  const callback = jest.fn();
-
-  const stopListening = videoAdContainer.onResize(callback);
-
-  expect(onElementResize).toHaveBeenCalledWith(adContainerElement, expect.any(Function));
-
-  const onResizeHandler = onElementResize.mock.calls[0][1];
-
-  expect(callback).not.toHaveBeenCalled();
-  onResizeHandler();
-  expect(callback).toHaveBeenCalled();
-
-  stopListening();
-
-  onResizeHandler();
-  expect(callback).toHaveBeenCalledTimes(1);
 });

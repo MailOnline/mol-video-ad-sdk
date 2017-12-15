@@ -71,15 +71,11 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
     icon[firstRenderPending] = true;
   });
 
-  // TODO: SHOULD PROVIDE A WAY TO RECALCULATE THE DRAWN ICONS BUT NOT DO IT BY DEFAULT
-  const stopResizeHandler = videoAdContainer.onResize(drawIcons);
-
   drawIcons();
 
   return () => {
     finished = true;
     removeDrawnIcons(icons);
-    stopResizeHandler();
   };
 };
 
