@@ -3,14 +3,6 @@ import renderIcons from './renderIcons';
 
 const firstRenderPending = Symbol('firstRenderPending');
 const noop = () => {};
-const canBeAdded = (icon, videoElement) => {
-  const currentTimeInMs = videoElement.currentTime * 1000;
-  const videoDurationInMs = videoElement.duration * 1000;
-  const offset = icon.offset || 0;
-  const duration = icon.duration || videoDurationInMs;
-
-  return offset <= currentTimeInMs && currentTimeInMs - offset <= duration;
-};
 
 const hasPendingIconRedraws = (icons, videoElement) => {
   const currentTimeInMs = videoElement.currentTime * 1000;
@@ -33,14 +25,11 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
   let finished = false;
 
   const drawIcons = async () => {
-    removeDrawnIcons(icons);
-
     if (finished) {
       return;
     }
 
-    const iconsToDraw = icons.filter((icon) => canBeAdded(icon, videoElement));
-    const drawnIcons = await renderIcons(iconsToDraw, {
+    const drawnIcons = await renderIcons(icons, {
       onIconClick,
       videoAdContainer,
       ...rest
@@ -62,7 +51,6 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
     }
 
     if (hasPendingIconRedraws(icons, videoElement)) {
-      // TODO: change logic to prevent unnecessary redraws
       once(videoElement, 'timeupdate', drawIcons);
     }
   };

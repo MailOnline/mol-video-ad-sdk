@@ -20,6 +20,7 @@ const calculateIconTop = (dynamicPos, iconHeight, phHeight) => {
 };
 
 const updateIcon = (icon, iconElement, {drawnIcons, placeholder}) => {
+  const oldSignature = icon.signature;
   const rect = iconElement.getBoundingClientRect();
   const phRect = placeholder.getBoundingClientRect();
   const width = icon.width || rect.width;
@@ -41,10 +42,14 @@ const updateIcon = (icon, iconElement, {drawnIcons, placeholder}) => {
     top = calculateIconTop(yPosition, height, phRect.height);
   }
 
+  const signature = `${left}-${top}_${width}x${height}`;
+
   return Object.assign(icon, {
     height,
     left,
+    signature,
     top,
+    updated: oldSignature !== signature,
     width
   });
 };

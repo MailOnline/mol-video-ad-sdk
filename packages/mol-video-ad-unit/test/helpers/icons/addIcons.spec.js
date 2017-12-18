@@ -112,46 +112,6 @@ test('addIcons must not the the icons whose offset is not meet yet', async () =>
   expect(element.contains(icons[1].element)).toBe(true);
 });
 
-test('addIcons must remove the already drawn icons before a redraw', async () => {
-  const icons = [
-    {
-      height: 20,
-      width: 20,
-      xPosition: 'right',
-      yPosition: 'top'
-    },
-    {
-      height: 20,
-      width: 20,
-      xPosition: 'left',
-      yPosition: 'top'
-    }
-  ];
-  const {element, videoElement} = videoAdContainer;
-
-  addIcons(icons, {
-    logger,
-    videoAdContainer
-  });
-
-  await waitFor(element, 'iconsdrawn');
-
-  expect(element.contains(icons[0].element)).toBe(true);
-  expect(element.contains(icons[1].element)).toBe(true);
-
-  videoElement.currentTime = 5;
-
-  videoElement.dispatchEvent(new Event('timeupdate'));
-
-  expect(element.contains(icons[0].element)).toBe(false);
-  expect(element.contains(icons[1].element)).toBe(false);
-
-  await waitFor(element, 'iconsdrawn');
-
-  expect(element.contains(icons[0].element)).toBe(true);
-  expect(element.contains(icons[1].element)).toBe(true);
-});
-
 test('addIcons must remove the icons once the duration is met', async () => {
   const icons = [
     {
