@@ -2,7 +2,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import loadVastChain from './helpers/loadVastChain';
-import rejectTimeout from './helpers/rejectTimeout';
 import startVideoAd from './helpers/startVideoAd';
 import makeCancelable from './helpers/makeCancelable';
 
@@ -16,7 +15,6 @@ class MolVideoAd extends Component {
     onLinearEvent: noop,
     onNonRecoverableError: noop,
     onRecoverableError: noop,
-    timeout: 5000,
     tracker: undefined
   };
 
@@ -34,7 +32,6 @@ class MolVideoAd extends Component {
     onLinearEvent: PropTypes.func,
     onNonRecoverableError: PropTypes.func,
     onRecoverableError: PropTypes.func,
-    timeout: PropTypes.number.isRequired,
     tracker: PropTypes.func
   };
 
@@ -84,7 +81,6 @@ class MolVideoAd extends Component {
       onLinearEvent,
       onNonRecoverableError,
       onRecoverableError: onError,
-      timeout: timeoutMs,
       tracker
     } = this.props;
 
@@ -97,10 +93,9 @@ class MolVideoAd extends Component {
     };
 
     try {
-      const timeout = rejectTimeout(timeoutMs, {msg: 'Video Ad timeout reached!'});
       const fetchVastChain = async () => loadVastChain(await Promise.resolve(getTag()));
 
-      this.adUnit = await startVideoAd(fetchVastChain, this.element, options, timeout);
+      this.adUnit = await startVideoAd(fetchVastChain, this.element, options);
     } catch (error) {
       logger.error('VideoAd Non recoberable error', error);
       onNonRecoverableError(error);

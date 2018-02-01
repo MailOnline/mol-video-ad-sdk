@@ -5,7 +5,7 @@ import {
 import loadNextVastChain from './loadNextVastChain';
 import waitForAdUnitStart from './waitForAdUnitStart';
 
-const startVideoAd = async (fetchVastChain, placeholder, options, timeout) => {
+const startVideoAd = async (fetchVastChain, placeholder, options) => {
   let vastChain;
   let videoAdContainer;
   let adUnit;
@@ -18,10 +18,7 @@ const startVideoAd = async (fetchVastChain, placeholder, options, timeout) => {
     videoAdContainer = await createVideoAdContainer(placeholder, options);
     adUnit = await createVideoAdUnit(vastChain, videoAdContainer, options);
 
-    const result = await Promise.race([
-      timeout.promise,
-      waitForAdUnitStart(adUnit)
-    ]);
+    const result = await waitForAdUnitStart(adUnit);
 
     if (result instanceof Error) {
       throw result;
@@ -37,12 +34,12 @@ const startVideoAd = async (fetchVastChain, placeholder, options, timeout) => {
       videoAdContainer.destroy();
     }
 
-    if (vastChain && !timeout.done) {
+    if (vastChain) {
       if (onError) {
         onError(error);
       }
 
-      return startVideoAd(() => loadNextVastChain(vastChain, options), placeholder, options, timeout);
+      return startVideoAd(() => loadNextVastChain(vastChain, options), placeholder, options);
     }
 
     throw error;
