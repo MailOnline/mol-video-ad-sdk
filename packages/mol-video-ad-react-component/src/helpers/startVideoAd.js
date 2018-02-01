@@ -34,6 +34,7 @@ const startVideoAd = async (fetchVastChain, placeholder, options) => {
       videoAdContainer.destroy();
     }
 
+    // TODO: WHAT HAPPENS IF AN AD UNIT FAILS IN THE MIDDLE OF THE AD.
     if (vastChain) {
       if (onError) {
         onError(error);

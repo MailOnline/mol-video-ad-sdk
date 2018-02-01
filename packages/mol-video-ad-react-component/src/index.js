@@ -9,6 +9,22 @@ const noop = () => {};
 
 class MolVideoAd extends Component {
   // TODO: define who can a user pause the ad and change the volume
+  // TODO: ADD RESIZE HOOK
+
+  // actions
+  // play/pause
+  // changeVolume
+  /**
+   *
+   * For resize add width and height props
+   * and on componentDid update if the props changed
+   * call adUnit.resize()
+   */
+
+  // TODO: ADD ON START THAT WILL RETURN THE THREE ACTIONS
+  // play
+  // pause
+  // volume
   static defaultProps = {
     children: undefined,
     logger: console,
@@ -59,6 +75,8 @@ class MolVideoAd extends Component {
       this.setState({
         ready: true
       });
+
+      // TODO CALL onStart with the actions
     });
   }
 
