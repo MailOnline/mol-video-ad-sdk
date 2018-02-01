@@ -46,12 +46,6 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
 
     if (finished) {
       removeDrawnIcons(icons);
-
-      return;
-    }
-
-    if (hasPendingIconRedraws(icons, videoElement)) {
-      once(videoElement, 'timeupdate', drawIcons);
     }
   };
 
@@ -59,11 +53,18 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
     icon[firstRenderPending] = true;
   });
 
-  drawIcons();
+  element.addEventListener('iconsdrawn', () => {
+    if (hasPendingIconRedraws(icons, videoElement)) {
+      once(videoElement, 'timeupdate', drawIcons);
+    }
+  });
 
-  return () => {
-    finished = true;
-    removeDrawnIcons(icons);
+  return {
+    drawIcons,
+    removeIcons: () => {
+      finished = true;
+      removeDrawnIcons(icons);
+    }
   };
 };
 

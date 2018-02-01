@@ -35,7 +35,17 @@ jest.mock('../src/helpers/metrics/handlers/index.js', () => [
   jest.fn(() => mockStopMetricHandler)
 ]);
 
-jest.mock('../src/helpers/icons/addIcons.js', () => jest.fn());
+const mockDrawIcons = jest.fn();
+const mockRemoveIcons = jest.fn();
+
+jest.mock('../src/helpers/icons/addIcons.js', () =>
+  jest.fn(
+    () => ({
+      drawIcons: mockDrawIcons,
+      removeIcons: mockRemoveIcons
+    })
+  )
+);
 jest.mock('../src/helpers/icons/retrieveIcons.js', () => jest.fn());
 
 let vastChain;
@@ -78,9 +88,8 @@ afterEach(() => {
   vastChain = null;
   videoAdContainer = null;
 
-  addIcons.mockClear();
-  retrieveIcons.mockClear();
-  mockStopMetricHandler.mockClear();
+  jest.clearAllMocks();
+  retrieveIcons.mockReset();
 });
 
 test('VastAdUnit must set the initial state with the data passed to the constructor', () => {
@@ -173,10 +182,11 @@ test('VastAdUnit must add the icons of the vastChain', () => {
   retrieveIcons.mockImplementation(() => icons);
   adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
-  adUnit.start();
-
   expect(retrieveIcons).toHaveBeenCalledTimes(2);
   expect(addIcons).toHaveBeenCalledTimes(1);
+
+  adUnit.start();
+  expect(mockDrawIcons).toHaveBeenCalledTimes(1);
 
   expect(addIcons).toHaveBeenCalledWith(icons, {
     logger: adUnit.logger,
@@ -194,9 +204,11 @@ test('VastAdUnit passed iconView must emit iconView passing the event, this and 
     xPosition: 'left',
     yPosition: 'top'
   }];
-  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   retrieveIcons.mockImplementation(() => icons);
+
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
   adUnit.start();
 
   expect(addIcons).toHaveBeenCalledTimes(1);
@@ -216,7 +228,7 @@ test('VastAdUnit passed iconView must emit iconView passing the event, this and 
   expect(passedArgs).toEqual([iconView, adUnit, icons[0]]);
 });
 
-test('VastAdUnit passed iconClick must emiit iconClick passing the event, this and the viewed icon', async () => {
+test('VastAdUnit passed iconClick must emit iconClick passing the event, this and the viewed icon', async () => {
   canPlay.mockReturnValue(true);
   const icons = [{
     height: 20,
@@ -224,9 +236,11 @@ test('VastAdUnit passed iconClick must emiit iconClick passing the event, this a
     xPosition: 'left',
     yPosition: 'top'
   }];
-  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   retrieveIcons.mockImplementation(() => icons);
+
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
   adUnit.start();
 
   expect(addIcons).toHaveBeenCalledTimes(1);
@@ -472,8 +486,6 @@ test('VastAdUnit finish must stop the metric handlers ', () => {
 test('VastAdUnit finish must remove the icons of the vastChain', () => {
   canPlay.mockReturnValue(true);
 
-  const removeIconMock = jest.fn();
-
   retrieveIcons.mockImplementation(() => [{
     height: 20,
     width: 20,
@@ -481,13 +493,12 @@ test('VastAdUnit finish must remove the icons of the vastChain', () => {
     yPosition: 'top'
   }]);
 
-  addIcons.mockImplementation(() => removeIconMock);
   const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.start();
   adUnit.finish();
 
-  expect(removeIconMock).toHaveBeenCalledTimes(1);
+  expect(mockRemoveIcons).toHaveBeenCalledTimes(1);
 });
 
 [
@@ -514,4 +525,49 @@ test('VastAdUnit finish must remove the icons of the vastChain', () => {
     adUnit[method]();
     expect(videoAdContainer.videoElement[vpMethod]).toHaveBeenCalledTimes(1);
   });
+});
+
+test('VastAdUnit resize must resize the the passed videoAdContainer', () => {
+  canPlay.mockReturnValue(true);
+  videoAdContainer.resize = jest.fn();
+  retrieveIcons.mockImplementation(() => null);
+
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+  adUnit.start();
+
+  expect(videoAdContainer.resize).toHaveBeenCalledTimes(0);
+  expect(mockRemoveIcons).toHaveBeenCalledTimes(0);
+  expect(mockDrawIcons).toHaveBeenCalledTimes(0);
+
+  adUnit.resize();
+
+  expect(videoAdContainer.resize).toHaveBeenCalledTimes(1);
+  expect(mockRemoveIcons).toHaveBeenCalledTimes(0);
+  expect(mockDrawIcons).toHaveBeenCalledTimes(0);
+});
+
+test('VastAdUnit must redraw the icons', () => {
+  canPlay.mockReturnValue(true);
+
+  const icons = [{
+    height: 20,
+    width: 20,
+    xPosition: 'left',
+    yPosition: 'top'
+  }];
+
+  retrieveIcons.mockImplementation(() => icons);
+
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+  adUnit.start();
+
+  expect(mockRemoveIcons).toHaveBeenCalledTimes(0);
+  expect(mockDrawIcons).toHaveBeenCalledTimes(1);
+
+  adUnit.resize();
+
+  expect(mockRemoveIcons).toHaveBeenCalledTimes(1);
+  expect(mockDrawIcons).toHaveBeenCalledTimes(2);
 });

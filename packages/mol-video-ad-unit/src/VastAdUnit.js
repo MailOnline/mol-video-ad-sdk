@@ -3,7 +3,8 @@ import {linearEvents} from 'mol-video-ad-tracker';
 import Emitter from 'mol-tiny-emitter';
 import findBestMedia from './helpers/media/findBestMedia';
 import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';
-import setupIcons from './helpers/icons/setupIcons';
+import retrieveIcons from './helpers/icons/retrieveIcons';
+import addIcons from './helpers/icons/addIcons';
 import safeCallback from './helpers/safeCallback';
 
 const {
@@ -68,22 +69,30 @@ class VastAdUnit extends Emitter {
     this.vastChain = vastChain;
     this.videoAdContainer = videoAdContainer;
 
-    const removeIcons = setupIcons(vastChain, {
-      logger,
-      onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
-      onIconView: (icon) => this.emit(iconView, iconView, this, icon),
-      videoAdContainer
-    });
+    this.icons = retrieveIcons(vastChain);
+
+    if (this.icons) {
+      const {
+        drawIcons,
+        removeIcons
+      } = addIcons(this.icons, {
+        logger,
+        onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
+        onIconView: (icon) => this.emit(iconView, iconView, this, icon),
+        videoAdContainer
+      });
+
+      this.drawIcons = drawIcons;
+      this.removeIcons = removeIcons;
+
+      onFinishCallbacks.push(removeIcons);
+    }
 
     const removeMetrichandlers = setupMetricHandlers({
       hooks: this.hooks,
       vastChain: this.vastChain,
       videoAdContainer: this.videoAdContainer
     }, handleMetric);
-
-    if (removeIcons) {
-      onFinishCallbacks.push(removeIcons);
-    }
 
     onFinishCallbacks.push(removeMetrichandlers);
   }
@@ -100,6 +109,10 @@ class VastAdUnit extends Emitter {
     const media = findBestMedia(inlineAd, videoElement, element);
 
     if (Boolean(media)) {
+      if (this.icons) {
+        this.drawIcons();
+      }
+
       videoElement.src = media.src;
       this.assetUri = media.src;
       videoElement.play();
@@ -174,11 +187,13 @@ class VastAdUnit extends Emitter {
     this[hidden].finished = true;
   }
 
-  // TODO: TEST THIS LOGIC
   resize () {
     this.videoAdContainer.resize();
 
-    // TODO: FORCE REDRAW OF THE ICONS
+    if (this.icons) {
+      this.removeIcons();
+      this.drawIcons();
+    }
   }
 }
 

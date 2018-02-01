@@ -64,17 +64,18 @@ test('addIcons must add the icons to the video ad container', async () => {
   ];
   const {element} = videoAdContainer;
 
-  addIcons(icons, {
+  const {drawIcons} = addIcons(icons, {
     logger,
     videoAdContainer
   });
 
+  drawIcons();
   await waitFor(element, 'iconsdrawn');
 
   icons.forEach((icon) => expect(element.contains(icon.element)).toBe(true));
 });
 
-test('addIcons must not the the icons whose offset is not meet yet', async () => {
+test('addIcons must not add the the icons whose offset is not meet yet', async () => {
   const icons = [
     {
       height: 20,
@@ -92,10 +93,12 @@ test('addIcons must not the the icons whose offset is not meet yet', async () =>
   ];
   const {element, videoElement} = videoAdContainer;
 
-  addIcons(icons, {
+  const {drawIcons} = addIcons(icons, {
     logger,
     videoAdContainer
   });
+
+  drawIcons();
 
   await waitFor(element, 'iconsdrawn');
 
@@ -130,10 +133,12 @@ test('addIcons must remove the icons once the duration is met', async () => {
   ];
   const {element, videoElement} = videoAdContainer;
 
-  addIcons(icons, {
+  const {drawIcons} = addIcons(icons, {
     logger,
     videoAdContainer
   });
+
+  drawIcons();
 
   await waitFor(element, 'iconsdrawn');
 
@@ -167,11 +172,15 @@ test('addIcons must return a remove function', async () => {
   ];
   const {element} = videoAdContainer;
 
-  const removeIcons = addIcons(icons, {
+  const {
+    drawIcons,
+    removeIcons
+  } = addIcons(icons, {
     logger,
     videoAdContainer
   });
 
+  drawIcons();
   await waitFor(element, 'iconsdrawn');
 
   expect(element.contains(icons[0].element)).toBe(true);
@@ -200,11 +209,15 @@ test('addIcons on remove must remove the icons on corner cases too', async () =>
   ];
   const {element, videoElement} = videoAdContainer;
 
-  const removeIcons = addIcons(icons, {
+  const {
+    drawIcons,
+    removeIcons
+  } = addIcons(icons, {
     logger,
     videoAdContainer
   });
 
+  drawIcons();
   await waitFor(element, 'iconsdrawn');
 
   expect(element.contains(icons[0].element)).toBe(true);
@@ -241,12 +254,13 @@ test('addIcons must call onIconView hook the moment the icon gets added to the p
   const {element, videoElement} = videoAdContainer;
   const onIconView = jest.fn();
 
-  addIcons(icons, {
+  const {drawIcons} = addIcons(icons, {
     logger,
     onIconView,
     videoAdContainer
   });
 
+  drawIcons();
   await waitFor(element, 'iconsdrawn');
 
   expect(onIconView).toHaveBeenCalledTimes(1);
