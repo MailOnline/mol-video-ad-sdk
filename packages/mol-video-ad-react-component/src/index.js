@@ -8,6 +8,7 @@ import makeCancelable from './helpers/makeCancelable';
 const noop = () => {};
 
 class MolVideoAd extends Component {
+  // TODO: define who can a user pause the ad and change the volume
   static defaultProps = {
     children: undefined,
     logger: console,
@@ -49,7 +50,7 @@ class MolVideoAd extends Component {
   }
 
   componentDidMount () {
-    this.adUnitPromise = this.playAd();
+    this.adUnitPromise = this.startAd();
     this.stateUpdate = makeCancelable(this.adUnitPromise);
 
     // eslint-disable-next-line promise/always-return, promise/catch-or-return, promise/prefer-await-to-then
@@ -73,7 +74,7 @@ class MolVideoAd extends Component {
     }
   }
 
-  async playAd () {
+  async startAd () {
     const {
       getTag,
       logger,
