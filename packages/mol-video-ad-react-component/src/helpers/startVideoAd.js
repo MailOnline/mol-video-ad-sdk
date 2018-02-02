@@ -3,7 +3,13 @@ import {
   createVideoAdUnit
 } from 'mol-video-ad-sdk';
 import loadNextVastChain from './loadNextVastChain';
-import waitForAdUnitStart from './waitForAdUnitStart';
+
+const waitForAdUnitStart = (adUnit) => new Promise((resolve, reject) => {
+  adUnit.onError(reject);
+  adUnit.on('start', () => resolve(adUnit));
+
+  adUnit.start();
+});
 
 const startVideoAd = async (fetchVastChain, placeholder, options) => {
   let vastChain;
