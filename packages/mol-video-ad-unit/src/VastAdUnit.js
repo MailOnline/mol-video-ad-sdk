@@ -144,6 +144,14 @@ class VastAdUnit extends Emitter {
     videoElement.pause();
   }
 
+  changeVolume (newVolume) {
+    this[hidden].throwIfFinished();
+
+    const {videoElement} = this.videoAdContainer;
+
+    videoElement.volume = newVolume;
+  }
+
   cancel () {
     this[hidden].throwIfFinished();
 
@@ -183,11 +191,13 @@ class VastAdUnit extends Emitter {
   }
 
   finish () {
+    this[hidden].throwIfFinished();
     this[hidden].onFinishCallbacks.forEach((callback) => callback());
     this[hidden].finished = true;
   }
 
   resize () {
+    this[hidden].throwIfFinished();
     this.videoAdContainer.resize();
 
     if (this.icons) {
