@@ -2,37 +2,24 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import loadVastChain from './helpers/loadVastChain';
-import startVideoAd from './helpers/startVideoAd';
+import tryToStartAd from './helpers/tryToStartAd';
 import makeCancelable from './helpers/makeCancelable';
 
 const noop = () => {};
 
 class MolVideoAd extends Component {
-  // TODO: define who can a user pause the ad and change the volume
-  // TODO: ADD RESIZE HOOK
-
-  // actions
-  // play/pause
-  // changeVolume
-  /**
-   *
-   * For resize add width and height props
-   * and on componentDid update if the props changed
-   * call adUnit.resize()
-   */
-
-  // TODO: ADD ON START THAT WILL RETURN THE THREE ACTIONS
-  // play
-  // pause
-  // volume
   static defaultProps = {
     children: undefined,
+    height: undefined,
     logger: console,
     onComplete: noop,
     onLinearEvent: noop,
     onNonRecoverableError: noop,
     onRecoverableError: noop,
-    tracker: undefined
+    onStart: noop,
+    tracker: undefined,
+    videoElement: undefined,
+    width: undefined
   };
 
   static propTypes = {
@@ -41,6 +28,7 @@ class MolVideoAd extends Component {
       PropTypes.node
     ]),
     getTag: PropTypes.func.isRequired,
+    height: PropTypes.number,
     logger: PropTypes.shape({
       error: PropTypes.func,
       log: PropTypes.func
@@ -49,7 +37,10 @@ class MolVideoAd extends Component {
     onLinearEvent: PropTypes.func,
     onNonRecoverableError: PropTypes.func,
     onRecoverableError: PropTypes.func,
-    tracker: PropTypes.func
+    onStart: PropTypes.func,
+    tracker: PropTypes.func,
+    videoElement: PropTypes.node,
+    width: PropTypes.number
   };
 
   ref = (element) => {
@@ -75,8 +66,6 @@ class MolVideoAd extends Component {
       this.setState({
         ready: true
       });
-
-      // TODO CALL onStart with the actions
     });
   }
 
@@ -92,6 +81,19 @@ class MolVideoAd extends Component {
     }
   }
 
+  async componentDidUpdate (prevProps) {
+    const {
+      height,
+      width
+    } = this.props;
+
+    if (height !== prevProps.height || width !== prevProps.width) {
+      const adUnit = await this.adUnitPromise.promise;
+
+      adUnit.resize();
+    }
+  }
+
   async startAd () {
     const {
       getTag,
@@ -100,7 +102,9 @@ class MolVideoAd extends Component {
       onLinearEvent,
       onNonRecoverableError,
       onRecoverableError: onError,
-      tracker
+      onStart,
+      tracker,
+      videoElement
     } = this.props;
 
     const options = {
@@ -108,15 +112,27 @@ class MolVideoAd extends Component {
       onComplete,
       onError,
       onLinearEvent,
-      tracker
+      tracker,
+      videoElement
     };
 
     try {
       const fetchVastChain = async () => loadVastChain(await Promise.resolve(getTag()));
+      const adUnit = await tryToStartAd(fetchVastChain, this.element, options);
 
-      this.adUnit = await startVideoAd(fetchVastChain, this.element, options);
+      adUnit.onError(onNonRecoverableError);
+
+      onStart({
+        adUnit,
+        changeVolume: (newVolume) => adUnit.changeVolume(newVolume),
+        pause: () => adUnit.pause(),
+        resize: () => adUnit.resize(),
+        resume: () => adUnit.resume()
+      });
+
+      return adUnit;
     } catch (error) {
-      logger.error('VideoAd Non recoberable error', error);
+      logger.error('VideoAd Non recoverable error', error);
       onNonRecoverableError(error);
 
       throw error;
