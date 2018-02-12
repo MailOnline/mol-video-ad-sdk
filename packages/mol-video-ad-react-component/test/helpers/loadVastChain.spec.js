@@ -56,11 +56,11 @@ test('must throw if there is a problem loading the chain', async () => {
     throw loadError;
   });
 
-  expect(loadVastChain()).rejects.toBe(loadError);
+  await expect(loadVastChain()).rejects.toBe(loadError);
 });
 
 test('must throw if there is a problem on the returned vastChain', async () => {
   load.mockImplementation(() => Promise.resolve(ErrorVastChain));
 
-  expect(loadVastChain()).rejects.toBeInstanceOf(Error);
+  await expect(loadVastChain()).rejects.toBeInstanceOf(Error);
 });
