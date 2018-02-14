@@ -41,7 +41,7 @@ const renderIcons = (icons, {onIconClick, videoAdContainer, logger}) => {
         placeholder: element
       }))
       .then((renderedIcon) => drawnIcons.push(renderedIcon))
-      .catch((error) => logger.error(error))
+      .catch((error) => logger.log(error))
       , Promise.resolve(drawnIcons))
     .then(() => drawnIcons);
 };
