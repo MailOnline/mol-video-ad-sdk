@@ -145,14 +145,18 @@ class MolVideoAd extends Component {
       width
     } = this.props;
 
-    const style = {
+    const containerStyles = {
       height: height ? `${height}px` : '100%',
       width: width ? `${width}px` : '100%'
     };
 
-    return <div style={style}>
+    const adPlaceholderStyles = {
+      display: this.state.ready ? 'block' : 'none'
+    };
+
+    return <div style={containerStyles}>
       {!this.state.ready && children}
-      {this.state.ready && <div ref={this.ref} />}
+      <div ref={this.ref} style={adPlaceholderStyles} />
     </div>;
   }
 }
