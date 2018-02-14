@@ -86,19 +86,26 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "babel-register": "^6.24.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.11.0",
     "eslint-config-mailonline": "^8.1.0",
     "eslint-plugin-jsdoc": "^3.2.0",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.2.1",
+    "jest-enzyme": "^4.2.0",
     "jest-tap-reporter": "^1.6.0",
     "jsdoc": "^3.5.5",
     "lerna": "^2.5.1",
     "mol-conventional-changelog": "^1.2.0",
+    "raf-polyfill": "^1.0.0",
+    "react": "^16.1.1",
     "stylelint-config-mailonline": "^3.0.2"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
+    "setupFiles": ["./setupTests.js"],
     "collectCoverageFrom": [
       "packages/**/src/**/*.js"
     ],

@@ -17,6 +17,8 @@
     "mol-tiny-emitter": "^0.1.0"
   },
   "devDependencies": {
-    "mol-vast-fixtures": "^0.1.0"
+    "mol-vast-fixtures": "^0.1.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1"
   }
 }

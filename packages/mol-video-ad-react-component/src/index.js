@@ -43,14 +43,15 @@ class MolVideoAd extends Component {
     width: PropTypes.number
   };
 
+  started = false;
+
   ref = (element) => {
     this.element = element;
   };
 
-  constructor (props) {
-    super();
+  constructor (props, context) {
+    super(props, context);
 
-    this.props = props;
     this.state = {
       ready: false
     };
@@ -59,9 +60,10 @@ class MolVideoAd extends Component {
   componentDidMount () {
     this.adUnitPromise = this.startAd();
     this.stateUpdate = makeCancelable(this.adUnitPromise);
-
     // eslint-disable-next-line promise/always-return, promise/catch-or-return, promise/prefer-await-to-then
-    this.stateUpdate.promise.then(() => {
+    this.stateUpdate.promise.then((adUnit) => {
+      this.adUnit = adUnit;
+
       // eslint-disable-next-line react/no-set-state
       this.setState({
         ready: true
@@ -69,28 +71,41 @@ class MolVideoAd extends Component {
     });
   }
 
-  async componentWillUnmount () {
+  componentWillUnmount () {
     if (this.stateUpdate.isPending()) {
       this.stateUpdate.cancel();
     }
-
-    const adUnit = await this.adUnitPromise.promise;
+    const adUnit = this.adUnit;
 
     if (adUnit && !adUnit.isFinished()) {
       adUnit.cancel();
     }
   }
 
-  async componentDidUpdate (prevProps) {
+  componentDidUpdate (prevProps) {
     const {
       height,
-      width
+      width,
+      onStart
     } = this.props;
 
-    if (height !== prevProps.height || width !== prevProps.width) {
-      const adUnit = await this.adUnitPromise.promise;
+    const adUnit = this.adUnit;
 
-      adUnit.resize();
+    if (adUnit) {
+      if (height !== prevProps.height || width !== prevProps.width) {
+        adUnit.resize();
+      }
+
+      if (!this.started && adUnit && this.state.ready) {
+        onStart({
+          adUnit,
+          changeVolume: (newVolume) => adUnit.changeVolume(newVolume),
+          pause: () => adUnit.pause(),
+          resume: () => adUnit.resume()
+        });
+
+        this.started = true;
+      }
     }
   }
 
@@ -102,14 +117,12 @@ class MolVideoAd extends Component {
       onLinearEvent,
       onNonRecoverableError,
       onRecoverableError: onError,
-      onStart,
       tracker,
       videoElement
     } = this.props;
 
     const options = {
       logger,
-      onComplete,
       onError,
       onLinearEvent,
       tracker,
@@ -121,18 +134,10 @@ class MolVideoAd extends Component {
       const adUnit = await tryToStartAd(fetchVastChain, this.element, options);
 
       adUnit.onError(onNonRecoverableError);
-
-      onStart({
-        adUnit,
-        changeVolume: (newVolume) => adUnit.changeVolume(newVolume),
-        pause: () => adUnit.pause(),
-        resize: () => adUnit.resize(),
-        resume: () => adUnit.resume()
-      });
+      adUnit.onComplete(onComplete);
 
       return adUnit;
     } catch (error) {
-      logger.error('VideoAd Non recoverable error', error);
       onNonRecoverableError(error);
 
       throw error;
@@ -141,17 +146,20 @@ class MolVideoAd extends Component {
 
   render () {
     const {
-      children
+      children,
+      height,
+      width
     } = this.props;
 
     const style = {
-      height: '100%',
-      width: '100%'
+      height: height ? `${height}px` : '100%',
+      width: width ? `${width}px` : '100%'
     };
 
+    // TODO: hid ad until it starts
     return <div style={style}>
       {!this.state.ready && children}
-      <div ref={this.ref} />
+      {this.state.ready && <div ref={this.ref} />}
     </div>;
   }
 }
