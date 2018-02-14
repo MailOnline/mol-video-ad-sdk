@@ -13,7 +13,7 @@ let icons;
 beforeEach(async () => {
   videoAdContainer = await createVideoAdContainer(document.createElement('DIV'));
   logger = {
-    error: jest.fn()
+    log: jest.fn()
   };
   icons = [
     {
@@ -92,6 +92,6 @@ test('renderIcons must log an error if an icon failed to render and return the o
     updatedIcon
   ]);
 
-  expect(logger.error).toHaveBeenCalledTimes(1);
-  expect(logger.error).toHaveBeenCalledWith(renderError);
+  expect(logger.log).toHaveBeenCalledTimes(1);
+  expect(logger.log).toHaveBeenCalledWith(renderError);
 });
