@@ -43,8 +43,6 @@ class MolVideoAd extends Component {
     width: PropTypes.number
   };
 
-  started = false;
-
   ref = (element) => {
     this.element = element;
   };
@@ -91,21 +89,17 @@ class MolVideoAd extends Component {
 
     const adUnit = this.adUnit;
 
-    if (adUnit) {
+    if (adUnit && this.state.ready) {
       if (height !== prevProps.height || width !== prevProps.width) {
         adUnit.resize();
       }
 
-      if (!this.started && adUnit && this.state.ready) {
-        onStart({
-          adUnit,
-          changeVolume: (newVolume) => adUnit.changeVolume(newVolume),
-          pause: () => adUnit.pause(),
-          resume: () => adUnit.resume()
-        });
-
-        this.started = true;
-      }
+      onStart({
+        adUnit,
+        changeVolume: (newVolume) => adUnit.changeVolume(newVolume),
+        pause: () => adUnit.pause(),
+        resume: () => adUnit.resume()
+      });
     }
   }
 
@@ -156,7 +150,6 @@ class MolVideoAd extends Component {
       width: width ? `${width}px` : '100%'
     };
 
-    // TODO: hid ad until it starts
     return <div style={style}>
       {!this.state.ready && children}
       {this.state.ready && <div ref={this.ref} />}

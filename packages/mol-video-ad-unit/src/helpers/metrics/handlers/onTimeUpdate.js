@@ -21,6 +21,7 @@ const onTimeUpdate = ({videoElement}, callback) => {
   let passThirdQuartile = false;
   let completed = false;
 
+  // eslint-disable-next-line complexity
   const timeupdateHandler = () => {
     const duration = videoElement.duration;
     const currentTime = videoElement.currentTime;
