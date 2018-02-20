@@ -21,7 +21,7 @@
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.16",
     "@storybook/react": "^3.2.16",
-    "autoprefixer": "^7.1.6",
+    "autoprefixer": "^8.0.0",
     "babel-loader": "^7.1.2",
     "css-loader": "^0.28.7",
     "enzyme": "^3.3.0",
