@@ -2,7 +2,7 @@ import {
   get,
   getAll,
   getFirstChild
-} from 'mol-vast-xml2js';
+} from '@mol/vast-xml2js';
 
 const getLinearCreative = (ad) => {
   const adTypeElement = getFirstChild(ad);

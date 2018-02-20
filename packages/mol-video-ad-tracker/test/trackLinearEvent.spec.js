@@ -4,8 +4,8 @@ import {
   inlineParsedXML,
   vastInlineXML,
   vastPodXML
-} from 'mol-vast-fixtures';
-import {getFirstAd} from 'mol-vast-selectors';
+} from '@mol/vast-fixtures';
+import {getFirstAd} from '@mol/vast-selectors';
 import trackLinearEvent from '../src/trackLinearEvent';
 import {
   clickThrough,

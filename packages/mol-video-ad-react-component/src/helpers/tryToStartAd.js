@@ -1,4 +1,4 @@
-import {createVideoAdContainer} from 'mol-video-ad-sdk';
+import {createVideoAdContainer} from '@mol/video-ad-sdk';
 import startVideoAd from './startVideoAd';
 import loadNextVastChain from './loadNextVastChain';
 

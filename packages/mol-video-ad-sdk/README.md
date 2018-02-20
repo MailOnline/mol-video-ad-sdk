@@ -1,4 +1,4 @@
-# mol-video-ad-manager
+# @mol/video-ad-manager
 
 > SDK to load and play video ads.
 

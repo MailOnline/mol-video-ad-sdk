@@ -1,5 +1,5 @@
-import {requestAd} from 'mol-vast-loader';
-import {trackError} from 'mol-video-ad-tracker';
+import {requestAd} from '@mol/vast-loader';
+import {trackError} from '@mol/video-ad-tracker';
 
 /**
  * Request the ad using the passed ad tag and returns an array with the VAST responses needed to get an inline ad.
@@ -11,7 +11,7 @@ import {trackError} from 'mol-video-ad-tracker';
  *                           * `AllowMultipleAds` Boolean to indicate whether adPods are allowed or not.
  *                              Defaults to true.
  *                           * `tracker` optional function to track whatever errors occur during the loading.
- *                              Defaults to `mol-video-ad-tracker` macrosTracker method.
+ *                              Defaults to `@mol/video-ad-tracker` macrosTracker method.
  * @returns Promise<VASTChain> - Returns a Promise that will resolve a VastChain with the newest VAST response at the begining of the array.
  *                              If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
  * @static

@@ -1,4 +1,4 @@
-# mol-vast-fixtures
+# @mol/vast-fixtures
 
 > Shared VAST fixtures to use by tests.
 

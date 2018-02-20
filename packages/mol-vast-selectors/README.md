@@ -1,4 +1,4 @@
-# mol-vast-selectors
+# @mol/vast-selectors
 
 > Collection of selector methods to work with parsed VAST XML objects
 

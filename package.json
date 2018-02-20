@@ -1,5 +1,5 @@
 {
-  "name": "mol-video-ad",
+  "name": "@mol/video-ad",
   "private": true,
   "description": "Mono-repo of VAST libraries that allow Video ads to be served on a browser",
   "author": "MailOnline <fe@mailonline.co.uk>",
@@ -11,19 +11,19 @@
     "precommit": "npm run lint",
     "prepush": "npm test",
     "start-package": "cd packages/$START_PACKAGE && npm run storybook && cd -",
-    "start": "START_PACKAGE=mol-video-ad-react-component npm run start-package",
+    "start": "START_PACKAGE=@mol/video-ad-react-component npm run start-package",
     "test": "NODE_ENV=test jest",
     "clean": "lerna clean; find . -type f -name 'package-lock.json' -delete; rm -r node_modules"
   },
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/MailOnline/mol-video-ad-sdk/issues"
+    "url": "https://github.com/MailOnline/@mol/video-ad-sdk/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/MailOnline/mol-video-ad-sdk.git"
+    "url": "git+ssh://git@github.com/MailOnline/@mol/video-ad-sdk.git"
   },
-  "homepage": "https://github.com/MailOnline/mol-video-ad-sdk#readme",
+  "homepage": "https://github.com/MailOnline/@mol/video-ad-sdk#readme",
   "config": {
     "commitizen": {
       "path": "./node_modules/mol-conventional-changelog"
@@ -123,14 +123,16 @@
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
-    "setupFiles": ["./setupTests.js"],
+    "setupFiles": [
+      "./setupTests.js"
+    ],
     "collectCoverageFrom": [
       "packages/**/src/**/*.js"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/packages/mol-vast-fixtures/",
-      "/packages/mol-vast-xml2js/"
+      "/packages/@mol/vast-fixtures/",
+      "/packages/@mol/vast-xml2js/"
     ],
     "moduleNameMapper": {
       "\\.(scss)$": "identity-obj-proxy"
@@ -139,8 +141,8 @@
       "^.+\\.jsx?$": "babel-jest"
     },
     "transformIgnorePatterns": [
-      "/node_modules/(?!mol-).*",
-      "packages/.*/node_modules/(?!mol-).*"
+      "/node_modules/(?!@mol/).*",
+      "packages/.*/node_modules/(?!@mol/).*"
     ]
   }
 }

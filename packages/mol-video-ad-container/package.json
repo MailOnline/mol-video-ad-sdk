@@ -1,5 +1,5 @@
 {
-  "name": "mol-video-ad-container",
+  "name": "@mol/video-ad-container",
   "version": "0.1.0",
   "description": "MOL video ad container",
   "author": "MailOnline <fe@mailonline.co.uk>",

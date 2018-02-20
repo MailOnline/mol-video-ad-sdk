@@ -1,4 +1,4 @@
-import {linearEvents} from 'mol-video-ad-tracker';
+import {linearEvents} from '@mol/video-ad-tracker';
 import onVolumeChange from '../../../../src/helpers/metrics/handlers/onVolumeChange';
 
 const {

@@ -3,7 +3,7 @@ import {
   getAll,
   getText,
   getAttributes
-} from 'mol-vast-xml2js';
+} from '@mol/vast-xml2js';
 import parseOffset from './helpers/parseOffset';
 import getLinearCreative from './helpers/getLinearCreative';
 

@@ -1,4 +1,4 @@
-# mol-tiny-emitter
+# @mol/tiny-emitter
 
 > Super tiny implementation of nodejs EventEmitter's `on`, `removeListener`, `removeAllListeners`, `once` and `emit` methods.
   You are probably asking yourself why the did we not use tiny-emitter or

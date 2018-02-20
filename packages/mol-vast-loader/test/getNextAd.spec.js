@@ -2,13 +2,13 @@
 import {
   getAds,
   isPodAd
-} from 'mol-vast-selectors';
+} from '@mol/vast-selectors';
 import {
   wrapperParsedXML,
   podParsedXML,
   waterfallParsedXML,
   wrapperAd
-} from 'mol-vast-fixtures';
+} from '@mol/vast-fixtures';
 import getNextAd from '../src/helpers/getNextAd';
 import {markAdAsRequested, unmarkAdAsRequested} from '../src/helpers/adUtils';
 

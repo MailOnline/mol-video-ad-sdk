@@ -1,4 +1,4 @@
-import xml2js from 'mol-vast-xml2js';
+import xml2js from '@mol/vast-xml2js';
 import {
   getWrapperOptions,
   getFirstAd,
@@ -6,7 +6,7 @@ import {
   hasAdPod,
   isInline,
   isWrapper
-} from 'mol-vast-selectors';
+} from '@mol/vast-selectors';
 import fetch from './helpers/fetch';
 import {markAdAsRequested} from './helpers/adUtils';
 

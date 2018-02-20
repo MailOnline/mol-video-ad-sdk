@@ -1,4 +1,4 @@
-import {getIcons} from 'mol-vast-selectors';
+import {getIcons} from '@mol/vast-selectors';
 import getResource from '../resources/getResource';
 
 const UNKNOWN = 'UNKNOWN';

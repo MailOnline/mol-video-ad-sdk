@@ -1,7 +1,7 @@
 import {
   inlineAd,
   wrapperAd
-} from 'mol-vast-fixtures';
+} from '@mol/vast-fixtures';
 import getIcons from '../src/getIcons';
 
 test('getIcons must return null if there are no icons', () => {

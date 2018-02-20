@@ -1,4 +1,4 @@
-import {linearEvents} from 'mol-video-ad-tracker';
+import {linearEvents} from '@mol/video-ad-tracker';
 import onTimeUpdate from '../../../../src/helpers/metrics/handlers/onTimeUpdate';
 
 const {

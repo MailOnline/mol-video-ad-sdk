@@ -2,7 +2,7 @@ import {
   getClickThrough,
   getImpressionUri,
   getLinearTrackingEvents
-} from 'mol-vast-selectors';
+} from '@mol/vast-selectors';
 import pixelTracker from './helpers/pixelTracker';
 import trackError from './helpers/trackError';
 import trackIconView from './helpers/trackIconView';

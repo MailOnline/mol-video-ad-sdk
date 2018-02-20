@@ -1,5 +1,5 @@
 {
-  "name": "mol-video-ad-unit",
+  "name": "@mol/video-ad-unit",
   "version": "0.1.0",
   "description": "creates the video ad units that will display the video ad.",
   "author": "MailOnline <fe@mailonline.co.uk>",
@@ -11,13 +11,13 @@
   ],
   "dependencies": {
     "whatwg-fetch": "^2.0.3",
-    "mol-video-ad-tracker": "^0.1.0",
-    "mol-video-ad-container": "^0.1.0",
-    "mol-vast-selectors": "^0.1.0",
-    "mol-tiny-emitter": "^0.1.0"
+    "@mol/video-ad-tracker": "^0.1.0",
+    "@mol/video-ad-container": "^0.1.0",
+    "@mol/vast-selectors": "^0.1.0",
+    "@mol/tiny-emitter": "^0.1.0"
   },
   "devDependencies": {
-    "mol-vast-fixtures": "^0.1.0",
+    "@mol/vast-fixtures": "^0.1.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1"
   }

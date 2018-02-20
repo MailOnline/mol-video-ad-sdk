@@ -1,4 +1,4 @@
-# mol-video-ad-container
+# @mol/video-ad-container
 
 > MOL video ad container
 

@@ -1,4 +1,4 @@
-import {createVideoAdContainer} from 'mol-video-ad-container';
+import {createVideoAdContainer} from '@mol/video-ad-container';
 import createVideoAdUnit from './createVideoAdUnit';
 import load from './load';
 import loadNext from './loadNext';

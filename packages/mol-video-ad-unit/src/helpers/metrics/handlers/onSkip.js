@@ -1,5 +1,5 @@
 /* eslint-disable callback-return, promise/prefer-await-to-callbacks */
-import {linearEvents} from 'mol-video-ad-tracker';
+import {linearEvents} from '@mol/video-ad-tracker';
 
 const {skip} = linearEvents;
 const createDefaultSkipControl = (document) => {

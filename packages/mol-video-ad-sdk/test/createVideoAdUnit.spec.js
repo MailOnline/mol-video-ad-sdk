@@ -1,5 +1,5 @@
-import {VideoAdContainer} from 'mol-video-ad-container';
-import {VastAdUnit} from 'mol-video-ad-unit';
+import {VideoAdContainer} from '@mol/video-ad-container';
+import {VastAdUnit} from '@mol/video-ad-unit';
 import {
   vastWrapperXML,
   vastInlineXML,
@@ -7,15 +7,15 @@ import {
   inlineParsedXML,
   wrapperAd,
   inlineAd
-} from 'mol-vast-fixtures';
+} from '@mol/vast-fixtures';
 import {
   linearEvents,
   trackLinearEvent
-} from 'mol-video-ad-tracker';
+} from '@mol/video-ad-tracker';
 import createVideoAdUnit from '../src/createVideoAdUnit';
 
-jest.mock('mol-video-ad-tracker', () => ({
-  ...require.requireActual('mol-video-ad-tracker'),
+jest.mock('@mol/video-ad-tracker', () => ({
+  ...require.requireActual('@mol/video-ad-tracker'),
   trackLinearEvent: jest.fn()
 }));
 

@@ -7,13 +7,13 @@ import {
   inlineAd,
   inlineParsedXML,
   vastInlineXML
-} from 'mol-vast-fixtures';
-import {requestNextAd} from 'mol-vast-loader';
-import {trackError} from 'mol-video-ad-tracker';
+} from '@mol/vast-fixtures';
+import {requestNextAd} from '@mol/vast-loader';
+import {trackError} from '@mol/video-ad-tracker';
 import loadNext from '../src/loadNext';
 
-jest.mock('mol-vast-loader', () => ({requestNextAd: jest.fn()}));
-jest.mock('mol-video-ad-tracker', () => ({trackError: jest.fn()}));
+jest.mock('@mol/vast-loader', () => ({requestNextAd: jest.fn()}));
+jest.mock('@mol/video-ad-tracker', () => ({trackError: jest.fn()}));
 
 const errorVastChain = [
   {

@@ -1,5 +1,5 @@
 {
-  "name": "mol-vast-loader",
+  "name": "@mol/vast-loader",
   "version": "0.1.0",
   "description": "MOL VAST loader",
   "author": "MailOnline <fe@mailonline.co.uk>",
@@ -11,11 +11,11 @@
   ],
   "dependencies": {
     "whatwg-fetch": "^2.0.3",
-    "mol-vast-xml2js": "^0.1.0",
-    "mol-vast-selectors": "^0.1.0"
+    "@mol/vast-xml2js": "^0.1.0",
+    "@mol/vast-selectors": "^0.1.0"
   },
   "devDependencies": {
     "lodash": "^4.17.4",
-    "mol-vast-fixtures": "0.1.0"
+    "@mol/vast-fixtures": "0.1.0"
   }
 }

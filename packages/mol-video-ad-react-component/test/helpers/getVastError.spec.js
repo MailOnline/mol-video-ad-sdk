@@ -5,7 +5,7 @@ import {
   inlineParsedXML,
   wrapperAd,
   inlineAd
-} from 'mol-vast-fixtures';
+} from '@mol/vast-fixtures';
 import getVastError from '../../src/helpers/getVastError';
 
 test('must return undefined if the vastchain has no error', () => {

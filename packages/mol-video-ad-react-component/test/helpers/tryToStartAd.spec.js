@@ -1,6 +1,6 @@
 import {
   createVideoAdContainer
-} from 'mol-video-ad-sdk';
+} from '@mol/video-ad-sdk';
 import {
   vastWrapperXML,
   vastInlineXML,
@@ -8,14 +8,14 @@ import {
   inlineParsedXML,
   wrapperAd,
   inlineAd
-} from 'mol-vast-fixtures';
-import {VideoAdContainer} from 'mol-video-ad-container';
-import {VastAdUnit} from 'mol-video-ad-unit';
+} from '@mol/vast-fixtures';
+import {VideoAdContainer} from '@mol/video-ad-container';
+import {VastAdUnit} from '@mol/video-ad-unit';
 import startVideoAd from '../../src/helpers/startVideoAd';
 import tryToStartAd from '../../src/helpers/tryToStartAd';
 import loadNextVastChain from '../../src/helpers/loadNextVastChain';
 
-jest.mock('mol-video-ad-sdk', () => ({
+jest.mock('@mol/video-ad-sdk', () => ({
   createVideoAdContainer: jest.fn()
 }));
 

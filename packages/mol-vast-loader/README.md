@@ -1,4 +1,4 @@
-# mol-vast-loader
+# @mol/vast-loader
 
 > MOL VAST loader
 

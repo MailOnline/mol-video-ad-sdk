@@ -1,5 +1,5 @@
 {
-  "name": "mol-element-observers",
+  "name": "@mol/element-observers",
   "version": "0.1.0",
   "description": "Utility libary to identify size and tree mutations of a single DOM element",
   "author": "MailOnline <fe@mailonline.co.uk>",

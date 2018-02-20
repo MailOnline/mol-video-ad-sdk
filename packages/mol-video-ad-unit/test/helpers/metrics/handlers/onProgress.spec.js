@@ -1,4 +1,4 @@
-import {linearEvents} from 'mol-video-ad-tracker';
+import {linearEvents} from '@mol/video-ad-tracker';
 import onProgress from '../../../../src/helpers/metrics/handlers/onProgress';
 
 const {progress} = linearEvents;

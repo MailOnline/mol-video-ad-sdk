@@ -1,4 +1,4 @@
-import {linearEvents} from 'mol-video-ad-tracker';
+import {linearEvents} from '@mol/video-ad-tracker';
 import onPlayPause from '../../../../src/helpers/metrics/handlers/onPlayPause';
 
 const {pause, resume} = linearEvents;

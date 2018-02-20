@@ -1,5 +1,5 @@
 {
-  "name": "mol-video-ad-tracker",
+  "name": "@mol/video-ad-tracker",
   "version": "0.1.0",
   "description": "MOL Video ad tracking tools",
   "author": "MailOnline <fe@mailonline.co.uk>",
@@ -10,10 +10,10 @@
     "src"
   ],
   "dependencies": {
-    "mol-vast-selectors": "^0.1.0"
+    "@mol/vast-selectors": "^0.1.0"
   },
   "devDependencies": {
     "mockdate": "^2.0.2",
-    "mol-vast-fixtures": "^0.1.0"
+    "@mol/vast-fixtures": "^0.1.0"
   }
 }

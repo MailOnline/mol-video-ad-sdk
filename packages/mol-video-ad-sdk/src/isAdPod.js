@@ -1,4 +1,4 @@
-import {hasAdPod} from 'mol-vast-selectors';
+import {hasAdPod} from '@mol/vast-selectors';
 
 /**
  * Returns true if the passed VASTChain has an ad pod or false otherwise.

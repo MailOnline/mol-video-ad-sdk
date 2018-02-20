@@ -1,4 +1,4 @@
-import {linearEvents} from 'mol-video-ad-tracker';
+import {linearEvents} from '@mol/video-ad-tracker';
 import onImpression from '../../../../src/helpers/metrics/handlers/onImpression';
 
 const {impression} = linearEvents;

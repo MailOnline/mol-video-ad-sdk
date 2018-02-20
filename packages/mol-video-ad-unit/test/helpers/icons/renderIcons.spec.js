@@ -1,4 +1,4 @@
-import {createVideoAdContainer} from 'mol-video-ad-container';
+import {createVideoAdContainer} from '@mol/video-ad-container';
 import renderIcons from '../../../src/helpers/icons/renderIcons';
 import renderIcon from '../../../src/helpers/icons/renderIcon';
 import canBeShown from '../../../src/helpers/icons/canBeShown';

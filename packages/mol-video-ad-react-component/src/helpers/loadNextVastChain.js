@@ -1,4 +1,4 @@
-import {loadNext} from 'mol-video-ad-sdk';
+import {loadNext} from '@mol/video-ad-sdk';
 import getVastError from './getVastError';
 
 const loadNextVastChain = async (vastChain, options) => {

@@ -1,4 +1,4 @@
-import {VideoAdContainer} from 'mol-video-ad-container';
+import {VideoAdContainer} from '@mol/video-ad-container';
 import {
   vastWrapperXML,
   vastInlineXML,
@@ -6,7 +6,7 @@ import {
   inlineParsedXML,
   wrapperAd,
   inlineAd
-} from 'mol-vast-fixtures';
+} from '@mol/vast-fixtures';
 import createVastAdUnit from '../src/createVastAdUnit';
 import VastAdUnit from '../src/VastAdUnit';
 

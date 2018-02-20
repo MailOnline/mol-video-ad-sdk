@@ -1,5 +1,5 @@
 {
-  "name": "mol-vast-xml2js",
+  "name": "@mol/vast-xml2js",
   "version": "0.1.0",
   "description": "MOL VAST xml2js method",
   "author": "MailOnline <fe@mailonline.co.uk>",

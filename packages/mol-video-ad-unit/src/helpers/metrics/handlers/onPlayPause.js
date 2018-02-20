@@ -1,6 +1,6 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
 
-import {linearEvents} from 'mol-video-ad-tracker';
+import {linearEvents} from '@mol/video-ad-tracker';
 
 const {
   pause,

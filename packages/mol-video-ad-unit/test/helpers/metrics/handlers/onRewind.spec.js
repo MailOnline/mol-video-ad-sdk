@@ -1,4 +1,4 @@
-import {linearEvents} from 'mol-video-ad-tracker';
+import {linearEvents} from '@mol/video-ad-tracker';
 import onRewind from '../../../../src/helpers/metrics/handlers/onRewind';
 
 const {rewind} = linearEvents;

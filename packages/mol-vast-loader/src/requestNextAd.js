@@ -1,7 +1,7 @@
 import {
   getVASTAdTagURI,
   isWrapper
-} from 'mol-vast-selectors';
+} from '@mol/vast-selectors';
 import requestAd from './requestAd';
 import getNextAd from './helpers/getNextAd';
 import {markAdAsRequested} from './helpers/adUtils';
@@ -26,7 +26,7 @@ const validateChain = (VASTChain) => {
  *                           * `AllowMultipleAds` Boolean to indicate whether adPods are allowed or not.
  *                              Defaults to true.
  *                           * `track` optional function to track whatever errors occur during the loading.
- *                              Defaults to `mol-video-ad-tracker` track method.
+ *                              Defaults to `@mol/video-ad-tracker` track method.
  *                           * `useAdBuffet` which should be set to true if we want to get a buffet ad from an ad pod.
  *                              If no buffet ad is available it will return the next ad in ad pod sequence.
  *                              Set it to true if an ad from an adPod failed and you want to replace it with an ad from the ad buffet.

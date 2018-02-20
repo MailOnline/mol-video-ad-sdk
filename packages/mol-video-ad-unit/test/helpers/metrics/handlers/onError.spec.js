@@ -1,4 +1,4 @@
-import {linearEvents} from 'mol-video-ad-tracker';
+import {linearEvents} from '@mol/video-ad-tracker';
 import onError from '../../../../src/helpers/metrics/handlers/onError';
 
 const {error} = linearEvents;

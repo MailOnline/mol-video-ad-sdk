@@ -1,4 +1,4 @@
-# mol-video-ad-tracker
+# @mol/video-ad-tracker
 
 > MOL Video ad tracking tools
 

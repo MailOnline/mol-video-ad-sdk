@@ -1,5 +1,5 @@
 {
-  "name": "mol-tiny-emitter",
+  "name": "@mol/tiny-emitter",
   "version": "0.1.0",
   "description": "MOL's tiny implementation of node's EventEmitter",
   "author": "MailOnline <fe@mailonline.co.uk>",

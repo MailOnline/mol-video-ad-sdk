@@ -1,4 +1,4 @@
-import {VideoAdContainer} from 'mol-video-ad-container';
+import {VideoAdContainer} from '@mol/video-ad-container';
 import VastAdUnit from './VastAdUnit';
 
 const createVastAdUnit = (vastAdChain, videoAdContainer, options = {}) => {

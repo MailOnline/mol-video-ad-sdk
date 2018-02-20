@@ -4,11 +4,11 @@ import {
   vastWrapperXML,
   wrapperParsedXML,
   wrapperAd
-} from 'mol-vast-fixtures';
+} from '@mol/vast-fixtures';
 import {
   getAdErrorURI,
   getVastErrorURI
-} from 'mol-vast-selectors';
+} from '@mol/vast-selectors';
 import pixelTracker from '../../src/helpers/pixelTracker';
 import trackError from '../../src/helpers/trackError';
 

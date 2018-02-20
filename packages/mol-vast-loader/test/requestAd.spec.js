@@ -1,9 +1,9 @@
 /* eslint-disable id-match */
-import xml2js from 'mol-vast-xml2js';
+import xml2js from '@mol/vast-xml2js';
 import {
   getAds,
   getFirstAd
-} from 'mol-vast-selectors';
+} from '@mol/vast-selectors';
 import {
   noAdParsedXML,
   vastNoAdXML,
@@ -17,7 +17,7 @@ import {
   vastInvalidParsedXML,
   wrapperAd,
   inlineAd
-} from 'mol-vast-fixtures';
+} from '@mol/vast-fixtures';
 import {requestAd} from '../src/index';
 import {markAdAsRequested, unmarkAdAsRequested} from '../src/helpers/adUtils';
 

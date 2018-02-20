@@ -3,7 +3,7 @@ import {
   getAds,
   getPodAdSequence,
   isPodAd
-} from 'mol-vast-selectors';
+} from '@mol/vast-selectors';
 import {hasAdBeenRequested} from './adUtils';
 
 const getNextPod = (currentPod, ads) => {

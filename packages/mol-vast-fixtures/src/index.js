@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
-import xml2js from 'mol-vast-xml2js';
-import {getFirstAd} from 'mol-vast-selectors';
+import xml2js from '@mol/vast-xml2js';
+import {getFirstAd} from '@mol/vast-selectors';
 
 export const vastWrapperXML = fs.readFileSync(path.join(__dirname, 'vast-wrapper.xml'), 'utf8');
 export const vastInlineXML = fs.readFileSync(path.join(__dirname, 'vast-inline.xml'), 'utf8');

@@ -1,5 +1,5 @@
 {
-  "name": "mol-video-ad-sdk",
+  "name": "@mol/video-ad-sdk",
   "version": "0.1.0",
   "description": "SDK to load and play video ads.",
   "author": "MailOnline <fe@mailonline.co.uk>",
@@ -10,13 +10,13 @@
     "src"
   ],
   "dependencies": {
-    "mol-vast-loader": "^0.1.0",
-    "mol-video-ad-container": "^0.1.0",
-    "mol-video-ad-tracker": "^0.1.0",
-    "mol-video-ad-unit": "^0.1.0",
-    "mol-vast-selectors": "^0.1.0"
+    "@mol/vast-loader": "^0.1.0",
+    "@mol/video-ad-container": "^0.1.0",
+    "@mol/video-ad-tracker": "^0.1.0",
+    "@mol/video-ad-unit": "^0.1.0",
+    "@mol/vast-selectors": "^0.1.0"
   },
   "devDependencies": {
-    "mol-vast-fixtures": "^0.1.0"
+    "@mol/vast-fixtures": "^0.1.0"
   }
 }

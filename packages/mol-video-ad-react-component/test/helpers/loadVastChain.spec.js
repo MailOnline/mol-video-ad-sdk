@@ -5,11 +5,11 @@ import {
   inlineParsedXML,
   wrapperAd,
   inlineAd
-} from 'mol-vast-fixtures';
-import {load} from 'mol-video-ad-sdk';
+} from '@mol/vast-fixtures';
+import {load} from '@mol/video-ad-sdk';
 import loadVastChain from '../../src/helpers/loadVastChain';
 
-jest.mock('mol-video-ad-sdk', () => ({load: jest.fn()}));
+jest.mock('@mol/video-ad-sdk', () => ({load: jest.fn()}));
 
 const ErrorVastChain = [];
 const successVastChain = [
