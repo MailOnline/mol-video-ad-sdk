@@ -1,7 +1,7 @@
 {
-  "name": "mol-vast-tools",
+  "name": "@mol/video-ad",
   "private": true,
-  "description": "Collection of VAST tool libraries",
+  "description": "Mono-repo of VAST libraries that allow Video ads to be served on a browser",
   "author": "MailOnline <fe@mailonline.co.uk>",
   "scripts": {
     "postinstall": "lerna bootstrap",
@@ -11,19 +11,19 @@
     "precommit": "npm run lint",
     "prepush": "npm test",
     "start-package": "cd packages/$START_PACKAGE && npm run storybook && cd -",
-    "start": "START_PACKAGE=mol-video-ad-react-component npm run start-package",
+    "start": "START_PACKAGE=@mol/video-ad-react-component npm run start-package",
     "test": "NODE_ENV=test jest",
     "clean": "lerna clean; find . -type f -name 'package-lock.json' -delete; rm -r node_modules"
   },
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/MailOnline/mol-vast-tools/issues"
+    "url": "https://github.com/MailOnline/@mol/video-ad-sdk/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/MailOnline/mol-vast-tools.git"
+    "url": "git+ssh://git@github.com/MailOnline/@mol/video-ad-sdk.git"
   },
-  "homepage": "https://github.com/MailOnline/mol-vast-tools#readme",
+  "homepage": "https://github.com/MailOnline/@mol/video-ad-sdk#readme",
   "config": {
     "commitizen": {
       "path": "./node_modules/mol-conventional-changelog"
@@ -75,9 +75,25 @@
       ]
     ]
   },
+  "dependencies": {
+    "whatwg-fetch": "^2.0.3",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "prop-types": "^15.6.0",
+    "xml-js": "^1.3.4"
+  },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.2.16",
+    "@storybook/react": "^3.2.16",
+    "autoprefixer": "^7.1.6",
+    "babel-loader": "^7.1.2",
+    "css-loader": "^0.28.7",
+    "postcss-loader": "^2.0.9",
+    "style-loader": "^0.19.0",
+    "svg-react-loader": "^0.4.5",
+    "webpack": "^3.8.1",
     "babel-core": "^6.25.0",
-    "babel-jest": "^21.2.0",
+    "babel-jest": "^22.2.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
@@ -93,11 +109,13 @@
     "eslint-plugin-jsdoc": "^3.2.0",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^21.2.1",
+    "jest": "^22.3.0",
     "jest-enzyme": "^4.2.0",
     "jest-tap-reporter": "^1.6.0",
     "jsdoc": "^3.5.5",
     "lerna": "^2.5.1",
+    "lodash": "^4.17.4",
+    "mockdate": "^2.0.2",
     "mol-conventional-changelog": "^1.2.0",
     "raf-polyfill": "^1.0.0",
     "react": "^16.1.1",
@@ -105,14 +123,16 @@
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
-    "setupFiles": ["./setupTests.js"],
+    "setupFiles": [
+      "./setupTests.js"
+    ],
     "collectCoverageFrom": [
       "packages/**/src/**/*.js"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/packages/mol-vast-fixtures/",
-      "/packages/mol-vast-xml2js/"
+      "/packages/@mol/vast-fixtures/",
+      "/packages/@mol/vast-xml2js/"
     ],
     "moduleNameMapper": {
       "\\.(scss)$": "identity-obj-proxy"
@@ -121,8 +141,8 @@
       "^.+\\.jsx?$": "babel-jest"
     },
     "transformIgnorePatterns": [
-      "/node_modules/(?!mol-).*",
-      "packages/.*/node_modules/(?!mol-).*"
+      "/node_modules/(?!@mol/).*",
+      "packages/.*/node_modules/(?!@mol/).*"
     ]
   }
 }
