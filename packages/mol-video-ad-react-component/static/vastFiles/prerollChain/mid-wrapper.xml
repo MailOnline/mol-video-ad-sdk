@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<VAST version="4.0">
+ <Ad id="4367623109">
+  <Wrapper allowMultipleAds="true" >
+   <AdSystem>MOL</AdSystem>
+   <VASTAdTagURI><![CDATA[http://localhost:9001/vastFiles/prerollChain/preroll-inline.xml]]></VASTAdTagURI>
+   <Error><![CDATA[https://test.example.com/mid-wrapper/error/[ERRORCODE]]]></Error>
+   <Impression><![CDATA[https://test.example.com/mid-wrapper/impression]]></Impression>
+   <Creatives>
+    <Creative sequence="1">
+     <Linear>
+        <TrackingEvents>
+          <Tracking event="start"><![CDATA[https://test.example.com/mid-wrapper/start]]></Tracking>
+          <Tracking event="firstQuartile"><![CDATA[https://test.example.com/mid-wrapper/firstQuartile]]></Tracking>
+          <Tracking event="midpoint"><![CDATA[https://test.example.com/mid-wrapper/midpoint]]></Tracking>
+          <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/mid-wrapper/thirdQuartile]]></Tracking>
+          <Tracking event="complete"><![CDATA[https://test.example.com/mid-wrapper/complete]]></Tracking>
+          <Tracking event="playerExpand"><![CDATA[https://test.example.com/mid-wrapper/playerExpand]]></Tracking>
+          <Tracking event="playerCollapse"><![CDATA[https://test.example.com/mid-wrapper/playerCollapse]]></Tracking>
+          <Tracking event="mute"><![CDATA[https://test.example.com/mid-wrapper/mute]]></Tracking>
+          <Tracking event="unmute"><![CDATA[https://test.example.com/mid-wrapper/unmute]]></Tracking>
+          <Tracking event="rewind"><![CDATA[https://test.example.com/mid-wrapper/rewind]]></Tracking>
+          <Tracking event="skip"><![CDATA[https://test.example.com/mid-wrapper/skip]]></Tracking>
+          <Tracking event="pause"><![CDATA[https://test.example.com/mid-wrapper/pause]]></Tracking>
+          <Tracking event="progress" offset="00:00:05"><![CDATA[https://test.example.com/mid-wrapper/progress]]></Tracking>
+          <Tracking event="resume"><![CDATA[https://test.example.com/mid-wrapper/resume]]></Tracking>
+          <Tracking event="fullscreen"><![CDATA[https://test.example.com/mid-wrapper/fullscreen]]></Tracking>
+          <Tracking event="creativeView"><![CDATA[https://test.example.com/mid-wrapper/creativeview]]></Tracking>
+          <Tracking event="exitFullscreen"><![CDATA[https://test.example.com/mid-wrapper/exitfullscreen]]></Tracking>
+          <Tracking event="exitFullscreen"><![CDATA[https://test.example.com/mid-wrapper/exitfullscreen]]></Tracking>
+          <Tracking event="acceptInvitationLinear"><![CDATA[https://test.example.com/mid-wrapper/acceptinvitationlinear]]></Tracking>
+          <Tracking event="closeLinear"><![CDATA[https://test.example.com/mid-wrapper/closelinear]]></Tracking>
+        </TrackingEvents>
+      <VideoClicks>
+       <ClickTracking><![CDATA[https://test.example.com/mid-wrapper/clicktracking]]></ClickTracking>
+      </VideoClicks>
+     </Linear>
+    </Creative>
+   </Creatives>
+  </Wrapper>
+ </Ad>
+</VAST>

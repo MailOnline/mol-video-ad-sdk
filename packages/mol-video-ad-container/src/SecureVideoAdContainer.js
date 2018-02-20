@@ -31,16 +31,13 @@ export default class SecureVideoAdContainer extends VideoAdContainer {
    * @param {Object} [options.logger] - Optional logger instance.
    *                                    Must comply to the [Console interface](https://developer.mozilla.org/es/docs/Web/API/Console).
    *                                    Defaults to console.
-   * @param {boolean} [options.dynamicResize] - Optional flag to tell the container to resize automatically whenever the placeholder changes its size.
-   *                                            Defaults to true.
    */
   constructor (placeholder, options = {}) {
     super(placeholder, options);
 
     const {
       videoElement,
-      logger = console,
-      dynamicResize = true
+      logger = console
     } = options;
 
     if (videoElement) {
@@ -66,10 +63,6 @@ export default class SecureVideoAdContainer extends VideoAdContainer {
 
         iframeDocument.body.appendChild(this.videoElement);
         this.resize();
-
-        if (dynamicResize) {
-          this.onResize(() => this.resize());
-        }
 
         return this;
       });
@@ -129,8 +122,6 @@ export default class SecureVideoAdContainer extends VideoAdContainer {
    */
   destroy () {
     super.destroy();
-
-    this[iframeElementKey] = null;
   }
 }
 

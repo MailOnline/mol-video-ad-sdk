@@ -1,4 +1,3 @@
-import {onElementResize} from 'mol-element-observers';
 import SecureVideoAdContainer from '../src/SecureVideoAdContainer';
 import VideoAdContainer from '../src/VideoAdContainer';
 
@@ -15,7 +14,6 @@ beforeEach(() => {
 
 afterEach(() => {
   document.body.removeChild(placeholder);
-  onElementResize.mockClear();
 });
 
 test('SecureVideoAdContainer must complain if you don\'t pass a placeholder element', () => {
@@ -102,7 +100,7 @@ test('SecureVideoAdContainer must be possible to add scripts to the iframe\'s', 
   expect(promise).resolves.toBe(script);
 });
 
-test('SecureVideoAdContainer destroy must remove the adContainer from the placeHolder and set the element reference to null', async () => {
+test('SecureVideoAdContainer destroy must remove the adContainer from the placeHolder', async () => {
   const secureVideoAdContainer = new SecureVideoAdContainer(placeholder);
 
   expect(secureVideoAdContainer.element).toBeInstanceOf(Element);
@@ -120,9 +118,6 @@ test('SecureVideoAdContainer destroy must remove the adContainer from the placeH
 
   secureVideoAdContainer.destroy();
 
-  expect(secureVideoAdContainer.element).toBe(null);
-  expect(secureVideoAdContainer.videoElement).toBe(null);
-  expect(secureVideoAdContainer.context).toBe(null);
   expect(placeholder.querySelector('.mol-video-ad-container')).toBe(null);
 });
 
@@ -196,31 +191,4 @@ test('SecureVideoAdContainer must resize itself on iframe load', async () => {
   await secureVideoAdContainer.ready();
 
   expect(secureVideoAdContainer.resize).toHaveBeenCalledTimes(1);
-});
-
-test('SecureVideoAdContainer must resize itself whenever the adContainer changes its size', async () => {
-  const secureVideoAdContainer = new SecureVideoAdContainer(placeholder);
-
-  await secureVideoAdContainer.ready();
-
-  const adContainerElement = secureVideoAdContainer.element;
-
-  expect(onElementResize).toHaveBeenCalledWith(adContainerElement, expect.any(Function));
-
-  const onResizeHandler = onElementResize.mock.calls[0][1];
-
-  SecureVideoAdContainer.prototype.resize = jest.fn();
-  expect(secureVideoAdContainer.resize).not.toHaveBeenCalled();
-  onResizeHandler();
-  expect(secureVideoAdContainer.resize).toHaveBeenCalled();
-});
-
-test('SecureVideoAdContainer must be possible to disable dynamic resize', async () => {
-  const secureVideoAdContainer = new SecureVideoAdContainer(placeholder, {
-    dynamicResize: false
-  });
-
-  await secureVideoAdContainer.ready();
-
-  expect(onElementResize).not.toHaveBeenCalled();
 });

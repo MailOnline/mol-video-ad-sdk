@@ -1,4 +1,3 @@
-import {onElementResize} from 'mol-element-observers';
 import loadScript from './helpers/loadScript';
 import createAdVideoElement from './helpers/createAdVideoElement';
 
@@ -12,8 +11,7 @@ const createAdContainer = () => {
 
   return adContainer;
 };
-const stopOnResizeObserver = Symbol('stopOnResizeObserver');
-const onResizeCallbacks = Symbol('onResizeCallbacks');
+const destroyed = Symbol('destroyed');
 
 /**
  * Contains everyting necesary to contain and create a video ad within a given placeholder Element.
@@ -59,6 +57,8 @@ class VideoAdContainer {
     if (!isVideoElement(videoElement)) {
       this.element.appendChild(this.videoElement);
     }
+
+    this[destroyed] = false;
   }
 
   /**
@@ -68,31 +68,6 @@ class VideoAdContainer {
    */
   ready () {
     return Promise.resolve(this);
-  }
-
-  /**
-   * Will call the passed callback whenever the VideoAdContainer resizes.
-   *
-   * @param {Function} callback - To be call on resize.
-   */
-  // eslint-disable-next-line promise/prefer-await-to-callbacks
-  onResize (callback) {
-    if (this.isDestroyed()) {
-      throw new Error('VideoAdContainer has been destroyed');
-    }
-
-    if (!this[stopOnResizeObserver]) {
-      this[onResizeCallbacks] = [];
-      const callOnResizeCallbacks = () => this[onResizeCallbacks].forEach((onResizeCallback) => onResizeCallback());
-
-      this[stopOnResizeObserver] = onElementResize(this.element, callOnResizeCallbacks);
-    }
-
-    this[onResizeCallbacks].push(callback);
-
-    return () => {
-      this[onResizeCallbacks] = this[onResizeCallbacks].filter((onResizeCallback) => onResizeCallback !== callback);
-    };
   }
 
   /**
@@ -123,16 +98,7 @@ class VideoAdContainer {
    */
   destroy () {
     this.element.parentNode.removeChild(this.element);
-    this.element = null;
-    this.context = null;
-    this.videoElement = null;
-
-    if (this[stopOnResizeObserver]) {
-      this[stopOnResizeObserver]();
-
-      this[onResizeCallbacks] = null;
-      this[stopOnResizeObserver] = null;
-    }
+    this[destroyed] = true;
   }
 
   /**
@@ -141,7 +107,7 @@ class VideoAdContainer {
    * @returns {boolean} - true if the container is destroyed and false otherwise.
    */
   isDestroyed () {
-    return !Boolean(this.element);
+    return this[destroyed];
   }
 
   /*

@@ -1,0 +1,33 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "debug": false,
+        "modules": false,
+        "targets": {
+          "browsers": [
+            "> 1%",
+            "last 3 versions",
+            "ios > 8",
+            "not ie < 10"
+          ]
+        },
+        "useBuiltIns": true
+      }
+    ],
+    "stage-3",
+    "react"
+  ],
+  "plugins": [
+    "babel-plugin-transform-class-properties",
+    [
+      "transform-runtime",
+      {
+        "helpers": false,
+        "polyfill": false,
+        "regenerator": true
+      }
+    ]
+  ]
+}

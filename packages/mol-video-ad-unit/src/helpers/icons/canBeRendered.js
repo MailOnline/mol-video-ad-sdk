@@ -39,6 +39,12 @@ const overlap = (newIcon, drawnIcon) => {
 
 export const withoutOverlaps = (newIcon, {drawnIcons}) => !drawnIcons.some((drawnIcon) => overlap(newIcon, drawnIcon));
 
-const canBeRendered = (newIcon, config) => hasSpace(newIcon, config) && withinBoundaries(newIcon, config) && withoutOverlaps(newIcon, config);
+const canBeRendered = (newIcon, config) => {
+  const thereIsSpace = hasSpace(newIcon, config);
+  const isWithinTheContentArea = withinBoundaries(newIcon, config);
+  const doesNotOverlap = withoutOverlaps(newIcon, config);
+
+  return thereIsSpace && isWithinTheContentArea && doesNotOverlap;
+};
 
 export default canBeRendered;

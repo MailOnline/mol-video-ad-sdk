@@ -64,17 +64,18 @@ test('addIcons must add the icons to the video ad container', async () => {
   ];
   const {element} = videoAdContainer;
 
-  addIcons(icons, {
+  const {drawIcons} = addIcons(icons, {
     logger,
     videoAdContainer
   });
 
+  drawIcons();
   await waitFor(element, 'iconsdrawn');
 
   icons.forEach((icon) => expect(element.contains(icon.element)).toBe(true));
 });
 
-test('addIcons must not the the icons whose offset is not meet yet', async () => {
+test('addIcons must not add the the icons whose offset is not meet yet', async () => {
   const icons = [
     {
       height: 20,
@@ -92,10 +93,12 @@ test('addIcons must not the the icons whose offset is not meet yet', async () =>
   ];
   const {element, videoElement} = videoAdContainer;
 
-  addIcons(icons, {
+  const {drawIcons} = addIcons(icons, {
     logger,
     videoAdContainer
   });
+
+  drawIcons();
 
   await waitFor(element, 'iconsdrawn');
 
@@ -105,46 +108,6 @@ test('addIcons must not the the icons whose offset is not meet yet', async () =>
   videoElement.currentTime = 5;
 
   videoElement.dispatchEvent(new Event('timeupdate'));
-
-  await waitFor(element, 'iconsdrawn');
-
-  expect(element.contains(icons[0].element)).toBe(true);
-  expect(element.contains(icons[1].element)).toBe(true);
-});
-
-test('addIcons must remove the already drawn icons before a redraw', async () => {
-  const icons = [
-    {
-      height: 20,
-      width: 20,
-      xPosition: 'right',
-      yPosition: 'top'
-    },
-    {
-      height: 20,
-      width: 20,
-      xPosition: 'left',
-      yPosition: 'top'
-    }
-  ];
-  const {element, videoElement} = videoAdContainer;
-
-  addIcons(icons, {
-    logger,
-    videoAdContainer
-  });
-
-  await waitFor(element, 'iconsdrawn');
-
-  expect(element.contains(icons[0].element)).toBe(true);
-  expect(element.contains(icons[1].element)).toBe(true);
-
-  videoElement.currentTime = 5;
-
-  videoElement.dispatchEvent(new Event('timeupdate'));
-
-  expect(element.contains(icons[0].element)).toBe(false);
-  expect(element.contains(icons[1].element)).toBe(false);
 
   await waitFor(element, 'iconsdrawn');
 
@@ -170,10 +133,12 @@ test('addIcons must remove the icons once the duration is met', async () => {
   ];
   const {element, videoElement} = videoAdContainer;
 
-  addIcons(icons, {
+  const {drawIcons} = addIcons(icons, {
     logger,
     videoAdContainer
   });
+
+  drawIcons();
 
   await waitFor(element, 'iconsdrawn');
 
@@ -207,11 +172,15 @@ test('addIcons must return a remove function', async () => {
   ];
   const {element} = videoAdContainer;
 
-  const removeIcons = addIcons(icons, {
+  const {
+    drawIcons,
+    removeIcons
+  } = addIcons(icons, {
     logger,
     videoAdContainer
   });
 
+  drawIcons();
   await waitFor(element, 'iconsdrawn');
 
   expect(element.contains(icons[0].element)).toBe(true);
@@ -240,11 +209,15 @@ test('addIcons on remove must remove the icons on corner cases too', async () =>
   ];
   const {element, videoElement} = videoAdContainer;
 
-  const removeIcons = addIcons(icons, {
+  const {
+    drawIcons,
+    removeIcons
+  } = addIcons(icons, {
     logger,
     videoAdContainer
   });
 
+  drawIcons();
   await waitFor(element, 'iconsdrawn');
 
   expect(element.contains(icons[0].element)).toBe(true);
@@ -281,12 +254,13 @@ test('addIcons must call onIconView hook the moment the icon gets added to the p
   const {element, videoElement} = videoAdContainer;
   const onIconView = jest.fn();
 
-  addIcons(icons, {
+  const {drawIcons} = addIcons(icons, {
     logger,
     onIconView,
     videoAdContainer
   });
 
+  drawIcons();
   await waitFor(element, 'iconsdrawn');
 
   expect(onIconView).toHaveBeenCalledTimes(1);
@@ -301,56 +275,4 @@ test('addIcons must call onIconView hook the moment the icon gets added to the p
   expect(onIconView).toHaveBeenCalledTimes(2);
   expect(onIconView).toHaveBeenCalledWith(icons[0]);
   expect(onIconView).toHaveBeenCalledWith(icons[1]);
-});
-
-test('addIcons must redraw the icons whenever the videoAdContainer resizes', async () => {
-  canBeRendered.mockReset();
-  canBeRendered.mockImplementationOnce(() => true)
-    .mockImplementationOnce(() => false)
-    .mockImplementationOnce(() => true)
-    .mockImplementationOnce(() => true);
-
-  const icons = [
-    {
-      height: 20,
-      width: 20,
-      xPosition: 'right',
-      yPosition: 'top'
-    },
-    {
-      height: 20,
-      width: 20,
-      xPosition: 'left',
-      yPosition: 'top'
-    }
-  ];
-  const {element} = videoAdContainer;
-  const mockRemoveOnResize = jest.fn();
-
-  videoAdContainer.onResize = jest.fn();
-  videoAdContainer.onResize.mockImplementation(() => mockRemoveOnResize);
-  const removeIcons = addIcons(icons, {
-    logger,
-    videoAdContainer
-  });
-
-  const onResizeHandler = videoAdContainer.onResize.mock.calls[0][0];
-
-  await waitFor(element, 'iconsdrawn');
-
-  expect(element.contains(icons[0].element)).toBe(true);
-  expect(element.contains(icons[1].element)).toBe(false);
-
-  onResizeHandler();
-  await waitFor(element, 'iconsdrawn');
-
-  expect(element.contains(icons[0].element)).toBe(true);
-  expect(element.contains(icons[1].element)).toBe(true);
-  expect(mockRemoveOnResize).not.toHaveBeenCalled();
-
-  removeIcons();
-
-  expect(element.contains(icons[0].element)).toBe(false);
-  expect(element.contains(icons[1].element)).toBe(false);
-  expect(mockRemoveOnResize).toHaveBeenCalledTimes(1);
 });

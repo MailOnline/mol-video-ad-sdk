@@ -169,3 +169,28 @@ test('updateIcon must assume dynamic position top, right if missing on the icon'
   }));
 });
 
+test('updateIcon must mark the icon for redraw if needed', () => {
+  Object.assign(icon, {
+    height: 4,
+    width: 2
+  });
+
+  const updatedIcon = updateIcon(icon, iconElement, config);
+
+  expect(updatedIcon).toEqual(expect.objectContaining({
+    height: 4,
+    left: 3,
+    top: 0,
+    updated: true,
+    width: 2
+  }));
+
+  expect(updateIcon(updatedIcon, iconElement, config)).toEqual(expect.objectContaining({
+    height: 4,
+    left: 3,
+    top: 0,
+    updated: false,
+    width: 2
+  }));
+});
+

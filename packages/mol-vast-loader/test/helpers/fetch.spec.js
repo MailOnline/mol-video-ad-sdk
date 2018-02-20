@@ -28,19 +28,3 @@ test('fetch must throw an error if the response\'s status is above 399', async (
     expect(error.response).toEqual(forbiddenResponse);
   }
 });
-
-test('fetch must not throw an error if the option \'doNotThrow\' is passed', async () => {
-  const forbiddenResponse = {
-    status: 403,
-    statusText: 'forbidden request'
-  };
-
-  global.fetch = jest.fn(() => Promise.resolve(forbiddenResponse));
-
-  const response = await fetch('http://example.com', {
-    doNotThrow: true
-  });
-
-  expect(response).toEqual(forbiddenResponse);
-});
-

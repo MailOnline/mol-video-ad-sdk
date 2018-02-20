@@ -22,6 +22,7 @@ beforeEach(() => {
     height: 5,
     left: 0,
     top: 0,
+    updated: true,
     width: 5,
     xPosition: 'left',
     yPosition: 'top'
@@ -90,6 +91,7 @@ test('renderIcon must style the icon Element', async () => {
     height: 3,
     left: 1,
     top: 4,
+    updated: true,
     width: 6
   };
 
@@ -180,4 +182,55 @@ test('renderIcon element anchor on click must call the passed onIconClick method
 
   expect(config.onIconClick).toHaveBeenCalledTimes(1);
   expect(config.onIconClick).toHaveBeenCalledWith(icon);
+});
+
+test('renderIcon must avoid adding the element to the dom if not needed', async () => {
+  const updatedIcon = {
+    height: 3,
+    left: 1,
+    top: 4,
+    updated: false,
+    width: 6
+  };
+
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
+  updateIcon.mockImplementation(() => updatedIcon);
+  canBeRendered.mockImplementation(() => true);
+
+  await renderIcon(icon, config);
+
+  expect(icon.element.parentNode).toEqual(null);
+  updatedIcon.updated = true;
+
+  await renderIcon(icon, config);
+
+  expect(icon.element.parentNode).toBe(placeholder);
+});
+
+test('renderIcon must must remove an icon that can no longer be rendered', async () => {
+  const updatedIcon = {
+    height: 3,
+    left: 1,
+    top: 4,
+    updated: true,
+    width: 6
+  };
+
+  loadResource.mockImplementation(() => Promise.resolve(iconResource));
+  updateIcon.mockImplementation(() => updatedIcon);
+  canBeRendered.mockImplementation(() => true);
+
+  await renderIcon(icon, config);
+
+  expect(icon.element.parentNode).toBe(placeholder);
+
+  canBeRendered.mockImplementation(() => false);
+
+  try {
+    await renderIcon(icon, config);
+  } catch (error) {
+    // Do nothing
+  }
+
+  expect(icon.element.parentNode).toEqual(null);
 });

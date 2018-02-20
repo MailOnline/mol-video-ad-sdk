@@ -35,7 +35,17 @@ jest.mock('../src/helpers/metrics/handlers/index.js', () => [
   jest.fn(() => mockStopMetricHandler)
 ]);
 
-jest.mock('../src/helpers/icons/addIcons.js', () => jest.fn());
+const mockDrawIcons = jest.fn();
+const mockRemoveIcons = jest.fn();
+
+jest.mock('../src/helpers/icons/addIcons.js', () =>
+  jest.fn(
+    () => ({
+      drawIcons: mockDrawIcons,
+      removeIcons: mockRemoveIcons
+    })
+  )
+);
 jest.mock('../src/helpers/icons/retrieveIcons.js', () => jest.fn());
 
 let vastChain;
@@ -78,9 +88,8 @@ afterEach(() => {
   vastChain = null;
   videoAdContainer = null;
 
-  addIcons.mockClear();
-  retrieveIcons.mockClear();
-  mockStopMetricHandler.mockClear();
+  jest.clearAllMocks();
+  retrieveIcons.mockReset();
 });
 
 test('VastAdUnit must set the initial state with the data passed to the constructor', () => {
@@ -173,10 +182,11 @@ test('VastAdUnit must add the icons of the vastChain', () => {
   retrieveIcons.mockImplementation(() => icons);
   adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
-  adUnit.start();
-
   expect(retrieveIcons).toHaveBeenCalledTimes(2);
   expect(addIcons).toHaveBeenCalledTimes(1);
+
+  adUnit.start();
+  expect(mockDrawIcons).toHaveBeenCalledTimes(1);
 
   expect(addIcons).toHaveBeenCalledWith(icons, {
     logger: adUnit.logger,
@@ -194,9 +204,11 @@ test('VastAdUnit passed iconView must emit iconView passing the event, this and 
     xPosition: 'left',
     yPosition: 'top'
   }];
-  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   retrieveIcons.mockImplementation(() => icons);
+
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
   adUnit.start();
 
   expect(addIcons).toHaveBeenCalledTimes(1);
@@ -216,7 +228,7 @@ test('VastAdUnit passed iconView must emit iconView passing the event, this and 
   expect(passedArgs).toEqual([iconView, adUnit, icons[0]]);
 });
 
-test('VastAdUnit passed iconClick must emiit iconClick passing the event, this and the viewed icon', async () => {
+test('VastAdUnit passed iconClick must emit iconClick passing the event, this and the viewed icon', async () => {
   canPlay.mockReturnValue(true);
   const icons = [{
     height: 20,
@@ -224,9 +236,11 @@ test('VastAdUnit passed iconClick must emiit iconClick passing the event, this a
     xPosition: 'left',
     yPosition: 'top'
   }];
-  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   retrieveIcons.mockImplementation(() => icons);
+
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
   adUnit.start();
 
   expect(addIcons).toHaveBeenCalledTimes(1);
@@ -272,7 +286,7 @@ test('VastAdUnit start emit an error if there is no suitable mediaFile to play',
   expect(errorHandler).toHaveBeenCalledTimes(1);
   expect(errorHandler).toHaveBeenCalledWith(errorEvt, adUnit, adUnit.error);
   expect(onErrorCallback).toHaveBeenCalledTimes(1);
-  expect(onErrorCallback).toHaveBeenCalledWith(adUnit, adUnit.error);
+  expect(onErrorCallback).toHaveBeenCalledWith(adUnit.error);
 });
 
 test('VastAdUnit start must select a mediaFile and update the src and the assetUri', () => {
@@ -353,32 +367,35 @@ test('VastAdUnit start must do nothing on a second play', () => {
   'pause',
   'cancel',
   'onError',
-  'onComplete'
+  'onComplete',
+  'finish',
+  'resize',
+  'changeVolume'
 ].forEach((method) => {
-  test(`VastAdUnit ${method} must throw if you call it on a destroyed adUnit`, () => {
+  test(`VastAdUnit ${method} must throw if you call it on a finished adUnit`, () => {
     const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
-    adUnit.destroy();
+    adUnit.cancel();
 
-    expect(() => adUnit[method]()).toThrowError('VastAdUnit has been destroyed');
+    expect(() => adUnit[method]()).toThrowError('VastAdUnit is finished');
   });
 });
 
-test('VastAdUnit cancel must stop the ad video and destroy the ad unit', () => {
+test('VastAdUnit cancel must stop the ad video and finish the ad unit', () => {
   canPlay.mockReturnValue(true);
   Object.defineProperty(videoAdContainer.videoElement, 'pause', {
     value: jest.fn()
   });
   const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
-  adUnit.destroy = jest.fn();
+  adUnit.finish = jest.fn();
   adUnit.start();
 
   expect(videoAdContainer.videoElement.pause).toHaveBeenCalledTimes(0);
   adUnit.cancel();
 
   expect(videoAdContainer.videoElement.pause).toHaveBeenCalledTimes(1);
-  expect(adUnit.destroy).toHaveBeenCalledTimes(0);
+  expect(adUnit.finish).toHaveBeenCalledTimes(1);
 });
 
 test('VastAdUnit onComplete must complain if you don\'t pass a callback', () => {
@@ -405,6 +422,7 @@ test('VastAdUnit onComplete must call the passed callback once the ad has comple
 
   videoAdContainer.videoElement.dispatchEvent(new Event('ended'));
   expect(callback).toHaveBeenCalledTimes(1);
+  expect(adUnit.isFinished()).toBe(true);
 });
 
 test('VastAdUnit onError must complain if you don\'t pass a callback', () => {
@@ -430,9 +448,10 @@ test('VastAdUnit onError must be called if there was an issue viewing the ad', (
 
   videoElement.dispatchEvent(new Event('error'));
   expect(callback).toHaveBeenCalledTimes(1);
-  expect(callback).toHaveBeenCalledWith(adUnit, mediaError);
+  expect(callback).toHaveBeenCalledWith(mediaError);
   expect(adUnit.error).toBe(mediaError);
   expect(adUnit.errorCode).toBe(405);
+  expect(adUnit.isFinished()).toBe(true);
 });
 
 test('VastAdUnit must emit whatever metric event happens', async () => {
@@ -457,26 +476,18 @@ test('VastAdUnit must emit whatever metric event happens', async () => {
   expect(passedArgs).toEqual(['custom', adUnit, data]);
 });
 
-test('VastAdUnit destroy must remove the src from the videoElement, stop the metric handlers and set state to null', () => {
+test('VastAdUnit finish must stop the metric handlers ', () => {
   canPlay.mockReturnValue(true);
   const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.start();
-  adUnit.destroy();
+  adUnit.finish();
 
-  expect(videoAdContainer.videoElement.src).toBe('');
-  expect(adUnit.vastChain).toEqual(null);
-  expect(adUnit.videoAdContainer).toEqual(null);
-  expect(adUnit.error).toEqual(null);
-  expect(adUnit.errorCode).toEqual(null);
-  expect(adUnit.assetUri).toEqual(null);
   expect(mockStopMetricHandler).toHaveBeenCalledTimes(metricHandlers.length);
 });
 
-test('VastAdUnit destroy must remove the icons of the vastChain', () => {
+test('VastAdUnit finish must remove the icons of the vastChain', () => {
   canPlay.mockReturnValue(true);
-
-  const removeIconMock = jest.fn();
 
   retrieveIcons.mockImplementation(() => [{
     height: 20,
@@ -485,13 +496,12 @@ test('VastAdUnit destroy must remove the icons of the vastChain', () => {
     yPosition: 'top'
   }]);
 
-  addIcons.mockImplementation(() => removeIconMock);
   const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.start();
-  adUnit.destroy();
+  adUnit.finish();
 
-  expect(removeIconMock).toHaveBeenCalledTimes(1);
+  expect(mockRemoveIcons).toHaveBeenCalledTimes(1);
 });
 
 [
@@ -518,4 +528,62 @@ test('VastAdUnit destroy must remove the icons of the vastChain', () => {
     adUnit[method]();
     expect(videoAdContainer.videoElement[vpMethod]).toHaveBeenCalledTimes(1);
   });
+});
+
+test('VastAdUnit resize must resize the the passed videoAdContainer', () => {
+  canPlay.mockReturnValue(true);
+  videoAdContainer.resize = jest.fn();
+  retrieveIcons.mockImplementation(() => null);
+
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+  adUnit.start();
+
+  expect(videoAdContainer.resize).toHaveBeenCalledTimes(0);
+  expect(mockRemoveIcons).toHaveBeenCalledTimes(0);
+  expect(mockDrawIcons).toHaveBeenCalledTimes(0);
+
+  adUnit.resize();
+
+  expect(videoAdContainer.resize).toHaveBeenCalledTimes(1);
+  expect(mockRemoveIcons).toHaveBeenCalledTimes(0);
+  expect(mockDrawIcons).toHaveBeenCalledTimes(0);
+});
+
+test('VastAdUnit must redraw the icons', () => {
+  canPlay.mockReturnValue(true);
+
+  const icons = [{
+    height: 20,
+    width: 20,
+    xPosition: 'left',
+    yPosition: 'top'
+  }];
+
+  retrieveIcons.mockImplementation(() => icons);
+
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+  adUnit.start();
+
+  expect(mockRemoveIcons).toHaveBeenCalledTimes(0);
+  expect(mockDrawIcons).toHaveBeenCalledTimes(1);
+
+  adUnit.resize();
+
+  expect(mockRemoveIcons).toHaveBeenCalledTimes(1);
+  expect(mockDrawIcons).toHaveBeenCalledTimes(2);
+});
+
+test('VastAdUnit changeVolume must change the volume of the video element', () => {
+  canPlay.mockReturnValue(true);
+  retrieveIcons.mockImplementation(() => null);
+  const {videoElement} = videoAdContainer;
+
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+  expect(videoElement.volume).toBe(1);
+
+  adUnit.changeVolume(0.5);
+  expect(videoElement.volume).toBe(0.5);
 });

@@ -9,10 +9,7 @@
   "files": [
     "src"
   ],
-  "peerDependencies": {
-    "mol-element-observers": "^0.1.0"
-  },
-  "devDependencies": {
+  "dependencies": {
     "mol-element-observers": "^0.1.0"
   }
 }

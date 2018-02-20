@@ -1,24 +1,41 @@
+/* eslint-disable promise/prefer-await-to-then, promise/always-return */
+import waitFor from '../dom/waitFor';
 import createResource from './createResource';
 
+const noop = () => {};
 const loadResource = (icon, {document, placeholder}) => new Promise((resolve, reject) => {
   try {
-    const iconElement = createResource(document, icon);
+    const resourceElement = createResource(document, icon);
+    const resourceErrorWait = waitFor(resourceElement, 'error');
+    const resourceLoadWait = waitFor(resourceElement, 'load');
+    const cleanUp = () => {
+      if (placeholder.contains(resourceElement)) {
+        placeholder.removeChild(resourceElement);
+        resourceElement.style.zIndex = 0;
+      }
+    };
 
-    iconElement.addEventListener('error', () => {
-      placeholder.removeChild(iconElement);
-      iconElement.style.zIndex = 0;
-      reject(new Error('Error loading icon'));
-    });
+    resourceErrorWait.promise
+      .then(() => {
+        resourceLoadWait.cancel();
+        cleanUp();
 
-    iconElement.addEventListener('load', () => {
-      placeholder.removeChild(iconElement);
-      iconElement.style.zIndex = 0;
-      resolve(iconElement);
-    });
+        reject(new Error('Error loading resource'));
+      })
+      .catch(noop);
+
+    resourceLoadWait.promise
+      .then(() => {
+        resourceErrorWait.cancel();
+        cleanUp();
+
+        resolve(resourceElement);
+      })
+      .catch(noop);
 
     // Some browsers will not load the resource if they are not added to the DOM
-    iconElement.style.zIndex = -9999;
-    placeholder.appendChild(iconElement);
+    resourceElement.style.zIndex = -9999;
+    placeholder.appendChild(resourceElement);
   } catch (error) {
     reject(error);
   }

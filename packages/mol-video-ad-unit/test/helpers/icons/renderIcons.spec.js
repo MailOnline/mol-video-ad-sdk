@@ -1,8 +1,10 @@
 import {createVideoAdContainer} from 'mol-video-ad-container';
 import renderIcons from '../../../src/helpers/icons/renderIcons';
 import renderIcon from '../../../src/helpers/icons/renderIcon';
+import canBeShown from '../../../src/helpers/icons/canBeShown';
 
 jest.mock('../../../src/helpers/icons/renderIcon');
+jest.mock('../../../src/helpers/icons/canBeShown');
 
 let videoAdContainer;
 let logger;
@@ -11,7 +13,7 @@ let icons;
 beforeEach(async () => {
   videoAdContainer = await createVideoAdContainer(document.createElement('DIV'));
   logger = {
-    error: jest.fn()
+    log: jest.fn()
   };
   icons = [
     {
@@ -24,12 +26,28 @@ beforeEach(async () => {
       width: 5
     }
   ];
+  canBeShown.mockImplementation(() => true);
 });
 
 afterEach(() => {
   videoAdContainer = null;
   logger = null;
   icons = null;
+});
+
+test('renderIcons must filterout the icons that can not be shown due to their offset or duration', () => {
+  const iconElement = document.createElement('DIV');
+
+  icons[0].element = iconElement;
+  videoAdContainer.element.appendChild(iconElement);
+  canBeShown.mockImplementation(() => false);
+
+  expect(renderIcons(icons, {
+    logger,
+    videoAdContainer
+  })).resolves.toEqual([]);
+
+  expect(iconElement.parentNode).toBe(null);
 });
 
 test('renderIcons must render the passed icons and return an array with the rendered icon definitions updated', () => {
@@ -74,6 +92,6 @@ test('renderIcons must log an error if an icon failed to render and return the o
     updatedIcon
   ]);
 
-  expect(logger.error).toHaveBeenCalledTimes(1);
-  expect(logger.error).toHaveBeenCalledWith(renderError);
+  expect(logger.log).toHaveBeenCalledTimes(1);
+  expect(logger.log).toHaveBeenCalledWith(renderError);
 });

@@ -9,7 +9,7 @@
   "files": [
     "src"
   ],
-  "peerDependencies": {
+  "dependencies": {
     "lodash": "^4.17.4"
   },
   "devDependencies": {

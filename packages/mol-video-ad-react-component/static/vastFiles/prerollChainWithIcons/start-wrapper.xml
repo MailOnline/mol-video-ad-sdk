@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<VAST version="4.0">
+ <Ad id="4367623109">
+  <Wrapper allowMultipleAds="true" >
+   <AdSystem>MOL</AdSystem>
+   <VASTAdTagURI><![CDATA[http://localhost:9001/vastFiles/prerollChain/mid-wrapper.xml]]></VASTAdTagURI>
+   <Error><![CDATA[https://test.example.com/start-wrapper/error/[ERRORCODE]]]></Error>
+   <Impression><![CDATA[https://test.example.com/start-wrapper/impression]]></Impression>
+   <Creatives>
+    <Creative sequence="1">
+     <Linear>
+        <TrackingEvents>
+          <Tracking event="start"><![CDATA[https://test.example.com/start-wrapper/start]]></Tracking>
+          <Tracking event="firstQuartile"><![CDATA[https://test.example.com/start-wrapper/firstQuartile]]></Tracking>
+          <Tracking event="midpoint"><![CDATA[https://test.example.com/start-wrapper/midpoint]]></Tracking>
+          <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/start-wrapper/thirdQuartile]]></Tracking>
+          <Tracking event="complete"><![CDATA[https://test.example.com/start-wrapper/complete]]></Tracking>
+          <Tracking event="playerExpand"><![CDATA[https://test.example.com/start-wrapper/playerExpand]]></Tracking>
+          <Tracking event="playerCollapse"><![CDATA[https://test.example.com/start-wrapper/playerCollapse]]></Tracking>
+          <Tracking event="mute"><![CDATA[https://test.example.com/start-wrapper/mute]]></Tracking>
+          <Tracking event="unmute"><![CDATA[https://test.example.com/start-wrapper/unmute]]></Tracking>
+          <Tracking event="rewind"><![CDATA[https://test.example.com/start-wrapper/rewind]]></Tracking>
+          <Tracking event="skip"><![CDATA[https://test.example.com/start-wrapper/skip]]></Tracking>
+          <Tracking event="pause"><![CDATA[https://test.example.com/start-wrapper/pause]]></Tracking>
+          <Tracking event="progress" offset="00:00:05"><![CDATA[https://test.example.com/start-wrapper/progress]]></Tracking>
+          <Tracking event="resume"><![CDATA[https://test.example.com/start-wrapper/resume]]></Tracking>
+          <Tracking event="fullscreen"><![CDATA[https://test.example.com/start-wrapper/fullscreen]]></Tracking>
+          <Tracking event="creativeView"><![CDATA[https://test.example.com/start-wrapper/creativeview]]></Tracking>
+          <Tracking event="exitFullscreen"><![CDATA[https://test.example.com/start-wrapper/exitfullscreen]]></Tracking>
+          <Tracking event="exitFullscreen"><![CDATA[https://test.example.com/start-wrapper/exitfullscreen]]></Tracking>
+          <Tracking event="acceptInvitationLinear"><![CDATA[https://test.example.com/start-wrapper/acceptinvitationlinear]]></Tracking>
+          <Tracking event="closeLinear"><![CDATA[https://test.example.com/start-wrapper/closelinear]]></Tracking>
+        </TrackingEvents>
+      <VideoClicks>
+       <ClickTracking><![CDATA[https://test.example.com/start-wrapper/clicktracking]]></ClickTracking>
+      </VideoClicks>
+      <Icons>
+          <Icon program="MOL_HTML" width="20px" height="20" xPosition="left" yPosition="top" duration="00:00:30" offset="00:00:05" pxratio="1">
+            <HTMLResource>http://localhost:9001/icons/html/blue.html</HTMLResource>
+            <IconClicks>
+              <IconClickThrough>https://test.example.com/start-wrapper/icons/html/blue/iconClickThrough</IconClickThrough>
+              <IconClickTracking>https://test.example.com/start-wrapper/icons/html/blue/iconClickTracking</IconClickTracking>
+            </IconClicks>
+            <IconViewTracking>https://test.example.com/start-wrapper/icons/html/blue/iconViewTracking</IconViewTracking>
+          </Icon>
+          <Icon program="MOL_IFRAME" width="20px" height="20px" xPosition="right" yPosition="top" pxratio="1">
+            <IFrameResource>http://localhost:9001/icons/iframe/icon.html</IFrameResource>
+            <IconClicks>
+              <IconClickThrough>https://test.example.com/start-wrapper/icons/iframe/icon/iconClickThrough</IconClickThrough>
+              <IconClickTracking>https://test.example.com/start-wrapper/icons/iframe/icon/iconClickTracking</IconClickTracking>
+            </IconClicks>
+            <IconViewTracking>https://test.example.com/start-wrapper/icons/iframe/icon/iconViewTracking</IconViewTracking>
+          </Icon>
+          <Icon program="MOL_STATIC_HTML5" width="40px" height="40px" xPosition="left" yPosition="botton" duration="00:00:30" offset="00:00:05" pxratio="1">
+            <StaticResource>http://localhost:9001/icons/static/instagram.png</StaticResource>
+            <IconClicks>
+              <IconClickThrough>https://test.example.com/start-wrapper/icons/static/instagram/iconClickThrough</IconClickThrough>
+              <IconClickTracking>https://test.example.com/start-wrapper/icons/static/instagram/iconClickTracking</IconClickTracking>
+            </IconClicks>
+            <IconViewTracking>https://test.example.com/start-wrapper/icons/static/instagram/iconViewTracking</IconViewTracking>
+          </Icon>
+        </Icons>
+     </Linear>
+    </Creative>
+   </Creatives>
+  </Wrapper>
+ </Ad>
+</VAST>

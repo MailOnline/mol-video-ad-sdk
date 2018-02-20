@@ -42,7 +42,9 @@ test('loadResource must return a promise', async () => {
   expect(placeholder.querySelector('.mock-resource-element')).toBeNull();
 });
 
-test('loadResource must reject the promise if there is a problem loading the icon', () => {
+test('loadResource must reject the promise if there is a problem loading the icon', async () => {
+  expect.assertions(4);
+
   const promise = loadResource(icon, {
     document,
     placeholder
@@ -52,11 +54,14 @@ test('loadResource must reject the promise if there is a problem loading the ico
 
   expect(iconElement.style.zIndex).toBe('-9999');
 
-  iconElement.dispatchEvent(new Event('error'));
-
-  expect(promise).rejects.toBeInstanceOf(Error);
-  expect(iconElement.style.zIndex).toBe('0');
-  expect(placeholder.querySelector('.mock-resource-element')).toBeNull();
+  try {
+    iconElement.dispatchEvent(new Event('error'));
+    await promise;
+  } catch (error) {
+    expect(error.message).toBe('Error loading resource');
+    expect(iconElement.style.zIndex).toBe('0');
+    expect(placeholder.querySelector('.mock-resource-element')).toBeNull();
+  }
 });
 
 test('loadResource must reject the promise if there is a problem creating the resource', () => {

@@ -53,6 +53,7 @@ beforeEach(() => {
 afterEach(() => {
   vastChain = null;
   videoAdContainer = null;
+  trackLinearEvent.mockClear();
 });
 
 test('createVideoAdUnit must return a VideoAdUnit', async () => {
@@ -75,11 +76,31 @@ Object.values(linearEvents).forEach((event) => {
     await eventPromise;
 
     expect(trackLinearEvent).toHaveBeenCalledTimes(1);
-    expect(trackLinearEvent).toHaveBeenCalledWith(event, {
+    expect(trackLinearEvent).toHaveBeenCalledWith(event, vastChain, {
+      data,
+      errorCode: adUnit.errorCode
+    });
+  });
+
+  test('createVideoAdUnit must call onLinearEvent handler if provided with the emitted event and the payload', async () => {
+    const onLinearEvent = jest.fn();
+    const adUnit = await createVideoAdUnit(vastChain, videoAdContainer, {onLinearEvent});
+    const data = {
+      progressUri: 'http://test.example.com/progress'
+    };
+    const eventPromise = new Promise((resolve) => adUnit.on(event, resolve));
+
+    adUnit.errorCode = 999;
+    adUnit.emit(event, event, adUnit, data);
+
+    await eventPromise;
+
+    expect(onLinearEvent).toHaveBeenCalledTimes(1);
+    expect(onLinearEvent).toHaveBeenCalledWith(event, vastChain, {
       data,
       errorCode: adUnit.errorCode
     });
 
-    trackLinearEvent.mockClear();
+    onLinearEvent.mockClear();
   });
 });

@@ -64,8 +64,13 @@ const renderIcon = async (icon, config) => {
   const updatedIcon = updateIcon(icon, iconElement, config);
 
   if (canBeRendered(updatedIcon, config)) {
-    placeholder.appendChild(updateIconElement(iconElement, updatedIcon));
+    if (updatedIcon.updated) {
+      placeholder.appendChild(updateIconElement(iconElement, updatedIcon));
+    }
   } else {
+    if (iconElement.parentNode) {
+      iconElement.parentNode.removeChild(iconElement);
+    }
     throw new Error('Icon can\'t be rendered');
   }
 
