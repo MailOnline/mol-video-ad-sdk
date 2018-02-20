@@ -47,7 +47,7 @@ test('renderIcon must fail if the icon can not be rendered', () => {
   loadResource.mockImplementation(() => Promise.resolve(iconResource));
   updateIcon.mockImplementation(() => icon);
   canBeRendered.mockImplementation(() => false);
-  expect(renderIcon(icon, config)).rejects.toThrowErrorMatchingSnapshot();
+  expect(renderIcon(icon, config)).rejects.toThrow('Icon can\'t be rendered');
 });
 
 test('must append the icon to the placeholder if three is no problem', async () => {
