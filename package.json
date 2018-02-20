@@ -131,8 +131,9 @@
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/packages/@mol/vast-fixtures/",
-      "/packages/@mol/vast-xml2js/"
+      "/packages/vast-fixtures/",
+      "/packages/vast-xml2js/",
+      "/packages/video-ad-react-component/src/stories/"
     ],
     "moduleNameMapper": {
       "\\.(scss)$": "identity-obj-proxy"
