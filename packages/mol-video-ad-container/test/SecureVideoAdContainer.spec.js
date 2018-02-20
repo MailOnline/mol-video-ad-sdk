@@ -1,10 +1,6 @@
 import SecureVideoAdContainer from '../src/SecureVideoAdContainer';
 import VideoAdContainer from '../src/VideoAdContainer';
 
-jest.mock('mol-element-observers', () => ({
-  onElementResize: jest.fn()
-}));
-
 let placeholder;
 
 beforeEach(() => {

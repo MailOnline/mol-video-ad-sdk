@@ -8,8 +8,5 @@
   "license": "UNLICENSED",
   "files": [
     "src"
-  ],
-  "dependencies": {
-    "mol-element-observers": "^0.1.0"
-  }
+  ]
 }
