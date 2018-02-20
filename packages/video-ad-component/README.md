@@ -1,4 +1,4 @@
-# @mol/video-ad-react-component
+# @mol/video-ad-component
 
 > React component that loads video-ads using @mol/video-ad-sdk
 

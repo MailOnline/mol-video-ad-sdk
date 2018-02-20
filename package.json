@@ -11,7 +11,7 @@
     "precommit": "npm run lint",
     "prepush": "npm test",
     "start-package": "cd packages/$START_PACKAGE && npm run storybook && cd -",
-    "start": "START_PACKAGE=@mol/video-ad-react-component npm run start-package",
+    "start": "START_PACKAGE=@mol/video-ad-component npm run start-package",
     "test": "NODE_ENV=test jest",
     "clean": "lerna clean; find . -type f -name 'package-lock.json' -delete; rm -r node_modules"
   },
@@ -133,7 +133,7 @@
       "/node_modules/",
       "/packages/vast-fixtures/",
       "/packages/vast-xml2js/",
-      "/packages/video-ad-react-component/src/stories/"
+      "/packages/video-ad-component/src/stories/"
     ],
     "moduleNameMapper": {
       "\\.(scss)$": "identity-obj-proxy"
