@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {onElementResize} from '@mol/element-observers';
 import VideoAd from './VideoAd';
 
+// TODO: test this component
 class ResponsiveVideoAd extends Component {
   constructor (props, context) {
     super(props, context);
