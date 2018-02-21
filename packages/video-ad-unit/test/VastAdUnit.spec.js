@@ -11,6 +11,7 @@ import {
 import {createVideoAdContainer} from '@mol/video-ad-container';
 import VastAdUnit from '../src/VastAdUnit';
 import canPlay from '../src/helpers/media/canPlay';
+import updateMedia from '../src/helpers/media/updateMedia';
 import metricHandlers from '../src/helpers/metrics/handlers';
 import addIcons from '../src/helpers/icons/addIcons';
 import retrieveIcons from '../src/helpers/icons/retrieveIcons';
@@ -23,6 +24,7 @@ const {
 const mockStopMetricHandler = jest.fn();
 
 jest.mock('../src/helpers/media/canPlay.js', () => jest.fn());
+jest.mock('../src/helpers/media/updateMedia.js', () => jest.fn());
 jest.mock('../src/helpers/metrics/handlers/index.js', () => [
   jest.fn(({videoElement}, callback) => {
     videoElement.addEventListener('ended', () => callback('complete'));
@@ -548,6 +550,39 @@ test('VastAdUnit resize must resize the the passed videoAdContainer', () => {
   expect(videoAdContainer.resize).toHaveBeenCalledTimes(1);
   expect(mockRemoveIcons).toHaveBeenCalledTimes(0);
   expect(mockDrawIcons).toHaveBeenCalledTimes(0);
+});
+
+test('VastAdUnit resize must not update the media if the ad has not started', () => {
+  canPlay.mockReturnValue(true);
+  videoAdContainer.resize = jest.fn();
+  retrieveIcons.mockImplementation(() => null);
+
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+  adUnit.resize();
+
+  expect(updateMedia).toHaveBeenCalledTimes(0);
+});
+
+test('VastAdUnit resize update the media element if the ad has started and there is a better source for the new size', () => {
+  canPlay.mockReturnValue(true);
+  videoAdContainer.resize = jest.fn();
+  retrieveIcons.mockImplementation(() => null);
+
+  const {videoElement} = videoAdContainer;
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+  adUnit.start();
+  adUnit.resize();
+
+  expect(updateMedia).toHaveBeenCalledTimes(0);
+  const bestSource = videoElement.src;
+
+  videoElement.src = '';
+  adUnit.resize();
+
+  expect(updateMedia).toHaveBeenCalledTimes(1);
+  expect(updateMedia).toHaveBeenCalledWith(videoElement, expect.objectContaining({src: bestSource}));
 });
 
 test('VastAdUnit must redraw the icons', () => {

@@ -91,7 +91,6 @@ class VideoAd extends Component {
 
     if (adUnit && this.state.ready) {
       if (height !== prevProps.height || width !== prevProps.width) {
-        // TODO: find why the sources are not changing when we call resize
         adUnit.resize();
       }
 
