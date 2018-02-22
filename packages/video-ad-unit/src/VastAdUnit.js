@@ -6,6 +6,7 @@ import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';
 import retrieveIcons from './helpers/icons/retrieveIcons';
 import addIcons from './helpers/icons/addIcons';
 import safeCallback from './helpers/safeCallback';
+import updateMedia from './helpers/media/updateMedia';
 
 const {
   complete,
@@ -203,6 +204,16 @@ class VastAdUnit extends Emitter {
     if (this.icons) {
       this.removeIcons();
       this.drawIcons();
+    }
+
+    if (this.isStarted()) {
+      const inlineAd = this.vastChain[0].ad;
+      const {videoElement, element} = this.videoAdContainer;
+      const media = findBestMedia(inlineAd, videoElement, element);
+
+      if (Boolean(media) && videoElement.src !== media.src) {
+        updateMedia(videoElement, media);
+      }
     }
   }
 }
