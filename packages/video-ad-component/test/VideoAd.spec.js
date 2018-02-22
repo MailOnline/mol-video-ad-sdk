@@ -51,7 +51,7 @@ test('must display the children until it is ready to start the ad', (done) => {
   expect(wrapper.html().includes('spinner')).toBe(true);
 });
 
-test('onStart must pass the adUnit and some convinience methods', (done) => {
+test('onStart must pass the adUnit and some convenience methods', (done) => {
   expect.assertions = 8;
 
   const onStart = ({adUnit, changeVolume, pause, resume}) => {
@@ -80,7 +80,7 @@ test('onStart must pass the adUnit and some convinience methods', (done) => {
   expect(wrapper.html().includes('spinner')).toBe(true);
 });
 
-test('must call onNonRecoberable error when an adUnit has an error', (done) => {
+test('must call onNonRecoverable error when an adUnit has an error', (done) => {
   expect.assertions = 4;
   // eslint-disable-next-line prefer-const
   const onNonRecoverableError = jest.fn();
@@ -142,8 +142,6 @@ test('must on unmount cancel the adUnit', (done) => {
       expect(mockAdUnit.cancel).toHaveBeenCalledTimes(1);
       done();
     });
-
-    // expect(mockAdUnit.cancel).toHaveBeenCalledTimes(1);
   };
 
   wrapper = mount(<div>
@@ -171,8 +169,6 @@ test('must not cancel the ad unit on unmount if the adUnit has already finished'
       expect(mockAdUnit.cancel).toHaveBeenCalledTimes(0);
       done();
     });
-
-    // expect(mockAdUnit.cancel).toHaveBeenCalledTimes(1);
   };
 
   wrapper = mount(<div>
@@ -214,7 +210,7 @@ test('must call onComplete once the adUnit is finished', (done) => {
   </div>);
 });
 
-test('must call onNonRecoberable error if there is a problem starting the ad', (done) => {
+test('must call onNonRecoverable error if there is a problem starting the ad', (done) => {
   expect.assertions = 1;
 
   const error = new Error('boom');
