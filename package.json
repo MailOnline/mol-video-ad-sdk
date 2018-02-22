@@ -117,7 +117,6 @@
     "mockdate": "^2.0.2",
     "mol-conventional-changelog": "^1.2.0",
     "raf-polyfill": "^1.0.0",
-    "react": "^16.1.1",
     "stylelint-config-mailonline": "^3.0.2"
   },
   "jest": {

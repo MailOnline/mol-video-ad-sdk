@@ -1,5 +1,5 @@
-import Enzyme, {mount} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {mount} from 'enzyme';
 import React from 'react';
 import MolVideoAd from '../src/VideoAd';
 import tryToStartAd from '../src/helpers/tryToStartAd';
@@ -16,8 +16,6 @@ const mockAdUnit = {
 };
 
 const Spinner = () => <div className='spinner' />;
-
-Enzyme.configure({adapter: new Adapter()});
 
 jest.mock('../src/helpers/tryToStartAd', () => jest.fn());
 

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {onElementResize} from '@mol/element-observers';
 import VideoAd from './VideoAd';
 
-// TODO: test this component
 class ResponsiveVideoAd extends Component {
   constructor (props, context) {
     super(props, context);
@@ -14,17 +13,13 @@ class ResponsiveVideoAd extends Component {
   }
 
   componentDidMount () {
-    this.removeResizeListener = onElementResize(this.element, () => {
+    onElementResize(this.element, () => {
       // eslint-disable-next-line react/no-set-state
       this.setState({
         height: this.element.clientHeight,
         width: this.element.clientWidth
       });
     });
-  }
-
-  componentWillUnmount () {
-    this.removeResizeListener();
   }
 
   ref = (element) => {
