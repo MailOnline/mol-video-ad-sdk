@@ -3,14 +3,10 @@ import {onElementResize} from '@mol/element-observers';
 import VideoAd from './VideoAd';
 
 class ResponsiveVideoAd extends Component {
-  constructor (props, context) {
-    super(props, context);
-
-    this.state = {
-      height: 0,
-      width: 0
-    };
-  }
+  state = {
+    height: 0,
+    width: 0
+  };
 
   componentDidMount () {
     onElementResize(this.element, () => {

@@ -47,13 +47,9 @@ class VideoAd extends Component {
     this.element = element;
   };
 
-  constructor (props, context) {
-    super(props, context);
-
-    this.state = {
-      ready: false
-    };
-  }
+  state = {
+    ready: false
+  };
 
   componentDidMount () {
     this.adUnitPromise = this.startAd();
