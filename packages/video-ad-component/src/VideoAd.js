@@ -89,8 +89,8 @@ class VideoAd extends Component {
 
     const adUnit = this.adUnit;
 
-    if (adUnit && this.state.ready) {
-      if (height !== prevProps.height || width !== prevProps.width) {
+    if (this.state.ready && adUnit) {
+      if (height !== prevProps.height || width !== prevProps.width && !adUnit.isFinished()) {
         adUnit.resize();
       }
 
