@@ -121,12 +121,18 @@ test('must resize the adUnit if the width or the height of the component changes
       <Spinner />
     </VideoAd>);
 
-  expect(wrapper.html()).toBe('<div style="height: 10px; width: 20px;"><div class="spinner"></div><div style="display: none;"></div></div>');
+  expect(wrapper.find('div').first().props().style).toEqual({
+    height: '10px',
+    width: '20px'
+  });
   wrapper.setProps({
     height: null,
     width: null
   });
-  expect(wrapper.html()).toBe('<div style="height: 100%; width: 100%;"><div class="spinner"></div><div style="display: none;"></div></div>');
+  expect(wrapper.find('div').first().props().style).toEqual({
+    height: '100%',
+    width: '100%'
+  });
 });
 
 test('must on unmount cancel the adUnit', (done) => {
