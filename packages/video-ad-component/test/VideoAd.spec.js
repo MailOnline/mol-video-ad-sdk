@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {mount} from 'enzyme';
 import React from 'react';
-import MolVideoAd from '../src/VideoAd';
+import VideoAd from '../src/VideoAd';
 import tryToStartAd from '../src/helpers/tryToStartAd';
 
 const mockAdUnit = {
@@ -40,12 +40,12 @@ test('must display the children until it is ready to start the ad', (done) => {
   };
 
   wrapper = mount(<div>
-    <MolVideoAd
+    <VideoAd
       getTag={getTag}
       onStart={onStart}
     >
       <Spinner />
-    </MolVideoAd>
+    </VideoAd>
   </div>);
 
   expect(wrapper.html().includes('spinner')).toBe(true);
@@ -69,12 +69,12 @@ test('onStart must pass the adUnit and some convenience methods', (done) => {
   };
 
   const wrapper = mount(<div>
-    <MolVideoAd
+    <VideoAd
       getTag={getTag}
       onStart={onStart}
     >
       <Spinner />
-    </MolVideoAd>
+    </VideoAd>
   </div>);
 
   expect(wrapper.html().includes('spinner')).toBe(true);
@@ -99,13 +99,13 @@ test('must call onNonRecoverable error when an adUnit has an error', (done) => {
   };
 
   mount(<div>
-    <MolVideoAd
+    <VideoAd
       getTag={getTag}
       onNonRecoverableError={onNonRecoverableError}
       onStart={onStart}
     >
       <Spinner />
-    </MolVideoAd>
+    </VideoAd>
   </div>);
 });
 
@@ -113,13 +113,13 @@ test('must resize the adUnit if the width or the height of the component changes
   expect.assertions = 2;
 
   const wrapper = mount(
-    <MolVideoAd
+    <VideoAd
       getTag={getTag}
       height={10}
       width={20}
     >
       <Spinner />
-    </MolVideoAd>);
+    </VideoAd>);
 
   expect(wrapper.html()).toBe('<div style="height: 10px; width: 20px;"><div class="spinner"></div><div style="display: none;"></div></div>');
   wrapper.setProps({
@@ -145,12 +145,12 @@ test('must on unmount cancel the adUnit', (done) => {
   };
 
   wrapper = mount(<div>
-    <MolVideoAd
+    <VideoAd
       getTag={getTag}
       onStart={onStart}
     >
       <Spinner />
-    </MolVideoAd>
+    </VideoAd>
   </div>);
 
   expect(wrapper.html().includes('spinner')).toBe(true);
@@ -172,12 +172,12 @@ test('must not cancel the ad unit on unmount if the adUnit has already finished'
   };
 
   wrapper = mount(<div>
-    <MolVideoAd
+    <VideoAd
       getTag={getTag}
       onStart={onStart}
     >
       <Spinner />
-    </MolVideoAd>
+    </VideoAd>
   </div>);
 
   expect(wrapper.html().includes('spinner')).toBe(true);
@@ -200,13 +200,13 @@ test('must call onComplete once the adUnit is finished', (done) => {
   };
 
   mount(<div>
-    <MolVideoAd
+    <VideoAd
       getTag={getTag}
       onComplete={onComplete}
       onStart={onStart}
     >
       <Spinner />
-    </MolVideoAd>
+    </VideoAd>
   </div>);
 });
 
@@ -225,11 +225,11 @@ test('must call onNonRecoverable error if there is a problem starting the ad', (
   };
 
   mount(<div>
-    <MolVideoAd
+    <VideoAd
       getTag={getTag}
       onNonRecoverableError={onNonRecoverableError}
     >
       <Spinner />
-    </MolVideoAd>
+    </VideoAd>
   </div>);
 });
