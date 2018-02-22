@@ -53,9 +53,9 @@
               <ClickTracking>https://test.example.com/clicktracking</ClickTracking>
             </VideoClicks>
             <MediaFiles>
-              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="1920" height="1080" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/1920x1080.mp4</MediaFile>
-              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="768" height="432" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/768x432.mp4</MediaFile>
-              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="640" height="362" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/640x362.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="1920" height="1080" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/1920x1080time.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="768" height="432" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/768x432time.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="640" height="362" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/640x362time.mp4</MediaFile>
             </MediaFiles>
             <Icons>
               <Icon program="MOL_HTML" width="20px" height="20" xPosition="left" yPosition="top" pxratio="1">
