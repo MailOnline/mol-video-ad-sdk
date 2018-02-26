@@ -105,7 +105,7 @@ const getOptions = (vastChain, options) => {
  * Array of VASTResponses sorted backguards. Last response goes first.
  * Represents the chain of VAST responses that ended up on a playable video ad or an error.
  *
- * @typedef {Array.VASTAdResponse} VASTChain
+ * @typedef {Array<VASTAdResponse>} VASTChain
  * @property {Object} ad - The selected ad extracted from the pasedXML.
  * @property {Object} parsedXML - The XML parsed object.
  * @property {number} errorCode - VAST error code number to idenitfy the error or null if there is no error.
