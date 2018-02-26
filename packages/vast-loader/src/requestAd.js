@@ -102,7 +102,7 @@ const getOptions = (vastChain, options) => {
  */
 
 /**
- * Array of VASTResponses sorted backguards. Lastests reponses first.
+ * Array of VASTResponses sorted backguards. Last response goes first.
  * Represents the chain of VAST responses that ended up on a playable video ad or an error.
  *
  * @typedef {Array.VASTAdResponse} VASTChain
