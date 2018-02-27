@@ -7,6 +7,8 @@ import makeCancelable from './helpers/makeCancelable';
 
 const noop = () => {};
 
+// TODO: SHOULD PAUSE THE AD ON VISIBILITY CHANGE
+
 class VideoAd extends Component {
   static defaultProps = {
     children: undefined,

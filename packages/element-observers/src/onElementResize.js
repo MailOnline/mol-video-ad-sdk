@@ -128,6 +128,8 @@ const onElementResize = function (target, callback, {threshold = 20} = {}) {
   };
 
   const checkElementHandler = debounce(checkElementSize, threshold);
+
+  // TODO: SHOULD USE MUTATIONS OR THE FALLBACK NOT NEED TO DO BOTH
   const stopObservingMutations = Boolean(MutationObserver) ? onMutation(target, checkElementHandler) : noop;
   const stopListeningToResize = onResize(target, checkElementHandler);
 
