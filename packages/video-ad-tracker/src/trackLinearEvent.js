@@ -38,6 +38,7 @@ import {
   * otherAdInteraction, <= Not used in VAST maybe for VPAID?
   * timeSpentViewing, <= Not used in VAST maybe for VPAID?
   */
+// TODO: clickTracking is missing
 
 const linearTrakingEventSelector = (event) => (ad) => getLinearTrackingEvents(ad, event);
 const linearTrackers = {
