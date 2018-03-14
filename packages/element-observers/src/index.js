@@ -38,7 +38,7 @@ export {
    * @description Helper function to know if the visibility of an element has changed.
    *
    * @param {HTMLElement} target - The element that we want to observe.
-   * @param {function} callback - The callback that handles the resize.  See [resizeCallback]{@link module:element-observers~visibilityCallback}.
+   * @param {function} callback - The callback that handles the resize.  See [visibilityCallback]{@link module:element-observers~visibilityCallback}.
    * @param {Object} [options] - Options Map.
    * @param {number} [options.threshold] - sets a debounce threshold for the callback. Defaults to 100 milliseconds.
    * @param {HTMLElement} [options.scrollableElement] - specifies the hook element for the scroll to check for visibility changes.
