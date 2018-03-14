@@ -2,6 +2,7 @@
   "extends": "mailonline",
   "root": true,
   "rules": {
-    "jsdoc/require-description-complete-sentence": "off"
+    "jsdoc/require-description-complete-sentence": "off",
+    "max-len": ["warn", {  "code": 160, "ignoreComments": true }]
   }
 }

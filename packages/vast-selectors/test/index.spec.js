@@ -15,7 +15,7 @@ import {
   getImpressionUri,
   getLinearTrackingEvents,
   getMediaFiles,
-  getSkipoffset,
+  getSkipOffset,
   getVASTAdTagURI,
   getVastErrorURI,
   getWrapperOptions,
@@ -467,13 +467,13 @@ test('getClickTracking must return the clickThrough uri', () => {
   expect(getClickTracking(wrapperAd)).toEqual('https://test.example.com/clicktracking');
 });
 
-test('getSkipoffset must return null if there none', () => {
-  expect(getSkipoffset()).toEqual(null);
-  expect(getSkipoffset(null)).toEqual(null);
-  expect(getSkipoffset({})).toEqual(null);
-  expect(getSkipoffset(wrapperAd)).toEqual(null);
+test('getSkipOffset must return null if there none', () => {
+  expect(getSkipOffset()).toEqual(null);
+  expect(getSkipOffset(null)).toEqual(null);
+  expect(getSkipOffset({})).toEqual(null);
+  expect(getSkipOffset(wrapperAd)).toEqual(null);
 });
 
-test('getSkipoffset must return the parsed skipoffset', () => {
-  expect(getSkipoffset(inlineAd)).toEqual(5000);
+test('getSkipOffset must return the parsed skipoffset', () => {
+  expect(getSkipOffset(inlineAd)).toEqual(5000);
 });

@@ -73,7 +73,19 @@ const compareBySequence = (itemA, itemB) => {
 // TODO: properly link @mol/vast-xml2js
 /**
  * JS XML deserialised object using @mol/vast-xml2js
- * @typedef parsetVast
+ *
+ * @typedef ParsedVast
+ * @type Object
+ *
+ * @global
+ */
+
+/**
+ * Deserialised ad object from a [parsedVast]{@link module:vast-selectors~parsedVast} object.
+ *
+ * @typedef ParsedAd
+ * @type Object
+ *
  * @global
  */
 
@@ -81,7 +93,7 @@ const compareBySequence = (itemA, itemB) => {
  * Selects the ads of the passed VAST.
  *
  * @function
- * @param {parsedVAST} parsedVAST - Parsed VAST xml.
+ * @param {ParsedVast} parsedVAST - Parsed VAST xml.
  * @returns {?Array} - Array of ads or `null`.
  * @static
  */
@@ -100,7 +112,7 @@ export const getAds = (parsedVAST) => {
  * Gets the Error URI of the passed parsed VAST xml.
  *
  * @function
- * @param {parsedVAST} parsedVAST - Parsed VAST xml.
+ * @param {ParsedVast} parsedVAST - Parsed VAST xml.
  * @returns {?VAST-macro} - Vast Error URI or `null` otherwise.
  * @static
  */
@@ -122,7 +134,7 @@ export const getVastErrorURI = (parsedVAST) => {
  * Gets the sequence of the pod ad.
  *
  * @function
- * @param {Object} ad - Parsed ad definition object.
+ * @param {ParsedAd} ad - Parsed ad definition object.
  * @returns {?number} - The pod ad sequence number or `null`.
  */
 export const getPodAdSequence = (ad) => {
@@ -139,7 +151,7 @@ export const getPodAdSequence = (ad) => {
  * Checks if the passed ad definition is a pod ad.
  *
  * @function
- * @param {Object} ad - Parsed ad definition object.
+ * @param {ParsedAd} ad - Parsed ad definition object.
  * @returns {?boolean} - Returns true if there the ad is a pod ad and false otherwise.
  */
 export const isPodAd = (ad) => Boolean(getPodAdSequence(ad));
@@ -148,7 +160,7 @@ export const isPodAd = (ad) => Boolean(getPodAdSequence(ad));
  * Checks if the passed array of ads have an ad pod.
  *
  * @function
- * @param {parsedVAST} parsedVAST - Parsed VAST xml.
+ * @param {ParsedVAST} parsedVAST - Parsed VAST xml.
  * @returns {?boolean} - Returns true if there is an ad pod in the array and false otherwise.
  */
 export const hasAdPod = (parsedVAST) => {
@@ -161,8 +173,8 @@ export const hasAdPod = (parsedVAST) => {
  * Selects the first ad of the passed VAST. If the passed VAST response contains an ad pod it will return the first ad in the ad pod sequence.
  *
  * @function
- * @param {parsedVAST} parsedVAST - Parsed VAST xml.
- * @returns {?Object} - First ad of the VAST xml or `null`.
+ * @param {ParsedVAST} parsedVAST - Parsed VAST xml.
+ * @returns {?ParsedAd} - First ad of the VAST xml or `null`.
  * @static
  */
 export const getFirstAd = (parsedVAST) => {
@@ -184,7 +196,7 @@ export const getFirstAd = (parsedVAST) => {
  * Checks if the passed ad is a Wrapper.
  *
  * @function
- * @param {Object} ad - VAST ad object.
+ * @param {ParsedAd} ad - VAST ad object.
  * @returns {boolean} - `true` if the ad contains a wrapper and `false` otherwise.
  * @static
  */
@@ -194,7 +206,7 @@ export const isWrapper = (ad = {}) => Boolean(get(ad || {}, 'Wrapper'));
  * Checks if the passed ad is an Inline.
  *
  * @function
- * @param {Object} ad - VAST ad object.
+ * @param {ParsedAd} ad - VAST ad object.
  * @returns {boolean} - Returns `true` if the ad contains an Inline or `false` otherwise.
  * @static
  */
@@ -204,7 +216,7 @@ export const isInline = (ad) => Boolean(get(ad || {}, 'Inline'));
  * Returns the VASTAdTagURI from the wrapper ad.
  *
  * @function
- * @param {Object} ad - VAST ad object.
+ * @param {ParsedAd} ad - VAST ad object.
  * @returns {?string} - Returns the VASTAdTagURI from the wrapper ad or `null` otherwise.
  * @static
  */
@@ -278,7 +290,7 @@ export const getWrapperOptions = (ad) => {
  * Gets the Error URI of the passed ad.
  *
  * @function
- * @param {Object} ad - VAST ad object.
+ * @param {ParsedAd} ad - VAST ad object.
  * @returns {?string} - Vast ad Error URI or `null` otherwise.
  * @static
  */
@@ -300,7 +312,7 @@ export const getAdErrorURI = (ad) => {
  * Gets the Impression URI of the passed ad.
  *
  * @function
- * @param {Object} ad - VAST ad object.
+ * @param {ParsedAd} ad - VAST ad object.
  * @returns {?string} - Vast ad Impression URI or `null` otherwise.
  * @static
  */
@@ -324,6 +336,7 @@ export const getImpressionUri = (ad) => {
  *
  * @global
  * @typedef MediaFile
+ * @type Object
  * @property {string} [codec] - The codec used to encode the file which can take values as specified by [RFC 4281]{@link http://tools.ietf.org/html/rfc4281}.
  * @property {string} [delivery] - Either `progressive` for progressive download protocols (such as HTTP) or `streaming` for streaming protocols.
  * @property {number} [height] - The native height of the video file, in pixels.
@@ -345,7 +358,7 @@ export const getImpressionUri = (ad) => {
  * Gets the ads MediaFiles.
  *
  * @function
- * @param {Object} ad - VAST ad object.
+ * @param {ParsedAd} ad - VAST ad object.
  * @returns {?Array.<MediaFile>} - array of media files or null
  */
 export const getMediaFiles = (ad) => {
@@ -415,7 +428,7 @@ const getVideoClicksElement = (ad) => {
  * Gets the click through {@link VAST-macro}.
  *
  * @function
- * @param {Object} ad - VAST ad object.
+ * @param {ParsedAd} ad - VAST ad object.
  * @returns {?VAST-macro} - clickthrough macro
  */
 export const getClickThrough = (ad) => {
@@ -429,10 +442,18 @@ export const getClickThrough = (ad) => {
   return null;
 };
 
-// TODO: CLICK TRACKING should return an array of click trackings
+/**
+ * Gets the click through {@link VAST-macro}.
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @returns {?Array.<VAST-macro>} - click tracking mavro macro
+ */
 export const getClickTracking = (ad) => {
   const videoClicksElement = getVideoClicksElement(ad);
   const clickTrackingElement = videoClicksElement && get(videoClicksElement, 'ClickTracking');
+
+  // TODO: MUST RETURN AN ARRAY
 
   if (clickTrackingElement) {
     return getText(clickTrackingElement);
@@ -444,7 +465,7 @@ export const getClickTracking = (ad) => {
 /**
  * The parsed time offset in milliseconds or a string with the percentage
  *
- * @typedef parsedOffset
+ * @typedef ParsedOffset
  * @global
  */
 
@@ -453,9 +474,9 @@ export const getClickTracking = (ad) => {
  *
  * @function
  * @param {Object} ad - VAST ad object.
- * @returns {?parsedOffset} - the time offset in milliseconds or a string with the percentage or null
+ * @returns {?ParsedOffset} - the time offset in milliseconds or a string with the percentage or null
  */
-export const getSkipoffset = (ad) => {
+export const getSkipOffset = (ad) => {
   const creativeElement = ad && getLinearCreative(ad);
   const linearElement = creativeElement && get(creativeElement, 'Linear');
   const skipoffset = linearElement && getAttribute(linearElement, 'skipoffset');
@@ -468,6 +489,23 @@ export const getSkipoffset = (ad) => {
 };
 
 export {
+
+  /**
+   * Gets the Vast Icon definitions from the Vast Ad
+   *
+   * @function
+   * @param {ParsedAd} ad - VAST ad object.
+   * @returns {?Array.<VastIcon>} - Array of VAST icon definitions
+   */
   getIcons,
+
+  /**
+   * Gets the Linear tracking events from the Vast Ad
+   *
+   * @function
+   * @param {ParsedAd} ad - VAST ad object.
+   * @param {string} [eventName] - If provided it will filter-out the array events against it.
+   * @returns {?Array.<VastTrackingEvent>} - Array of Tracking event definitions
+   */
   getLinearTrackingEvents
 };
