@@ -70,9 +70,8 @@ const compareBySequence = (itemA, itemB) => {
  * @global
  */
 
-// TODO: properly link @mol/vast-xml2js
 /**
- * JS XML deserialised object using @mol/vast-xml2js
+ * JS XML deserialised object.
  *
  * @typedef ParsedVast
  * @type Object

@@ -25,6 +25,7 @@ export {
    * Function to track VAST events.
    *
    * @typedef {function} tracker
+   * @global
    * @name tracker
    * @description Tracking function.
    * @param {string} URLMacro - URL Macro that need to be tracked.

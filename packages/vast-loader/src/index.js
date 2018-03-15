@@ -42,7 +42,6 @@ export {
    */
   requestAd,
 
-  // todo Properly link track method once the api is documented
   /**
    * @function requestNextAd
    * @async
@@ -55,7 +54,7 @@ export {
    *  Defaults to `5`.
    * @param {boolean} [options.AllowMultipleAds] - Boolean to indicate whether adPods are allowed or not.
    *  Defaults to `true`.
-   * @param {function} [options.track] - optional function to track whatever errors occur during the loading.
+   * @param {tracker} [options.track] - optional function to track whatever errors occur during the loading.
    *  Defaults to `@mol/video-ad-tracker` track method.
    * @param {boolean} [options.useAdBuffet] - Specifies whether to use buffet ads from an ad pod if possible.
    *    If no buffet ad is available it will return the next ad in ad pod sequence.
