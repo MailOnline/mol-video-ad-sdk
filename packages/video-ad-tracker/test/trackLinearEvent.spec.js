@@ -176,7 +176,10 @@ test('trackLinearEvent must track iconClicks', () => {
 
 test('trackLinearEvent must track iconViews', () => {
   const data = {
-    iconViewTracking: 'https://test.example.com/iconView'
+    iconViewTracking: [
+      'https://test.example.com/iconView',
+      'https://test.example.com/iconView2'
+    ]
   };
   const tracker = jest.fn();
 
@@ -185,8 +188,9 @@ test('trackLinearEvent must track iconViews', () => {
     tracker
   });
 
-  expect(tracker).toHaveBeenCalledTimes(1);
+  expect(tracker).toHaveBeenCalledTimes(2);
   expect(tracker).toHaveBeenCalledWith('https://test.example.com/iconView', data);
+  expect(tracker).toHaveBeenCalledWith('https://test.example.com/iconView2', data);
 });
 
 test('trackLinearEvent must track progress', () => {

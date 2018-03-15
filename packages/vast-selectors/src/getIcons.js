@@ -69,17 +69,17 @@ const getIconResource = (iconElement) => {
   };
 };
 
-// TODO must return an array
 const getIconViewTracking = (iconElement) => {
-  const iconViewTrackingElement = get(iconElement, 'IconViewTracking');
+  const iconTrackingElements = getAll(iconElement, 'IconViewTracking')
+    .map((iconViewTrackingElement) => getText(iconViewTrackingElement));
 
-  if (iconViewTrackingElement) {
-    return {
-      iconViewTracking: getText(iconViewTrackingElement)
-    };
+  if (iconTrackingElements.length === 0) {
+    return {};
   }
 
-  return {};
+  return {
+    iconViewTracking: iconTrackingElements
+  };
 };
 
 const getIconClicks = (iconElement) => {

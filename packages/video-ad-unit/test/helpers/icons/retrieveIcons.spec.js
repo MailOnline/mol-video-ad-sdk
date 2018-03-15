@@ -29,7 +29,8 @@ test('retrieveIcons must return the icons filtering out the duplicates and just 
       height: 20,
       iconClickThrough: 'https://test.example.com/iconClickThrough',
       iconClickTracking: 'https://test.example.com/iconClickTracking',
-      iconViewTracking: 'https://test.example.com/iconViewTracking',
+      iconViewTracking: expect.arrayContaining(['https://test.example.com/iconViewTracking']),
+
       offset: 5000,
       program: 'MOL_STATIC',
       pxratio: 2,
@@ -44,7 +45,8 @@ test('retrieveIcons must return the icons filtering out the duplicates and just 
       htmlResource: 'https://test.example.com/icon/htmlResource',
       iconClickThrough: 'https://test.example.com/iconClickThrough',
       iconClickTracking: 'https://test.example.com/iconClickTracking',
-      iconViewTracking: 'https://test.example.com/iconViewTracking',
+      iconViewTracking: expect.arrayContaining(['https://test.example.com/iconViewTracking']),
+
       offset: 5000,
       program: 'MOL_HTML',
       pxratio: 1,
@@ -57,7 +59,8 @@ test('retrieveIcons must return the icons filtering out the duplicates and just 
       height: 20,
       iconClickThrough: 'https://test.example.com/iconClickThrough',
       iconClickTracking: 'https://test.example.com/iconClickTracking',
-      iconViewTracking: 'https://test.example.com/iconViewTracking',
+      iconViewTracking: expect.arrayContaining(['https://test.example.com/iconViewTracking']),
+
       iFrameResource: 'https://test.example.com/icon/iFrameResource',
       offset: undefined,
       program: 'MOL_IFRAME',
@@ -97,7 +100,8 @@ test('retrieveIcons must filter the icons taking the pxratio into account', () =
       height: 20,
       iconClickThrough: 'https://test.example.com/iconClickThrough',
       iconClickTracking: 'https://test.example.com/iconClickTracking',
-      iconViewTracking: 'https://test.example.com/iconViewTracking',
+      iconViewTracking: expect.arrayContaining(['https://test.example.com/iconViewTracking']),
+
       offset: 5000,
       program: 'MOL_STATIC',
       pxratio: 2,
@@ -124,7 +128,8 @@ test('retrieveIcons must filter the icons taking the pxratio into account', () =
     height: 20,
     iconClickThrough: 'https://test.example.com/iconClickThrough',
     iconClickTracking: 'https://test.example.com/iconClickTracking',
-    iconViewTracking: 'https://test.example.com/iconViewTracking',
+    iconViewTracking: expect.arrayContaining(['https://test.example.com/iconViewTracking']),
+
     offset: 5000,
     program: 'MOL_STATIC',
     pxratio: 1,
