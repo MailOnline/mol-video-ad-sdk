@@ -50,6 +50,7 @@ export const iconView = 'iconView';
  * @property {string} iconClick - the user clicked the creative icon.
  * @property {string} iconView - the user viewed the creative icon.
  * @property {string} impression - there was an impression of the linear creative.
+ * @property {string} clickThrough - fired when a viewer clicks the ad
  */
 const linearEvents = {
   acceptInvitationLinear,

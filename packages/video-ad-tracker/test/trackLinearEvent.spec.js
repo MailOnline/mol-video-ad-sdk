@@ -53,7 +53,8 @@ const vastChain = [
 ];
 
 afterEach(() => {
-  trackError.mockClear();
+  jest.clearAllMocks();
+  jest.resetAllMocks();
 });
 
 test('trackLinearEvent must track the error linear event with the default pixelTracker', () => {
@@ -112,8 +113,9 @@ test(`trackLinearEvent must track ${clickThrough} linear event with the default 
     tracker
   });
 
-  expect(tracker).toHaveBeenCalledTimes(1);
+  expect(tracker).toHaveBeenCalledTimes(3);
   expect(tracker).toHaveBeenCalledWith('https://test.example.com/clickthrough', {});
+  expect(tracker).toHaveBeenCalledWith('https://test.example.com/clicktracking', {});
 });
 
 [
