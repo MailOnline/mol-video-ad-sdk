@@ -450,12 +450,10 @@ export const getClickThrough = (ad) => {
  */
 export const getClickTracking = (ad) => {
   const videoClicksElement = getVideoClicksElement(ad);
-  const clickTrackingElement = videoClicksElement && get(videoClicksElement, 'ClickTracking');
+  const clickTrackingElements = videoClicksElement && getAll(videoClicksElement, 'ClickTracking');
 
-  // TODO: MUST RETURN AN ARRAY
-
-  if (clickTrackingElement) {
-    return getText(clickTrackingElement);
+  if (clickTrackingElements && clickTrackingElements.length > 0) {
+    return clickTrackingElements.map((element) => getText(element));
   }
 
   return null;

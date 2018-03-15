@@ -463,8 +463,8 @@ test('getClickTracking must return true if there is none', () => {
 });
 
 test('getClickTracking must return the clickThrough uri', () => {
-  expect(getClickTracking(inlineAd)).toEqual('https://test.example.com/clicktracking');
-  expect(getClickTracking(wrapperAd)).toEqual('https://test.example.com/clicktracking');
+  expect(getClickTracking(inlineAd)).toEqual(['https://test.example.com/clicktracking']);
+  expect(getClickTracking(wrapperAd)).toEqual(['https://test.example.com/clicktracking']);
 });
 
 test('getSkipOffset must return null if there none', () => {
