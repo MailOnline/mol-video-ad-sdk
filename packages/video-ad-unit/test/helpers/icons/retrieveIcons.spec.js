@@ -28,7 +28,7 @@ test('retrieveIcons must return the icons filtering out the duplicates and just 
       duration: 30000,
       height: 20,
       iconClickThrough: 'https://test.example.com/iconClickThrough',
-      iconClickTracking: 'https://test.example.com/iconClickTracking',
+      iconClickTracking: expect.arrayContaining(['https://test.example.com/iconClickTracking']),
       iconViewTracking: expect.arrayContaining(['https://test.example.com/iconViewTracking']),
 
       offset: 5000,
@@ -44,7 +44,7 @@ test('retrieveIcons must return the icons filtering out the duplicates and just 
       height: 20,
       htmlResource: 'https://test.example.com/icon/htmlResource',
       iconClickThrough: 'https://test.example.com/iconClickThrough',
-      iconClickTracking: 'https://test.example.com/iconClickTracking',
+      iconClickTracking: expect.arrayContaining(['https://test.example.com/iconClickTracking']),
       iconViewTracking: expect.arrayContaining(['https://test.example.com/iconViewTracking']),
 
       offset: 5000,
@@ -58,7 +58,7 @@ test('retrieveIcons must return the icons filtering out the duplicates and just 
       duration: undefined,
       height: 20,
       iconClickThrough: 'https://test.example.com/iconClickThrough',
-      iconClickTracking: 'https://test.example.com/iconClickTracking',
+      iconClickTracking: expect.arrayContaining(['https://test.example.com/iconClickTracking']),
       iconViewTracking: expect.arrayContaining(['https://test.example.com/iconViewTracking']),
 
       iFrameResource: 'https://test.example.com/icon/iFrameResource',
@@ -99,7 +99,7 @@ test('retrieveIcons must filter the icons taking the pxratio into account', () =
       duration: 30000,
       height: 20,
       iconClickThrough: 'https://test.example.com/iconClickThrough',
-      iconClickTracking: 'https://test.example.com/iconClickTracking',
+      iconClickTracking: expect.arrayContaining(['https://test.example.com/iconClickTracking']),
       iconViewTracking: expect.arrayContaining(['https://test.example.com/iconViewTracking']),
 
       offset: 5000,
@@ -127,7 +127,7 @@ test('retrieveIcons must filter the icons taking the pxratio into account', () =
     duration: 30000,
     height: 20,
     iconClickThrough: 'https://test.example.com/iconClickThrough',
-    iconClickTracking: 'https://test.example.com/iconClickTracking',
+    iconClickTracking: expect.arrayContaining(['https://test.example.com/iconClickTracking']),
     iconViewTracking: expect.arrayContaining(['https://test.example.com/iconViewTracking']),
 
     offset: 5000,

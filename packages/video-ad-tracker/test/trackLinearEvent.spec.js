@@ -161,7 +161,10 @@ test('trackLinearEvent must track impression linear event with the default pixel
 
 test('trackLinearEvent must track iconClicks', () => {
   const data = {
-    iconClickTracking: 'https://test.example.com/iconClick'
+    iconClickTracking: [
+      'https://test.example.com/iconClick',
+      'https://test.example.com/iconClick2'
+    ]
   };
   const tracker = jest.fn();
 
@@ -170,8 +173,9 @@ test('trackLinearEvent must track iconClicks', () => {
     tracker
   });
 
-  expect(tracker).toHaveBeenCalledTimes(1);
+  expect(tracker).toHaveBeenCalledTimes(2);
   expect(tracker).toHaveBeenCalledWith('https://test.example.com/iconClick', data);
+  expect(tracker).toHaveBeenCalledWith('https://test.example.com/iconClick2', data);
 });
 
 test('trackLinearEvent must track iconViews', () => {

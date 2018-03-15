@@ -85,13 +85,12 @@ const getIconViewTracking = (iconElement) => {
 const getIconClicks = (iconElement) => {
   const iconClicksElement = get(iconElement, 'IconClicks');
   const iconClickThroughElement = iconClicksElement && get(iconClicksElement, 'IconClickThrough');
-  const iconClickTrackingElement = iconClicksElement && get(iconClicksElement, 'IconClickTracking');
+  const iconClickTrackingElements = iconClicksElement && getAll(iconClicksElement, 'IconClickTracking')
+    .map((iconClickTrackingElement) => getText(iconClickTrackingElement));
 
   return {
     iconClickThrough: iconClickThroughElement && getText(iconClickThroughElement),
-
-    // TODO must return be array
-    iconClickTracking: iconClickTrackingElement && getText(iconClickTrackingElement)
+    iconClickTracking: iconClickTrackingElements && iconClickTrackingElements.length > 0 ? iconClickTrackingElements : undefined
   };
 };
 
