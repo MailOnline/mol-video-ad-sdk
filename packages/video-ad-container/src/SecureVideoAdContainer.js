@@ -16,12 +16,13 @@ const readyPromiseKey = Symbol('readyPromiseKey');
 const getContentDocument = (iframeElement) => iframeElement.contentDocument || iframeElement.contentWindow.document;
 
 /**
- * This class provides everyting necesary to contain and create a video ad within a given placeholder Element.
+ * @class
+ * @global
+ * @description This class provides everyting necesary to contain and create a video ad within a given placeholder Element.
  * On a secure way i.e. within an Iframe.
- *
- * @extends VideoAdContainer
+ * @augments VideoAdContainer
  */
-export default class SecureVideoAdContainer extends VideoAdContainer {
+class SecureVideoAdContainer extends VideoAdContainer {
   /**
    * Creates a SecureVideoAdContainer.
    *
@@ -80,9 +81,9 @@ export default class SecureVideoAdContainer extends VideoAdContainer {
   }
 
   /*
+   * Reszie the container.
    * Call this method whenever you need to do a manual resize and are not sure that the change will be automatically picked.
-   * or if `dynamicResize` option flag was set to false when the container was created.
-  */
+   */
   resize () {
     if (this.isDestroyed()) {
       throw new Error('SecureVideoAdContainer has been destroyed');
@@ -125,3 +126,4 @@ export default class SecureVideoAdContainer extends VideoAdContainer {
   }
 }
 
+export default SecureVideoAdContainer;
