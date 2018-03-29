@@ -1,5 +1,6 @@
 import {
-  createVideoAdUnit
+  createVideoAdUnit,
+  VastAdUnit
 } from '@mol/video-ad-sdk';
 import {
   vastWrapperXML,
@@ -10,12 +11,7 @@ import {
   inlineAd
 } from '@mol/vast-fixtures';
 import {VideoAdContainer} from '@mol/video-ad-container';
-import {VastAdUnit} from '@mol/video-ad-unit';
 import startVideoAd from '../startVideoAd';
-
-jest.mock('@mol/video-ad-sdk', () => ({
-  createVideoAdUnit: jest.fn()
-}));
 
 const createAdUnitMock = (adChain, adContainer, opts) => {
   const vastAdUnit = new VastAdUnit(adChain, adContainer, opts);

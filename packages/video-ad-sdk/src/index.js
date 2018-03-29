@@ -3,14 +3,13 @@ import createVideoAdUnit from './createVideoAdUnit';
 import load from './load';
 import loadNext from './loadNext';
 import isAdPod from './isAdPod';
+import {VastAdUnit} from './adUnit';
 
-/**
- * @namespace MolVideoAdManager
- */
 export {
   createVideoAdContainer,
   createVideoAdUnit,
   isAdPod,
   load,
-  loadNext
+  loadNext,
+  VastAdUnit
 };

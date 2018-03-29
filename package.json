@@ -130,6 +130,8 @@
       "packages/**/src/**/*.js"
     ],
     "coveragePathIgnorePatterns": [
+      "/\\.spec\\.js$/",
+      "/__tests__/",
       "/node_modules/",
       "/packages/vast-fixtures/",
       "/packages/vast-xml2js/",

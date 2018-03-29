@@ -1,5 +1,4 @@
 import {VideoAdContainer} from '@mol/video-ad-container';
-import {VastAdUnit} from '@mol/video-ad-unit';
 import {
   vastWrapperXML,
   vastInlineXML,
@@ -12,6 +11,7 @@ import {
   linearEvents,
   trackLinearEvent
 } from '@mol/video-ad-tracker';
+import {VastAdUnit} from '../adUnit';
 import createVideoAdUnit from '../createVideoAdUnit';
 
 jest.mock('@mol/video-ad-tracker', () => ({
