@@ -138,6 +138,7 @@
     "moduleNameMapper": {
       "\\.(scss)$": "identity-obj-proxy"
     },
+    "testRegex": "__tests__/.*\\.spec\\.(jsx?|tsx?)$",
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
     },

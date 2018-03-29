@@ -1,5 +1,8 @@
 {
-  "extends": "mailonline",
+  "extends": [
+    "mailonline",
+    "mailonline/jest"
+  ],
   "root": true,
   "rules": {
     "jsdoc/require-description-complete-sentence": "off",
