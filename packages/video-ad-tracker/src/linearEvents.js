@@ -57,8 +57,6 @@ const linearEvents = {
   clickThrough,
   complete,
   error,
-
-  // TODO: SHOULD BE USED TOGETHER WITH playerCollapse
   exitFullscreen,
   firstQuartile,
   fullscreen,

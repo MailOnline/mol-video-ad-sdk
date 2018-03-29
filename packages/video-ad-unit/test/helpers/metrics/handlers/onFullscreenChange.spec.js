@@ -3,6 +3,7 @@ import onFullscreenChange from '../../../../src/helpers/metrics/handlers/onFulls
 
 const {
   fullscreen,
+  exitFullscreen,
   playerCollapse,
   playerExpand
 } = linearEvents;
@@ -20,8 +21,9 @@ test('onFullscreenChange must call playerExpand on when going fullscreen and pla
   callback.mockClear();
   document.fullscreenElement = null;
   document.dispatchEvent(new Event('fullscreenchange'));
-  expect(callback).toHaveBeenCalledTimes(1);
+  expect(callback).toHaveBeenCalledTimes(2);
   expect(callback).toHaveBeenCalledWith(playerCollapse);
+  expect(callback).toHaveBeenCalledWith(exitFullscreen);
 
   disconnect();
   callback.mockClear();
