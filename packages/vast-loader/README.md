@@ -1,6 +1,3 @@
 # @mol/vast-loader
 
-> MOL VAST loader
-
-## See also
-* [Root README](../../README.md)
+See [Root README](../../README.md)

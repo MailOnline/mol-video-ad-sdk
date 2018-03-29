@@ -1,10 +1,10 @@
-/** Tiny Emitter implementation. */
+/**
+ * @alias module:tiny-emitter
+ * @class
+ * @description Subset of  node's [Emitter class]{@link https://nodejs.org/api/events.html#events_class_eventemitter}
+ * @param {Object} logger - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
+ */
 class Emitter {
-  /**
-   * Create an Emitter instance.
-   *
-   * @param {Object} logger - Optional logger instance. Must comply to the [Console interface](https://developer.mozilla.org/es/docs/Web/API/Console).
-   */
   constructor (logger) {
     this.evts = {};
     this.logger = logger || console;
@@ -101,4 +101,8 @@ class Emitter {
   }
 }
 
+/**
+ * @module tiny-emitter
+ * @description Exports the emitter class wich is a subset of node's [Emitter class]{@link https://nodejs.org/api/events.html#events_class_eventemitter}
+ */
 export default Emitter;

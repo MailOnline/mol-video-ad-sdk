@@ -53,7 +53,8 @@ const vastChain = [
 ];
 
 afterEach(() => {
-  trackError.mockClear();
+  jest.clearAllMocks();
+  jest.resetAllMocks();
 });
 
 test('trackLinearEvent must track the error linear event with the default pixelTracker', () => {
@@ -112,8 +113,9 @@ test(`trackLinearEvent must track ${clickThrough} linear event with the default 
     tracker
   });
 
-  expect(tracker).toHaveBeenCalledTimes(1);
+  expect(tracker).toHaveBeenCalledTimes(3);
   expect(tracker).toHaveBeenCalledWith('https://test.example.com/clickthrough', {});
+  expect(tracker).toHaveBeenCalledWith('https://test.example.com/clicktracking', {});
 });
 
 [
@@ -161,7 +163,10 @@ test('trackLinearEvent must track impression linear event with the default pixel
 
 test('trackLinearEvent must track iconClicks', () => {
   const data = {
-    iconClickTracking: 'https://test.example.com/iconClick'
+    iconClickTracking: [
+      'https://test.example.com/iconClick',
+      'https://test.example.com/iconClick2'
+    ]
   };
   const tracker = jest.fn();
 
@@ -170,13 +175,17 @@ test('trackLinearEvent must track iconClicks', () => {
     tracker
   });
 
-  expect(tracker).toHaveBeenCalledTimes(1);
+  expect(tracker).toHaveBeenCalledTimes(2);
   expect(tracker).toHaveBeenCalledWith('https://test.example.com/iconClick', data);
+  expect(tracker).toHaveBeenCalledWith('https://test.example.com/iconClick2', data);
 });
 
 test('trackLinearEvent must track iconViews', () => {
   const data = {
-    iconViewTracking: 'https://test.example.com/iconView'
+    iconViewTracking: [
+      'https://test.example.com/iconView',
+      'https://test.example.com/iconView2'
+    ]
   };
   const tracker = jest.fn();
 
@@ -185,8 +194,9 @@ test('trackLinearEvent must track iconViews', () => {
     tracker
   });
 
-  expect(tracker).toHaveBeenCalledTimes(1);
+  expect(tracker).toHaveBeenCalledTimes(2);
   expect(tracker).toHaveBeenCalledWith('https://test.example.com/iconView', data);
+  expect(tracker).toHaveBeenCalledWith('https://test.example.com/iconView2', data);
 });
 
 test('trackLinearEvent must track progress', () => {

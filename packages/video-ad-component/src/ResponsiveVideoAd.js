@@ -1,11 +1,27 @@
 import React, {Component} from 'react';
-import {onElementResize} from '@mol/element-observers';
+import PropTypes from 'prop-types';
+import {
+  onElementResize,
+  onElementVisibilityChange
+} from '@mol/element-observers';
 import VideoAd from './VideoAd';
 
 class ResponsiveVideoAd extends Component {
+  static defaultProps = {
+    onStart: undefined
+  };
+
+  static propTypes = {
+    onStart: PropTypes.func
+  };
+
   state = {
     height: 0,
     width: 0
+  };
+
+  ref = (element) => {
+    this.element = element;
   };
 
   componentDidMount () {
@@ -18,14 +34,25 @@ class ResponsiveVideoAd extends Component {
     });
   }
 
-  ref = (element) => {
-    this.element = element;
-  };
+  handleOnStart (adUnit, ...args) {
+    onElementVisibilityChange(this.element, (visible) => {
+      if (visible) {
+        adUnit.resume();
+      } else {
+        adUnit.pause();
+      }
+    });
+
+    if (typeof this.props.onStart === 'function') {
+      this.props.onStart(adUnit, ...args);
+    }
+  }
 
   render () {
     const videoAdProps = {
       ...this.props,
-      ...this.state
+      ...this.state,
+      onStart: (...args) => this.handleOnStart(...args)
     };
 
     const containerStyles = {

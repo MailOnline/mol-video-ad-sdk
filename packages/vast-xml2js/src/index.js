@@ -1,3 +1,4 @@
+/** @module vast-xml2js */
 import xml2js from 'xml-js/lib/xml2js';
 import {
   get,

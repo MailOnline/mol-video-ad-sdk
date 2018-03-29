@@ -3,6 +3,7 @@ import {linearEvents} from '@mol/video-ad-tracker';
 
 const {
   fullscreen,
+  exitFullscreen,
   playerCollapse,
   playerExpand
 } = linearEvents;
@@ -15,6 +16,7 @@ const onFullscreenChange = ({context}, callback) => {
       callback(fullscreen);
     } else {
       callback(playerCollapse);
+      callback(exitFullscreen);
     }
   };
 

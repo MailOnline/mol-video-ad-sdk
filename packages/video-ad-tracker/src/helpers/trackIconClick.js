@@ -3,8 +3,10 @@ import pixelTracker from './pixelTracker';
 const trackIconClick = (vastChain, {data, tracker = pixelTracker} = {}) => {
   const {iconClickTracking} = data;
 
-  if (Boolean(iconClickTracking)) {
-    tracker(iconClickTracking, {...data});
+  if (Array.isArray(iconClickTracking)) {
+    for (const trackUrl of iconClickTracking) {
+      tracker(trackUrl, {...data});
+    }
   }
 };
 

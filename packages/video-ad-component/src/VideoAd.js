@@ -1,4 +1,4 @@
-/* eslint-disable filenames/match-exported, react/sort-comp */
+/* eslint-disable filenames/match-exported */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import loadVastChain from './helpers/loadVastChain';

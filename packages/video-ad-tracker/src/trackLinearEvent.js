@@ -1,5 +1,6 @@
 import {
   getClickThrough,
+  getClickTracking,
   getImpressionUri,
   getLinearTrackingEvents
 } from '@mol/vast-selectors';
@@ -14,6 +15,7 @@ import {
   complete,
   firstQuartile,
   fullscreen,
+  exitFullscreen,
   impression,
   iconClick,
   iconView,
@@ -38,12 +40,27 @@ import {
   * otherAdInteraction, <= Not used in VAST maybe for VPAID?
   * timeSpentViewing, <= Not used in VAST maybe for VPAID?
   */
+const clickTrackingSelector = (ad) => {
+  const trackingURIs = [];
+  const clickThroughUri = getClickThrough(ad);
+  const clickTrackings = getClickTracking(ad);
 
+  if (clickThroughUri) {
+    trackingURIs.push({uri: clickThroughUri});
+  }
+
+  if (Array.isArray(clickTrackings) && clickTrackings.length > 0) {
+    trackingURIs.push(...clickTrackings.map((uri) => ({uri})));
+  }
+
+  return trackingURIs;
+};
 const linearTrakingEventSelector = (event) => (ad) => getLinearTrackingEvents(ad, event);
 const linearTrackers = {
-  [clickThrough]: createLinearEventTracker(getClickThrough),
+  [clickThrough]: createLinearEventTracker(clickTrackingSelector),
   [complete]: createLinearEventTracker(linearTrakingEventSelector(complete)),
   [error]: trackError,
+  [exitFullscreen]: createLinearEventTracker(linearTrakingEventSelector(exitFullscreen)),
   [firstQuartile]: createLinearEventTracker(linearTrakingEventSelector(firstQuartile)),
   [fullscreen]: createLinearEventTracker(linearTrakingEventSelector(fullscreen)),
   [iconClick]: trackIconClick,

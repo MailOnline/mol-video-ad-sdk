@@ -4,7 +4,7 @@ const findChildByName = (element, childName) =>
   getChildren(element).find(({name = ''}) => name.toUpperCase() === childName.toUpperCase());
 
 const filterChildrendByName = (element, childrentName) =>
-  getChildren(element).filter(({name}) => name.toUpperCase() === childrentName.toUpperCase());
+  getChildren(element).filter(({name = ''}) => name.toUpperCase() === childrentName.toUpperCase());
 
 export const get = findChildByName;
 

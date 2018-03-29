@@ -1,14 +1,14 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
 import {
   getClickThrough,
-  getSkipoffset
+  getSkipOffset
 } from '@mol/vast-selectors';
 import getProgressEvents from '../progress/getProgressEvents';
 import metricHandlers from './handlers';
 
 const setupMetricHandlers = ({vastChain, videoAdContainer, hooks}, callback) => {
   const inlineAd = vastChain[0].ad;
-  const skipoffset = getSkipoffset(inlineAd);
+  const skipoffset = getSkipOffset(inlineAd);
   const clickThroughUrl = getClickThrough(inlineAd);
   const progressEvents = getProgressEvents(vastChain);
   const data = {
