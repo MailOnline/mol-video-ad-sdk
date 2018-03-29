@@ -21,7 +21,7 @@ export {
    * @param {Object} [options] - Options Map.
    * @param {number} [options.threshold] - sets a debounce threshold for the callback. Defaults to 20 milliseconds
    *
-   * @returns {undefined}
+   * @returns {function} - unsubscribe function.
    */
   onElementResize,
 
@@ -46,7 +46,7 @@ export {
    * @param {number} [options.viewabilityOffset] - Offset fraction. Percentage of the element that needs to be hidden to be considered not vissible.
    *  Defaults to 0.4
    *
-   * @returns {undefined}
+   * @returns {function} - unsubscribe function.
    */
   onElementVisibilityChange
 };

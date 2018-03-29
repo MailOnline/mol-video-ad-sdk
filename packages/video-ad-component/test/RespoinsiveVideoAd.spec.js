@@ -1,16 +1,21 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {mount} from 'enzyme';
 import React from 'react';
-import {onElementResize} from '@mol/element-observers';
+import {
+  onElementResize,
+  onElementVisibilityChange
+} from '@mol/element-observers';
 import ResponsiveVideoAd from '../src/ResponsiveVideoAd';
 import VideoAd from '../src/VideoAd';
 
 jest.mock('@mol/element-observers', () => ({
-  onElementResize: jest.fn()
+  onElementResize: jest.fn(),
+  onElementVisibilityChange: jest.fn()
 }));
 
 let resizeElement;
 let simulateResize;
+let simulateVisibilityChange;
 const noop = () => {};
 
 beforeEach(() => {
@@ -19,10 +24,15 @@ beforeEach(() => {
     resizeElement = element;
     simulateResize = callback;
   });
+  // eslint-disable-next-line promise/prefer-await-to-callbacks
+  onElementVisibilityChange.mockImplementation((element, callback) => {
+    simulateVisibilityChange = callback;
+  });
 });
+
 afterEach(() => {
-  onElementResize.mockReset();
-  onElementResize.mockClear();
+  jest.clearAllMocks();
+  jest.resetAllMocks();
 });
 
 test('ResponsiveVideoAd must propagate the props to the VideoAd component', () => {
@@ -37,6 +47,7 @@ test('ResponsiveVideoAd must propagate the props to the VideoAd component', () =
   expect(videoAd.props()).toEqual(expect.objectContaining({
     ...props,
     height: 0,
+    onStart: expect.any(Function),
     width: 0
   }));
 
@@ -60,6 +71,55 @@ test('ResponsiveVideoAd must propagate the props to the VideoAd component', () =
   expect(videoAd.props()).toEqual(expect.objectContaining({
     ...props,
     height: 100,
+    onStart: expect.any(Function),
     width: 150
   }));
+});
+
+test('must pause and resume the ad unit on visibility change', () => {
+  const props = {
+    getTag: noop,
+    onStart: noop
+  };
+  const wrapper = mount(<ResponsiveVideoAd {...props} />);
+  const videoAd = wrapper.find(VideoAd);
+  const {onStart: simulateOnStart} = videoAd.props();
+  const adUnitMock = {
+    changeVolume: jest.fn(),
+    pause: jest.fn(),
+    resume: jest.fn()
+  };
+
+  expect(onElementVisibilityChange).not.toHaveBeenCalled();
+  simulateOnStart(adUnitMock, adUnitMock.changeVolume, adUnitMock.pause, adUnitMock.resume);
+  expect(onElementVisibilityChange).toHaveBeenCalledTimes(1);
+
+  expect(adUnitMock.pause).toHaveBeenCalledTimes(0);
+  expect(adUnitMock.resume).toHaveBeenCalledTimes(0);
+  simulateVisibilityChange(false);
+  expect(adUnitMock.pause).toHaveBeenCalledTimes(1);
+  expect(adUnitMock.resume).toHaveBeenCalledTimes(0);
+  simulateVisibilityChange(true);
+  expect(adUnitMock.pause).toHaveBeenCalledTimes(1);
+  expect(adUnitMock.resume).toHaveBeenCalledTimes(1);
+});
+
+test('must call the onStart prop if passed', () => {
+  const props = {
+    getTag: noop,
+    onStart: jest.fn()
+  };
+  const wrapper = mount(<ResponsiveVideoAd {...props} />);
+  const videoAd = wrapper.find(VideoAd);
+  const {onStart: simulateOnStart} = videoAd.props();
+  const adUnitMock = {
+    changeVolume: jest.fn(),
+    pause: jest.fn(),
+    resume: jest.fn()
+  };
+
+  expect(props.onStart).toHaveBeenCalledTimes(0);
+  simulateOnStart(adUnitMock, adUnitMock.changeVolume, adUnitMock.pause, adUnitMock.resume);
+  expect(props.onStart).toHaveBeenCalledTimes(1);
+  expect(props.onStart).toHaveBeenCalledWith(adUnitMock, adUnitMock.changeVolume, adUnitMock.pause, adUnitMock.resume);
 });

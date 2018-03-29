@@ -1,4 +1,4 @@
-/* eslint-disable filenames/match-exported, react/sort-comp */
+/* eslint-disable filenames/match-exported */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import loadVastChain from './helpers/loadVastChain';
@@ -6,8 +6,6 @@ import tryToStartAd from './helpers/tryToStartAd';
 import makeCancelable from './helpers/makeCancelable';
 
 const noop = () => {};
-
-// TODO: SHOULD PAUSE THE AD ON VISIBILITY CHANGE
 
 class VideoAd extends Component {
   static defaultProps = {
