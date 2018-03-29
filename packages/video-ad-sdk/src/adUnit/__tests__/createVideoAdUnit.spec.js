@@ -11,7 +11,7 @@ import {
   linearEvents,
   trackLinearEvent
 } from '@mol/video-ad-tracker';
-import {VastAdUnit} from '../adUnit';
+import VastAdUnit from '../VastAdUnit';
 import createVideoAdUnit from '../createVideoAdUnit';
 
 jest.mock('@mol/video-ad-tracker', () => ({
