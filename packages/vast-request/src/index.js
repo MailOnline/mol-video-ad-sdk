@@ -1,4 +1,4 @@
-/** @module vast-loader */
+/** @module vast-request */
 import requestAd from './requestAd';
 import requestNextAd from './requestNextAd';
 
