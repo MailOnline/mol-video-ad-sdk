@@ -1,5 +1,5 @@
-import {linearEvents} from '@mol/video-ad-tracker';
 import {getLinearTrackingEvents} from '@mol/vast-selectors';
+import {linearEvents} from '../../../tracker';
 
 const {
   progress

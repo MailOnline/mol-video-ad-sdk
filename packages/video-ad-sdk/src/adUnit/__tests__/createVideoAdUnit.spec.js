@@ -10,12 +10,12 @@ import {
 import {
   linearEvents,
   trackLinearEvent
-} from '@mol/video-ad-tracker';
+} from '../../tracker';
 import VastAdUnit from '../VastAdUnit';
 import createVideoAdUnit from '../createVideoAdUnit';
 
-jest.mock('@mol/video-ad-tracker', () => ({
-  ...require.requireActual('@mol/video-ad-tracker'),
+jest.mock('../../tracker', () => ({
+  ...require.requireActual('../../tracker'),
   trackLinearEvent: jest.fn()
 }));
 

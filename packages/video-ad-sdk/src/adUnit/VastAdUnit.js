@@ -1,6 +1,6 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
-import {linearEvents} from '@mol/video-ad-tracker';
 import Emitter from '@mol/tiny-emitter';
+import {linearEvents} from '../tracker';
 import findBestMedia from './helpers/media/findBestMedia';
 import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';
 import retrieveIcons from './helpers/icons/retrieveIcons';

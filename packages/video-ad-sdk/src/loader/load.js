@@ -1,5 +1,5 @@
 import {requestAd} from '@mol/vast-loader';
-import {trackError} from '@mol/video-ad-tracker';
+import {trackError} from '../tracker';
 
 /**
  * Request the ad using the passed ad tag and returns an array with the VAST responses needed to get an inline ad.

@@ -1,5 +1,4 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
-import {linearEvents} from '@mol/video-ad-tracker';
 import {
   vastWrapperXML,
   vastInlineXML,
@@ -9,6 +8,7 @@ import {
   inlineAd
 } from '@mol/vast-fixtures';
 import {createVideoAdContainer} from '@mol/video-ad-container';
+import {linearEvents} from '../../tracker';
 import VastAdUnit from '../VastAdUnit';
 import canPlay from '../helpers/media/canPlay';
 import updateMedia from '../helpers/media/updateMedia';

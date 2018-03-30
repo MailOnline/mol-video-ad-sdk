@@ -1,7 +1,7 @@
 import {
   linearEvents,
   trackLinearEvent
-} from '@mol/video-ad-tracker';
+} from '../tracker';
 import createVastAdUnit from './createVastAdUnit';
 
 const createVideoAdUnit = async (vastChain, videoAdContainer, options = {}) => {

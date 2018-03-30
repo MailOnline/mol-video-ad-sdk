@@ -1,5 +1,5 @@
-import {linearEvents} from '@mol/video-ad-tracker';
 import {createVideoAdContainer} from '@mol/video-ad-container';
+import {linearEvents} from '../../../../../tracker';
 import onClickThrough from '../onClickThrough';
 
 const {clickThrough} = linearEvents;
