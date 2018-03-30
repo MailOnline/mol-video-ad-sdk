@@ -11,7 +11,7 @@
   ],
   "dependencies": {
     "@mol/tiny-emitter": "^0.1.0",
-    "@mol/vast-loader": "^0.1.0",
+    "@mol/vast-request": "^0.1.0",
     "@mol/vast-selectors": "^0.1.0",
     "whatwg-fetch": "^2.0.3"
   },

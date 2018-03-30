@@ -1,4 +1,4 @@
-import {requestNextAd} from '@mol/vast-loader';
+import {requestNextAd} from '@mol/vast-request';
 import {trackError} from '../tracker';
 
 /**

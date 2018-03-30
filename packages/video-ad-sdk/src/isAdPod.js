@@ -1,5 +1,6 @@
 import {hasAdPod} from '@mol/vast-selectors';
 
+// TODO: MOVE this method to the vast-selectors module
 /**
  * Returns true if the passed VASTChain has an ad pod or false otherwise.
  *
