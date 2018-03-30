@@ -10,8 +10,10 @@ import {
   vastInlineXML,
   vastPodXML
 } from '@mol/vast-fixtures';
-import {getFirstAd} from '@mol/vast-selectors';
-import isAdPod from '../isAdPod';
+import {
+  getFirstAd,
+  isAdPod
+} from '../index';
 
 test('isAdPod must return true if the passed vastChain has an adPod', () => {
   const adPodVastChain = [
