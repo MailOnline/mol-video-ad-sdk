@@ -1,6 +1,7 @@
 import {
   createVideoAdContainer,
-  VastAdUnit
+  VastAdUnit,
+  VideoAdContainer
 } from '@mol/video-ad-sdk';
 import {
   vastWrapperXML,
@@ -10,7 +11,6 @@ import {
   wrapperAd,
   inlineAd
 } from '@mol/vast-fixtures';
-import {VideoAdContainer} from '@mol/video-ad-container';
 import startVideoAd from '../startVideoAd';
 import tryToStartAd from '../tryToStartAd';
 import loadNextVastChain from '../loadNextVastChain';

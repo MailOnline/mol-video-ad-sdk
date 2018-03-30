@@ -7,7 +7,7 @@ import {
   wrapperAd,
   inlineAd
 } from '@mol/vast-fixtures';
-import {createVideoAdContainer} from '@mol/video-ad-container';
+import createVideoAdContainer from '../../adContainer/createVideoAdContainer';
 import {linearEvents} from '../../tracker';
 import VastAdUnit from '../VastAdUnit';
 import canPlay from '../helpers/media/canPlay';

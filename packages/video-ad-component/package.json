@@ -28,7 +28,6 @@
     "jest-enzyme": "^4.2.0",
     "react": "^16.1.1",
     "@mol/vast-fixtures": "^0.1.0",
-    "@mol/video-ad-container": "^0.1.0",
     "postcss-loader": "^2.0.9",
     "style-loader": "^0.19.0",
     "svg-react-loader": "^0.4.5",

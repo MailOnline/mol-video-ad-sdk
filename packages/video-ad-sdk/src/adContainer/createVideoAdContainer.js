@@ -1,12 +1,9 @@
-/** @module video-ad-container */
-import VideoAdContainer from './VideoAdContainer';
 import SecureVideoAdContainer from './SecureVideoAdContainer';
-import createVideoAdContainer from './createVideoAdContainer';
+import VideoAdContainer from './VideoAdContainer';
 
-export {
-
-  /**
+/**
    * VideoAdContainer factory method. Returns a VideoAdContainer instance that will contain the video ad.
+   *
    * @function
    * @static
    * @param {HTMLElement} placeholder - Placeholder element that will contain the video ad.
@@ -20,15 +17,14 @@ export {
    *
    * @returns {VideoAdContainer|SecureVideoAdContainer} - Returns a `VideoAdContainer` or `SecureVideoAdContainer` instance.
    */
-  createVideoAdContainer,
+const createVideoAdContainer = (placeholder, options = {}) => {
+  const {secure = false} = options;
 
-  /**
-   * @see VideoAdContainer
-   */
-  VideoAdContainer,
+  if (secure) {
+    return new SecureVideoAdContainer(placeholder, options).ready();
+  }
 
-  /**
-   * @see SecureVideoAdContainer
-   */
-  SecureVideoAdContainer
+  return new VideoAdContainer(placeholder, options).ready();
 };
+
+export default createVideoAdContainer;

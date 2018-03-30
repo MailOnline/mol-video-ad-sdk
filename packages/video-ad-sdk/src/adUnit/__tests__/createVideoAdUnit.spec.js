@@ -1,4 +1,3 @@
-import {VideoAdContainer} from '@mol/video-ad-container';
 import {
   vastWrapperXML,
   vastInlineXML,
@@ -7,6 +6,7 @@ import {
   wrapperAd,
   inlineAd
 } from '@mol/vast-fixtures';
+import VideoAdContainer from '../../adContainer/VideoAdContainer';
 import {
   linearEvents,
   trackLinearEvent

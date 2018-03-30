@@ -1,4 +1,4 @@
-import {createVideoAdContainer} from '@mol/video-ad-container';
+import createVideoAdContainer from '../../../../../adContainer/createVideoAdContainer';
 import {linearEvents} from '../../../../../tracker';
 import onClickThrough from '../onClickThrough';
 

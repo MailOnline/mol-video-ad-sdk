@@ -1,4 +1,5 @@
-import {createVideoAdContainer} from '@mol/video-ad-container';
+import createVideoAdContainer from './adContainer/createVideoAdContainer';
+import VideoAdContainer from './adContainer/VideoAdContainer';
 import load from './loader/load';
 import loadNext from './loader/loadNext';
 import isAdPod from './isAdPod';
@@ -11,5 +12,6 @@ export {
   isAdPod,
   load,
   loadNext,
-  VastAdUnit
+  VastAdUnit,
+  VideoAdContainer
 };
