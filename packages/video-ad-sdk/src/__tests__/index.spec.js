@@ -1,7 +1,6 @@
 import {
   createVideoAdContainer,
   createVideoAdUnit,
-  isAdPod,
   load,
   loadNext
 } from '../index';
@@ -12,10 +11,6 @@ test('@mol/video-ad-manager must publish `load`', () => {
 
 test('@mol/video-ad-manager must publish `loadNext`', () => {
   expect(loadNext).toBeInstanceOf(Function);
-});
-
-test('@mol/video-ad-manager must publish `isAdPod`', () => {
-  expect(isAdPod).toBeInstanceOf(Function);
 });
 
 test('@mol/video-ad-manager must publish `createVideoAdContainer`', () => {

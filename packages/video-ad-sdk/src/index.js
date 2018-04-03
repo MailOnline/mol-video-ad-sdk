@@ -1,16 +1,15 @@
-import {createVideoAdContainer} from '@mol/video-ad-container';
-import createVideoAdUnit from './createVideoAdUnit';
-import load from './load';
-import loadNext from './loadNext';
-import isAdPod from './isAdPod';
+import createVideoAdContainer from './adContainer/createVideoAdContainer';
+import VideoAdContainer from './adContainer/VideoAdContainer';
+import load from './loader/load';
+import loadNext from './loader/loadNext';
+import VastAdUnit from './adUnit/VastAdUnit';
+import createVideoAdUnit from './adUnit/createVideoAdUnit';
 
-/**
- * @namespace MolVideoAdManager
- */
 export {
   createVideoAdContainer,
   createVideoAdUnit,
-  isAdPod,
   load,
-  loadNext
+  loadNext,
+  VastAdUnit,
+  VideoAdContainer
 };
