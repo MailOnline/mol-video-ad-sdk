@@ -11,6 +11,7 @@ storiesOf('VideoAd', module)
         <ResponsiveVideoAd
           getTag={() => 'http://localhost:9001/vastFiles/prerollChain/start-wrapper.xml'}
           onComplete={action('complete')}
+          onLinearEvent={(eventname, ...args) => action(eventname)(...args)}
           onNonRecoverableError={action('NonRecoverableError')}
           onRecoverableError={action('RecoverableError')}
           onStart={action('start')}
