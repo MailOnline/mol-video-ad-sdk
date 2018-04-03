@@ -10,7 +10,7 @@
     "src"
   ],
   "dependencies": {
-    "whatwg-fetch": "^2.0.3",
+    "whatwg-fetch": "^2.0.4",
     "@mol/vast-xml2js": "^0.1.0",
     "@mol/vast-selectors": "^0.1.0"
   },
