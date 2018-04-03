@@ -12,7 +12,7 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['mocha'],
     files: [
-      'integration/index_test.js'
+      'integration-tests.js'
     ],
     port: 9876,
     colors: true,
@@ -22,7 +22,7 @@ module.exports = function (config) {
     singleRun: true,
     concurrency: Infinity,
     preprocessors: {
-      'integration/index_test.js': ['webpack', 'sourcemap']
+      'integration-tests.js': ['webpack', 'sourcemap']
     },
     reporters: ['mocha'],
     webpack: {
