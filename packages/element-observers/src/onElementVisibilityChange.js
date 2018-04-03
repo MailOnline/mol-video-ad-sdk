@@ -39,9 +39,9 @@ const onElementVisibilityChange = function (target, callback, {threshold = 100, 
 
   const entry = {
     callback,
+    element: target,
     lastInViewport: false,
     scrollableElement,
-    target,
     viewabilityOffset
   };
 
