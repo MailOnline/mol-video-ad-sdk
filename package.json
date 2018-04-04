@@ -13,7 +13,9 @@
     "prepush": "npm test",
     "start": "cd packages/video-ad-component && npm run storybook && cd -",
     "test": "NODE_ENV=test jest",
-    "clean": "lerna clean; find . -type f -name 'package-lock.json' -delete; rm -r node_modules"
+    "clean": "lerna clean; find . -type f -name 'package-lock.json' -delete; rm -r node_modules",
+    "storybook": "start-storybook -s ./static -p 9001",
+    "test:karma": "karma start"
   },
   "license": "UNLICENSED",
   "bugs": {

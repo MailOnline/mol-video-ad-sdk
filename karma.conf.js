@@ -12,7 +12,7 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['mocha'],
     files: [
-      'integration-tests.js'
+      './packages/*/src/**/__karma__/**/*.spec.js'
     ],
     port: 9876,
     colors: true,
@@ -22,7 +22,7 @@ module.exports = function (config) {
     singleRun: true,
     concurrency: Infinity,
     preprocessors: {
-      'integration-tests.js': ['webpack', 'sourcemap']
+      './packages/*/src/**/__karma__/**/*.spec.js': ['webpack', 'sourcemap']
     },
     reporters: ['mocha'],
     webpack: {
