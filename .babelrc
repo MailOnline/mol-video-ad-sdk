@@ -21,6 +21,14 @@
   ],
   "plugins": [
     "syntax-dynamic-import",
+    [
+      "transform-runtime",
+      {
+        "helpers": false,
+        "polyfill": false,
+        "regenerator": true
+      }
+    ],
     "babel-plugin-transform-class-properties"
   ],
   "env": {

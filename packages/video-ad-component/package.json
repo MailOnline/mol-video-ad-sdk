@@ -17,9 +17,6 @@
     "prop-types": "^15.6.0"
   },
   "devDependencies": {
-    "@mol/vast-fixtures": "^0.1.0",
-    "@storybook/addon-actions": "^3.4.0",
-    "@storybook/react": "^3.4.0",
-    "react": "^16.1.1"
+    "@mol/vast-fixtures": "^0.1.0"
   }
 }
