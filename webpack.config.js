@@ -1,3 +1,4 @@
+/* eslint-disable import/unambiguous, import/no-commonjs, sort-keys, global-require, no-process-env */
 const cssLoaders = [
   {
     loader: 'style-loader'
@@ -39,6 +40,7 @@ const rules = [
     ]
   }
 ];
+
 module.exports = {
   module: {rules}
 };
