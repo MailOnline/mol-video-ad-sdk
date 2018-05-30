@@ -8,7 +8,7 @@ class VideoAdIMA extends React.Component {
   static propTypes = propTypes;
 
   render () {
-    return <div>test</div>;
+    return <div>IMA</div>;
   }
 }
 
