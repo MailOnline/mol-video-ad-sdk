@@ -7,8 +7,8 @@ import {ResponsiveVideoAd} from '../index';
 import Spinner from '../Spinner';
 import styles from './styles.css';
 
-storiesOf('VideoAd', module)
-  .add('preroll success', () =>
+storiesOf('<ResponsiveVideoAd>', module)
+  .add('Preroll success', () =>
     <div className={styles.videoContainer}>
       <div className={styles.videoPlaceholder}>
         <ResponsiveVideoAd
@@ -26,3 +26,7 @@ storiesOf('VideoAd', module)
     </div>
   );
 
+storiesOf('<Spinner>', module)
+  .add('Default', () =>
+    <Spinner />
+  );
