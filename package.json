@@ -151,7 +151,7 @@
       "/node_modules/",
       "/packages/vast-fixtures/",
       "/packages/vast-xml2js/",
-      "/packages/video-ad-component/src/stories/"
+      "/packages/react-vast/src/__storybook_/"
     ],
     "moduleNameMapper": {
       "\\.(scss)$": "identity-obj-proxy"
