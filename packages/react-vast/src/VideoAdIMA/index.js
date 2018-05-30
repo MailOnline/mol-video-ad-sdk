@@ -1,6 +1,7 @@
 /* eslint-disable filenames/match-exported, react/no-did-mount-set-state */
 import {loadScript} from '@mol-fe/mol-fe-dom-helpers';
 import React from 'react';
+import PropTypes from 'prop-types';
 import timeoutPromise from '../helpers/timeoutPromise';
 import defaultProps from '../VideoAd/defaultProps';
 import propTypes from '../VideoAd/propTypes';
@@ -14,9 +15,22 @@ const loadComponent = async () => {
   return VideoAdIMASync;
 };
 
+const defaultRender = () => null;
+
 class VideoAdIMA extends React.Component {
-  static defaultProps = defaultProps;
-  static propTypes = propTypes;
+  static propTypes = {
+    ...propTypes,
+    onLoadingError: PropTypes.func,
+    renderError: PropTypes.func,
+    renderLoading: PropTypes.func
+  };
+
+  static defaultProps = {
+    ...defaultProps,
+    onLoadingError: () => {},
+    renderError: defaultRender,
+    renderLoading: defaultRender
+  };
 
   state = {
     Component: null,
@@ -34,6 +48,7 @@ class VideoAdIMA extends React.Component {
         Component
       });
     } catch (error) {
+      this.props.onLoadingError(error);
       this.setState({
         error
       });
@@ -41,15 +56,16 @@ class VideoAdIMA extends React.Component {
   }
 
   render () {
-    const {renderError, renderLoading, ...rest} = this.props;
+    // eslint-disable-next-line no-unused-vars
+    const {renderError, renderLoading, onLoadingError, ...rest} = this.props;
     const {Component, error} = this.state;
 
     if (error) {
-      return null;
+      return renderError(error, this.props);
     }
 
     if (!Component) {
-      return null;
+      return renderLoading(this.props);
     }
 
     return <Component {...rest} />;
