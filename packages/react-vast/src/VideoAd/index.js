@@ -1,47 +1,14 @@
 /* eslint-disable filenames/match-exported */
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import loadVastChain from './helpers/loadVastChain';
-import tryToStartAd from './helpers/tryToStartAd';
-import makeCancelable from './helpers/makeCancelable';
+import React from 'react';
+import loadVastChain from '../helpers/loadVastChain';
+import tryToStartAd from '../helpers/tryToStartAd';
+import makeCancelable from '../helpers/makeCancelable';
+import defaultProps from './defaultProps';
+import propTypes from './propTypes';
 
-const noop = () => {};
-
-class VideoAd extends Component {
-  static defaultProps = {
-    children: undefined,
-    height: undefined,
-    logger: console,
-    onComplete: noop,
-    onLinearEvent: noop,
-    onNonRecoverableError: noop,
-    onRecoverableError: noop,
-    onStart: noop,
-    tracker: undefined,
-    videoElement: undefined,
-    width: undefined
-  };
-
-  static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ]),
-    getTag: PropTypes.func.isRequired,
-    height: PropTypes.number,
-    logger: PropTypes.shape({
-      error: PropTypes.func,
-      log: PropTypes.func
-    }),
-    onComplete: PropTypes.func,
-    onLinearEvent: PropTypes.func,
-    onNonRecoverableError: PropTypes.func,
-    onRecoverableError: PropTypes.func,
-    onStart: PropTypes.func,
-    tracker: PropTypes.func,
-    videoElement: PropTypes.node,
-    width: PropTypes.number
-  };
+class VideoAd extends React.Component {
+  static defaultProps = defaultProps;
+  static propTypes = propTypes;
 
   ref = (element) => {
     this.element = element;
