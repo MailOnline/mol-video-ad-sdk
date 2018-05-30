@@ -4,6 +4,7 @@ import {storiesOf} from '@storybook/react';
 import {action} from '@storybook/addon-actions';
 /* eslint-enable import/no-extraneous-dependencies */
 import {ResponsiveVideoAd} from '../index';
+import Spinner from '../Spinner';
 import styles from './styles.css';
 
 storiesOf('VideoAd', module)
@@ -18,7 +19,9 @@ storiesOf('VideoAd', module)
           onRecoverableError={action('RecoverableError')}
           onStart={action('start')}
           tracker={() => {}}
-        >Loading ad ...</ResponsiveVideoAd>
+        >
+          <Spinner />
+        </ResponsiveVideoAd>
       </div>
     </div>
   );
