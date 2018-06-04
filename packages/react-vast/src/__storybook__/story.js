@@ -6,6 +6,7 @@ import {action} from '@storybook/addon-actions';
 import {ResponsiveVideoAd, VideoAd, VideoAdIMA} from '../index';
 import {VideoAd as VideoAdIMASDK} from '../ima';
 import Spinner from '../Spinner';
+import PrerollStory from './PrerollStory';
 import styles from './styles.css';
 
 storiesOf('<ResponsiveVideoAd>', module)
@@ -64,6 +65,7 @@ storiesOf('<VideoAdIMA>', module)
   );
 
 storiesOf('ima/<VideoAd>', module)
+  .add('Preroll', () => <PrerollStory component={VideoAdIMASDK} />)
   .add('Preroll success', () =>
     <div className={styles.videoContainer}>
       <div className={styles.videoPlaceholder}>

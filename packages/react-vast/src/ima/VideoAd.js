@@ -6,6 +6,7 @@ import timeoutPromise from '../helpers/timeoutPromise';
 import defaultProps from '../VideoAd/defaultProps';
 import propTypes from '../VideoAd/propTypes';
 
+// TODO: WHERE IS `window.IMA_SDK_URL` SET? ON PROD SITE IT IS `undefined`.
 const IMA_SDK_URL = window.IMA_SDK_URL || '//imasdk.googleapis.com/js/sdkloader/ima3_debug.js';
 const loadSDK = () => {
   if (typeof window === 'object' && window.google && window.google.ima) {
@@ -74,7 +75,6 @@ class VideoAd extends React.Component {
       return renderLoading(this.props);
     }
 
-    console.log('here', Component);
     return <Component {...rest} />;
   }
 }
