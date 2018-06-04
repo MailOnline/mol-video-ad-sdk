@@ -4,7 +4,7 @@ import {storiesOf} from '@storybook/react';
 import {action} from '@storybook/addon-actions';
 /* eslint-enable import/no-extraneous-dependencies */
 import {ResponsiveVideoAd, VideoAd, VideoAdIMA} from '../index';
-import {VideoAd as VideoAdIMASDK} from '../ima/VideoAd';
+import {VideoAd as VideoAdIMASDK} from '../ima';
 import Spinner from '../Spinner';
 import styles from './styles.css';
 
