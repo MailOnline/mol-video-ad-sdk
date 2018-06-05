@@ -5,13 +5,17 @@ import {
   onElementVisibilityChange
 } from '@mol/element-observers';
 import VideoAd from './VideoAd';
+import propTypes from './VideoAd/propTypes';
+import defaultProps from './VideoAd/defaultProps';
 
 class ResponsiveVideoAd extends Component {
   static defaultProps = {
+    ...defaultProps,
     onStart: undefined
   };
 
   static propTypes = {
+    ...propTypes,
     onStart: PropTypes.func
   };
 

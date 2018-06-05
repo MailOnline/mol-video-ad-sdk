@@ -1,0 +1,8 @@
+{
+  "extends": "mailonline/react",
+  "rules": {
+    "react/sort-comp": "off",
+    "react/no-set-state": "off",
+    "react/no-did-mount-set-state": "off"
+  }
+}

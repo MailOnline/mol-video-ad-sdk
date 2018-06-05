@@ -1,5 +1,5 @@
 {
-  "name": "@mol/video-ad-component",
+  "name": "@mol/react-vast",
   "version": "0.1.0",
   "description": "React component that loads video-ads using @mol/video-ad-sdk",
   "author": "MailOnline <fe@mailonline.co.uk>",
@@ -12,6 +12,11 @@
   "dependencies": {
     "@mol/video-ad-sdk": "^0.1.0",
     "@mol/element-observers": "^0.1.0",
+    "@mol-fe/mol-fe-async": "^4.2.0",
+    "@mol-fe/mol-fe-page-metadata": "^2.2.0",
+    "@mol-fe/mol-fe-client-logger": "^2.5.0",
+    "@mol-fe/mol-fe-dom-helpers": "^3.6.0",
+    "@mol-fe/mol-fe-components": "^3.2.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "prop-types": "^15.6.0"
