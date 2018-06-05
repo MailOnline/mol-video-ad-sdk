@@ -12,7 +12,8 @@ const styles = {
     left: 0,
     width: 200,
     height: 200,
-    outline: '2px solid red'
+    outline: '2px solid red',
+    overflow: 'hidden'
   },
   videoElement: {
     height: 360,

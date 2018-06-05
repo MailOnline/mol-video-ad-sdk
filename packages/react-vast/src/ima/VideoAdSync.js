@@ -27,10 +27,6 @@ export class VideoAdSync extends React.Component {
     this.videoContent = video;
   };
 
-  handleClick = () => {
-    this.playAds();
-  };
-
   createAdDisplayContainer () {
     this.adDisplayContainer = new window.google.ima.AdDisplayContainer(this.adContainer, this.videoContent);
   }
@@ -86,6 +82,8 @@ export class VideoAdSync extends React.Component {
     this.adsManager.addEventListener(ima.AdEvent.Type.LOADED, this.onAdEvent);
     this.adsManager.addEventListener(ima.AdEvent.Type.STARTED, this.onAdEvent);
     this.adsManager.addEventListener(ima.AdEvent.Type.COMPLETE, this.onAdEvent);
+
+    this.playAds();
   }
 
   onAdError = (adErrorEvent) => {
@@ -161,6 +159,7 @@ export class VideoAdSync extends React.Component {
       // start at this time; the call will be ignored for ad rules.
       this.adsManager.start();
     } catch (error) {
+      console.log('ERROR', error);
       // An error may be thrown if there was a problem with the VAST response.
       this.videoContent.play();
     }
