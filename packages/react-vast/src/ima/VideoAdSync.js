@@ -55,7 +55,9 @@ export class VideoAdSync extends React.Component {
   };
 
   createAdDisplayContainer () {
-    this.adDisplayContainer = new window.google.ima.AdDisplayContainer(this.adContainer, this.props.videoElement);
+    const ima = window.google.ima;
+
+    this.adDisplayContainer = new ima.AdDisplayContainer(this.adContainer, this.props.videoElement);
   }
 
   init () {

@@ -6,6 +6,15 @@ import timeoutPromise from '../helpers/timeoutPromise';
 import defaultProps from '../VideoAd/defaultProps';
 import propTypes from '../VideoAd/propTypes';
 
+const styles = {
+  loading: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'relative'
+  }
+};
+
 // TODO: WHERE IS `window.IMA_SDK_URL` SET? ON PROD SITE IT IS `undefined`.
 const IMA_SDK_URL = window.IMA_SDK_URL ||
   // eslint-disable-next-line no-process-env
@@ -75,7 +84,17 @@ class VideoAd extends React.Component {
     }
 
     if (!Component) {
-      return rest.renderLoading(this.props);
+      return (
+        <div
+          style={{
+            ...styles.loading,
+            height: this.props.height,
+            width: this.props.width
+          }}
+        >
+          {rest.renderLoading(this.props)}
+        </div>
+      );
     }
 
     return <Component {...rest} />;
