@@ -2,7 +2,7 @@ const noop = () => {};
 
 const defaultProps = {
   children: undefined,
-  height: undefined,
+  height: 360,
   logger: console,
   onComplete: noop,
   onLinearEvent: noop,
@@ -11,7 +11,7 @@ const defaultProps = {
   onStart: noop,
   tracker: undefined,
   videoElement: undefined,
-  width: undefined
+  width: 640
 };
 
 export default defaultProps;

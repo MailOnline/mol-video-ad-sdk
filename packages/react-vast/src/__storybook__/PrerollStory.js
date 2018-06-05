@@ -61,11 +61,14 @@ class PrerollStory extends React.Component {
         <div style={styles.ad}>
           <VideoAdComponent
             getTag={() => 'http://localhost:9001/vastFiles/prerollChain/start-wrapper.xml'}
+            height={styles.ad.height}
             onComplete={action('complete')}
             onLinearEvent={(eventname, ...args) => action(eventname)(...args)}
             onNonRecoverableError={action('NonRecoverableError')}
             onRecoverableError={action('RecoverableError')}
             tracker={() => {}}
+            videoElement={this.el}
+            width={styles.ad.width}
           />
         </div>
       </div>

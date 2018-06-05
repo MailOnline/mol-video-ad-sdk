@@ -11,7 +11,6 @@ export class VideoAdSync extends React.Component {
     this.init();
   }
 
-  videoContent;
   adContainer;
   adDisplayContainer;
   adsLoader;
@@ -23,12 +22,8 @@ export class VideoAdSync extends React.Component {
     this.adContainer = div;
   };
 
-  refContentElement = (video) => {
-    this.videoContent = video;
-  };
-
   createAdDisplayContainer () {
-    this.adDisplayContainer = new window.google.ima.AdDisplayContainer(this.adContainer, this.videoContent);
+    this.adDisplayContainer = new window.google.ima.AdDisplayContainer(this.adContainer, this.props.videoElement);
   }
 
   init () {
@@ -70,7 +65,7 @@ export class VideoAdSync extends React.Component {
 
     adsRenderingSettings.restoreCustomPlaybackStateOnAdBreakComplete = true;
 
-    this.adsManager = adsManagerLoadedEvent.getAdsManager(this.videoContent, adsRenderingSettings);
+    this.adsManager = adsManagerLoadedEvent.getAdsManager(this.props.videoElement, adsRenderingSettings);
 
     // Add listeners to the required events.
     this.adsManager.addEventListener(ima.AdErrorEvent.Type.AD_ERROR, this.onAdError);
@@ -148,7 +143,7 @@ export class VideoAdSync extends React.Component {
     const ima = window.google.ima;
 
     // TODO: Initialize the container. Must be done via a user action on mobile devices.
-    this.videoContent.load();
+    // this.props.videoElement.load();
     this.adDisplayContainer.initialize();
 
     try {
@@ -167,47 +162,13 @@ export class VideoAdSync extends React.Component {
 
   render () {
     return (
-      <div>
-        <div style={{
-          height: 360,
-          position: 'relative',
-          width: 640
-        }}>
-          <div
-            id='content'
-            style={{
-              height: 360,
-              left: 0,
-              position: 'absolute',
-              top: 0,
-              width: 640
-            }}
-          >
-            <video
-              ref={this.refContentElement}
-              style={{
-                height: 360,
-                overflow: 'hidden',
-                width: 640
-              }}
-            >
-              <source src='http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4' />
-              <source src='http://rmcdn.2mdn.net/Demo/vast_inspector/android.webm' />
-            </video>
-          </div>
-          <div
-            ref={this.refAdContainer}
-            style={{
-              height: 360,
-              left: 0,
-              position: 'absolute',
-              top: 0,
-              width: 640
-            }}
-          />
-        </div>
-        <button onClick={this.handleClick}>Play</button>
-      </div>
+      <div
+        ref={this.refAdContainer}
+        style={{
+          height: this.props.height,
+          width: this.props.width
+        }}
+      />
     );
   }
 }
