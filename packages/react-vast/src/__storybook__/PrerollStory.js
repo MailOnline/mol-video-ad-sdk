@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Spinner from '../Spinner';
 
 const width = 640;
 const height = 360;
@@ -79,7 +80,7 @@ class PrerollStory extends React.Component {
             onLinearEvent={(eventname, ...args) => action(eventname)(...args)}
             onNonRecoverableError={action('NonRecoverableError')}
             onRecoverableError={action('RecoverableError')}
-            renderLoading={() => 'Loading...'}
+            renderLoading={() => <Spinner />}
             tracker={() => {}}
             videoElement={this.el}
             width={styles.ad.width}

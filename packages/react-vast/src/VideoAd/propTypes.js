@@ -10,10 +10,10 @@ const propTypes = {
     log: PropTypes.func
   }),
   onComplete: PropTypes.func,
+  onError: PropTypes.func,
   onLinearEvent: PropTypes.func,
-  onNonRecoverableError: PropTypes.func,
-  onRecoverableError: PropTypes.func,
   onStart: PropTypes.func,
+  renderError: PropTypes.func,
   renderLoading: PropTypes.func,
   tracker: PropTypes.func,
   videoElement: PropTypes.node,

@@ -16,7 +16,7 @@ const styles = {
   container: {
     position: 'relative'
   },
-  loading: {
+  overlay: {
     ...overlay,
     zIndex: 1,
     display: 'flex',
@@ -36,6 +36,7 @@ export class VideoAdSync extends React.Component {
   static propTypes = propTypes;
 
   state = {
+    error: null,
     loading: true
   };
 
@@ -111,25 +112,28 @@ export class VideoAdSync extends React.Component {
     this.playAds();
   }
 
+  onError = (error) => {
+    this.setState({error});
+    this.props.logger.log(error);
+    this.props.onError(error);
+  };
+
   onAdError = (adErrorEvent) => {
     // Handle the error logging.
-    this.props.logger.log(adErrorEvent.getError());
     this.adsManager.destroy();
+    this.onError(adErrorEvent.getError());
   };
 
   onContentResumeRequested = () => {
-    // videoContent.play();
     // This function is where you should ensure that your UI is ready
     // to play content. It is the responsibility of the Publisher to
     // implement this function when necessary.
-    // setupUIForContent();
+    this.props.onComplete();
   }
 
   onContentPauseRequested = () => {
-    // videoContent.pause();
     // This function is where you should setup UI for showing ads (e.g.
     // display ad timer countdown, disable seeking etc.)
-    // setupUIForAds();
   }
 
   onAdEvent = (adEvent) => {
@@ -193,20 +197,24 @@ export class VideoAdSync extends React.Component {
       this.setState({
         loading: false
       });
-    } catch (error) {
-      this.props.error(error);
 
-      // An error may be thrown if there was a problem with the VAST response.
-      this.videoContent.play();
+      this.props.onStart();
+    } catch (error) {
+      this.onError(error);
     }
   }
 
   render () {
-    let loadingElement = null;
+    let overlayElement = null;
 
-    if (this.state.loading) {
-      loadingElement =
-        <div key='loading' style={styles.loading}>
+    if (this.state.error) {
+      overlayElement =
+        <div key='overlay' style={styles.overlay}>
+          {this.props.renderError(this.state.error)}
+        </div>;
+    } else if (this.state.loading) {
+      overlayElement =
+        <div key='overlay' style={styles.overlay}>
           {this.props.renderLoading(this.props, this.state)}
         </div>;
     }
@@ -219,7 +227,7 @@ export class VideoAdSync extends React.Component {
           width: this.props.width
         }}
       >
-        {loadingElement}
+        {overlayElement}
         <div
           key='ad'
           ref={this.refAdContainer}
