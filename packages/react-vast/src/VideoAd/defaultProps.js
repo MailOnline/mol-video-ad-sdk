@@ -9,6 +9,7 @@ const defaultProps = {
   onNonRecoverableError: noop,
   onRecoverableError: noop,
   onStart: noop,
+  renderLoading: () => null,
   tracker: undefined,
   videoElement: undefined,
   width: 640

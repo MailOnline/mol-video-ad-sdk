@@ -3,9 +3,38 @@ import React from 'react';
 import defaultProps from '../VideoAd/defaultProps';
 import propTypes from '../VideoAd/propTypes';
 
+/* eslint-disable sort-keys */
+const overlay = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%'
+};
+
+const styles = {
+  container: {
+    position: 'relative'
+  },
+  loading: {
+    ...overlay,
+    zIndex: 1
+  },
+  ad: {
+    ...overlay,
+    zIndex: 2,
+    transition: 'opacity .2s'
+  }
+};
+/* eslint-enable sort-keys */
+
 export class VideoAdSync extends React.Component {
   static defaultProps = defaultProps;
   static propTypes = propTypes;
+
+  state = {
+    loading: true
+  };
 
   componentDidMount () {
     this.init();
@@ -149,6 +178,10 @@ export class VideoAdSync extends React.Component {
       // Call play to start showing the ad. Single video and overlay ads will
       // start at this time; the call will be ignored for ad rules.
       this.adsManager.start();
+      this.setState({
+        loading: false
+      });
+
     } catch (error) {
       console.log('ERROR', error);
       // An error may be thrown if there was a problem with the VAST response.
@@ -157,14 +190,33 @@ export class VideoAdSync extends React.Component {
   }
 
   render () {
+    let loadingElement = null;
+
+    if (this.state.loading) {
+      loadingElement =
+        <div key='loading' style={styles.loading}>
+          {this.props.renderLoading(this.props, this.state)}
+        </div>;
+    }
+
     return (
       <div
-        ref={this.refAdContainer}
         style={{
+          ...styles.container,
           height: this.props.height,
           width: this.props.width
         }}
-      />
+      >
+        {loadingElement}
+        <div
+          key='ad'
+          ref={this.refAdContainer}
+          style={{
+            ...styles.ad,
+            opacity: this.state.loading ? 0 : 1
+          }}
+        />
+      </div>
     );
   }
 }

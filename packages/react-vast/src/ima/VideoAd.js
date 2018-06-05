@@ -7,7 +7,12 @@ import defaultProps from '../VideoAd/defaultProps';
 import propTypes from '../VideoAd/propTypes';
 
 // TODO: WHERE IS `window.IMA_SDK_URL` SET? ON PROD SITE IT IS `undefined`.
-const IMA_SDK_URL = window.IMA_SDK_URL || '//imasdk.googleapis.com/js/sdkloader/ima3_debug.js';
+const IMA_SDK_URL = window.IMA_SDK_URL ||
+  // eslint-disable-next-line no-process-env
+  (process.env.NODE_ENV === 'production' ?
+    '//imasdk.googleapis.com/js/sdkloader/ima3.js' :
+    '//imasdk.googleapis.com/js/sdkloader/ima3_debug.js');
+
 const loadSDK = () => {
   if (typeof window === 'object' && window.google && window.google.ima) {
     return Promise.resolve();
@@ -28,15 +33,13 @@ class VideoAd extends React.Component {
   static propTypes = {
     ...propTypes,
     onLoadingError: PropTypes.func,
-    renderError: PropTypes.func,
-    renderLoading: PropTypes.func
+    renderError: PropTypes.func
   };
 
   static defaultProps = {
     ...defaultProps,
     onLoadingError: () => {},
-    renderError: defaultRender,
-    renderLoading: defaultRender
+    renderError: defaultRender
   };
 
   state = {
@@ -64,7 +67,7 @@ class VideoAd extends React.Component {
 
   render () {
     // eslint-disable-next-line no-unused-vars
-    const {renderError, renderLoading, onLoadingError, ...rest} = this.props;
+    const {renderError, onLoadingError, ...rest} = this.props;
     const {Component, error} = this.state;
 
     if (error) {
@@ -72,7 +75,7 @@ class VideoAd extends React.Component {
     }
 
     if (!Component) {
-      return renderLoading(this.props);
+      return rest.renderLoading(this.props);
     }
 
     return <Component {...rest} />;

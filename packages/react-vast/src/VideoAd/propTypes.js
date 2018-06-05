@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 
 const propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]),
+
+  // TODO: Why is this a function?
   getTag: PropTypes.func.isRequired,
   height: PropTypes.number,
   logger: PropTypes.shape({
@@ -16,6 +14,7 @@ const propTypes = {
   onNonRecoverableError: PropTypes.func,
   onRecoverableError: PropTypes.func,
   onStart: PropTypes.func,
+  renderLoading: PropTypes.func,
   tracker: PropTypes.func,
   videoElement: PropTypes.node,
   width: PropTypes.number

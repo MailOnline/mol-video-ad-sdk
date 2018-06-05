@@ -71,6 +71,7 @@ class PrerollStory extends React.Component {
             onLinearEvent={(eventname, ...args) => action(eventname)(...args)}
             onNonRecoverableError={action('NonRecoverableError')}
             onRecoverableError={action('RecoverableError')}
+            renderLoading={() => 'Loading...'}
             tracker={() => {}}
             videoElement={this.el}
             width={styles.ad.width}
