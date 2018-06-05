@@ -56,16 +56,13 @@ export class VideoAdIMASync extends React.Component {
     // Request video ads.
     this.adsRequest = new ima.AdsRequest();
 
-    this.adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads?' +
-      'sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&' +
-      'impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&' +
-      'cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator=';
+    this.adsRequest.adTagUrl = this.props.getTag();
 
     // TODO: USE VIDEO PLAYER DIMENSIONS?
-    this.adsRequest.linearAdSlotWidth = 300;
-    this.adsRequest.linearAdSlotHeight = 300;
-    this.adsRequest.nonLinearAdSlotWidth = 300;
-    this.adsRequest.nonLinearAdSlotHeight = 300;
+    this.adsRequest.linearAdSlotWidth = this.props.width;
+    this.adsRequest.linearAdSlotHeight = this.props.height;
+    this.adsRequest.nonLinearAdSlotWidth = this.props.width;
+    this.adsRequest.nonLinearAdSlotHeight = this.props.height;
 
     this.requestAds();
   }
@@ -94,7 +91,7 @@ export class VideoAdIMASync extends React.Component {
     this.adsManager.addEventListener(ima.AdEvent.Type.CONTENT_RESUME_REQUESTED, this.onContentResumeRequested);
 
     try {
-      this.adsManager.init(300, 300, ima.ViewMode.NORMAL);
+      this.adsManager.init(this.props.width, this.props.height, ima.ViewMode.NORMAL);
       this.adsManager.start();
     } catch (error) {
       // TODO: proceed to playing video.
