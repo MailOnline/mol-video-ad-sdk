@@ -18,7 +18,10 @@ const styles = {
   },
   loading: {
     ...overlay,
-    zIndex: 1
+    zIndex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   ad: {
     ...overlay,
@@ -178,10 +181,10 @@ export class VideoAdSync extends React.Component {
       // Call play to start showing the ad. Single video and overlay ads will
       // start at this time; the call will be ignored for ad rules.
       this.adsManager.start();
+
       this.setState({
         loading: false
       });
-
     } catch (error) {
       console.log('ERROR', error);
       // An error may be thrown if there was a problem with the VAST response.
@@ -213,7 +216,7 @@ export class VideoAdSync extends React.Component {
           ref={this.refAdContainer}
           style={{
             ...styles.ad,
-            opacity: this.state.loading ? 0 : 1
+            visibility: this.state.loading ? 0 : 1
           }}
         />
       </div>

@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const width = 640;
+const height = 360;
+
 /* eslint-disable sort-keys */
 const styles = {
   story: {
@@ -10,22 +13,28 @@ const styles = {
     position: 'absolute',
     top: 0,
     left: 0,
-    width: 200,
-    height: 200,
+    width: width / 2,
+    height: height / 2,
     outline: '2px solid red',
     overflow: 'hidden'
   },
   videoElement: {
-    height: 360,
-    overflow: 'hidden',
-    width: 640
+    width,
+    height,
+    overflow: 'hidden'
   }
 };
 /* eslint-enable sort-keys */
 
 class PrerollStory extends React.Component {
   static propTypes = {
-    component: PropTypes.func.isRequired
+    component: PropTypes.func.isRequired,
+    action: PropTypes.func
+  };
+
+  static defaultProps = {
+    // eslint-disable-next-line no-console
+    action: (name) => (event) => console.log(name, event)
   };
 
   state = {
@@ -45,9 +54,7 @@ class PrerollStory extends React.Component {
   };
 
   render () {
-    const VideoAdComponent = this.props.component;
-    // eslint-disable-next-line no-console
-    const action = (name) => (event) => console.log(name, event);
+    const {action, component: VideoAdComponent} = this.props;
 
     return (
       <div style={styles.story}>
