@@ -47,23 +47,7 @@ storiesOf('<VideoAd>', module)
   );
 
 storiesOf('ima/<VideoAd>', module)
-  .add('Preroll', () => <PrerollStory component={VideoAdIMASDK} />)
-  .add('Preroll success', () =>
-    <div className={styles.videoContainer}>
-      <div className={styles.videoPlaceholder}>
-        <VideoAdIMASDK
-          getTag={() => 'http://localhost:9001/vastFiles/prerollChain/start-wrapper.xml'}
-          onComplete={action('complete')}
-          onLinearEvent={(eventname, ...args) => action(eventname)(...args)}
-          onNonRecoverableError={action('NonRecoverableError')}
-          onRecoverableError={action('RecoverableError')}
-          tracker={() => {}}
-        >
-          <Spinner />
-        </VideoAdIMASDK>
-      </div>
-    </div>
-  );
+  .add('Preroll', () => <PrerollStory component={VideoAdIMASDK} />);
 
 storiesOf('<Spinner>', module)
   .add('Default', () =>
