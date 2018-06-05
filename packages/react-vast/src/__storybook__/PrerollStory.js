@@ -61,6 +61,7 @@ class PrerollStory extends React.Component {
         <video
           autoPlay={true}
           controls={false}
+          muted={true}
           ref={this.ref}
           src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'
           style={styles.videoElement}

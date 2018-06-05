@@ -1,7 +1,6 @@
 const noop = () => {};
 
 const defaultProps = {
-  children: undefined,
   height: 360,
   logger: console,
   onComplete: noop,

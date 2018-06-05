@@ -111,7 +111,7 @@ export class VideoAdSync extends React.Component {
 
   onAdError = (adErrorEvent) => {
     // Handle the error logging.
-    console.log(adErrorEvent.getError());
+    this.props.logger.log(adErrorEvent.getError());
     this.adsManager.destroy();
   };
 
@@ -136,6 +136,8 @@ export class VideoAdSync extends React.Component {
 
     switch (adEvent.type) {
     case ima.AdEvent.Type.LOADED:
+      this.props.logger('ad loaded');
+
       // This is the first event sent for an ad - it is possible to
       // determine whether the ad is a video ad or an overlay.
       if (!ad.isLinear()) {
@@ -145,6 +147,8 @@ export class VideoAdSync extends React.Component {
       }
       break;
     case ima.AdEvent.Type.STARTED:
+      this.props.logger('ad started');
+
       // This event indicates the ad has started - the video player
       // can adjust the UI, for example display a pause button and
       // remaining time.
@@ -157,6 +161,8 @@ export class VideoAdSync extends React.Component {
       }
       break;
     case ima.AdEvent.Type.COMPLETE:
+      this.props.logger('ad completed');
+
       // This event indicates the ad has finished - the video player
       // can perform appropriate UI actions, such as removing the timer for
       // remaining time detection.
