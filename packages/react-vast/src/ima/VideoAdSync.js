@@ -192,7 +192,8 @@ export class VideoAdSync extends React.Component {
         loading: false
       });
     } catch (error) {
-      console.log('ERROR', error);
+      this.props.error(error);
+
       // An error may be thrown if there was a problem with the VAST response.
       this.videoContent.play();
     }

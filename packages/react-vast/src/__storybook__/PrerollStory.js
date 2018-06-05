@@ -28,8 +28,8 @@ const styles = {
 
 class PrerollStory extends React.Component {
   static propTypes = {
-    component: PropTypes.func.isRequired,
-    action: PropTypes.func
+    action: PropTypes.func,
+    component: PropTypes.func.isRequired
   };
 
   static defaultProps = {
