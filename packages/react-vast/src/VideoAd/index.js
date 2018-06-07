@@ -15,6 +15,9 @@ class VideoAd extends React.Component {
   };
 
   state = {
+    done: false,
+    error: null,
+    loading: true,
     ready: false
   };
 
@@ -66,17 +69,10 @@ class VideoAd extends React.Component {
     }
   }
 
-  onAdUnitError = (error) => {
-    error.recoverable = true;
-    this.props.onError(error);
-  };
-
   async startAd () {
     const {
       getTag,
       logger,
-      onComplete,
-      onError,
       onLinearEvent,
       tracker,
       videoElement
@@ -86,8 +82,7 @@ class VideoAd extends React.Component {
       logger,
       onError: (error) => {
         error.recoverable = true;
-
-        onError(error);
+        this.handleError(error);
       },
       onLinearEvent,
       tracker,
@@ -98,8 +93,8 @@ class VideoAd extends React.Component {
       const fetchVastChain = async () => loadVastChain(await Promise.resolve(getTag()));
       const adUnit = await tryToStartAd(fetchVastChain, this.element, options);
 
-      adUnit.onError(this.props.onError);
-      adUnit.onComplete(onComplete);
+      adUnit.onError(this.handleError);
+      adUnit.onComplete(this.handleComplete);
 
       return adUnit;
     } catch (error) {
@@ -109,12 +104,36 @@ class VideoAd extends React.Component {
     }
   }
 
+  handleError = (error) => {
+    this.setState({error});
+    this.props.onError(error);
+  };
+
+  handleComplete = () => {
+    this.setState({
+      complete: true
+    });
+    this.props.onComplete();
+  };
+
   render () {
     const {
       children,
       height,
       width
     } = this.props;
+    const {
+      complete,
+      error
+    } = this.state;
+
+    if (complete) {
+      return null;
+    }
+
+    if (error) {
+      return this.renderError(error) || null;
+    }
 
     const containerStyles = {
       height: height ? `${height}px` : '100%',
