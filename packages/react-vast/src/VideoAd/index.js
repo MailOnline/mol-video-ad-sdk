@@ -66,21 +66,29 @@ class VideoAd extends React.Component {
     }
   }
 
+  onAdUnitError = (error) => {
+    error.recoverable = true;
+    this.props.onError(error);
+  };
+
   async startAd () {
     const {
       getTag,
       logger,
       onComplete,
+      onError,
       onLinearEvent,
-      onNonRecoverableError,
-      onRecoverableError: onError,
       tracker,
       videoElement
     } = this.props;
 
     const options = {
       logger,
-      onError,
+      onError: (error) => {
+        error.recoverable = true;
+
+        onError(error);
+      },
       onLinearEvent,
       tracker,
       videoElement
@@ -90,12 +98,12 @@ class VideoAd extends React.Component {
       const fetchVastChain = async () => loadVastChain(await Promise.resolve(getTag()));
       const adUnit = await tryToStartAd(fetchVastChain, this.element, options);
 
-      adUnit.onError(onNonRecoverableError);
+      adUnit.onError(this.props.onError);
       adUnit.onComplete(onComplete);
 
       return adUnit;
     } catch (error) {
-      onNonRecoverableError(error);
+      this.props.onError(error);
 
       throw error;
     }
