@@ -30,12 +30,18 @@ const styles = {
 class PrerollStory extends React.Component {
   static propTypes = {
     action: PropTypes.func,
-    component: PropTypes.func.isRequired
+    component: PropTypes.func.isRequired,
+    tag: PropTypes.string
   };
 
   static defaultProps = {
     // eslint-disable-next-line no-console
-    action: (name) => (event) => console.log(name, event)
+    action: (name) => (event) => console.log(name, event),
+    tag:
+      'https://pubads.g.doubleclick.net/gampad/ads?' +
+      'sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&' +
+      'impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&' +
+      'cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator='
   };
 
   state = {
@@ -69,12 +75,7 @@ class PrerollStory extends React.Component {
         />
         <div style={styles.ad}>
           <VideoAdComponent
-            getTag={() =>
-              'https://pubads.g.doubleclick.net/gampad/ads?' +
-              'sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&' +
-              'impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&' +
-              'cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator='
-            }
+            getTag={() => this.props.tag}
             height={styles.ad.height}
             onComplete={action('complete')}
             onLinearEvent={(eventname, ...args) => action(eventname)(...args)}

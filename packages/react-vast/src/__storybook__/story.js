@@ -29,6 +29,12 @@ storiesOf('<ResponsiveVideoAd>', module)
   );
 
 storiesOf('<VideoAd>', module)
+  .add('Preroll', () =>
+    <PrerollStory
+      component={VideoAd}
+      tag={'http://localhost:9001/vastFiles/prerollChain/start-wrapper.xml'}
+    />
+  )
   .add('Preroll success', () =>
     <div className={styles.videoContainer}>
       <div className={styles.videoPlaceholder}>
@@ -47,7 +53,13 @@ storiesOf('<VideoAd>', module)
   );
 
 storiesOf('ima/<VideoAd>', module)
-  .add('Preroll', () => <PrerollStory component={VideoAdIMASDK} />);
+  .add('Preroll', () => <PrerollStory component={VideoAdIMASDK} />)
+  .add('Preroll - inhouse tag', () =>
+    <PrerollStory
+      component={VideoAdIMASDK}
+      tag={'http://localhost:9001/vastFiles/prerollChain/start-wrapper.xml'}
+    />
+  );
 
 storiesOf('<Spinner>', module)
   .add('Default', () =>
