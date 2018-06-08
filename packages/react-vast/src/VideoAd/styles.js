@@ -16,7 +16,8 @@ const styles = {
     zIndex: 1,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    background: '#000'
   },
   ad: {
     ...overlay,
