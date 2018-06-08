@@ -6,6 +6,7 @@ import makeCancelable from '../helpers/makeCancelable';
 import defaultProps from './defaultProps';
 import propTypes from './propTypes';
 import render from './render';
+import defaultState from './defaultState';
 
 class VideoAd extends React.Component {
   static defaultProps = defaultProps;
@@ -15,11 +16,7 @@ class VideoAd extends React.Component {
     this.element = element;
   };
 
-  state = {
-    complete: false,
-    error: null,
-    loading: true
-  };
+  state = defaultState;
 
   componentDidMount () {
     // NOTE: This should never happen in PRODUCTION.

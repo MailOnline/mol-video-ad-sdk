@@ -3,16 +3,13 @@ import React from 'react';
 import defaultProps from '../VideoAd/defaultProps';
 import propTypes from '../VideoAd/propTypes';
 import render from '../VideoAd/render';
+import defaultState from '../VideoAd/defaultState';
 
 export class VideoAdSync extends React.Component {
   static defaultProps = defaultProps;
   static propTypes = propTypes;
 
-  state = {
-    complete: false,
-    error: null,
-    loading: true
-  };
+  state = defaultState;
 
   componentDidMount () {
     this.init();
