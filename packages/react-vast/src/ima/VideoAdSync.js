@@ -15,6 +15,16 @@ export class VideoAdSync extends React.Component {
     this.init();
   }
 
+  componentWillUnmount () {
+    if (this.adsLoader) {
+      this.adsLoader.destroy();
+    }
+
+    if (this.adsManager) {
+      this.adsManager.destroy();
+    }
+  }
+
   adContainer;
   adDisplayContainer;
   adsLoader;
