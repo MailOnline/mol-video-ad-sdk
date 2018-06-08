@@ -5,7 +5,7 @@ import tryToStartAd from '../helpers/tryToStartAd';
 import makeCancelable from '../helpers/makeCancelable';
 import defaultProps from './defaultProps';
 import propTypes from './propTypes';
-import styles from './styles';
+import render from './render';
 
 class VideoAd extends React.Component {
   static defaultProps = defaultProps;
@@ -125,61 +125,8 @@ class VideoAd extends React.Component {
     });
     this.props.onComplete();
   };
-
-  render () {
-    const {
-      height,
-      renderError,
-      renderLoading,
-      width
-    } = this.props;
-
-    const {
-      complete,
-      error,
-      loading
-    } = this.state;
-
-    let overlayElement = null;
-
-    if (complete) {
-      return null;
-    } else if (error) {
-      overlayElement =
-        <div key='overlay' style={styles.overlay}>
-          {renderError(this.state.error)}
-        </div>;
-    } else if (loading) {
-      overlayElement =
-        <div key='overlay' style={styles.overlay}>
-          {renderLoading(this.props, this.state)}
-        </div>;
-    }
-
-    // NOTE: We always have to render `adElement`, because we need to get `ref` to it.
-    const adElement =
-      <div
-        key='ad'
-        ref={this.ref}
-        style={{
-          ...styles.ad,
-          visibility: this.state.loading ? 0 : 1
-        }}
-      />;
-
-    const containerStyles = {
-      ...styles.container,
-      height,
-      width
-    };
-
-    return (
-      <div style={containerStyles}>
-        {overlayElement}
-        {adElement}
-      </div>
-    );
-  }
 }
+
+VideoAd.prototype.render = render;
 
 export default VideoAd;

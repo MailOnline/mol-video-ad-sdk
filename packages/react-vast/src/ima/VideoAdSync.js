@@ -2,40 +2,14 @@
 import React from 'react';
 import defaultProps from '../VideoAd/defaultProps';
 import propTypes from '../VideoAd/propTypes';
-
-/* eslint-disable sort-keys */
-const overlay = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%'
-};
-
-const styles = {
-  container: {
-    position: 'relative'
-  },
-  overlay: {
-    ...overlay,
-    zIndex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  ad: {
-    ...overlay,
-    zIndex: 2,
-    transition: 'opacity .2s'
-  }
-};
-/* eslint-enable sort-keys */
+import render from '../VideoAd/render';
 
 export class VideoAdSync extends React.Component {
   static defaultProps = defaultProps;
   static propTypes = propTypes;
 
   state = {
+    complete: false,
     error: null,
     loading: true
   };
@@ -51,7 +25,7 @@ export class VideoAdSync extends React.Component {
   intervalTimer;
   adsRequest;
 
-  refAdContainer = (div) => {
+  ref = (div) => {
     this.adContainer = div;
   };
 
@@ -203,40 +177,6 @@ export class VideoAdSync extends React.Component {
       this.onError(error);
     }
   }
-
-  render () {
-    let overlayElement = null;
-
-    if (this.state.error) {
-      overlayElement =
-        <div key='overlay' style={styles.overlay}>
-          {this.props.renderError(this.state.error)}
-        </div>;
-    } else if (this.state.loading) {
-      overlayElement =
-        <div key='overlay' style={styles.overlay}>
-          {this.props.renderLoading(this.props, this.state)}
-        </div>;
-    }
-
-    return (
-      <div
-        style={{
-          ...styles.container,
-          height: this.props.height,
-          width: this.props.width
-        }}
-      >
-        {overlayElement}
-        <div
-          key='ad'
-          ref={this.refAdContainer}
-          style={{
-            ...styles.ad,
-            visibility: this.state.loading ? 0 : 1
-          }}
-        />
-      </div>
-    );
-  }
 }
+
+VideoAdSync.prototype.render = render;
