@@ -5,6 +5,7 @@ import tryToStartAd from '../helpers/tryToStartAd';
 import makeCancelable from '../helpers/makeCancelable';
 import defaultProps from './defaultProps';
 import propTypes from './propTypes';
+import styles from './styles';
 
 class VideoAd extends React.Component {
   static defaultProps = defaultProps;
@@ -21,6 +22,14 @@ class VideoAd extends React.Component {
   };
 
   componentDidMount () {
+    // NOTE: This should never happen in PRODUCTION.
+    // eslint-disable-next-line no-process-env
+    if (process.env.NODE_ENV !== 'production') {
+      if (!this.element) {
+        this.handleError(new TypeError('Could not find ref to ad container element.'));
+      }
+    }
+
     this.adUnitPromise = this.startAd();
     this.stateUpdate = makeCancelable(this.adUnitPromise);
     // eslint-disable-next-line promise/always-return, promise/catch-or-return, promise/prefer-await-to-then
@@ -119,37 +128,57 @@ class VideoAd extends React.Component {
 
   render () {
     const {
-      children,
       height,
+      renderError,
+      renderLoading,
       width
     } = this.props;
+
     const {
       complete,
       error,
       loading
     } = this.state;
 
+    let overlayElement = null;
+
     if (complete) {
       return null;
     } else if (error) {
-      return this.renderError(error) || null;
+      overlayElement =
+        <div key='overlay' style={styles.overlay}>
+          {renderError(this.state.error)}
+        </div>;
     } else if (loading) {
-
+      overlayElement =
+        <div key='overlay' style={styles.overlay}>
+          {renderLoading(this.props, this.state)}
+        </div>;
     }
 
+    // NOTE: We always have to render `adElement`, because we need to get `ref` to it.
+    const adElement =
+      <div
+        key='ad'
+        ref={this.ref}
+        style={{
+          ...styles.ad,
+          visibility: this.state.loading ? 0 : 1
+        }}
+      />;
+
     const containerStyles = {
-      height: height ? `${height}px` : '100%',
-      width: width ? `${width}px` : '100%'
+      ...styles.container,
+      height,
+      width
     };
 
-    const adPlaceholderStyles = {
-      display: this.state.loading ? 'none' : 'block'
-    };
-
-    return <div style={containerStyles}>
-      {this.state.loading && children}
-      <div ref={this.ref} style={adPlaceholderStyles} />
-    </div>;
+    return (
+      <div style={containerStyles}>
+        {overlayElement}
+        {adElement}
+      </div>
+    );
   }
 }
 

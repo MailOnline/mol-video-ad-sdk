@@ -1,17 +1,17 @@
 const noop = () => {};
 
 const defaultProps = {
-  height: 360,
+  height: '100%',
   logger: console,
   onComplete: noop,
   onError: noop,
   onLinearEvent: noop,
   onStart: noop,
-  renderError: (error) => error.message,
+  renderError: (error) => 'Error: ' + error.message,
   renderLoading: () => null,
   tracker: undefined,
   videoElement: undefined,
-  width: 640
+  width: '100%'
 };
 
 export default defaultProps;
