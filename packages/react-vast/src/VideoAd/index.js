@@ -15,25 +15,26 @@ class VideoAd extends React.Component {
   };
 
   state = {
-    done: false,
+    complete: false,
     error: null,
-    loading: true,
-    ready: false
+    loading: true
   };
 
   componentDidMount () {
     this.adUnitPromise = this.startAd();
     this.stateUpdate = makeCancelable(this.adUnitPromise);
     // eslint-disable-next-line promise/always-return, promise/catch-or-return, promise/prefer-await-to-then
-    this.stateUpdate.promise.then((adUnit) => {
-      this.adUnit = adUnit;
-
-      // eslint-disable-next-line react/no-set-state
-      this.setState({
-        ready: true
-      });
-    });
+    this.stateUpdate.promise.then(this.onAdUnit);
   }
+
+  onAdUnit = (adUnit) => {
+    this.adUnit = adUnit;
+
+    // eslint-disable-next-line react/no-set-state
+    this.setState({
+      loading: false
+    });
+  };
 
   componentWillUnmount () {
     if (this.stateUpdate.isPending()) {
@@ -55,7 +56,7 @@ class VideoAd extends React.Component {
 
     const adUnit = this.adUnit;
 
-    if (this.state.ready && adUnit) {
+    if (!this.state.loading) {
       if (height !== prevProps.height || width !== prevProps.width && !adUnit.isFinished()) {
         adUnit.resize();
       }
@@ -98,7 +99,7 @@ class VideoAd extends React.Component {
 
       return adUnit;
     } catch (error) {
-      this.props.onError(error);
+      this.handleError(error);
 
       throw error;
     }
@@ -124,15 +125,16 @@ class VideoAd extends React.Component {
     } = this.props;
     const {
       complete,
-      error
+      error,
+      loading
     } = this.state;
 
     if (complete) {
       return null;
-    }
-
-    if (error) {
+    } else if (error) {
       return this.renderError(error) || null;
+    } else if (loading) {
+
     }
 
     const containerStyles = {
@@ -141,11 +143,11 @@ class VideoAd extends React.Component {
     };
 
     const adPlaceholderStyles = {
-      display: this.state.ready ? 'block' : 'none'
+      display: this.state.loading ? 'none' : 'block'
     };
 
     return <div style={containerStyles}>
-      {!this.state.ready && children}
+      {this.state.loading && children}
       <div ref={this.ref} style={adPlaceholderStyles} />
     </div>;
   }
