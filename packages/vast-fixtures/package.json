@@ -1,12 +1,12 @@
 {
   "name": "@mol/vast-fixtures",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared VAST fixtures to use for testing",
   "author": "MailOnline <fe@mailonline.co.uk>",
   "license": "UNLICENSED",
   "main": "src/index.js",
   "dependencies": {
-    "@mol/vast-selectors": "^0.1.0",
-    "@mol/vast-xml2js": "^0.1.0"
+    "@mol/vast-selectors": "^0.1.1",
+    "@mol/vast-xml2js": "^0.1.1"
   }
 }

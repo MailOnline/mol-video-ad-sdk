@@ -1,6 +1,6 @@
 {
   "name": "@mol/vast-selectors",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MOL VAST selector methods",
   "author": "MailOnline <fe@mailonline.co.uk>",
   "browser": "src/index.js",
@@ -10,9 +10,9 @@
     "src"
   ],
   "dependencies": {
-    "@mol/vast-xml2js": "^0.1.0"
+    "@mol/vast-xml2js": "^0.1.1"
   },
   "devDependencies": {
-    "@mol/vast-fixtures": "^0.1.0"
+    "@mol/vast-fixtures": "^0.1.1"
   }
 }
