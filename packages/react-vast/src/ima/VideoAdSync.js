@@ -51,12 +51,6 @@ export class VideoAdSync extends React.Component {
     this.adsLoader.addEventListener(ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, this.onAdsManagerLoaded, false);
     this.adsLoader.addEventListener(ima.AdErrorEvent.Type.AD_ERROR, this.onAdError, false);
 
-    // An event listener to tell the SDK that our content video
-    // is completed so the SDK can play any post-roll ads.
-    // var contentEndedListener = function() {adsLoader.contentComplete();};
-
-    // videoContent.onended = contentEndedListener;
-
     // Request video ads.
     this.adsRequest = new ima.AdsRequest();
     this.adsRequest.adTagUrl = this.props.getTag();
@@ -163,11 +157,10 @@ export class VideoAdSync extends React.Component {
   playAds () {
     const ima = window.google.ima;
 
-    // TODO: Initialize the container. Must be done via a user action on mobile devices.
-    // this.props.videoElement.load();
-    this.adDisplayContainer.initialize();
-
     try {
+      // TODO: Initialize the container. Must be done via a user action on mobile devices.
+      this.adDisplayContainer.initialize();
+
       // Initialize the ads manager. Ad rules playlist will start at this time.
       this.adsManager.init(this.props.width, this.props.height, ima.ViewMode.NORMAL);
 
