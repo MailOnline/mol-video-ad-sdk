@@ -1,4 +1,4 @@
-/* eslint-disable filenames/match-exported, filenames/match-regex */
+/* eslint-disable filenames/match-exported, filenames/match-regex, complexity */
 import React from 'react';
 import defaultProps from '../VideoAd/defaultProps';
 import propTypes from '../VideoAd/propTypes';
@@ -130,7 +130,7 @@ export class VideoAdSync extends React.Component {
       if (ad.isLinear()) {
         this.duration = ad.getDuration();
 
-        if (this.duration > -1) {
+        if (this.duration && this.duration > -1) {
           this.props.onDuration(this.duration);
         }
       }
@@ -142,7 +142,7 @@ export class VideoAdSync extends React.Component {
       // can adjust the UI, for example display a pause button and
       // remaining time.
       if (ad.isLinear()) {
-        if (this.duration > -1) {
+        if (this.duration && this.duration > -1) {
           this.progressTimer = setInterval(() => {
             const remainingTime = this.adsManager.getRemainingTime();
             const progress = this.duration - remainingTime;
@@ -154,8 +154,9 @@ export class VideoAdSync extends React.Component {
       break;
     case ima.AdEvent.Type.COMPLETE:
       this.props.logger.log('ad completed');
+
       if (this.progressTimer) {
-        if (this.duration > -1) {
+        if (this.duration && this.duration > -1) {
           this.props.onProgress(this.duration);
         }
 
