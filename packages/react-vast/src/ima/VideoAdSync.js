@@ -117,7 +117,7 @@ export class VideoAdSync extends React.Component {
 
     switch (adEvent.type) {
     case ima.AdEvent.Type.LOADED:
-      this.props.logger('ad loaded');
+      this.props.logger.log('ad loaded');
 
       // This is the first event sent for an ad - it is possible to
       // determine whether the ad is a video ad or an overlay.
@@ -128,7 +128,7 @@ export class VideoAdSync extends React.Component {
       }
       break;
     case ima.AdEvent.Type.STARTED:
-      this.props.logger('ad started');
+      this.props.logger.log('ad started');
 
       // This event indicates the ad has started - the video player
       // can adjust the UI, for example display a pause button and
@@ -142,7 +142,7 @@ export class VideoAdSync extends React.Component {
       }
       break;
     case ima.AdEvent.Type.COMPLETE:
-      this.props.logger('ad completed');
+      this.props.logger.log('ad completed');
 
       // This event indicates the ad has finished - the video player
       // can perform appropriate UI actions, such as removing the timer for
