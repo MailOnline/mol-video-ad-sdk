@@ -13,8 +13,10 @@ const propTypes = {
     log: PropTypes.func
   }),
   onComplete: PropTypes.func,
+  onDuration: PropTypes.func,
   onError: PropTypes.func,
   onLinearEvent: PropTypes.func,
+  onProgress: PropTypes.func,
   onStart: PropTypes.func,
   renderError: PropTypes.func,
   renderLoading: PropTypes.func,

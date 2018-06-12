@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
@@ -78,8 +79,10 @@ class PrerollStory extends React.Component {
             getTag={() => this.props.tag}
             height={styles.ad.height}
             onComplete={action('complete')}
+            onDuration={(duration) => console.log('DURATION', duration)}
             onLinearEvent={(eventname, ...args) => action(eventname)(...args)}
             onNonRecoverableError={action('NonRecoverableError')}
+            onProgress={(progress) => console.log('PROGRESS', progress)}
             onRecoverableError={action('RecoverableError')}
             renderLoading={() => <Spinner />}
             tracker={() => {}}

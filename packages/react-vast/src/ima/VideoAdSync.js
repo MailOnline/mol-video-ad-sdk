@@ -23,13 +23,19 @@ export class VideoAdSync extends React.Component {
     if (this.adsManager) {
       this.adsManager.destroy();
     }
+
+    if (this.progressTimer) {
+      clearInterval(this.progressTimer);
+      this.progressTimer = null;
+    }
   }
 
+  duration;
   adContainer;
   adDisplayContainer;
   adsLoader;
   adsManager;
-  intervalTimer;
+  progressTimer;
   adsRequest;
 
   ref = (div) => {
@@ -121,10 +127,12 @@ export class VideoAdSync extends React.Component {
 
       // This is the first event sent for an ad - it is possible to
       // determine whether the ad is a video ad or an overlay.
-      if (!ad.isLinear()) {
-        // Position AdDisplayContainer correctly for overlay.
-        // Use ad.width and ad.height.
-        // videoContent.play();
+      if (ad.isLinear()) {
+        this.duration = ad.getDuration();
+
+        if (this.duration > -1) {
+          this.props.onDuration(this.duration);
+        }
       }
       break;
     case ima.AdEvent.Type.STARTED:
@@ -134,21 +142,25 @@ export class VideoAdSync extends React.Component {
       // can adjust the UI, for example display a pause button and
       // remaining time.
       if (ad.isLinear()) {
-        // For a linear ad, a timer can be started to poll for
-        // the remaining time.
-        this.intervalTimer = setInterval(() => {
-          // const remainingTime = this.adsManager.getRemainingTime();
-        }, 300);
+        if (this.duration > -1) {
+          this.progressTimer = setInterval(() => {
+            const remainingTime = this.adsManager.getRemainingTime();
+            const progress = this.duration - remainingTime;
+
+            this.props.onProgress(progress);
+          }, 200);
+        }
       }
       break;
     case ima.AdEvent.Type.COMPLETE:
       this.props.logger.log('ad completed');
+      if (this.progressTimer) {
+        if (this.duration > -1) {
+          this.props.onProgress(this.duration);
+        }
 
-      // This event indicates the ad has finished - the video player
-      // can perform appropriate UI actions, such as removing the timer for
-      // remaining time detection.
-      if (ad.isLinear()) {
-        clearInterval(this.intervalTimer);
+        clearInterval(this.progressTimer);
+        this.progressTimer = null;
       }
       break;
     }
