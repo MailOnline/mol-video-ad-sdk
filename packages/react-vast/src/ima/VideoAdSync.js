@@ -42,6 +42,26 @@ export class VideoAdSync extends React.Component {
     this.adContainer = div;
   };
 
+  actions = {
+    pause: () => {
+      if (this.adsManager) {
+        this.adsManager.pause();
+      }
+    },
+
+    setVolume: (volume) => {
+      if (this.adsManager) {
+        this.adsManger.setVolume(volume);
+      }
+    },
+
+    start: () => {
+      if (this.adsManager) {
+        this.adsManager.start();
+      }
+    }
+  };
+
   createAdDisplayContainer () {
     const ima = window.google.ima;
 
@@ -109,12 +129,32 @@ export class VideoAdSync extends React.Component {
     // This function is where you should ensure that your UI is ready
     // to play content. It is the responsibility of the Publisher to
     // implement this function when necessary.
-    this.props.onComplete();
+    this.execEvent('onComplete');
   }
 
   onContentPauseRequested = () => {
     // This function is where you should setup UI for showing ads (e.g.
     // display ad timer countdown, disable seeking etc.)
+  }
+
+  createStateObject () {
+    const duration = this.duration;
+    const remainingTime = this.adsManager.getRemainingTime();
+    const progress = remainingTime && remainingTime > -1 ?
+      duration - remainingTime :
+      0;
+    const volume = this.adsManager.getVolume();
+    const state = {
+      duration,
+      progress,
+      volume
+    };
+
+    return state;
+  }
+
+  execEvent (name) {
+    this.props[name](this.createStateObject(), this.actions);
   }
 
   onAdEvent = (adEvent) => {
@@ -131,7 +171,7 @@ export class VideoAdSync extends React.Component {
         this.duration = ad.getDuration();
 
         if (this.duration && this.duration > -1) {
-          this.props.onDuration(this.duration);
+          this.execEvent('onDuration');
         }
       }
       break;
@@ -144,10 +184,7 @@ export class VideoAdSync extends React.Component {
       if (ad.isLinear()) {
         if (this.duration && this.duration > -1) {
           this.progressTimer = setInterval(() => {
-            const remainingTime = this.adsManager.getRemainingTime();
-            const progress = this.duration - remainingTime;
-
-            this.props.onProgress(progress);
+            this.execEvent('onProgress');
           }, 200);
         }
       }
@@ -157,7 +194,7 @@ export class VideoAdSync extends React.Component {
 
       if (this.progressTimer) {
         if (this.duration && this.duration > -1) {
-          this.props.onProgress(this.duration);
+          this.execEvent('onProgress');
         }
 
         clearInterval(this.progressTimer);
@@ -185,7 +222,7 @@ export class VideoAdSync extends React.Component {
         loading: false
       });
 
-      this.props.onStart();
+      this.execEvent('onStart');
     } catch (error) {
       this.onError(error);
     }

@@ -78,12 +78,12 @@ class PrerollStory extends React.Component {
           <VideoAdComponent
             getTag={() => this.props.tag}
             height={styles.ad.height}
-            onComplete={action('complete')}
-            onDuration={(duration) => console.log('DURATION', duration)}
+            onComplete={(state, actions) => console.log('COMPLETE', state, actions)}
+            onDuration={(state, actions) => console.log('DURATION', state, actions)}
+            onError={(error) => console.log('ERROR', error)}
             onLinearEvent={(eventname, ...args) => action(eventname)(...args)}
-            onNonRecoverableError={action('NonRecoverableError')}
-            onProgress={(progress) => console.log('PROGRESS', progress)}
-            onRecoverableError={action('RecoverableError')}
+            onProgress={(state, actions) => console.log('PROGRESS', state, actions)}
+            onStart={(state, actions) => console.log('START', state, actions)}
             renderLoading={() => <Spinner />}
             tracker={() => {}}
             videoElement={this.el}
