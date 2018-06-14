@@ -49,15 +49,15 @@ export class VideoAdSync extends React.Component {
       }
     },
 
-    setVolume: (volume) => {
+    play: () => {
       if (this.adsManager) {
-        this.adsManger.setVolume(volume);
+        this.adsManager.resume();
       }
     },
 
-    start: () => {
+    setVolume: (volume) => {
       if (this.adsManager) {
-        this.adsManager.start();
+        this.adsManger.setVolume(volume);
       }
     }
   };
@@ -185,7 +185,7 @@ export class VideoAdSync extends React.Component {
         if (this.duration && this.duration > -1) {
           this.progressTimer = setInterval(() => {
             this.execEvent('onProgress');
-          }, 200);
+          }, 250);
         }
       }
       break;
