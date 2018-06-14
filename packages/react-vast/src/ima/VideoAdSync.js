@@ -48,6 +48,7 @@ export class VideoAdSync extends React.Component {
     mute: () => {
       if (this.adsManager) {
         this.adsManager.setVolume(0);
+        this.execEvent('onProgress');
       }
     },
 
@@ -67,12 +68,14 @@ export class VideoAdSync extends React.Component {
       if (this.adsManager) {
         this.volume = volume;
         this.adsManger.setVolume(volume);
+        this.execEvent('onProgress');
       }
     },
 
     unmute: () => {
       if (this.adsManager) {
         this.adsManager.setVolume(this.volume);
+        this.execEvent('onProgress');
       }
     }
   };
@@ -86,6 +89,7 @@ export class VideoAdSync extends React.Component {
     const volume = this.adsManager.getVolume();
     const state = {
       duration,
+      muted: this.muted,
       progress,
       volume
     };
