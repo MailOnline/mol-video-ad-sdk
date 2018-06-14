@@ -37,12 +37,20 @@ export class VideoAdSync extends React.Component {
   adsManager;
   progressTimer;
   adsRequest;
+  muted = false;
+  volume = 1;
 
   ref = (div) => {
     this.adContainer = div;
   };
 
   actions = {
+    mute: () => {
+      if (this.adsManager) {
+        this.adsManager.setVolume(0);
+      }
+    },
+
     pause: () => {
       if (this.adsManager) {
         this.adsManager.pause();
@@ -57,10 +65,33 @@ export class VideoAdSync extends React.Component {
 
     setVolume: (volume) => {
       if (this.adsManager) {
+        this.volume = volume;
         this.adsManger.setVolume(volume);
+      }
+    },
+
+    unmute: () => {
+      if (this.adsManager) {
+        this.adsManager.setVolume(this.volume);
       }
     }
   };
+
+  createStateObject () {
+    const duration = this.duration;
+    const remainingTime = this.adsManager.getRemainingTime();
+    const progress = remainingTime && remainingTime > -1 ?
+      duration - remainingTime :
+      0;
+    const volume = this.adsManager.getVolume();
+    const state = {
+      duration,
+      progress,
+      volume
+    };
+
+    return state;
+  }
 
   createAdDisplayContainer () {
     const ima = window.google.ima;
@@ -137,22 +168,6 @@ export class VideoAdSync extends React.Component {
     // display ad timer countdown, disable seeking etc.)
   }
 
-  createStateObject () {
-    const duration = this.duration;
-    const remainingTime = this.adsManager.getRemainingTime();
-    const progress = remainingTime && remainingTime > -1 ?
-      duration - remainingTime :
-      0;
-    const volume = this.adsManager.getVolume();
-    const state = {
-      duration,
-      progress,
-      volume
-    };
-
-    return state;
-  }
-
   execEvent (name) {
     this.props[name](this.createStateObject(), this.actions);
   }
@@ -185,7 +200,7 @@ export class VideoAdSync extends React.Component {
         if (this.duration && this.duration > -1) {
           this.progressTimer = setInterval(() => {
             this.execEvent('onProgress');
-          }, 250);
+          }, 150);
         }
       }
       break;
