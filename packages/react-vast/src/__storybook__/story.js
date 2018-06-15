@@ -7,6 +7,7 @@ import {ResponsiveVideoAd, VideoAd} from '../index';
 import {VideoAd as VideoAdIMASDK} from '../ima';
 import Spinner from '../Spinner';
 import PrerollStory from './PrerollStory';
+import PrerollResizeStory from './PrerollResizeStory';
 import styles from './styles.css';
 
 storiesOf('<ResponsiveVideoAd>', module)
@@ -40,6 +41,7 @@ storiesOf('<VideoAd>', module)
       component={VideoAd}
     />
   )
+  .add('Preroll - resize', () => <PrerollResizeStory component={VideoAd} />)
   .add('Preroll success', () =>
     <div className={styles.videoContainer}>
       <div className={styles.videoPlaceholder}>
@@ -64,7 +66,8 @@ storiesOf('ima/<VideoAd>', module)
       component={VideoAdIMASDK}
       tag={'http://localhost:9001/vastFiles/prerollChain/start-wrapper.xml'}
     />
-  );
+  )
+  .add('Preroll - resize', () => <PrerollResizeStory component={VideoAdIMASDK} />);
 
 storiesOf('<Spinner>', module)
   .add('Default', () =>
