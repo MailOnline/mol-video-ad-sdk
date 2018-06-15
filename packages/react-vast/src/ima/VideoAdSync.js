@@ -97,6 +97,12 @@ export class VideoAdSync extends React.Component {
     return state;
   }
 
+  resize (width, height) {
+    if (this.adsManager && !this.state.loading && !this.state.error) {
+      this.adsManager.resize(width, height, window.google.ima.ViewMode.NORMAL);
+    }
+  }
+
   createAdDisplayContainer () {
     const ima = window.google.ima;
 
@@ -249,3 +255,15 @@ export class VideoAdSync extends React.Component {
 }
 
 VideoAdSync.prototype.render = render;
+
+/* eslint-disable func-style, babel/no-invalid-this */
+function componentWillReceiveProps (props) {
+  if (props.width !== this.props.width) {
+    this.resize(props.width, props.height);
+  }
+}
+/* eslint-enable func-style, bable/no-invalid-this */
+
+VideoAdSync.prototype.componentWillReceiveProps = componentWillReceiveProps;
+// eslint-disable-next-line id-match
+VideoAdSync.prototype.UNSAFE_componentWillReceiveProps = componentWillReceiveProps;
