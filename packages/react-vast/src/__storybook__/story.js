@@ -41,7 +41,12 @@ storiesOf('<VideoAd>', module)
       component={VideoAd}
     />
   )
-  .add('Preroll - resize', () => <PrerollResizeStory component={VideoAd} />)
+  .add('Preroll - resize', () =>
+    <PrerollResizeStory
+      component={VideoAd}
+      tag={'http://localhost:9001/vastFiles/prerollChain/start-wrapper.xml'}
+    />
+  )
   .add('Preroll success', () =>
     <div className={styles.videoContainer}>
       <div className={styles.videoPlaceholder}>
