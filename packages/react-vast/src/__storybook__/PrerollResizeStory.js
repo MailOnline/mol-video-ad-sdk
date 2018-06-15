@@ -5,6 +5,7 @@ import Spinner from '../Spinner';
 
 const width = 640;
 const height = 360;
+const sizes = [0.5, 0.75, 1];
 
 /* eslint-disable sort-keys */
 const styles = {
@@ -15,8 +16,6 @@ const styles = {
     position: 'absolute',
     top: 0,
     left: 0,
-    width: width / 2,
-    height: height / 2,
     outline: '2px solid red',
     overflow: 'hidden'
   },
@@ -28,7 +27,7 @@ const styles = {
 };
 /* eslint-enable sort-keys */
 
-class PrerollStory extends React.Component {
+class PrerollResizeStory extends React.Component {
   static propTypes = {
     action: PropTypes.func,
     component: PropTypes.func.isRequired,
@@ -46,6 +45,7 @@ class PrerollStory extends React.Component {
   };
 
   state = {
+    counter: 0,
     showAd: false
   };
 
@@ -53,9 +53,20 @@ class PrerollStory extends React.Component {
     this.setState({
       showAd: true
     });
+
+    this.interval = setInterval(() => {
+      this.setState({
+        counter: this.state.counter + 1
+      });
+    }, 1000);
+  }
+
+  componentWillUnmount () {
+    clearInterval(this.interval);
   }
 
   el = null;
+  interval = null;
 
   ref = (el) => {
     this.el = el;
@@ -63,6 +74,9 @@ class PrerollStory extends React.Component {
 
   render () {
     const {action, component: VideoAdComponent} = this.props;
+    const factor = sizes[this.state.counter % sizes.length];
+    const adWidth = width * factor;
+    const adHeight = height * factor;
 
     return (
       <div style={styles.story}>
@@ -74,10 +88,16 @@ class PrerollStory extends React.Component {
           src='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'
           style={styles.videoElement}
         />
-        <div style={styles.ad}>
+        <div
+          style={{
+            ...styles.ad,
+            height: adHeight,
+            width: adWidth
+          }}
+        >
           <VideoAdComponent
             getTag={() => this.props.tag}
-            height={styles.ad.height}
+            height={adHeight}
             onComplete={(state, actions) => console.log('COMPLETE', state, actions)}
             onDuration={(state, actions) => console.log('DURATION', state, actions)}
             onError={(error) => console.log('ERROR', error)}
@@ -87,7 +107,7 @@ class PrerollStory extends React.Component {
             renderLoading={() => <Spinner />}
             tracker={() => {}}
             videoElement={this.el}
-            width={styles.ad.width}
+            width={adWidth}
           />
         </div>
       </div>
@@ -95,4 +115,4 @@ class PrerollStory extends React.Component {
   }
 }
 
-export default PrerollStory;
+export default PrerollResizeStory;

@@ -1,6 +1,6 @@
 {
   "name": "@mol/video-ad-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "SDK to load and play video ads.",
   "author": "MailOnline <fe@mailonline.co.uk>",
   "browser": "src/index.js",
@@ -10,15 +10,15 @@
     "src"
   ],
   "dependencies": {
-    "@mol/tiny-emitter": "^0.1.0",
-    "@mol/vast-request": "^0.1.0",
-    "@mol/vast-selectors": "^0.1.0",
+    "@mol/tiny-emitter": "^0.1.1",
+    "@mol/vast-request": "^0.1.1",
+    "@mol/vast-selectors": "^0.1.1",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
-    "mockdate": "^2.0.2",    
-    "@mol/vast-fixtures": "^0.1.0",
+    "@mol/vast-fixtures": "^0.1.1",
     "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1"
+    "enzyme-adapter-react-16": "^1.1.1",
+    "mockdate": "^2.0.2"
   }
 }

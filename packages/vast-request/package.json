@@ -1,6 +1,6 @@
 {
   "name": "@mol/vast-request",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MOL VAST request",
   "author": "MailOnline <fe@mailonline.co.uk>",
   "browser": "src/index.js",
@@ -10,12 +10,12 @@
     "src"
   ],
   "dependencies": {
-    "whatwg-fetch": "^2.0.4",
-    "@mol/vast-xml2js": "^0.1.0",
-    "@mol/vast-selectors": "^0.1.0"
+    "@mol/vast-selectors": "^0.1.1",
+    "@mol/vast-xml2js": "^0.1.1",
+    "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
-    "lodash": "^4.17.4",
-    "@mol/vast-fixtures": "0.1.0"
+    "@mol/vast-fixtures": "^0.1.1",
+    "lodash": "^4.17.4"
   }
 }

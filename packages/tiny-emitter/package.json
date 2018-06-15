@@ -1,6 +1,6 @@
 {
   "name": "@mol/tiny-emitter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MOL's tiny implementation of node's EventEmitter",
   "author": "MailOnline <fe@mailonline.co.uk>",
   "browser": "src/Emitter.js",

@@ -5,6 +5,8 @@ import tryToStartAd from '../helpers/tryToStartAd';
 import makeCancelable from '../helpers/makeCancelable';
 import defaultProps from './defaultProps';
 import propTypes from './propTypes';
+import render from './render';
+import defaultState from './defaultState';
 
 class VideoAd extends React.Component {
   static defaultProps = defaultProps;
@@ -14,23 +16,31 @@ class VideoAd extends React.Component {
     this.element = element;
   };
 
-  state = {
-    ready: false
-  };
+  state = defaultState;
 
   componentDidMount () {
+    // NOTE: This should never happen in PRODUCTION.
+    // eslint-disable-next-line no-process-env
+    if (process.env.NODE_ENV !== 'production') {
+      if (!this.element) {
+        this.handleError(new TypeError('Could not find ref to ad container element.'));
+      }
+    }
+
     this.adUnitPromise = this.startAd();
     this.stateUpdate = makeCancelable(this.adUnitPromise);
     // eslint-disable-next-line promise/always-return, promise/catch-or-return, promise/prefer-await-to-then
-    this.stateUpdate.promise.then((adUnit) => {
-      this.adUnit = adUnit;
-
-      // eslint-disable-next-line react/no-set-state
-      this.setState({
-        ready: true
-      });
-    });
+    this.stateUpdate.promise.then(this.onAdUnit);
   }
+
+  onAdUnit = (adUnit) => {
+    this.adUnit = adUnit;
+
+    // eslint-disable-next-line react/no-set-state
+    this.setState({
+      loading: false
+    });
+  };
 
   componentWillUnmount () {
     if (this.stateUpdate.isPending()) {
@@ -52,7 +62,7 @@ class VideoAd extends React.Component {
 
     const adUnit = this.adUnit;
 
-    if (this.state.ready && adUnit) {
+    if (!this.state.loading) {
       if (height !== prevProps.height || width !== prevProps.width && !adUnit.isFinished()) {
         adUnit.resize();
       }
@@ -70,17 +80,17 @@ class VideoAd extends React.Component {
     const {
       getTag,
       logger,
-      onComplete,
       onLinearEvent,
-      onNonRecoverableError,
-      onRecoverableError: onError,
       tracker,
       videoElement
     } = this.props;
 
     const options = {
       logger,
-      onError,
+      onError: (error) => {
+        error.recoverable = true;
+        this.handleError(error);
+      },
       onLinearEvent,
       tracker,
       videoElement
@@ -90,38 +100,30 @@ class VideoAd extends React.Component {
       const fetchVastChain = async () => loadVastChain(await Promise.resolve(getTag()));
       const adUnit = await tryToStartAd(fetchVastChain, this.element, options);
 
-      adUnit.onError(onNonRecoverableError);
-      adUnit.onComplete(onComplete);
+      adUnit.onError(this.handleError);
+      adUnit.onComplete(this.handleComplete);
 
       return adUnit;
     } catch (error) {
-      onNonRecoverableError(error);
+      this.handleError(error);
 
       throw error;
     }
   }
 
-  render () {
-    const {
-      children,
-      height,
-      width
-    } = this.props;
+  handleError = (error) => {
+    this.setState({error});
+    this.props.onError(error);
+  };
 
-    const containerStyles = {
-      height: height ? `${height}px` : '100%',
-      width: width ? `${width}px` : '100%'
-    };
-
-    const adPlaceholderStyles = {
-      display: this.state.ready ? 'block' : 'none'
-    };
-
-    return <div style={containerStyles}>
-      {!this.state.ready && children}
-      <div ref={this.ref} style={adPlaceholderStyles} />
-    </div>;
-  }
+  handleComplete = () => {
+    this.setState({
+      complete: true
+    });
+    this.props.onComplete();
+  };
 }
+
+VideoAd.prototype.render = render;
 
 export default VideoAd;

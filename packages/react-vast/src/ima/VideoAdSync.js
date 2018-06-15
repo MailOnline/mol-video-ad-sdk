@@ -1,59 +1,107 @@
-/* eslint-disable filenames/match-exported, filenames/match-regex */
+/* eslint-disable filenames/match-exported, filenames/match-regex, complexity */
 import React from 'react';
 import defaultProps from '../VideoAd/defaultProps';
 import propTypes from '../VideoAd/propTypes';
-
-/* eslint-disable sort-keys */
-const overlay = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%'
-};
-
-const styles = {
-  container: {
-    position: 'relative'
-  },
-  overlay: {
-    ...overlay,
-    zIndex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  ad: {
-    ...overlay,
-    zIndex: 2,
-    transition: 'opacity .2s'
-  }
-};
-/* eslint-enable sort-keys */
+import render from '../VideoAd/render';
+import defaultState from '../VideoAd/defaultState';
 
 export class VideoAdSync extends React.Component {
   static defaultProps = defaultProps;
   static propTypes = propTypes;
 
-  state = {
-    error: null,
-    loading: true
-  };
+  state = defaultState;
 
   componentDidMount () {
     this.init();
   }
 
+  componentWillUnmount () {
+    if (this.adsLoader) {
+      this.adsLoader.destroy();
+    }
+
+    if (this.adsManager) {
+      this.adsManager.destroy();
+    }
+
+    if (this.progressTimer) {
+      clearInterval(this.progressTimer);
+      this.progressTimer = null;
+    }
+  }
+
+  duration;
   adContainer;
   adDisplayContainer;
   adsLoader;
   adsManager;
-  intervalTimer;
+  progressTimer;
   adsRequest;
+  muted = false;
+  volume = 1;
 
-  refAdContainer = (div) => {
+  ref = (div) => {
     this.adContainer = div;
   };
+
+  actions = {
+    mute: () => {
+      if (this.adsManager) {
+        this.adsManager.setVolume(0);
+        this.execEvent('onProgress');
+      }
+    },
+
+    pause: () => {
+      if (this.adsManager) {
+        this.adsManager.pause();
+      }
+    },
+
+    play: () => {
+      if (this.adsManager) {
+        this.adsManager.resume();
+      }
+    },
+
+    setVolume: (volume) => {
+      if (this.adsManager) {
+        this.volume = volume;
+        this.adsManger.setVolume(volume);
+        this.execEvent('onProgress');
+      }
+    },
+
+    unmute: () => {
+      if (this.adsManager) {
+        this.adsManager.setVolume(this.volume);
+        this.execEvent('onProgress');
+      }
+    }
+  };
+
+  createStateObject () {
+    const duration = this.duration;
+    const remainingTime = this.adsManager.getRemainingTime();
+    const progress = remainingTime && remainingTime > -1 ?
+      duration - remainingTime :
+      0;
+    const volume = this.adsManager.getVolume();
+    const state = {
+      duration,
+      muted: this.muted,
+      progress,
+      volume
+    };
+
+    return state;
+  }
+
+  resize (width, height) {
+    if (this.adsManager && !this.state.loading && !this.state.error) {
+      this.adsManager.resize(width, height, window.google.ima.ViewMode.NORMAL);
+    }
+  }
 
   createAdDisplayContainer () {
     const ima = window.google.ima;
@@ -69,12 +117,6 @@ export class VideoAdSync extends React.Component {
 
     this.adsLoader.addEventListener(ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, this.onAdsManagerLoaded, false);
     this.adsLoader.addEventListener(ima.AdErrorEvent.Type.AD_ERROR, this.onAdError, false);
-
-    // An event listener to tell the SDK that our content video
-    // is completed so the SDK can play any post-roll ads.
-    // var contentEndedListener = function() {adsLoader.contentComplete();};
-
-    // videoContent.onended = contentEndedListener;
 
     // Request video ads.
     this.adsRequest = new ima.AdsRequest();
@@ -128,12 +170,16 @@ export class VideoAdSync extends React.Component {
     // This function is where you should ensure that your UI is ready
     // to play content. It is the responsibility of the Publisher to
     // implement this function when necessary.
-    this.props.onComplete();
+    this.execEvent('onComplete');
   }
 
   onContentPauseRequested = () => {
     // This function is where you should setup UI for showing ads (e.g.
     // display ad timer countdown, disable seeking etc.)
+  }
+
+  execEvent (name) {
+    this.props[name](this.createStateObject(), this.actions);
   }
 
   onAdEvent = (adEvent) => {
@@ -142,38 +188,42 @@ export class VideoAdSync extends React.Component {
 
     switch (adEvent.type) {
     case ima.AdEvent.Type.LOADED:
-      this.props.logger('ad loaded');
+      this.props.logger.log('ad loaded');
 
       // This is the first event sent for an ad - it is possible to
       // determine whether the ad is a video ad or an overlay.
-      if (!ad.isLinear()) {
-        // Position AdDisplayContainer correctly for overlay.
-        // Use ad.width and ad.height.
-        // videoContent.play();
+      if (ad.isLinear()) {
+        this.duration = ad.getDuration();
+
+        if (this.duration && this.duration > -1) {
+          this.execEvent('onDuration');
+        }
       }
       break;
     case ima.AdEvent.Type.STARTED:
-      this.props.logger('ad started');
+      this.props.logger.log('ad started');
 
       // This event indicates the ad has started - the video player
       // can adjust the UI, for example display a pause button and
       // remaining time.
       if (ad.isLinear()) {
-        // For a linear ad, a timer can be started to poll for
-        // the remaining time.
-        this.intervalTimer = setInterval(() => {
-          // const remainingTime = this.adsManager.getRemainingTime();
-        }, 300);
+        if (this.duration && this.duration > -1) {
+          this.progressTimer = setInterval(() => {
+            this.execEvent('onProgress');
+          }, 150);
+        }
       }
       break;
     case ima.AdEvent.Type.COMPLETE:
-      this.props.logger('ad completed');
+      this.props.logger.log('ad completed');
 
-      // This event indicates the ad has finished - the video player
-      // can perform appropriate UI actions, such as removing the timer for
-      // remaining time detection.
-      if (ad.isLinear()) {
-        clearInterval(this.intervalTimer);
+      if (this.progressTimer) {
+        if (this.duration && this.duration > -1) {
+          this.execEvent('onProgress');
+        }
+
+        clearInterval(this.progressTimer);
+        this.progressTimer = null;
       }
       break;
     }
@@ -182,11 +232,10 @@ export class VideoAdSync extends React.Component {
   playAds () {
     const ima = window.google.ima;
 
-    // TODO: Initialize the container. Must be done via a user action on mobile devices.
-    // this.props.videoElement.load();
-    this.adDisplayContainer.initialize();
-
     try {
+      // TODO: Initialize the container. Must be done via a user action on mobile devices.
+      this.adDisplayContainer.initialize();
+
       // Initialize the ads manager. Ad rules playlist will start at this time.
       this.adsManager.init(this.props.width, this.props.height, ima.ViewMode.NORMAL);
 
@@ -198,45 +247,23 @@ export class VideoAdSync extends React.Component {
         loading: false
       });
 
-      this.props.onStart();
+      this.execEvent('onStart');
     } catch (error) {
       this.onError(error);
     }
   }
+}
 
-  render () {
-    let overlayElement = null;
+VideoAdSync.prototype.render = render;
 
-    if (this.state.error) {
-      overlayElement =
-        <div key='overlay' style={styles.overlay}>
-          {this.props.renderError(this.state.error)}
-        </div>;
-    } else if (this.state.loading) {
-      overlayElement =
-        <div key='overlay' style={styles.overlay}>
-          {this.props.renderLoading(this.props, this.state)}
-        </div>;
-    }
-
-    return (
-      <div
-        style={{
-          ...styles.container,
-          height: this.props.height,
-          width: this.props.width
-        }}
-      >
-        {overlayElement}
-        <div
-          key='ad'
-          ref={this.refAdContainer}
-          style={{
-            ...styles.ad,
-            visibility: this.state.loading ? 0 : 1
-          }}
-        />
-      </div>
-    );
+/* eslint-disable func-style, babel/no-invalid-this */
+function componentWillReceiveProps (props) {
+  if (props.width !== this.props.width) {
+    this.resize(props.width, props.height);
   }
 }
+/* eslint-enable func-style, bable/no-invalid-this */
+
+VideoAdSync.prototype.componentWillReceiveProps = componentWillReceiveProps;
+// eslint-disable-next-line id-match
+VideoAdSync.prototype.UNSAFE_componentWillReceiveProps = componentWillReceiveProps;

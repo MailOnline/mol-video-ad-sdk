@@ -1,7 +1,6 @@
 /* eslint-disable filenames/match-exported, react/no-did-mount-set-state */
 import {loadScript} from '@mol-fe/mol-fe-dom-helpers';
 import React from 'react';
-import PropTypes from 'prop-types';
 import timeoutPromise from '../helpers/timeoutPromise';
 import defaultProps from '../VideoAd/defaultProps';
 import propTypes from '../VideoAd/propTypes';
@@ -36,20 +35,9 @@ const loadComponent = async () => {
   return VideoAdSync;
 };
 
-const defaultRender = () => null;
-
 class VideoAd extends React.Component {
-  static propTypes = {
-    ...propTypes,
-    onLoadingError: PropTypes.func,
-    renderError: PropTypes.func
-  };
-
-  static defaultProps = {
-    ...defaultProps,
-    onLoadingError: () => {},
-    renderError: defaultRender
-  };
+  static propTypes = propTypes;
+  static defaultProps = defaultProps;
 
   state = {
     Component: null,
@@ -75,12 +63,10 @@ class VideoAd extends React.Component {
   }
 
   render () {
-    // eslint-disable-next-line no-unused-vars
-    const {renderError, onLoadingError, ...rest} = this.props;
     const {Component, error} = this.state;
 
     if (error) {
-      return renderError(error, this.props);
+      return this.props.renderError(error, this.props);
     }
 
     if (!Component) {
@@ -92,12 +78,12 @@ class VideoAd extends React.Component {
             width: this.props.width
           }}
         >
-          {rest.renderLoading(this.props)}
+          {this.props.renderLoading(this.props)}
         </div>
       );
     }
 
-    return <Component {...rest} />;
+    return <Component {...this.props} />;
   }
 }
 
