@@ -8,8 +8,8 @@ import styles from './styles.css';
 
 storiesOf('VideoAd', module)
   .add('preroll success', () =>
-    <div className={styles.videoContainer}>
-      <div className={styles.videoPlaceholder}>
+    <div className={styles.container}>
+      <div className={styles.videoContainer}>
         <ResponsiveVideoAd
           getTag={() => 'http://localhost:9001/vastFiles/prerollChain/start-wrapper.xml'}
           onComplete={action('complete')}
@@ -18,7 +18,9 @@ storiesOf('VideoAd', module)
           onRecoverableError={action('RecoverableError')}
           onStart={action('start')}
           tracker={() => {}}
-        >Loading ad ...</ResponsiveVideoAd>
+        >
+          <div className={styles.loading} />
+        </ResponsiveVideoAd>
       </div>
     </div>
   );

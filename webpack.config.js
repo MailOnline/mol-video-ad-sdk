@@ -7,7 +7,7 @@ const cssLoaders = [
     loader: 'css-loader',
     options: {
       importLoaders: 3,
-      localIdentName: '',
+      localIdentName: '[local]--[hash:base64:4]',
       modules: true,
       sourceMap: true
     }
