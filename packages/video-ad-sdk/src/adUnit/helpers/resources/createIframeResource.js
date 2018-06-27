@@ -18,6 +18,9 @@ const createIframeResource = (src, {document, data}) => {
 
   iframeElement.src = src;
 
+  iframeElement.frameBorder = 0;
+  iframeElement.style.border = 'none';
+
   return iframeElement;
 };
 

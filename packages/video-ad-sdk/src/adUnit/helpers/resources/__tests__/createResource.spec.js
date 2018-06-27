@@ -37,10 +37,10 @@ test('createResource must create a html resource if you pass `htmlResource` in t
   }));
 });
 
-test('createResource must create an iframe resource if you pass `iframeResource` in the data', () => {
+test('createResource must create an iframe resource if you pass `iFrameResource` in the data', () => {
   const src = 'http://test.example.com/resource';
   const data = {
-    iframeResource: src
+    iFrameResource: src
   };
   const resource = createResource(document, data);
 
