@@ -57,7 +57,16 @@
               <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="768" height="432" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/768x432time.mp4</MediaFile>
               <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="640" height="362" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/640x362time.mp4</MediaFile>
             </MediaFiles>
-
+            <Icons>
+              <Icon program="MOL_IFRAME" width="20px" height="20px" xPosition="right" yPosition="top" pxratio="1">
+                <IFrameResource>http://localhost:9001/icons/iframe/icon.html</IFrameResource>
+                <IconClicks>
+                  <IconClickThrough>https://test.example.com/start-wrapper/icons/iframe/icon/iconClickThrough</IconClickThrough>
+                  <IconClickTracking>https://test.example.com/start-wrapper/icons/iframe/icon/iconClickTracking</IconClickTracking>
+                </IconClicks>
+                <IconViewTracking>https://test.example.com/start-wrapper/icons/iframe/icon/iconViewTracking</IconViewTracking>
+              </Icon>
+            </Icons>
           </Linear>
         </Creative>
       </Creatives>
