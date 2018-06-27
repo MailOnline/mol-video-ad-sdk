@@ -44,14 +44,22 @@ const updateIconElement = (iconElement, icon) => {
     height,
     width,
     left,
-    top
+    top,
+    yPosition
   } = icon;
 
   iconElement.height = height;
   iconElement.width = width;
   iconElement.style.position = 'absolute';
   iconElement.style.left = `${left}px`;
-  iconElement.style.top = `${top}px`;
+
+  // NOTE: This if is a bit odd but some browser don't calculate the placeholder height pixel perfect and,
+  //       setting the top of the icon will change the size of the icon's placeholder this if prevents that sittuation
+  if (yPosition === 'bottom') {
+    iconElement.style.bottom = '0';
+  } else {
+    iconElement.style.top = `${top}px`;
+  }
   iconElement.style.height = `${height}px`;
   iconElement.style.width = `${width}px`;
 
@@ -64,7 +72,7 @@ const renderIcon = async (icon, config) => {
   const updatedIcon = updateIcon(icon, iconElement, config);
 
   if (canBeRendered(updatedIcon, config)) {
-    if (updatedIcon.updated) {
+    if (!iconElement.parentNode || icon.updated) {
       placeholder.appendChild(updateIconElement(iconElement, updatedIcon));
     }
   } else {

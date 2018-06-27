@@ -1,3 +1,5 @@
+// TODO: CHECK IF THIS IS NEEDED
+
 const createIconPlaceholder = (document) => {
   const placeholder = document.createElement('DIV');
 

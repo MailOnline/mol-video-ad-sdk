@@ -371,7 +371,6 @@ test('VastAdUnit start must do nothing on a second play', () => {
   'onError',
   'onComplete',
   'finish',
-  'resize',
   'changeVolume'
 ].forEach((method) => {
   test(`VastAdUnit ${method} must throw if you call it on a finished adUnit`, () => {
@@ -381,6 +380,19 @@ test('VastAdUnit start must do nothing on a second play', () => {
 
     expect(() => adUnit[method]()).toThrowError('VastAdUnit is finished');
   });
+});
+
+test('VastAdUnit `resize` must throw if you call it on a finished adUnit', async () => {
+  expect.assertions(1);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+  adUnit.cancel();
+
+  try {
+    await adUnit.resize();
+  } catch (error) {
+    expect(error.message).toBe('VastAdUnit is finished');
+  }
 });
 
 test('VastAdUnit cancel must stop the ad video and finish the ad unit', () => {
@@ -585,7 +597,7 @@ test('VastAdUnit resize update the media element if the ad has started and there
   expect(updateMedia).toHaveBeenCalledWith(videoElement, expect.objectContaining({src: bestSource}));
 });
 
-test('VastAdUnit must redraw the icons', () => {
+test('VastAdUnit must redraw the icons', async () => {
   canPlay.mockReturnValue(true);
 
   const icons = [{
@@ -604,7 +616,7 @@ test('VastAdUnit must redraw the icons', () => {
   expect(mockRemoveIcons).toHaveBeenCalledTimes(0);
   expect(mockDrawIcons).toHaveBeenCalledTimes(1);
 
-  adUnit.resize();
+  await adUnit.resize();
 
   expect(mockRemoveIcons).toHaveBeenCalledTimes(1);
   expect(mockDrawIcons).toHaveBeenCalledTimes(2);

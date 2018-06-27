@@ -1,8 +1,7 @@
 const isCustomXposition = (xPosition) => !['left', 'right'].includes(String(xPosition).toLowerCase());
 const isCustomYPosition = (yPosition) => !['top', 'bottom'].includes(String(yPosition).toLowerCase());
 const calculateIconLeft = (dynamicPos, iconWidth, drawnIcons, phWidth) => {
-  const icons = drawnIcons.filter((icon) => icon.xPosition === dynamicPos);
-  const drawnIconsWidth = icons.reduce((accumulator, icon) => accumulator + icon.width, 0);
+  const drawnIconsWidth = drawnIcons.reduce((accumulator, icon) => accumulator + icon.width + 1, 0);
 
   if (dynamicPos === 'left') {
     return drawnIconsWidth;
@@ -33,9 +32,10 @@ const updateIcon = (icon, iconElement, {drawnIcons, placeholder}) => {
   if (isCustomXposition(xPosition)) {
     left = xPosition;
   } else {
-    left = calculateIconLeft(xPosition, width, drawnIcons, phRect.width);
-  }
+    const icons = drawnIcons.filter((dIcon) => dIcon.xPosition === xPosition && dIcon.yPosition === yPosition);
 
+    left = calculateIconLeft(xPosition, width, icons, phRect.width);
+  }
   if (isCustomYPosition(yPosition)) {
     top = yPosition;
   } else {

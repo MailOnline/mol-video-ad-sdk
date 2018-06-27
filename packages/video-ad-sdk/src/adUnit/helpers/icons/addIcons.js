@@ -22,13 +22,7 @@ const removeDrawnIcons = (icons) => icons
 
 const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noop, ...rest} = {}) => {
   const {videoElement, element} = videoAdContainer;
-  let finished = false;
-
   const drawIcons = async () => {
-    if (finished) {
-      return;
-    }
-
     const drawnIcons = await renderIcons(icons, {
       onIconClick,
       videoAdContainer,
@@ -43,10 +37,6 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
         icon[firstRenderPending] = false;
       }
     });
-
-    if (finished) {
-      removeDrawnIcons(icons);
-    }
   };
 
   icons.forEach((icon) => {
@@ -54,17 +44,17 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
   });
 
   element.addEventListener('iconsdrawn', () => {
-    if (hasPendingIconRedraws(icons, videoElement)) {
+    const videoAdIsFinish = videoElement.currentTime > 0 &&
+                            Math.ceil(videoElement.currentTime) >= Math.floor(videoElement.duration);
+
+    if (hasPendingIconRedraws(icons, videoElement) && !videoAdIsFinish) {
       once(videoElement, 'timeupdate', drawIcons);
     }
   });
 
   return {
     drawIcons,
-    removeIcons: () => {
-      finished = true;
-      removeDrawnIcons(icons);
-    }
+    removeIcons: () => removeDrawnIcons(icons)
   };
 };
 
