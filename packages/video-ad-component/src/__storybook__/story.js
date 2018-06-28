@@ -7,8 +7,13 @@ import {ResponsiveVideoAd} from '../index';
 import styles from './styles.css';
 
 storiesOf('VideoAd', module)
-  .add('preroll success', () =>
-    <div className={styles.container}>
+  .add('preroll success', () => {
+    const skipBtn = document.createElement('button');
+
+    skipBtn.classList.add(styles.skipControl);
+    skipBtn.innerHTML = 'Skip';
+
+    return <div className={styles.container}>
       <div className={styles.videoContainer}>
         <ResponsiveVideoAd
           getTag={() => 'http://localhost:9001/vastFiles/prerollChain/start-wrapper.xml'}
@@ -17,11 +22,13 @@ storiesOf('VideoAd', module)
           onNonRecoverableError={action('NonRecoverableError')}
           onRecoverableError={action('RecoverableError')}
           onStart={action('start')}
-          tracker={() => {}}
+          skipControl={skipBtn}
+          tracker={() => { }}
         >
           <div className={styles.loading} />
         </ResponsiveVideoAd>
       </div>
-    </div>
+    </div>;
+  }
   );
 
