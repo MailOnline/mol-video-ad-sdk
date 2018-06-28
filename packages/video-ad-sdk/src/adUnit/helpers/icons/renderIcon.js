@@ -59,7 +59,7 @@ const updateIconElement = (iconElement, icon) => {
   iconElement.style.left = `${left}px`;
 
   // NOTE: This if is a bit odd but some browser don't calculate the placeholder height pixel perfect and,
-  //       setting the top of the icon will change the size of the icon's placeholder this if prevents that sittuation
+  //       setting the top of the icon will change the size of the icon's placeholder this if prevents that situation
   if (yPosition === 'bottom') {
     iconElement.style.bottom = '0';
   } else {
