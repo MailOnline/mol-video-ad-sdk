@@ -7,10 +7,10 @@ const createDefaultSkipControl = (document) => {
 
   skipBtn.classList.add('mol-vast-skip-control');
   skipBtn.type = 'button';
-  skipBtn.value = 'skip';
+  skipBtn.innerHTML = 'skip';
   skipBtn.style.position = 'absolute';
-  skipBtn.style.botton = '10px';
-  skipBtn.style.right = '0px';
+  skipBtn.style.bottom = '15px';
+  skipBtn.style.right = '15px';
 
   return skipBtn;
 };

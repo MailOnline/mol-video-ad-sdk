@@ -24,7 +24,7 @@
               <Custom>This is custom stuff</Custom>
             </CreativeExtension>
           </CreativeExtensions>
-          <Linear skipoffset="00:00:05" >
+          <Linear skipoffset="00:00:01" >
             <Duration>00:00:30</Duration>
             <TrackingEvents>
               <Tracking event="start"><![CDATA[https://test.example.com/start]]></Tracking>

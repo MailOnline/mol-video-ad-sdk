@@ -12,7 +12,8 @@ const {
   complete,
   iconClick,
   iconView,
-  error: errorEvt
+  error: errorEvt,
+  skip
 } = linearEvents;
 
 const hidden = Symbol('hidden');
@@ -32,6 +33,10 @@ class VastAdUnit extends Emitter {
         this.errorCode = this.error && this.error.errorCode ? this.error.errorCode : 405;
         this[hidden].onErrorCallbacks.forEach((callback) => callback(this.error));
         this.finish();
+        break;
+      }
+      case skip: {
+        this.cancel();
         break;
       }
       }
