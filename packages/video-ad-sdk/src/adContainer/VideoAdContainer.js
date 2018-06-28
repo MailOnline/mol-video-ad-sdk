@@ -16,7 +16,7 @@ const destroyed = Symbol('destroyed');
 /**
  * @class
  * @global
- * @description Contains everyting necesary to contain and create a video ad within a given placeholder Element.
+ * @description Contains everything necessary to contain and create a video ad within a given placeholder Element.
  */
 class VideoAdContainer {
   /**

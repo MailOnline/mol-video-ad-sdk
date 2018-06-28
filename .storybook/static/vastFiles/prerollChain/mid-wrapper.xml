@@ -34,6 +34,32 @@
       <VideoClicks>
        <ClickTracking><![CDATA[https://test.example.com/mid-wrapper/clicktracking]]></ClickTracking>
       </VideoClicks>
+      <Icons>
+          <Icon program="MOL_STATIC" width="40px" height="40px" xPosition="left" yPosition="bottom" pxratio="1">
+            <StaticResource>http://localhost:9001/icons/static/instagram.png</StaticResource>
+            <IconClicks>
+              <IconClickThrough>https://test.example.com/mid-wrapper/icons/static/instagram/iconClickThrough</IconClickThrough>
+              <IconClickTracking>https://test.example.com/mid-wrapper/icons/static/instagram/iconClickTracking</IconClickTracking>
+            </IconClicks>
+            <IconViewTracking>https://test.example.com/mid-wrapper/icons/static/instagram/iconViewTracking</IconViewTracking>
+          </Icon>
+          <Icon program="MOL_STATIC_2" width="40px" height="40px" xPosition="left" yPosition="bottom" pxratio="1">
+            <StaticResource>http://localhost:9001/icons/static/android.png</StaticResource>
+            <IconClicks>
+              <IconClickThrough>https://test.example.com/mid-wrapper/icons/static/instagram/iconClickThrough</IconClickThrough>
+              <IconClickTracking>https://test.example.com/mid-wrapper/icons/static/instagram/iconClickTracking</IconClickTracking>
+            </IconClicks>
+            <IconViewTracking>https://test.example.com/mid-wrapper/icons/static/instagram/iconViewTracking</IconViewTracking>
+          </Icon>
+          <Icon program="MOL_STATIC_3" width="40px" height="40px" xPosition="left" yPosition="bottom" pxratio="1">
+            <StaticResource>http://localhost:9001/icons/static/twitter.png</StaticResource>
+            <IconClicks>
+              <IconClickThrough>https://test.example.com/mid-wrapper/icons/static/instagram/iconClickThrough</IconClickThrough>
+              <IconClickTracking>https://test.example.com/mid-wrapper/icons/static/instagram/iconClickTracking</IconClickTracking>
+            </IconClicks>
+            <IconViewTracking>https://test.example.com/mid-wrapper/icons/static/instagram/iconViewTracking</IconViewTracking>
+          </Icon>
+        </Icons>
      </Linear>
     </Creative>
    </Creatives>

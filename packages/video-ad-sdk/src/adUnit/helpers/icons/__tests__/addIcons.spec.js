@@ -180,56 +180,12 @@ test('addIcons must return a remove function', async () => {
     videoAdContainer
   });
 
-  drawIcons();
-  await waitFor(element, 'iconsdrawn');
+  await drawIcons();
 
   expect(element.contains(icons[0].element)).toBe(true);
   expect(element.contains(icons[1].element)).toBe(true);
 
-  removeIcons();
-
-  expect(element.contains(icons[0].element)).toBe(false);
-  expect(element.contains(icons[1].element)).toBe(false);
-});
-
-test('addIcons on remove must remove the icons on corner cases too', async () => {
-  const icons = [
-    {
-      height: 20,
-      width: 20,
-      xPosition: 'right',
-      yPosition: 'top'
-    },
-    {
-      height: 20,
-      width: 20,
-      xPosition: 'left',
-      yPosition: 'top'
-    }
-  ];
-  const {element, videoElement} = videoAdContainer;
-
-  const {
-    drawIcons,
-    removeIcons
-  } = addIcons(icons, {
-    logger,
-    videoAdContainer
-  });
-
-  drawIcons();
-  await waitFor(element, 'iconsdrawn');
-
-  expect(element.contains(icons[0].element)).toBe(true);
-  expect(element.contains(icons[1].element)).toBe(true);
-
-  videoElement.currentTime = 6;
-
-  videoElement.dispatchEvent(new Event('timeupdate'));
-
-  removeIcons();
-
-  await waitFor(element, 'iconsdrawn');
+  await removeIcons();
 
   expect(element.contains(icons[0].element)).toBe(false);
   expect(element.contains(icons[1].element)).toBe(false);

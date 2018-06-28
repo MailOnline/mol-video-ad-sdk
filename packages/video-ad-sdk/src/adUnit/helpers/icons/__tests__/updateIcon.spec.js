@@ -26,7 +26,8 @@ beforeEach(() => {
       left: 0,
       top: 0,
       width: 5,
-      xPosition: 'left'
+      xPosition: 'left',
+      yPosition: 'top'
 
     },
     {
@@ -35,7 +36,8 @@ beforeEach(() => {
       left: 6,
       top: 0,
       width: 5,
-      xPosition: 'right'
+      xPosition: 'right',
+      yPosition: 'top'
     }
   ];
 
@@ -98,16 +100,16 @@ test('updateIcon must calculate the dynamic left position taking the drawn icons
     height: 4,
     width: 6,
     xPosition: 'left',
-    yPosition: 2
+    yPosition: 'top'
   });
 
   expect(updateIcon(icon, iconElement, config)).toEqual(expect.objectContaining({
     height: 4,
-    left: 5,
-    top: 2,
+    left: 6,
+    top: 0,
     width: 6,
     xPosition: 'left',
-    yPosition: 2
+    yPosition: 'top'
   }));
 
   Object.assign(icon, {
@@ -116,11 +118,11 @@ test('updateIcon must calculate the dynamic left position taking the drawn icons
 
   expect(updateIcon(icon, iconElement, config)).toEqual(expect.objectContaining({
     height: 4,
-    left: -1,
-    top: 2,
+    left: -2,
+    top: 0,
     width: 6,
     xPosition: 'right',
-    yPosition: 2
+    yPosition: 'top'
   }));
 });
 
@@ -163,7 +165,7 @@ test('updateIcon must assume dynamic position top, right if missing on the icon'
 
   expect(updateIcon(icon, iconElement, config)).toEqual(expect.objectContaining({
     height: 4,
-    left: 3,
+    left: 2,
     top: 0,
     width: 2
   }));
@@ -179,7 +181,7 @@ test('updateIcon must mark the icon for redraw if needed', () => {
 
   expect(updatedIcon).toEqual(expect.objectContaining({
     height: 4,
-    left: 3,
+    left: 2,
     top: 0,
     updated: true,
     width: 2
@@ -187,7 +189,7 @@ test('updateIcon must mark the icon for redraw if needed', () => {
 
   expect(updateIcon(updatedIcon, iconElement, config)).toEqual(expect.objectContaining({
     height: 4,
-    left: 3,
+    left: 2,
     top: 0,
     updated: false,
     width: 2

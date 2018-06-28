@@ -34,6 +34,32 @@
       <VideoClicks>
        <ClickTracking><![CDATA[https://test.example.com/start-wrapper/clicktracking]]></ClickTracking>
       </VideoClicks>
+      <Icons>
+          <Icon program="MOL_HTML" width="20px" height="20px" xPosition="left" yPosition="top" duration="00:00:30" offset="00:00:05" pxratio="1">
+            <HTMLResource>http://localhost:9001/icons/html/green.html</HTMLResource>
+            <IconClicks>
+              <IconClickThrough>https://test.example.com/start-wrapper/icons/html/blue/iconClickThrough</IconClickThrough>
+              <IconClickTracking>https://test.example.com/start-wrapper/icons/html/blue/iconClickTracking</IconClickTracking>
+            </IconClicks>
+            <IconViewTracking>https://test.example.com/start-wrapper/icons/html/blue/iconViewTracking</IconViewTracking>
+          </Icon>
+          <Icon program="MOL_HTML_2" width="20px" height="20px" xPosition="left" yPosition="top" pxratio="1">
+            <HTMLResource>http://localhost:9001/icons/html/red.html</HTMLResource>
+            <IconClicks>
+              <IconClickThrough>https://test.example.com/start-wrapper/icons/html/blue/iconClickThrough</IconClickThrough>
+              <IconClickTracking>https://test.example.com/start-wrapper/icons/html/blue/iconClickTracking</IconClickTracking>
+            </IconClicks>
+            <IconViewTracking>https://test.example.com/start-wrapper/icons/html/blue/iconViewTracking</IconViewTracking>
+          </Icon>
+          <Icon program="MOL_HTML_3" width="20px" height="20px" xPosition="left" yPosition="top" pxratio="1">
+            <HTMLResource>http://localhost:9001/icons/html/blue.html</HTMLResource>
+            <IconClicks>
+              <IconClickThrough>https://test.example.com/start-wrapper/icons/html/blue/iconClickThrough</IconClickThrough>
+              <IconClickTracking>https://test.example.com/start-wrapper/icons/html/blue/iconClickTracking</IconClickTracking>
+            </IconClicks>
+            <IconViewTracking>https://test.example.com/start-wrapper/icons/html/blue/iconViewTracking</IconViewTracking>
+          </Icon>
+        </Icons>
      </Linear>
     </Creative>
    </Creatives>

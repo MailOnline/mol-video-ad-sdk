@@ -6,7 +6,7 @@ const createResource = (document, data) => {
   const {
     staticResource,
     htmlResource,
-    iframeResource
+    iFrameResource
   } = data;
 
   if (Boolean(staticResource)) {
@@ -23,7 +23,7 @@ const createResource = (document, data) => {
     });
   }
 
-  return createIframeResource(iframeResource, {
+  return createIframeResource(iFrameResource, {
     data,
     document
   });

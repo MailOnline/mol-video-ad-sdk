@@ -184,7 +184,7 @@ test('renderIcon element anchor on click must call the passed onIconClick method
   expect(config.onIconClick).toHaveBeenCalledWith(icon);
 });
 
-test('renderIcon must avoid adding the element to the dom if not needed', async () => {
+test('renderIcon must add the element if it has no parentNode', async () => {
   const updatedIcon = {
     height: 3,
     left: 1,
@@ -196,11 +196,6 @@ test('renderIcon must avoid adding the element to the dom if not needed', async 
   loadResource.mockImplementation(() => Promise.resolve(iconResource));
   updateIcon.mockImplementation(() => updatedIcon);
   canBeRendered.mockImplementation(() => true);
-
-  await renderIcon(icon, config);
-
-  expect(icon.element.parentNode).toEqual(null);
-  updatedIcon.updated = true;
 
   await renderIcon(icon, config);
 
