@@ -470,6 +470,24 @@ export const getClickTracking = (ad) => {
 };
 
 /**
+ * Gets the custom click {@link VAST-macro}.
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @returns {?Array.<VAST-macro>} - click tracking mavro macro
+ */
+export const getCustomClick = (ad) => {
+  const videoClicksElement = getVideoClicksElement(ad);
+  const customClickElements = videoClicksElement && getAll(videoClicksElement, 'CustomClick');
+
+  if (customClickElements && customClickElements.length > 0) {
+    return customClickElements.map((element) => getText(element));
+  }
+
+  return null;
+};
+
+/**
  * The parsed time offset in milliseconds or a string with the percentage
  *
  * @typedef ParsedOffset

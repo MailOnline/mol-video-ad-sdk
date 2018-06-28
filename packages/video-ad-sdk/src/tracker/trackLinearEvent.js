@@ -1,6 +1,6 @@
 import {
-  getClickThrough,
   getClickTracking,
+  getCustomClick,
   getImpressionUri,
   getLinearTrackingEvents
 } from '@mol/vast-selectors';
@@ -42,15 +42,15 @@ import {
   */
 const clickTrackingSelector = (ad) => {
   const trackingURIs = [];
-  const clickThroughUri = getClickThrough(ad);
   const clickTrackings = getClickTracking(ad);
-
-  if (clickThroughUri) {
-    trackingURIs.push({uri: clickThroughUri});
-  }
+  const customClicks = getCustomClick(ad);
 
   if (Array.isArray(clickTrackings) && clickTrackings.length > 0) {
     trackingURIs.push(...clickTrackings.map((uri) => ({uri})));
+  }
+
+  if (Array.isArray(customClicks) && customClicks.length > 0) {
+    trackingURIs.push(...customClicks.map((uri) => ({uri})));
   }
 
   return trackingURIs;

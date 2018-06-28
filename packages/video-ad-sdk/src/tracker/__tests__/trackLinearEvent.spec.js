@@ -113,8 +113,8 @@ test(`trackLinearEvent must track ${clickThrough} linear event with the default 
     tracker
   });
 
-  expect(tracker).toHaveBeenCalledTimes(3);
-  expect(tracker).toHaveBeenCalledWith('https://test.example.com/clickthrough', {});
+  expect(tracker).toHaveBeenCalledTimes(4);
+  expect(tracker).toHaveBeenCalledWith('https://test.example.com/customclick', {});
   expect(tracker).toHaveBeenCalledWith('https://test.example.com/clicktracking', {});
 });
 

@@ -51,6 +51,7 @@
       </TrackingEvents>
       <VideoClicks>
        <ClickTracking><![CDATA[https://test.example.com/clicktracking]]></ClickTracking>
+       <CustomClick>https://test.example.com/customclick</CustomClick>
       </VideoClicks>
       <Icons>
         <Icon>http://adchoices.com</Icon>

@@ -41,6 +41,7 @@
             <VideoClicks>
               <ClickThrough>https://test.example.com/clickthrough</ClickThrough>
               <ClickTracking>https://test.example.com/clicktracking</ClickTracking>
+              <CustomClick>https://test.example.com/customclick</CustomClick>
             </VideoClicks>
             <MediaFiles>
               <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="1920" height="1080" scalable="true" maintainAspectRatio="true">https://test.example.com/test1920x1080.mp4</MediaFile>

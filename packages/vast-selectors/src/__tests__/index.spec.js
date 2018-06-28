@@ -11,6 +11,7 @@ import {
   getAdErrorURI,
   getClickThrough,
   getClickTracking,
+  getCustomClick,
   getFirstAd,
   getImpressionUri,
   getLinearTrackingEvents,
@@ -456,7 +457,7 @@ test('getClickThrough must return the clickThrough uri', () => {
   expect(getClickThrough(inlineAd)).toEqual('https://test.example.com/clickthrough');
 });
 
-test('getClickTracking must return true if there is none', () => {
+test('getClickTracking must return null if there is none', () => {
   expect(getClickTracking()).toEqual(null);
   expect(getClickTracking(null)).toEqual(null);
   expect(getClickTracking({})).toEqual(null);
@@ -465,6 +466,17 @@ test('getClickTracking must return true if there is none', () => {
 test('getClickTracking must return the clickThrough uri', () => {
   expect(getClickTracking(inlineAd)).toEqual(['https://test.example.com/clicktracking']);
   expect(getClickTracking(wrapperAd)).toEqual(['https://test.example.com/clicktracking']);
+});
+
+test('getCustomClick must return null if there is none', () => {
+  expect(getCustomClick()).toEqual(null);
+  expect(getCustomClick(null)).toEqual(null);
+  expect(getCustomClick({})).toEqual(null);
+});
+
+test('getCustomClick must return the clickThrough uri', () => {
+  expect(getCustomClick(inlineAd)).toEqual(['https://test.example.com/customclick']);
+  expect(getCustomClick(wrapperAd)).toEqual(['https://test.example.com/customclick']);
 });
 
 test('getSkipOffset must return null if there none', () => {
