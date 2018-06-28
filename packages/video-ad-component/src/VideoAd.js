@@ -17,6 +17,7 @@ class VideoAd extends Component {
     onNonRecoverableError: noop,
     onRecoverableError: noop,
     onStart: noop,
+    skipControl: undefined,
     tracker: undefined,
     videoElement: undefined,
     width: undefined
@@ -38,6 +39,10 @@ class VideoAd extends Component {
     onNonRecoverableError: PropTypes.func,
     onRecoverableError: PropTypes.func,
     onStart: PropTypes.func,
+    skipControl: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.node
+    ]),
     tracker: PropTypes.func,
     videoElement: PropTypes.node,
     width: PropTypes.number
@@ -107,6 +112,7 @@ class VideoAd extends Component {
       onLinearEvent,
       onNonRecoverableError,
       onRecoverableError: onError,
+      skipControl,
       tracker,
       videoElement
     } = this.props;
@@ -118,6 +124,12 @@ class VideoAd extends Component {
       tracker,
       videoElement
     };
+
+    if (skipControl) {
+      options.hooks = {
+        createSkipControl: typeof skipControl === 'function' ? skipControl : () => skipControl
+      };
+    }
 
     try {
       const fetchVastChain = async () => loadVastChain(await Promise.resolve(getTag()));
