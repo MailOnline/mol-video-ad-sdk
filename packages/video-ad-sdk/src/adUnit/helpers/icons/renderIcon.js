@@ -11,6 +11,11 @@ const wrapWithClickThrough = (iconElement, icon, {onIconClick = noop} = {}) => {
     anchor.target = '_blank';
   }
 
+  // NOTE: if iframe icon disable pointer events so that clickThrough and click tracking work
+  if (Boolean(icon.iFrameResource)) {
+    iconElement.style.pointerEvents = 'none';
+  }
+
   anchor.onclick = (event) => {
     if (Event.prototype.stopPropagation !== undefined) {
       event.stopPropagation();
