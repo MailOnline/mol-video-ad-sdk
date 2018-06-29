@@ -12,6 +12,8 @@ const onClickThrough = ({videoElement, context, element}, callback, {clickThroug
   anchor.style.width = '100%';
   anchor.style.height = '100%';
   anchor.style.position = 'absolute';
+  anchor.style.left = 0;
+  anchor.style.top = 0;
 
   if (clickThroughUrl) {
     anchor.href = clickThroughUrl;
@@ -32,7 +34,7 @@ const onClickThrough = ({videoElement, context, element}, callback, {clickThroug
     }
   };
 
-  placeholder.insertBefore(anchor, videoElement);
+  placeholder.insertBefore(anchor, videoElement.nextSibling);
 
   return () => {
     placeholder.removeChild(anchor);
