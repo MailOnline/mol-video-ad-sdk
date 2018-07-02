@@ -34,7 +34,7 @@ const onClickThrough = ({videoElement, context, element}, callback, {clickThroug
     }
   };
 
-  placeholder.insertBefore(anchor, videoElement.nextSibling);
+  placeholder.insertBefore(anchor, placeholder.nextSibling);
 
   return () => {
     placeholder.removeChild(anchor);

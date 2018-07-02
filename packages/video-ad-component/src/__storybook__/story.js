@@ -12,7 +12,6 @@ storiesOf('VideoAd', module)
       <Player
         adTag='http://localhost:9001/vastFiles/prerollChain/start-wrapper.xml'
         autoplay={false}
-        logger={console.log}
         poster='http://localhost:9001/assets/big_buck_bunny-poster.svg'
         source='http://localhost:9001/assets/big_buck_bunny.mp4'
       />
