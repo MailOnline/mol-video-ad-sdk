@@ -32,7 +32,7 @@ test('once must call the listener with all the args', () => {
   expect(listener).toHaveBeenCalledWith(event);
 });
 
-test('once must remove a remove function', () => {
+test('once must return a remove function', () => {
   const element = document.createElement('DIV');
   const listener = jest.fn();
   const eventName = 'test';

@@ -1,6 +1,11 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
 import {linearEvents} from '../../../../tracker';
 
+const fullscreenElement = () => document.fullscreenElement ||
+document.webkitFullscreenElement ||
+document.mozFullScreenElement ||
+document.msFullscreenElement || null;
+
 const {
   fullscreen,
   exitFullscreen,
@@ -8,22 +13,30 @@ const {
   playerExpand
 } = linearEvents;
 
-const onFullscreenChange = ({context}, callback) => {
+const onFullscreenChange = ({context, videoElement}, callback) => {
+  const fullscreenEvtNames = ['webkitfullscreenchange', 'mozfullscreenchange', 'fullscreenchange', 'MSFullscreenChange'];
   const {document} = context;
+  let fullscreenOn = false;
   const fullscreenchangeHandler = () => {
-    if (Boolean(document.fullscreenElement)) {
+    if (fullscreenElement() === videoElement) {
+      fullscreenOn = true;
       callback(playerExpand);
       callback(fullscreen);
-    } else {
+    } else if (fullscreenOn) {
+      fullscreenOn = false;
       callback(playerCollapse);
       callback(exitFullscreen);
     }
   };
 
-  document.addEventListener('fullscreenchange', fullscreenchangeHandler);
+  for (const event of fullscreenEvtNames) {
+    document.addEventListener(event, fullscreenchangeHandler);
+  }
 
   return () => {
-    document.removeEventListener('fullscreenchange', fullscreenchangeHandler);
+    for (const event of fullscreenEvtNames) {
+      document.removeEventListener(event, fullscreenchangeHandler);
+    }
   };
 };
 
