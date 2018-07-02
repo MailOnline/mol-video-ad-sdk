@@ -25,8 +25,8 @@ class VideoAd extends Component {
 
   static propTypes = {
     children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
+      PropTypes.arrayOf(PropTypes.any),
+      PropTypes.any
     ]),
     getTag: PropTypes.func.isRequired,
     height: PropTypes.number,
@@ -41,10 +41,10 @@ class VideoAd extends Component {
     onStart: PropTypes.func,
     skipControl: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.node
+      PropTypes.any
     ]),
     tracker: PropTypes.func,
-    videoElement: PropTypes.node,
+    videoElement: PropTypes.any,
     width: PropTypes.number
   };
 
