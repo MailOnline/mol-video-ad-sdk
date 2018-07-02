@@ -107,7 +107,7 @@ test('addIcons must not add the the icons whose offset is not meet yet', async (
 
   videoElement.currentTime = 5;
 
-  videoElement.dispatchEvent(new Event('timeupdate'));
+  drawIcons();
 
   await waitFor(element, 'iconsdrawn');
 
@@ -147,7 +147,7 @@ test('addIcons must remove the icons once the duration is met', async () => {
 
   videoElement.currentTime = 5.1;
 
-  videoElement.dispatchEvent(new Event('timeupdate'));
+  drawIcons();
 
   await waitFor(element, 'iconsdrawn');
 
@@ -224,7 +224,7 @@ test('addIcons must call onIconView hook the moment the icon gets added to the p
 
   videoElement.currentTime = 5;
 
-  videoElement.dispatchEvent(new Event('timeupdate'));
+  drawIcons();
 
   await waitFor(element, 'iconsdrawn');
 

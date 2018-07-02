@@ -52,7 +52,10 @@ class ResponsiveVideoAd extends Component {
     });
 
     if (typeof this.props.onStart === 'function') {
-      this.props.onStart(adUnit, ...args);
+      this.props.onStart({
+        adUnit,
+        ...args
+      });
     }
   }
 

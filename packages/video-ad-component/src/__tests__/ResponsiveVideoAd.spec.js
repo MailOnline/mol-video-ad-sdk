@@ -85,13 +85,13 @@ test('must pause and resume the ad unit on visibility change', () => {
   const videoAd = wrapper.find(VideoAd);
   const {onStart: simulateOnStart} = videoAd.props();
   const adUnitMock = {
-    changeVolume: jest.fn(),
+    isFinished: () => false,
     pause: jest.fn(),
     resume: jest.fn()
   };
 
   expect(onElementVisibilityChange).not.toHaveBeenCalled();
-  simulateOnStart(adUnitMock, adUnitMock.changeVolume, adUnitMock.pause, adUnitMock.resume);
+  simulateOnStart({adUnit: adUnitMock});
   expect(onElementVisibilityChange).toHaveBeenCalledTimes(1);
 
   expect(adUnitMock.pause).toHaveBeenCalledTimes(0);
@@ -104,7 +104,7 @@ test('must pause and resume the ad unit on visibility change', () => {
   expect(adUnitMock.resume).toHaveBeenCalledTimes(1);
 });
 
-test('must call the onStart prop if passed', () => {
+test('must call onStart handler if passed', () => {
   const props = {
     getTag: noop,
     onStart: jest.fn()
@@ -113,13 +113,14 @@ test('must call the onStart prop if passed', () => {
   const videoAd = wrapper.find(VideoAd);
   const {onStart: simulateOnStart} = videoAd.props();
   const adUnitMock = {
+    adUnit: {isFinished: () => false},
     changeVolume: jest.fn(),
     pause: jest.fn(),
     resume: jest.fn()
   };
 
   expect(props.onStart).toHaveBeenCalledTimes(0);
-  simulateOnStart(adUnitMock, adUnitMock.changeVolume, adUnitMock.pause, adUnitMock.resume);
+  simulateOnStart(adUnitMock);
   expect(props.onStart).toHaveBeenCalledTimes(1);
-  expect(props.onStart).toHaveBeenCalledWith(adUnitMock, adUnitMock.changeVolume, adUnitMock.pause, adUnitMock.resume);
+  expect(props.onStart).toHaveBeenCalledWith(adUnitMock);
 });
