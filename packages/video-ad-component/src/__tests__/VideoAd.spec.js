@@ -206,7 +206,6 @@ test('must call onFinish once the adUnit is finished', (done) => {
 
     simulateComplete();
     expect(mockAdUnit.onFinish).toHaveBeenCalledTimes(1);
-    expect(onFinish).toHaveBeenCalledWith();
     expect(onFinish).toHaveBeenCalledTimes(1);
 
     done();
