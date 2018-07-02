@@ -19,6 +19,11 @@ html, body {margin:0;padding:0;height:100%;}
   position: absolute;
   bottom: 15px;
   right: 15px;
+  cursor: pointer;
+}
+
+.skipControl:hover {
+  opacity: 0.6;
 }
 
 .videoContainer {
