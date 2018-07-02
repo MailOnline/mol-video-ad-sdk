@@ -8,8 +8,8 @@ const mockAdUnit = {
   cancel: jest.fn(),
   changeVolume: jest.fn(),
   isFinished: jest.fn(),
-  onComplete: jest.fn(),
   onError: jest.fn(),
+  onFinish: jest.fn(),
   pause: jest.fn(),
   resize: jest.fn(),
   resume: jest.fn()
@@ -196,18 +196,18 @@ test('must not cancel the ad unit on unmount if the adUnit has already finished'
   expect(wrapper.html().includes('spinner')).toBe(true);
 });
 
-test('must call onComplete once the adUnit is finished', (done) => {
-  expect.assertions = 4;
+expect.assertions = 4;
+test('must call onFinish once the adUnit is finished', (done) => {
   // eslint-disable-next-line prefer-const
-  const onComplete = jest.fn();
 
+  const onFinish = jest.fn();
   const onStart = () => {
-    const simulateComplete = mockAdUnit.onComplete.mock.calls[0][0];
+    const simulateComplete = mockAdUnit.onFinish.mock.calls[0][0];
 
-    expect(mockAdUnit.onComplete).toHaveBeenCalledTimes(1);
     simulateComplete();
-    expect(onComplete).toHaveBeenCalledTimes(1);
-    expect(onComplete).toHaveBeenCalledWith();
+    expect(mockAdUnit.onFinish).toHaveBeenCalledTimes(1);
+    expect(onFinish).toHaveBeenCalledWith();
+    expect(onFinish).toHaveBeenCalledTimes(1);
 
     done();
   };
@@ -215,7 +215,7 @@ test('must call onComplete once the adUnit is finished', (done) => {
   mount(<div>
     <VideoAd
       getTag={getTag}
-      onComplete={onComplete}
+      onFinish={onFinish}
       onStart={onStart}
     >
       <Spinner />

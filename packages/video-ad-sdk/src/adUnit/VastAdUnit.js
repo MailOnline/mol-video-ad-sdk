@@ -178,6 +178,16 @@ class VastAdUnit extends Emitter {
     this[hidden].onCompleteCallbacks.push(safeCallback(callback, this.logger));
   }
 
+  onFinish (callback) {
+    this[hidden].throwIfFinished();
+
+    if (typeof callback !== 'function') {
+      throw new TypeError('Expected a callback function');
+    }
+
+    this[hidden].onFinishCallbacks.push(safeCallback(callback, this.logger));
+  }
+
   onError (callback) {
     this[hidden].throwIfFinished();
 

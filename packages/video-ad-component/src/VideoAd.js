@@ -12,7 +12,7 @@ class VideoAd extends Component {
     children: undefined,
     height: undefined,
     logger: console,
-    onComplete: noop,
+    onFinish: noop,
     onLinearEvent: noop,
     onNonRecoverableError: noop,
     onRecoverableError: noop,
@@ -34,7 +34,7 @@ class VideoAd extends Component {
       error: PropTypes.func,
       log: PropTypes.func
     }),
-    onComplete: PropTypes.func,
+    onFinish: PropTypes.func,
     onLinearEvent: PropTypes.func,
     onNonRecoverableError: PropTypes.func,
     onRecoverableError: PropTypes.func,
@@ -110,7 +110,7 @@ class VideoAd extends Component {
     const {
       getTag,
       logger,
-      onComplete,
+      onFinish,
       onLinearEvent,
       onNonRecoverableError,
       onRecoverableError: onError,
@@ -138,7 +138,7 @@ class VideoAd extends Component {
       const adUnit = await tryToStartAd(fetchVastChain, this.videoAdPlaceholder.current, options);
 
       adUnit.onError(onNonRecoverableError);
-      adUnit.onComplete(onComplete);
+      adUnit.onFinish(onFinish);
 
       return adUnit;
     } catch (error) {
