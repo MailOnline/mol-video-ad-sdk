@@ -70,17 +70,19 @@ class Player extends Component {
         <source src={source} type='video/mp4' />
       </video>
       {started && !adFinished &&
-        <ResponsiveVideoAd
-          getTag={() => adTag}
-          onComplete={logger('complete')}
-          onLinearEvent={(eventname, ...args) => logger(eventname)(...args)}
-          onNonRecoverableError={logger('NonRecoverableError')}
-          onRecoverableError={logger('RecoverableError')}
-          onStart={logger('start')}
-          skipControl={skipBtn}
-          tracker={logger('Tracking')}
-          videoElement={this.videoElement.current}
-        />
+        <div className={styles.adContainer} >
+          <ResponsiveVideoAd
+            getTag={() => adTag}
+            onComplete={logger('complete')}
+            onLinearEvent={(eventname, ...args) => logger(eventname)(...args)}
+            onNonRecoverableError={logger('NonRecoverableError')}
+            onRecoverableError={logger('RecoverableError')}
+            onStart={logger('start')}
+            skipControl={skipBtn}
+            tracker={logger('Tracking')}
+            videoElement={this.videoElement.current}
+          />
+        </div>
       }
       {loading && <div className={styles.loading} />}
       {!started &&
