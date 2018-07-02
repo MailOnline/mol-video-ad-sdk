@@ -60,7 +60,7 @@
             </MediaFiles>
             <Icons>
               <Icon program="MOL_IFRAME" width="20px" height="20px" xPosition="right" yPosition="top" pxratio="1">
-                <IFrameResource>http://localhost:9001/icons/iframe/icon.html</IFrameResource>
+                <IFrameResource>/icons/iframe/icon.html</IFrameResource>
                 <IconClicks>
                   <IconClickThrough>https://test.example.com/start-wrapper/icons/iframe/icon/iconClickThrough</IconClickThrough>
                   <IconClickTracking>https://test.example.com/start-wrapper/icons/iframe/icon/iconClickTracking</IconClickTracking>

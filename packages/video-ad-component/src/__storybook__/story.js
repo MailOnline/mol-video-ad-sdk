@@ -10,10 +10,10 @@ storiesOf('VideoAd', module)
   .add('preroll success', () => <div>
     <div className={styles.container}>
       <Player
-        adTag='http://localhost:9001/vastFiles/prerollChain/start-wrapper.xml'
+        adTag='/vastFiles/prerollChain/start-wrapper.xml'
         autoplay={false}
-        poster='http://localhost:9001/assets/big_buck_bunny-poster.svg'
-        source='http://localhost:9001/assets/big_buck_bunny.mp4'
+        poster='/assets/big_buck_bunny-poster.svg'
+        source='/assets/big_buck_bunny.mp4'
       />
     </div>
     <div className={styles.credit}>

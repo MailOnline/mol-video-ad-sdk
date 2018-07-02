@@ -93,7 +93,7 @@ html, body {margin:0;padding:0;height:100%;}
   display: flex;
   align-content: center;
   justify-content: center;
-  background: transparent url('http://localhost:9001/assets/play-icon.svg') no-repeat center center;
+  background: transparent url('/assets/play-icon.svg') no-repeat center center;
   cursor: pointer;
 }
 
