@@ -79,8 +79,7 @@ class Player extends Component {
           onStart={logger('start')}
           skipControl={skipBtn}
           tracker={logger('Tracking')}
-
-          // videoElement={this.videoElement.current}
+          videoElement={this.videoElement.current}
         />
       }
       {loading && <div className={styles.loading} />}

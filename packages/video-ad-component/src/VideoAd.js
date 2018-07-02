@@ -48,9 +48,11 @@ class VideoAd extends Component {
     width: PropTypes.number
   };
 
-  ref = (element) => {
-    this.element = element;
-  };
+  constructor (props) {
+    super(props);
+
+    this.videoAdPlaceholder = React.createRef();
+  }
 
   state = {
     ready: false
@@ -133,7 +135,7 @@ class VideoAd extends Component {
 
     try {
       const fetchVastChain = async () => loadVastChain(await Promise.resolve(getTag()));
-      const adUnit = await tryToStartAd(fetchVastChain, this.element, options);
+      const adUnit = await tryToStartAd(fetchVastChain, this.videoAdPlaceholder.current, options);
 
       adUnit.onError(onNonRecoverableError);
       adUnit.onComplete(onComplete);
@@ -153,18 +155,22 @@ class VideoAd extends Component {
       width
     } = this.props;
 
-    const containerStyles = {
+    const placeHolderStyles = {
       height: height ? `${height}px` : '100%',
+      left: '0',
+      position: 'absolute',
+      top: '0',
       width: width ? `${width}px` : '100%'
     };
 
     const adPlaceholderStyles = {
+      ...placeHolderStyles,
       display: this.state.ready ? 'block' : 'none'
     };
 
-    return <div style={containerStyles}>
+    return <div style={placeHolderStyles}>
       {!this.state.ready && children}
-      <div ref={this.ref} style={adPlaceholderStyles} />
+      <div ref={this.videoAdPlaceholder} style={adPlaceholderStyles} />
     </div>;
   }
 }

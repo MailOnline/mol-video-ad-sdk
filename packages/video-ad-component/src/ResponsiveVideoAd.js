@@ -20,22 +20,26 @@ class ResponsiveVideoAd extends Component {
     width: 0
   };
 
-  ref = (element) => {
-    this.element = element;
-  };
+  constructor (props) {
+    super(props);
+
+    this.placeholder = React.createRef();
+  }
 
   componentDidMount () {
-    onElementResize(this.element, () => {
+    const element = this.placeholder.current;
+
+    onElementResize(element, () => {
       // eslint-disable-next-line react/no-set-state
       this.setState({
-        height: this.element.clientHeight,
-        width: this.element.clientWidth
+        height: element.clientHeight,
+        width: element.clientWidth
       });
     });
   }
 
   handleOnStart (adUnit, ...args) {
-    onElementVisibilityChange(this.element, (visible) => {
+    onElementVisibilityChange(this.placeholder.current, (visible) => {
       if (visible) {
         adUnit.resume();
       } else {
@@ -55,12 +59,15 @@ class ResponsiveVideoAd extends Component {
       onStart: (...args) => this.handleOnStart(...args)
     };
 
-    const containerStyles = {
+    const placeHolderStyles = {
       height: '100%',
+      left: '0',
+      position: 'absolute',
+      top: '0',
       width: '100%'
     };
 
-    return <div ref={this.ref} style={containerStyles}>
+    return <div ref={this.placeholder} style={placeHolderStyles}>
       <VideoAd {...videoAdProps} />
     </div>;
   }

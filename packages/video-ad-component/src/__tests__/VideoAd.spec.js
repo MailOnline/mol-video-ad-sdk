@@ -123,14 +123,21 @@ test('must resize the adUnit if the width or the height of the component changes
 
   expect(wrapper.find('div').first().props().style).toEqual({
     height: '10px',
+    left: '0',
+    position: 'absolute',
+    top: '0',
     width: '20px'
   });
+
   wrapper.setProps({
     height: null,
     width: null
   });
   expect(wrapper.find('div').first().props().style).toEqual({
     height: '100%',
+    left: '0',
+    position: 'absolute',
+    top: '0',
     width: '100%'
   });
 });

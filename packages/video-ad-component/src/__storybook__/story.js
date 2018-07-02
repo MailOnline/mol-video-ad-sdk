@@ -17,8 +17,8 @@ storiesOf('VideoAd', module)
       />
     </div>
     <div className={styles.credit}>
-      Play icon by <a className='external text' href='https://www.iconfinder.com/vectto' rel='nofollow'>vectto</a>
-       is licensed under <a className='external text' href='https://creativecommons.org/licenses/by/3.0/' rel='nofollow'>CC BY 3.0</a>
+      Play icon by <a className='external text' href='https://www.iconfinder.com/vectto' rel='nofollow'>vectto</a>&nbsp;
+      is licensed under <a className='external text' href='https://creativecommons.org/licenses/by/3.0/' rel='nofollow'>CC BY 3.0</a>
     </div>
   </div>
   );
