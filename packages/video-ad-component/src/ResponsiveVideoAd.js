@@ -38,8 +38,12 @@ class ResponsiveVideoAd extends Component {
     });
   }
 
-  handleOnStart (adUnit, ...args) {
+  handleOnStart ({adUnit, ...args}) {
     onElementVisibilityChange(this.placeholder.current, (visible) => {
+      if (adUnit.isFinished()) {
+        return;
+      }
+
       if (visible) {
         adUnit.resume();
       } else {

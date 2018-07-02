@@ -1,4 +1,3 @@
-import once from '../dom/once';
 import renderIcons from './renderIcons';
 
 const firstRenderPending = Symbol('firstRenderPending');
@@ -43,17 +42,9 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
     icon[firstRenderPending] = true;
   });
 
-  element.addEventListener('iconsdrawn', () => {
-    const videoAdIsFinish = videoElement.currentTime > 0 &&
-                            Math.ceil(videoElement.currentTime) >= Math.floor(videoElement.duration);
-
-    if (hasPendingIconRedraws(icons, videoElement) && !videoAdIsFinish) {
-      once(videoElement, 'timeupdate', drawIcons);
-    }
-  });
-
   return {
     drawIcons,
+    hasPendingIconRedraws: () => hasPendingIconRedraws(icons, videoElement),
     removeIcons: () => removeDrawnIcons(icons)
   };
 };

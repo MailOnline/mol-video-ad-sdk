@@ -29,6 +29,7 @@ class Player extends Component {
 
     this.videoElement = React.createRef();
     this.handleStart = this.handleStart.bind(this);
+    this.handleAdFinish = this.handleAdFinish.bind(this);
   }
 
   handleStart () {
@@ -37,6 +38,17 @@ class Player extends Component {
       ...this.state,
       started: true
     });
+  }
+
+  handleAdFinish () {
+    // eslint-disable-next-line react/no-set-state
+    this.setState({
+      ...this.state,
+      adFinished: true
+    });
+
+    this.videoElement.current.src = this.props.source;
+    this.videoElement.current.play();
   }
 
   render () {
@@ -74,6 +86,7 @@ class Player extends Component {
           <ResponsiveVideoAd
             getTag={() => adTag}
             onComplete={logger('complete')}
+            onFinish={this.handleAdFinish}
             onLinearEvent={(eventname, ...args) => logger(eventname)(...args)}
             onNonRecoverableError={logger('NonRecoverableError')}
             onRecoverableError={logger('RecoverableError')}
