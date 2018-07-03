@@ -364,7 +364,6 @@ test('VastAdUnit start must do nothing on a second play', () => {
 });
 
 [
-  'start',
   'resume',
   'pause',
   'cancel',
@@ -390,6 +389,19 @@ test('VastAdUnit `resize` must throw if you call it on a finished adUnit', async
 
   try {
     await adUnit.resize();
+  } catch (error) {
+    expect(error.message).toBe('VastAdUnit is finished');
+  }
+});
+
+test('VastAdUnit `start` must throw if you call it on a finished adUnit', async () => {
+  expect.assertions(1);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+  adUnit.cancel();
+
+  try {
+    await adUnit.start();
   } catch (error) {
     expect(error.message).toBe('VastAdUnit is finished');
   }

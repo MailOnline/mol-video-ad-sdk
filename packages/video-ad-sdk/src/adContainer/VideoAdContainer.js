@@ -1,7 +1,6 @@
 import loadScript from './helpers/loadScript';
 import createAdVideoElement from './helpers/createAdVideoElement';
 
-const isVideoElement = (video) => video instanceof HTMLMediaElement;
 const createAdContainer = () => {
   const adContainer = document.createElement('DIV');
 
@@ -52,11 +51,11 @@ class VideoAdContainer {
      * @name VideoAdContainer#videoElement
      * @type HTMLVideoElement
     */
-    this.videoElement = isVideoElement(videoElement) ? videoElement : createAdVideoElement();
+    this.videoElement = videoElement ? videoElement : createAdVideoElement();
 
     placeholder.appendChild(this.element);
 
-    if (!isVideoElement(videoElement)) {
+    if (!videoElement) {
       this.element.appendChild(this.videoElement);
     }
 

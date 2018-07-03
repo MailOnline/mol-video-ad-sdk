@@ -4,6 +4,7 @@ import {
   getSkipOffset
 } from '@mol/vast-selectors';
 import getProgressEvents from '../progress/getProgressEvents';
+import safeCallback from '../safeCallback';
 import metricHandlers from './handlers';
 
 const setupMetricHandlers = ({vastChain, videoAdContainer, hooks}, callback) => {
@@ -18,7 +19,7 @@ const setupMetricHandlers = ({vastChain, videoAdContainer, hooks}, callback) => 
     ...hooks
   };
 
-  const stopHandlersFns = metricHandlers.map((handler) => handler(videoAdContainer, callback, data));
+  const stopHandlersFns = metricHandlers.map((handler) => safeCallback(handler(videoAdContainer, callback, data)));
 
   return () => stopHandlersFns.forEach((disconnect) => disconnect());
 };

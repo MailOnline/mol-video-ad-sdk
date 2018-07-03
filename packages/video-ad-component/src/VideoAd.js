@@ -12,7 +12,7 @@ class VideoAd extends Component {
     children: undefined,
     height: undefined,
     logger: console,
-    onComplete: noop,
+    onFinish: noop,
     onLinearEvent: noop,
     onNonRecoverableError: noop,
     onRecoverableError: noop,
@@ -25,8 +25,8 @@ class VideoAd extends Component {
 
   static propTypes = {
     children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
+      PropTypes.arrayOf(PropTypes.any),
+      PropTypes.any
     ]),
     getTag: PropTypes.func.isRequired,
     height: PropTypes.number,
@@ -34,23 +34,25 @@ class VideoAd extends Component {
       error: PropTypes.func,
       log: PropTypes.func
     }),
-    onComplete: PropTypes.func,
+    onFinish: PropTypes.func,
     onLinearEvent: PropTypes.func,
     onNonRecoverableError: PropTypes.func,
     onRecoverableError: PropTypes.func,
     onStart: PropTypes.func,
     skipControl: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.node
+      PropTypes.any
     ]),
     tracker: PropTypes.func,
-    videoElement: PropTypes.node,
+    videoElement: PropTypes.any,
     width: PropTypes.number
   };
 
-  ref = (element) => {
-    this.element = element;
-  };
+  constructor (props) {
+    super(props);
+
+    this.videoAdPlaceholder = React.createRef();
+  }
 
   state = {
     ready: false
@@ -108,7 +110,7 @@ class VideoAd extends Component {
     const {
       getTag,
       logger,
-      onComplete,
+      onFinish,
       onLinearEvent,
       onNonRecoverableError,
       onRecoverableError: onError,
@@ -133,10 +135,10 @@ class VideoAd extends Component {
 
     try {
       const fetchVastChain = async () => loadVastChain(await Promise.resolve(getTag()));
-      const adUnit = await tryToStartAd(fetchVastChain, this.element, options);
+      const adUnit = await tryToStartAd(fetchVastChain, this.videoAdPlaceholder.current, options);
 
       adUnit.onError(onNonRecoverableError);
-      adUnit.onComplete(onComplete);
+      adUnit.onFinish(onFinish);
 
       return adUnit;
     } catch (error) {
@@ -153,18 +155,22 @@ class VideoAd extends Component {
       width
     } = this.props;
 
-    const containerStyles = {
+    const placeHolderStyles = {
       height: height ? `${height}px` : '100%',
+      left: '0',
+      position: 'absolute',
+      top: '0',
       width: width ? `${width}px` : '100%'
     };
 
     const adPlaceholderStyles = {
+      ...placeHolderStyles,
       display: this.state.ready ? 'block' : 'none'
     };
 
-    return <div style={containerStyles}>
+    return <div style={placeHolderStyles}>
       {!this.state.ready && children}
-      <div ref={this.ref} style={adPlaceholderStyles} />
+      <div ref={this.videoAdPlaceholder} style={adPlaceholderStyles} />
     </div>;
   }
 }

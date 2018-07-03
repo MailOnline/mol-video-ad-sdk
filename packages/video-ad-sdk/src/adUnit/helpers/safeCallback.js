@@ -3,7 +3,9 @@ const safeCallback = (callback, logger) => (...args) => {
     // eslint-disable-next-line callback-return, promise/prefer-await-to-callbacks
     callback(...args);
   } catch (error) {
-    logger.error(error);
+    if (logger) {
+      logger.error(error);
+    }
   }
 };
 

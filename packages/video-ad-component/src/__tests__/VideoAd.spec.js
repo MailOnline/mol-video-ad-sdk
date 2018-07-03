@@ -8,8 +8,8 @@ const mockAdUnit = {
   cancel: jest.fn(),
   changeVolume: jest.fn(),
   isFinished: jest.fn(),
-  onComplete: jest.fn(),
   onError: jest.fn(),
+  onFinish: jest.fn(),
   pause: jest.fn(),
   resize: jest.fn(),
   resume: jest.fn()
@@ -29,7 +29,7 @@ beforeEach(() => {
 });
 
 test('must display the children until it is ready to start the ad', (done) => {
-  expect.assertions = 2;
+  expect.assertions(2);
   // eslint-disable-next-line prefer-const
   let wrapper;
 
@@ -52,7 +52,7 @@ test('must display the children until it is ready to start the ad', (done) => {
 });
 
 test('onStart must pass the adUnit and some convenience methods', (done) => {
-  expect.assertions = 8;
+  expect.assertions(8);
 
   const onStart = ({adUnit, changeVolume, pause, resume}) => {
     expect(adUnit).toBe(mockAdUnit);
@@ -81,8 +81,7 @@ test('onStart must pass the adUnit and some convenience methods', (done) => {
 });
 
 test('must call onNonRecoverable error when an adUnit has an error', (done) => {
-  expect.assertions = 4;
-  // eslint-disable-next-line prefer-const
+  expect.assertions(4);
   const onNonRecoverableError = jest.fn();
 
   const onStart = () => {
@@ -110,7 +109,7 @@ test('must call onNonRecoverable error when an adUnit has an error', (done) => {
 });
 
 test('must resize the adUnit if the width or the height of the component changes', () => {
-  expect.assertions = 2;
+  expect.assertions(2);
 
   const wrapper = mount(
     <VideoAd
@@ -123,20 +122,27 @@ test('must resize the adUnit if the width or the height of the component changes
 
   expect(wrapper.find('div').first().props().style).toEqual({
     height: '10px',
+    left: '0',
+    position: 'absolute',
+    top: '0',
     width: '20px'
   });
+
   wrapper.setProps({
     height: null,
     width: null
   });
   expect(wrapper.find('div').first().props().style).toEqual({
     height: '100%',
+    left: '0',
+    position: 'absolute',
+    top: '0',
     width: '100%'
   });
 });
 
 test('must on unmount cancel the adUnit', (done) => {
-  expect.assertions = 3;
+  expect.assertions(3);
   // eslint-disable-next-line prefer-const
   let wrapper;
 
@@ -163,7 +169,7 @@ test('must on unmount cancel the adUnit', (done) => {
 });
 
 test('must not cancel the ad unit on unmount if the adUnit has already finished', (done) => {
-  expect.assertions = 3;
+  expect.assertions(3);
   // eslint-disable-next-line prefer-const
   let wrapper;
 
@@ -189,18 +195,16 @@ test('must not cancel the ad unit on unmount if the adUnit has already finished'
   expect(wrapper.html().includes('spinner')).toBe(true);
 });
 
-test('must call onComplete once the adUnit is finished', (done) => {
-  expect.assertions = 4;
-  // eslint-disable-next-line prefer-const
-  const onComplete = jest.fn();
+test('must call onFinish once the adUnit is finished', (done) => {
+  expect.assertions(2);
 
+  const onFinish = jest.fn();
   const onStart = () => {
-    const simulateComplete = mockAdUnit.onComplete.mock.calls[0][0];
+    const simulateComplete = mockAdUnit.onFinish.mock.calls[0][0];
 
-    expect(mockAdUnit.onComplete).toHaveBeenCalledTimes(1);
     simulateComplete();
-    expect(onComplete).toHaveBeenCalledTimes(1);
-    expect(onComplete).toHaveBeenCalledWith();
+    expect(mockAdUnit.onFinish).toHaveBeenCalledTimes(1);
+    expect(onFinish).toHaveBeenCalledTimes(1);
 
     done();
   };
@@ -208,7 +212,7 @@ test('must call onComplete once the adUnit is finished', (done) => {
   mount(<div>
     <VideoAd
       getTag={getTag}
-      onComplete={onComplete}
+      onFinish={onFinish}
       onStart={onStart}
     >
       <Spinner />
@@ -217,14 +221,13 @@ test('must call onComplete once the adUnit is finished', (done) => {
 });
 
 test('must call onNonRecoverable error if there is a problem starting the ad', (done) => {
-  expect.assertions = 1;
+  expect.assertions(1);
 
   const error = new Error('boom');
 
   tryToStartAd.mockImplementation(() => {
     throw error;
   });
-  // eslint-disable-next-line prefer-const
   const onNonRecoverableError = (err) => {
     expect(err).toBe(error);
     done();

@@ -2,6 +2,7 @@
 import Emitter from '@mol/tiny-emitter';
 import {linearEvents} from '../tracker';
 import findBestMedia from './helpers/media/findBestMedia';
+import once from './helpers/dom/once';
 import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';
 import retrieveIcons from './helpers/icons/retrieveIcons';
 import addIcons from './helpers/icons/addIcons';
@@ -80,6 +81,7 @@ class VastAdUnit extends Emitter {
     if (this.icons) {
       const {
         drawIcons,
+        hasPendingIconRedraws,
         removeIcons
       } = addIcons(this.icons, {
         logger,
@@ -90,6 +92,7 @@ class VastAdUnit extends Emitter {
 
       this.drawIcons = drawIcons;
       this.removeIcons = removeIcons;
+      this.hasPendingIconRedraws = hasPendingIconRedraws;
 
       onFinishCallbacks.push(removeIcons);
     }
@@ -103,7 +106,7 @@ class VastAdUnit extends Emitter {
     onFinishCallbacks.push(removeMetrichandlers);
   }
 
-  start () {
+  async start () {
     this[hidden].throwIfFinished();
 
     if (this.isStarted()) {
@@ -116,7 +119,19 @@ class VastAdUnit extends Emitter {
 
     if (Boolean(media)) {
       if (this.icons) {
-        this.drawIcons();
+        const drawIcons = async () => {
+          if (this.isFinished()) {
+            return;
+          }
+
+          await this.drawIcons();
+
+          if (this.hasPendingIconRedraws() && !this.isFinished()) {
+            once(videoElement, 'timeupdate', drawIcons);
+          }
+        };
+
+        await drawIcons();
       }
 
       videoElement.src = media.src;
@@ -176,6 +191,16 @@ class VastAdUnit extends Emitter {
     }
 
     this[hidden].onCompleteCallbacks.push(safeCallback(callback, this.logger));
+  }
+
+  onFinish (callback) {
+    this[hidden].throwIfFinished();
+
+    if (typeof callback !== 'function') {
+      throw new TypeError('Expected a callback function');
+    }
+
+    this[hidden].onFinishCallbacks.push(safeCallback(callback, this.logger));
   }
 
   onError (callback) {

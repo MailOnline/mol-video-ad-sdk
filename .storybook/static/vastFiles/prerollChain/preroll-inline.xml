@@ -49,18 +49,19 @@
               <Tracking event="closeLinear"><![CDATA[https://test.example.com/closelinear]]></Tracking>
             </TrackingEvents>
             <VideoClicks>
-              <ClickThrough>https://test.example.com/clickthrough</ClickThrough>
+              <ClickThrough>https://store.blender.org/</ClickThrough>
               <ClickTracking>https://test.example.com/clicktracking</ClickTracking>
               <CustomClick>https://test.example.com/customclick</CustomClick>
             </VideoClicks>
             <MediaFiles>
-              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="1920" height="1080" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/1920x1080time.mp4</MediaFile>
-              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="768" height="432" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/768x432time.mp4</MediaFile>
-              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="640" height="362" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/640x362time.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="1920" height="1080" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/1920x1080timeb.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="768" height="432" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/768x432timeb.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="640" height="362" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/640x362timeb.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="640" height="362" scalable="true" maintainAspectRatio="true">http://video.dailymail.co.uk/video/mol/test/ads/256x144timeb.mp4</MediaFile>
             </MediaFiles>
             <Icons>
               <Icon program="MOL_IFRAME" width="20px" height="20px" xPosition="right" yPosition="top" pxratio="1">
-                <IFrameResource>http://localhost:9001/icons/iframe/icon.html</IFrameResource>
+                <IFrameResource>/icons/iframe/icon.html</IFrameResource>
                 <IconClicks>
                   <IconClickThrough>https://test.example.com/start-wrapper/icons/iframe/icon/iconClickThrough</IconClickThrough>
                   <IconClickTracking>https://test.example.com/start-wrapper/icons/iframe/icon/iconClickTracking</IconClickTracking>

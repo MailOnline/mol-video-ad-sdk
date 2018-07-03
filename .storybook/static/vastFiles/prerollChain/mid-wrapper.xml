@@ -3,7 +3,7 @@
  <Ad id="4367623109">
   <Wrapper allowMultipleAds="true" >
    <AdSystem>MOL</AdSystem>
-   <VASTAdTagURI><![CDATA[http://localhost:9001/vastFiles/prerollChain/preroll-inline.xml]]></VASTAdTagURI>
+   <VASTAdTagURI><![CDATA[/vastFiles/prerollChain/preroll-inline.xml]]></VASTAdTagURI>
    <Error><![CDATA[https://test.example.com/mid-wrapper/error/[ERRORCODE]]]></Error>
    <Impression><![CDATA[https://test.example.com/mid-wrapper/impression]]></Impression>
    <Creatives>
@@ -36,7 +36,7 @@
       </VideoClicks>
       <Icons>
           <Icon program="MOL_STATIC" width="40px" height="40px" xPosition="left" yPosition="bottom" pxratio="1">
-            <StaticResource>http://localhost:9001/icons/static/instagram.png</StaticResource>
+            <StaticResource>/icons/static/instagram.png</StaticResource>
             <IconClicks>
               <IconClickThrough>https://test.example.com/mid-wrapper/icons/static/instagram/iconClickThrough</IconClickThrough>
               <IconClickTracking>https://test.example.com/mid-wrapper/icons/static/instagram/iconClickTracking</IconClickTracking>
@@ -44,7 +44,7 @@
             <IconViewTracking>https://test.example.com/mid-wrapper/icons/static/instagram/iconViewTracking</IconViewTracking>
           </Icon>
           <Icon program="MOL_STATIC_2" width="40px" height="40px" xPosition="left" yPosition="bottom" pxratio="1">
-            <StaticResource>http://localhost:9001/icons/static/android.png</StaticResource>
+            <StaticResource>/icons/static/android.png</StaticResource>
             <IconClicks>
               <IconClickThrough>https://test.example.com/mid-wrapper/icons/static/instagram/iconClickThrough</IconClickThrough>
               <IconClickTracking>https://test.example.com/mid-wrapper/icons/static/instagram/iconClickTracking</IconClickTracking>
@@ -52,7 +52,7 @@
             <IconViewTracking>https://test.example.com/mid-wrapper/icons/static/instagram/iconViewTracking</IconViewTracking>
           </Icon>
           <Icon program="MOL_STATIC_3" width="40px" height="40px" xPosition="left" yPosition="bottom" pxratio="1">
-            <StaticResource>http://localhost:9001/icons/static/twitter.png</StaticResource>
+            <StaticResource>/icons/static/twitter.png</StaticResource>
             <IconClicks>
               <IconClickThrough>https://test.example.com/mid-wrapper/icons/static/instagram/iconClickThrough</IconClickThrough>
               <IconClickTracking>https://test.example.com/mid-wrapper/icons/static/instagram/iconClickTracking</IconClickTracking>
