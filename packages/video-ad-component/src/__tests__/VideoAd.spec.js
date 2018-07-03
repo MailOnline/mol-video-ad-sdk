@@ -29,7 +29,7 @@ beforeEach(() => {
 });
 
 test('must display the children until it is ready to start the ad', (done) => {
-  expect.assertions = 2;
+  expect.assertions(2);
   // eslint-disable-next-line prefer-const
   let wrapper;
 
@@ -52,7 +52,7 @@ test('must display the children until it is ready to start the ad', (done) => {
 });
 
 test('onStart must pass the adUnit and some convenience methods', (done) => {
-  expect.assertions = 8;
+  expect.assertions(8);
 
   const onStart = ({adUnit, changeVolume, pause, resume}) => {
     expect(adUnit).toBe(mockAdUnit);
@@ -81,7 +81,7 @@ test('onStart must pass the adUnit and some convenience methods', (done) => {
 });
 
 test('must call onNonRecoverable error when an adUnit has an error', (done) => {
-  expect.assertions = 4;
+  expect.assertions(4);
   // eslint-disable-next-line prefer-const
   const onNonRecoverableError = jest.fn();
 
@@ -110,7 +110,7 @@ test('must call onNonRecoverable error when an adUnit has an error', (done) => {
 });
 
 test('must resize the adUnit if the width or the height of the component changes', () => {
-  expect.assertions = 2;
+  expect.assertions(2);
 
   const wrapper = mount(
     <VideoAd
@@ -143,7 +143,7 @@ test('must resize the adUnit if the width or the height of the component changes
 });
 
 test('must on unmount cancel the adUnit', (done) => {
-  expect.assertions = 3;
+  expect.assertions(3);
   // eslint-disable-next-line prefer-const
   let wrapper;
 
@@ -170,7 +170,7 @@ test('must on unmount cancel the adUnit', (done) => {
 });
 
 test('must not cancel the ad unit on unmount if the adUnit has already finished', (done) => {
-  expect.assertions = 3;
+  expect.assertions(3);
   // eslint-disable-next-line prefer-const
   let wrapper;
 
@@ -197,7 +197,7 @@ test('must not cancel the ad unit on unmount if the adUnit has already finished'
 });
 
 test('must call onFinish once the adUnit is finished', (done) => {
-  expect.assertions = 4;
+  expect.assertions(2);
   // eslint-disable-next-line prefer-const
 
   const onFinish = jest.fn();
@@ -223,7 +223,7 @@ test('must call onFinish once the adUnit is finished', (done) => {
 });
 
 test('must call onNonRecoverable error if there is a problem starting the ad', (done) => {
-  expect.assertions = 1;
+  expect.assertions(1);
 
   const error = new Error('boom');
 
