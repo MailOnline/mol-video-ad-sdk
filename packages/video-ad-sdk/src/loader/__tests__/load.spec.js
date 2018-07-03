@@ -8,11 +8,11 @@ import {
   inlineParsedXML,
   vastInlineXML
 } from '@mol/vast-fixtures';
-import {requestAd} from '@mol/vast-request';
 import {trackError} from '../../tracker';
 import load from '../load';
+import requestAd from '../requestAd';
 
-jest.mock('@mol/vast-request', () => ({requestAd: jest.fn()}));
+jest.mock('../requestAd', () => jest.fn());
 jest.mock('../../tracker', () => ({trackError: jest.fn()}));
 
 const errorVastChain = [

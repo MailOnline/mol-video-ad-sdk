@@ -18,7 +18,7 @@ import {
   wrapperAd,
   inlineAd
 } from '@mol/vast-fixtures';
-import {requestAd} from '../index';
+import requestAd from '../requestAd';
 import {markAdAsRequested, unmarkAdAsRequested} from '../helpers/adUtils';
 
 test('requestAd must return a chain with errorcode 304 if the wrapperLimit is reached', async () => {

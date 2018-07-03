@@ -10,13 +10,14 @@
     "src"
   ],
   "dependencies": {
+    "whatwg-fetch": "^2.0.4",
+    "@mol/vast-xml2js": "^0.1.0",
     "@mol/tiny-emitter": "^0.1.0",
-    "@mol/vast-request": "^0.1.0",
-    "@mol/vast-selectors": "^0.1.0",
-    "whatwg-fetch": "^2.0.3"
+    "@mol/vast-selectors": "^0.1.0"
   },
   "devDependencies": {
-    "mockdate": "^2.0.2",    
+    "mockdate": "^2.0.2",
+    "lodash": "^4.17.4",
     "@mol/vast-fixtures": "^0.1.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1"

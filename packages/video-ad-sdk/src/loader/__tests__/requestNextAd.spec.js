@@ -11,7 +11,7 @@ import {
   wrapperAd,
   inlineAd
 } from '@mol/vast-fixtures';
-import {requestNextAd} from '../index';
+import requestNextAd from '../requestNextAd';
 import {markAdAsRequested, unmarkAdAsRequested} from '../helpers/adUtils';
 
 test('requestNextAd must throw if we pass an invalid VAST chain', () => {
