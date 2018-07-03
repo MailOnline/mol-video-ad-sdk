@@ -82,7 +82,6 @@ test('onStart must pass the adUnit and some convenience methods', (done) => {
 
 test('must call onNonRecoverable error when an adUnit has an error', (done) => {
   expect.assertions(4);
-  // eslint-disable-next-line prefer-const
   const onNonRecoverableError = jest.fn();
 
   const onStart = () => {
@@ -198,7 +197,6 @@ test('must not cancel the ad unit on unmount if the adUnit has already finished'
 
 test('must call onFinish once the adUnit is finished', (done) => {
   expect.assertions(2);
-  // eslint-disable-next-line prefer-const
 
   const onFinish = jest.fn();
   const onStart = () => {
@@ -230,7 +228,6 @@ test('must call onNonRecoverable error if there is a problem starting the ad', (
   tryToStartAd.mockImplementation(() => {
     throw error;
   });
-  // eslint-disable-next-line prefer-const
   const onNonRecoverableError = (err) => {
     expect(err).toBe(error);
     done();
