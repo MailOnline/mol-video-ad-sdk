@@ -196,8 +196,8 @@ test('must not cancel the ad unit on unmount if the adUnit has already finished'
   expect(wrapper.html().includes('spinner')).toBe(true);
 });
 
-expect.assertions = 4;
 test('must call onFinish once the adUnit is finished', (done) => {
+  expect.assertions = 4;
   // eslint-disable-next-line prefer-const
 
   const onFinish = jest.fn();
