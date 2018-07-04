@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   onElementResize,
   onElementVisibilityChange
-} from '@mol/element-observers';
+} from './elementObservers';
 import VideoAd from './VideoAd';
 
 class ResponsiveVideoAd extends Component {
