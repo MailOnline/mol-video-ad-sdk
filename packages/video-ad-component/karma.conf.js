@@ -33,7 +33,6 @@ module.exports = function (config) {
       noInfo: true
     },
 
-    // TODO: CHECK THIS CUSTOM LAUNCHER
     customLaunchers: {
       ChromeHeadless: {
         base: 'Chrome',
