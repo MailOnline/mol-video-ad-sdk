@@ -39,17 +39,6 @@ const run = async (vastChain, placeholder, options) => {
       videoAdContainer.destroy();
     }
 
-    if (vastChain) {
-      const onError = options.onError;
-
-      if (onError) {
-        onError({
-          error,
-          vastChain
-        });
-      }
-    }
-
     throw error;
   }
 };

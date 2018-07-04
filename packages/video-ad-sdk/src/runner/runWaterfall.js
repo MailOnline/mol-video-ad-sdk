@@ -13,6 +13,15 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
     return adUnit;
   } catch (error) {
     if (vastChain) {
+      const onError = options.onError;
+
+      if (onError) {
+        onError({
+          error,
+          vastChain
+        });
+      }
+
       return waterfall(() => requestNextAd(vastChain, options), placeholder, options);
     }
 

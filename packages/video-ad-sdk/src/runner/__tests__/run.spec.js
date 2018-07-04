@@ -44,7 +44,6 @@ beforeEach(async () => {
     }
   ];
   options = {
-    onError: jest.fn(),
     tracker: jest.fn()
   };
   placeholder = document.createElement('div');
@@ -89,11 +88,6 @@ test('run must throw if the vastChain has an error and track the error', async (
     expect(trackError).toHaveBeenCalledWith(vastChainWithError, expect.objectContaining({
       errorCode: 900,
       tracker: options.tracker
-    }));
-    expect(options.onError).toHaveBeenCalledTimes(1);
-    expect(options.onError).toHaveBeenCalledWith(expect.objectContaining({
-      error: vastChainError,
-      vastChain: vastChainWithError
     }));
   }
 });
