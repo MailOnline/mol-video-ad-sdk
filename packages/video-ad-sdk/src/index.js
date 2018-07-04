@@ -4,6 +4,8 @@ import load from './loader/load';
 import loadNext from './loader/loadNext';
 import VastAdUnit from './adUnit/VastAdUnit';
 import createVideoAdUnit from './adUnit/createVideoAdUnit';
+import run from './runner/run';
+import runWaterfall from './runner/runWaterfall';
 
 export {
   createVideoAdContainer,
@@ -11,5 +13,7 @@ export {
   load,
   loadNext,
   VastAdUnit,
-  VideoAdContainer
+  VideoAdContainer,
+  run,
+  runWaterfall
 };

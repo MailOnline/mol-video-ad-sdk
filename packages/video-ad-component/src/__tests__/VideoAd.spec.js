@@ -1,8 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {mount} from 'enzyme';
 import React from 'react';
+import {runWaterfall} from '@mol/video-ad-sdk';
 import VideoAd from '../VideoAd';
-import tryToStartAd from '../helpers/tryToStartAd';
 
 const mockAdUnit = {
   cancel: jest.fn(),
@@ -17,7 +17,7 @@ const mockAdUnit = {
 
 const Spinner = () => <div className='spinner' />;
 
-jest.mock('../helpers/tryToStartAd', () => jest.fn());
+jest.mock('@mol/video-ad-sdk', () => ({runWaterfall: jest.fn()}));
 
 const getTag = () => 'http://fakeTestTagUrl';
 
@@ -25,7 +25,7 @@ beforeEach(() => {
   jest.clearAllMocks();
   jest.resetAllMocks();
   jest.resetModules();
-  tryToStartAd.mockImplementation(() => Promise.resolve(mockAdUnit));
+  runWaterfall.mockImplementation(() => Promise.resolve(mockAdUnit));
 });
 
 test('must display the children until it is ready to start the ad', (done) => {
@@ -225,7 +225,7 @@ test('must call onNonRecoverable error if there is a problem starting the ad', (
 
   const error = new Error('boom');
 
-  tryToStartAd.mockImplementation(() => {
+  runWaterfall.mockImplementation(() => {
     throw error;
   });
   const onNonRecoverableError = (err) => {

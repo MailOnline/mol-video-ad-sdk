@@ -1,4 +1,4 @@
-import {createVideoAdUnit} from '@mol/video-ad-sdk';
+import createVideoAdUnit from '../../adUnit/createVideoAdUnit';
 
 const waitForAdUnitStart = (adUnit) => new Promise((resolve, reject) => {
   adUnit.onError(reject);
