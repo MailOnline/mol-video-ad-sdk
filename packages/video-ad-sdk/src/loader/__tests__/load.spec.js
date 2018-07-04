@@ -10,9 +10,9 @@ import {
 } from '@mol/vast-fixtures';
 import {trackError} from '../../tracker';
 import load from '../load';
-import requestAd from '../requestAd';
+import requestAd from '../../vastRequest/requestAd';
 
-jest.mock('../requestAd', () => jest.fn());
+jest.mock('../../vastRequest/requestAd', () => jest.fn());
 jest.mock('../../tracker', () => ({trackError: jest.fn()}));
 
 const errorVastChain = [

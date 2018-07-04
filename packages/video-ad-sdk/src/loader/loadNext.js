@@ -1,5 +1,5 @@
 import {trackError} from '../tracker';
-import requestNextAd from './requestNextAd';
+import requestNextAd from '../vastRequest/requestNextAd';
 
 /**
  * Loads the next ad in the VAST Chain.

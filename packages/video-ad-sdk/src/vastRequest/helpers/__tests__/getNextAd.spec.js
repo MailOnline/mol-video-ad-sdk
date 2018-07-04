@@ -9,8 +9,8 @@ import {
   waterfallParsedXML,
   wrapperAd
 } from '@mol/vast-fixtures';
-import getNextAd from '../helpers/getNextAd';
-import {markAdAsRequested, unmarkAdAsRequested} from '../helpers/adUtils';
+import getNextAd from '../getNextAd';
+import {markAdAsRequested, unmarkAdAsRequested} from '../adUtils';
 
 const markAdsAsRequested = (parsedXml) => {
   getAds(parsedXml).forEach(markAdAsRequested);

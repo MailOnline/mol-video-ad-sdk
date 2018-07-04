@@ -1,5 +1,5 @@
 import {trackError} from '../tracker';
-import requestAd from './requestAd';
+import requestAd from '../vastRequest/requestAd';
 
 /**
  * Request the ad using the passed ad tag and returns an array with the VAST responses needed to get an inline ad.
