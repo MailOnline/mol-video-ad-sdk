@@ -20,6 +20,7 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
   }
 };
 
+// TODO: TEST THIS LOGIC
 const runWaterfall = (adTag, placeholder, options) =>
   waterfall(
     () => requestAd(adTag, options),

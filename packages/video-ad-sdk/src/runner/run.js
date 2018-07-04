@@ -23,6 +23,7 @@ const validateVastChain = (vastChain, options) => {
   }
 };
 
+// TODO: TEST THIS LOGIC
 const run = async (vastChain, placeholder, options) => {
   validateVastChain(vastChain, options);
 
