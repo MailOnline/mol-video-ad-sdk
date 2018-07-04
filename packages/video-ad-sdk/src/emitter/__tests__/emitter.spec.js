@@ -1,4 +1,4 @@
-import Emitter from '../Emitter';
+import Emitter from '../index';
 
 test('Emitter `on` method must register the listener to the passed eventName', () => {
   const emitter = new Emitter();

@@ -1,3 +1,4 @@
+/* eslint-disable filenames/match-exported */
 /**
  * @alias module:tiny-emitter
  * @class

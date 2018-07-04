@@ -1,5 +1,5 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
-import Emitter from '@mol/tiny-emitter';
+import Emitter from '../emitter';
 import {linearEvents} from '../tracker';
 import findBestMedia from './helpers/media/findBestMedia';
 import once from './helpers/dom/once';
