@@ -28,7 +28,6 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "@mol/vast-fixtures": "^0.1.0",
     "@storybook/addon-actions": "^3.2.16",
     "@storybook/react": "^3.2.16",
     "autoprefixer": "^8.0.0",
