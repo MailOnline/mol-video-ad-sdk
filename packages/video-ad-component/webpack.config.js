@@ -1,4 +1,7 @@
 /* eslint-disable import/unambiguous, import/no-commonjs, sort-keys, global-require, no-process-env */
+const path = require('path');
+const {name: pkgName} = require('./package.json');
+
 const cssLoaders = [
   {
     loader: 'style-loader'
@@ -42,5 +45,15 @@ const rules = [
 ];
 
 module.exports = {
-  module: {rules}
+  devtool: 'source-map',
+  entry: {
+    index: './src/index.js'
+  },
+  module: {rules},
+  output: {
+    devtoolFallbackModuleFilenameTemplate: `webpack:///${pkgName}/[resource-path]?[hash]`,
+    devtoolModuleFilenameTemplate: `webpack:///${pkgName}/[resource-path]`,
+    filename: '[name].js',
+    path: path.join(__dirname, 'dist')
+  }
 };

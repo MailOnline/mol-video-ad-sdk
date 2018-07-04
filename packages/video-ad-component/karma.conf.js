@@ -12,7 +12,7 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['mocha'],
     files: [
-      './packages/*/src/**/__karma__/**/*.spec.js'
+      './src/**/__karma__/**/*.spec.js'
     ],
     port: 9876,
     colors: true,
@@ -22,7 +22,7 @@ module.exports = function (config) {
     singleRun: true,
     concurrency: Infinity,
     preprocessors: {
-      './packages/*/src/**/__karma__/**/*.spec.js': ['webpack', 'sourcemap']
+      './src/**/__karma__/**/*.spec.js': ['webpack', 'sourcemap']
     },
     reporters: ['mocha'],
     webpack: {
@@ -32,6 +32,8 @@ module.exports = function (config) {
     webpackServer: {
       noInfo: true
     },
+
+    // TODO: CHECK THIS CUSTOM LAUNCHER
     customLaunchers: {
       ChromeHeadless: {
         base: 'Chrome',
