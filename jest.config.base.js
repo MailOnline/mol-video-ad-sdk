@@ -12,7 +12,7 @@ module.exports = {
     '!**/src/**/__storybook__/**/*',
     '!**/src/**/__karma__/**/*'
   ],
-  coverageReporters: ['json'],
+  coverageReporters: ['json', 'html'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testRegex: '__tests__/.*\\.spec\\.(jsx?|tsx?)$',
   transform: {

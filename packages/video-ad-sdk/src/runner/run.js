@@ -23,15 +23,12 @@ const validateVastChain = (vastChain, options) => {
   }
 };
 
-// TODO: TEST THIS LOGIC
 const run = async (vastChain, placeholder, options) => {
-  validateVastChain(vastChain, options);
-
-  let onError;
   let videoAdContainer;
 
   try {
-    onError = options.onError;
+    validateVastChain(vastChain, options);
+
     videoAdContainer = await createVideoAdContainer(placeholder, options);
 
     const adUnit = await startVideoAd(vastChain, videoAdContainer, options);
@@ -43,8 +40,13 @@ const run = async (vastChain, placeholder, options) => {
     }
 
     if (vastChain) {
+      const onError = options.onError;
+
       if (onError) {
-        onError(error);
+        onError({
+          error,
+          vastChain
+        });
       }
     }
 
