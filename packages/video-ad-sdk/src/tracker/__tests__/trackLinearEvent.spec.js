@@ -1,11 +1,11 @@
+import {getFirstAd} from '../../vastSelectors';
 import {
   wrapperParsedXML,
   inlineAd,
   inlineParsedXML,
   vastInlineXML,
   vastPodXML
-} from '@mol/vast-fixtures';
-import {getFirstAd} from '@mol/vast-selectors';
+} from '../../../fixtures';
 import trackLinearEvent from '../trackLinearEvent';
 import {
   clickThrough,

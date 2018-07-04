@@ -7,7 +7,7 @@ import {
   inlineAd,
   inlineParsedXML,
   vastInlineXML
-} from '@mol/vast-fixtures';
+} from '../../../fixtures';
 import {trackError} from '../../tracker';
 import loadNext from '../loadNext';
 import requestNextAd from '../../vastRequest/requestNextAd';

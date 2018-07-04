@@ -1,7 +1,7 @@
 import {
   getVASTAdTagURI,
   isWrapper
-} from '@mol/vast-selectors';
+} from '../vastSelectors';
 import requestAd from './requestAd';
 import getNextAd from './helpers/getNextAd';
 import {markAdAsRequested} from './helpers/adUtils';

@@ -6,7 +6,7 @@ import {
   hasAdPod,
   isInline,
   isWrapper
-} from '@mol/vast-selectors';
+} from '../vastSelectors';
 import fetch from './helpers/fetch';
 import {markAdAsRequested} from './helpers/adUtils';
 

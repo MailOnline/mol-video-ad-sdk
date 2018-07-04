@@ -1,4 +1,4 @@
-import {getLinearTrackingEvents} from '@mol/vast-selectors';
+import {getLinearTrackingEvents} from '../../../vastSelectors';
 import {linearEvents} from '../../../tracker';
 
 const {

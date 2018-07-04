@@ -1,7 +1,7 @@
 import {
   wrapperAd,
   inlineAd
-} from '@mol/vast-fixtures';
+} from '../../../../../fixtures';
 import retrieveIcons from '../retrieveIcons';
 
 beforeEach(() => {

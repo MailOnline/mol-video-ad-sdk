@@ -1,4 +1,4 @@
-import {getMediaFiles} from '@mol/vast-selectors';
+import {getMediaFiles} from '../../../vastSelectors';
 import canPlay from './canPlay';
 import sortMediaByBestFit from './sortMediaByBestFit';
 

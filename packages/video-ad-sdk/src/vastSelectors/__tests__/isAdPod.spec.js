@@ -9,7 +9,7 @@ import {
   podParsedXML,
   vastInlineXML,
   vastPodXML
-} from '@mol/vast-fixtures';
+} from '../../../fixtures';
 import {
   getFirstAd,
   isAdPod

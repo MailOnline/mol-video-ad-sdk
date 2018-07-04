@@ -1,14 +1,14 @@
 import {
+  getAdErrorURI,
+  getVastErrorURI
+} from '../../../vastSelectors';
+import {
   noAdParsedXML,
   vastNoAdXML,
   vastWrapperXML,
   wrapperParsedXML,
   wrapperAd
-} from '@mol/vast-fixtures';
-import {
-  getAdErrorURI,
-  getVastErrorURI
-} from '@mol/vast-selectors';
+} from '../../../../fixtures';
 import pixelTracker from '../pixelTracker';
 import trackError from '../trackError';
 

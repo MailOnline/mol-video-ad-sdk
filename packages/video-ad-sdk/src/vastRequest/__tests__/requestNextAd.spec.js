@@ -1,5 +1,5 @@
 /* eslint-disable id-match */
-import {getAds} from '@mol/vast-selectors';
+import {getAds} from '../../vastSelectors';
 import {
   vastWrapperXML,
   vastInlineXML,
@@ -10,7 +10,7 @@ import {
   waterfallWithInlineParsedXML,
   wrapperAd,
   inlineAd
-} from '@mol/vast-fixtures';
+} from '../../../fixtures';
 import requestNextAd from '../requestNextAd';
 import {markAdAsRequested, unmarkAdAsRequested} from '../helpers/adUtils';
 

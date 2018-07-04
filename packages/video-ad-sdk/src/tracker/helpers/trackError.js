@@ -1,7 +1,7 @@
 import {
   getAdErrorURI,
   getVastErrorURI
-} from '@mol/vast-selectors';
+} from '../../vastSelectors';
 import pixelTracker from './pixelTracker';
 
 const trackError = (vastChain, {errorCode, tracker = pixelTracker} = {}) => {

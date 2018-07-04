@@ -5,7 +5,7 @@ import {
   inlineParsedXML,
   wrapperAd,
   inlineAd
-} from '@mol/vast-fixtures';
+} from '../../../fixtures';
 import VideoAdContainer from '../../adContainer/VideoAdContainer';
 import {
   linearEvents,

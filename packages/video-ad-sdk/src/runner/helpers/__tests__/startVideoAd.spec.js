@@ -5,7 +5,7 @@ import {
   inlineParsedXML,
   wrapperAd,
   inlineAd
-} from '@mol/vast-fixtures';
+} from '../../../../fixtures';
 import createVideoAdUnit from '../../../adUnit/createVideoAdUnit';
 import VastAdUnit from '../../../adUnit/VastAdUnit';
 import VideoAdContainer from '../../../adContainer/VideoAdContainer';

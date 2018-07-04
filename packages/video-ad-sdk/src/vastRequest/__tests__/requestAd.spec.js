@@ -3,7 +3,7 @@ import xml2js from '@mol/vast-xml2js';
 import {
   getAds,
   getFirstAd
-} from '@mol/vast-selectors';
+} from '../../vastSelectors';
 import {
   noAdParsedXML,
   vastNoAdXML,
@@ -17,7 +17,7 @@ import {
   vastInvalidParsedXML,
   wrapperAd,
   inlineAd
-} from '@mol/vast-fixtures';
+} from '../../../fixtures';
 import requestAd from '../requestAd';
 import {markAdAsRequested, unmarkAdAsRequested} from '../helpers/adUtils';
 

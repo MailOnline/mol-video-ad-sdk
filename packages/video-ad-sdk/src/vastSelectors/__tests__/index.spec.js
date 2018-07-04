@@ -5,7 +5,7 @@ import {
   wrapperAd,
   wrapperParsedXML,
   noAdParsedXML
-} from '@mol/vast-fixtures';
+} from '../../../fixtures';
 import {
   getAds,
   getAdErrorURI,
