@@ -1,8 +1,7 @@
 /* eslint-disable filenames/match-exported */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import loadVastChain from './helpers/loadVastChain';
-import tryToStartAd from './helpers/tryToStartAd';
+import {runWaterfall} from '@mol/video-ad-sdk';
 import makeCancelable from './helpers/makeCancelable';
 
 const noop = () => {};
@@ -134,8 +133,8 @@ class VideoAd extends Component {
     }
 
     try {
-      const fetchVastChain = async () => loadVastChain(await Promise.resolve(getTag()));
-      const adUnit = await tryToStartAd(fetchVastChain, this.videoAdPlaceholder.current, options);
+      const adTag = await Promise.resolve(getTag());
+      const adUnit = await runWaterfall(adTag, this.videoAdPlaceholder.current, options);
 
       adUnit.onError(onNonRecoverableError);
       adUnit.onFinish(onFinish);

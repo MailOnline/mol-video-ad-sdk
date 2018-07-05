@@ -4,11 +4,11 @@ import React from 'react';
 import {
   onElementResize,
   onElementVisibilityChange
-} from '@mol/element-observers';
+} from '../elementObservers';
 import ResponsiveVideoAd from '../ResponsiveVideoAd';
 import VideoAd from '../VideoAd';
 
-jest.mock('@mol/element-observers', () => ({
+jest.mock('../elementObservers', () => ({
   onElementResize: jest.fn(),
   onElementVisibilityChange: jest.fn()
 }));

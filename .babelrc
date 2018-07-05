@@ -10,6 +10,7 @@
             "> 1%",
             "last 3 versions",
             "ios > 8",
+            "ie > 9",
             "not ie < 10"
           ]
         },
@@ -58,7 +59,7 @@
             "regenerator": true
           }
         ],
-        "babel-plugin-transform-class-properties"
+        "transform-class-properties"
       ]
     }
   }

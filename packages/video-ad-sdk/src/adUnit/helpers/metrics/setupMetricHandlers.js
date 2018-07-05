@@ -2,7 +2,7 @@
 import {
   getClickThrough,
   getSkipOffset
-} from '@mol/vast-selectors';
+} from '../../../vastSelectors';
 import getProgressEvents from '../progress/getProgressEvents';
 import safeCallback from '../safeCallback';
 import metricHandlers from './handlers';

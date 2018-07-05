@@ -3,7 +3,7 @@ import {
   getCustomClick,
   getImpressionUri,
   getLinearTrackingEvents
-} from '@mol/vast-selectors';
+} from '../vastSelectors';
 import pixelTracker from './helpers/pixelTracker';
 import trackError from './helpers/trackError';
 import trackIconView from './helpers/trackIconView';

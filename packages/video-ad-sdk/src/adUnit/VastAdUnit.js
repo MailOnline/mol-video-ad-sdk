@@ -1,6 +1,6 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
-import Emitter from '@mol/tiny-emitter';
 import {linearEvents} from '../tracker';
+import Emitter from './helpers/Emitter';
 import findBestMedia from './helpers/media/findBestMedia';
 import once from './helpers/dom/once';
 import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';

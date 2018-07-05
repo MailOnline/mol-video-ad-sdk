@@ -1,23 +1,23 @@
 import {
-  createVideoAdContainer,
-  createVideoAdUnit,
-  load,
-  loadNext
+  run,
+  runWaterfall,
+  requestAd,
+  requestNextAd
 } from '../index';
 
-test('@mol/video-ad-manager must publish `load`', () => {
-  expect(load).toBeInstanceOf(Function);
+test('must publish `requestAd`', () => {
+  expect(requestAd).toBeInstanceOf(Function);
 });
 
-test('@mol/video-ad-manager must publish `loadNext`', () => {
-  expect(loadNext).toBeInstanceOf(Function);
+test('must publish `requestNextAd`', () => {
+  expect(requestNextAd).toBeInstanceOf(Function);
 });
 
-test('@mol/video-ad-manager must publish `createVideoAdContainer`', () => {
-  expect(createVideoAdContainer).toBeInstanceOf(Function);
+test('must publish `run`', () => {
+  expect(run).toBeInstanceOf(Function);
 });
 
-test('@mol/video-ad-manager must publish `createVideoAdUnit`', () => {
-  expect(createVideoAdUnit).toBeInstanceOf(Function);
+test('must publish `runWaterfall`', () => {
+  expect(runWaterfall).toBeInstanceOf(Function);
 });
 
