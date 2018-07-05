@@ -92,7 +92,7 @@ test('run must throw if the vastChain has an error and track the error', async (
   }
 });
 
-test('must return the started adUnit adUnit', async () => {
+test('must return the started adUnit', async () => {
   expect(await run(vastAdChain, placeholder, options)).toBe(adUnit);
   expect(createVideoAdContainer).toHaveBeenCalledWith(placeholder, options);
   expect(startVideoAd).toHaveBeenCalledWith(vastAdChain, adContainer, options);
