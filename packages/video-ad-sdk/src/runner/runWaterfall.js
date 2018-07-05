@@ -12,16 +12,17 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
 
     return adUnit;
   } catch (error) {
+    const onError = options.onError;
+
+    /* istanbul ignore else */
+    if (onError) {
+      onError({
+        error,
+        vastChain
+      });
+    }
+
     if (vastChain) {
-      const onError = options.onError;
-
-      if (onError) {
-        onError({
-          error,
-          vastChain
-        });
-      }
-
       return waterfall(() => requestNextAd(vastChain, options), placeholder, options);
     }
 
@@ -29,7 +30,6 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
   }
 };
 
-// TODO: TEST THIS LOGIC
 const runWaterfall = (adTag, placeholder, options) =>
   waterfall(
     () => requestAd(adTag, options),
