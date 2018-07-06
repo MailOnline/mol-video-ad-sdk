@@ -85,7 +85,6 @@ class Player extends Component {
         <div className={styles.adContainer} >
           <ResponsiveVideoAd
             getTag={() => adTag}
-            onComplete={logger('complete')}
             onFinish={this.handleAdFinish}
             onLinearEvent={(eventname, ...args) => logger(eventname)(...args)}
             onNonRecoverableError={logger('NonRecoverableError')}

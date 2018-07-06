@@ -25,7 +25,6 @@ class VastAdUnit extends Emitter {
     handleMetric: (event, data) => {
       switch (event) {
       case complete: {
-        this[hidden].onCompleteCallbacks.forEach((callback) => callback(this));
         this.finish();
         break;
       }
@@ -44,7 +43,6 @@ class VastAdUnit extends Emitter {
 
       this.emit(event, event, this, data);
     },
-    onCompleteCallbacks: [],
     onErrorCallbacks: [],
     onFinishCallbacks: [],
     started: false,
@@ -181,16 +179,6 @@ class VastAdUnit extends Emitter {
     videoElement.pause();
 
     this.finish();
-  }
-
-  onComplete (callback) {
-    this[hidden].throwIfFinished();
-
-    if (typeof callback !== 'function') {
-      throw new TypeError('Expected a callback function');
-    }
-
-    this[hidden].onCompleteCallbacks.push(safeCallback(callback, this.logger));
   }
 
   onFinish (callback) {
