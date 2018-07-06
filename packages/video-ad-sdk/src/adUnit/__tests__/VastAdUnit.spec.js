@@ -370,7 +370,8 @@ test('VastAdUnit start must do nothing on a second play', () => {
   'onError',
   'onFinish',
   'finish',
-  'changeVolume'
+  'setVolume',
+  'getVolume'
 ].forEach((method) => {
   test(`VastAdUnit ${method} must throw if you call it on a finished adUnit`, () => {
     const adUnit = new VastAdUnit(vastChain, videoAdContainer);
@@ -653,7 +654,7 @@ test('VastAdUnit must redraw the icons', async () => {
   expect(mockDrawIcons).toHaveBeenCalledTimes(2);
 });
 
-test('VastAdUnit changeVolume must change the volume of the video element', () => {
+test('VastAdUnit setVolume must change the volume of the video element', () => {
   canPlay.mockReturnValue(true);
   retrieveIcons.mockImplementation(() => null);
   const {videoElement} = videoAdContainer;
@@ -662,6 +663,18 @@ test('VastAdUnit changeVolume must change the volume of the video element', () =
 
   expect(videoElement.volume).toBe(1);
 
-  adUnit.changeVolume(0.5);
+  adUnit.setVolume(0.5);
   expect(videoElement.volume).toBe(0.5);
+});
+
+test('VastAdUnit getVolume must return the volume of the video element', () => {
+  canPlay.mockReturnValue(true);
+  retrieveIcons.mockImplementation(() => null);
+
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+  expect(adUnit.getVolume()).toBe(1);
+
+  adUnit.setVolume(0.5);
+  expect(adUnit.getVolume()).toBe(0.5);
 });

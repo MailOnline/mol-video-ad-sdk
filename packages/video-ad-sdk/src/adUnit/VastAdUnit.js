@@ -163,12 +163,20 @@ class VastAdUnit extends Emitter {
     videoElement.pause();
   }
 
-  changeVolume (newVolume) {
+  setVolume (newVolume) {
     this[hidden].throwIfFinished();
 
     const {videoElement} = this.videoAdContainer;
 
     videoElement.volume = newVolume;
+  }
+
+  getVolume () {
+    this[hidden].throwIfFinished();
+
+    const {videoElement} = this.videoAdContainer;
+
+    return videoElement.volume;
   }
 
   cancel () {

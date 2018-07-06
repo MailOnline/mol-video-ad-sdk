@@ -6,13 +6,13 @@ import VideoAd from '../VideoAd';
 
 const mockAdUnit = {
   cancel: jest.fn(),
-  changeVolume: jest.fn(),
   isFinished: jest.fn(),
   onError: jest.fn(),
   onFinish: jest.fn(),
   pause: jest.fn(),
   resize: jest.fn(),
-  resume: jest.fn()
+  resume: jest.fn(),
+  setVolume: jest.fn()
 };
 
 const Spinner = () => <div className='spinner' />;
@@ -54,13 +54,13 @@ test('must display the children until it is ready to start the ad', (done) => {
 test('onStart must pass the adUnit and some convenience methods', (done) => {
   expect.assertions(8);
 
-  const onStart = ({adUnit, changeVolume, pause, resume}) => {
+  const onStart = ({adUnit, setVolume, pause, resume}) => {
     expect(adUnit).toBe(mockAdUnit);
-    expect(adUnit.changeVolume).toHaveBeenCalledTimes(0);
+    expect(adUnit.setVolume).toHaveBeenCalledTimes(0);
     expect(adUnit.pause).toHaveBeenCalledTimes(0);
     expect(adUnit.resume).toHaveBeenCalledTimes(0);
-    changeVolume();
-    expect(adUnit.changeVolume).toHaveBeenCalledTimes(1);
+    setVolume();
+    expect(adUnit.setVolume).toHaveBeenCalledTimes(1);
     pause();
     expect(adUnit.pause).toHaveBeenCalledTimes(1);
     resume();
