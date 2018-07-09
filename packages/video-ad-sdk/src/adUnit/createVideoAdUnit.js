@@ -3,7 +3,9 @@ import {
   trackLinearEvent
 } from '../tracker';
 import VideoAdContainer from '../adContainer/VideoAdContainer';
+import {getInteractiveFiles} from '../../../../node_modules/@mol/video-ad-sdk/src/vastSelectors';
 import VastAdUnit from './VastAdUnit';
+import VpaidAdUnit from './VpaidAdUnit';
 
 const validate = (vastChain, videoAdContainer) => {
   if (!Array.isArray(vastChain) || vastChain.length === 0) {
@@ -15,11 +17,15 @@ const validate = (vastChain, videoAdContainer) => {
   }
 };
 
-const createVastAdUnit = (vastAdChain, videoAdContainer, options) => new VastAdUnit(vastAdChain, videoAdContainer, options);
+const hasVpaidAd = (vastChain) => {
+  const ad = vastChain[0].ad;
+
+  return Boolean(getInteractiveFiles(ad));
+};
 
 const createVideoAdUnit = (vastChain, videoAdContainer, options) => {
   validate(vastChain, videoAdContainer);
-  const adUnit = createVastAdUnit(vastChain, videoAdContainer, options);
+  const adUnit = hasVpaidAd(vastChain) ? new VpaidAdUnit(vastChain, videoAdContainer, options) : new VastAdUnit(vastChain, videoAdContainer, options);
   const {
     onLinearEvent,
     tracker

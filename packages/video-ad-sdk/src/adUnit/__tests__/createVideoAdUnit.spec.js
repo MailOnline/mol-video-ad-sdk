@@ -4,7 +4,10 @@ import {
   wrapperParsedXML,
   inlineParsedXML,
   wrapperAd,
-  inlineAd
+  inlineAd,
+  vpaidInlineAd,
+  vpaidInlineParsedXML,
+  vastVpaidInlineXML
 } from '../../../fixtures';
 import VideoAdContainer from '../../adContainer/VideoAdContainer';
 import {
@@ -13,6 +16,7 @@ import {
 } from '../../tracker';
 import VastAdUnit from '../VastAdUnit';
 import createVideoAdUnit from '../createVideoAdUnit';
+import VpaidAdUnit from '../../../../../node_modules/@mol/video-ad-sdk/src/adUnit/VpaidAdUnit';
 
 jest.mock('../../tracker', () => ({
   ...require.requireActual('../../tracker'),
@@ -20,6 +24,7 @@ jest.mock('../../tracker', () => ({
 }));
 
 let vastChain;
+let vpaidChain;
 let videoAdContainer;
 
 beforeEach(() => {
@@ -46,6 +51,15 @@ beforeEach(() => {
       XML: vastWrapperXML
     }
   ];
+  vpaidChain = [
+    {
+      ad: vpaidInlineAd,
+      errorCode: null,
+      parsedXML: vpaidInlineParsedXML,
+      requestTag: 'https://test.example.com/vastadtaguri',
+      XML: vastVpaidInlineXML
+    }
+  ];
 
   videoAdContainer = new VideoAdContainer(document.createElement('DIV'));
 });
@@ -63,10 +77,16 @@ test('createVastAdUnit must complain if you don\'t pass a vastAdChain or a video
   expect(() => createVideoAdUnit(vastChain, {})).toThrowError(TypeError);
 });
 
-test('createVideoAdUnit must return a VideoAdUnit', () => {
+test('createVideoAdUnit must return a VastAdUnit for Vast ads', () => {
   const adUnit = createVideoAdUnit(vastChain, videoAdContainer, {});
 
   expect(adUnit).toBeInstanceOf(VastAdUnit);
+});
+
+test('createVideoAdUnit must return a VpaidAdUnit for Vpaid ads', () => {
+  const adUnit = createVideoAdUnit(vpaidChain, videoAdContainer, {});
+
+  expect(adUnit).toBeInstanceOf(VpaidAdUnit);
 });
 
 Object.values(linearEvents).forEach((event) => {
