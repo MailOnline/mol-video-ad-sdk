@@ -11,7 +11,7 @@ const startVideoAd = async (vastChain, videoAdContainer, options) => {
   let adUnit;
 
   try {
-    adUnit = await createVideoAdUnit(vastChain, videoAdContainer, options);
+    adUnit = createVideoAdUnit(vastChain, videoAdContainer, options);
 
     await waitForAdUnitStart(adUnit);
 

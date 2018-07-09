@@ -75,14 +75,12 @@ test('must cancel the ad unit if there is an error starting it', async () => {
   const adUnit = createAdUnitMock(vastAdChain, videoAdContainer, options);
 
   createVideoAdUnit.mockImplementationOnce(() => {
-    const promise = Promise.resolve(adUnit);
-
     // eslint-disable-next-line promise/always-return, promise/always-return, promise/catch-or-return, promise/prefer-await-to-then
     adUnit.start = () => {
       adUnit.__simulateError(adUnitError);
     };
 
-    return promise;
+    return adUnit;
   });
 
   await expect(startVideoAd(vastAdChain, videoAdContainer, options)).rejects.toBe(adUnitError);
@@ -94,14 +92,12 @@ test('must return the ad unit', async () => {
   const adUnit = createAdUnitMock(vastAdChain, videoAdContainer, options);
 
   createVideoAdUnit.mockImplementationOnce(() => {
-    const promise = Promise.resolve(adUnit);
-
     // eslint-disable-next-line promise/always-return, promise/always-return, promise/catch-or-return, promise/prefer-await-to-then
     adUnit.start = () => {
       adUnit.emit('start');
     };
 
-    return promise;
+    return adUnit;
   });
 
   await expect(startVideoAd(vastAdChain, videoAdContainer, options)).resolves.toBe(adUnit);
