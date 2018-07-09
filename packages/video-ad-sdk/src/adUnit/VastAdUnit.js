@@ -217,6 +217,7 @@ class VastAdUnit extends Emitter {
     return this[hidden].started;
   }
 
+  // TODO: FINISH SHOULD BE PRIVATE
   finish () {
     this[hidden].throwIfFinished();
     this[hidden].onFinishCallbacks.forEach((callback) => callback());
