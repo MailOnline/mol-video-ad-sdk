@@ -47,7 +47,7 @@ beforeEach(async () => {
     tracker: jest.fn()
   };
   placeholder = document.createElement('div');
-  adContainer = await new VideoAdContainer(placeholder, {videoElement: document.createElement('video')}).ready();
+  adContainer = await new VideoAdContainer(placeholder, document.createElement('video')).ready();
   adUnit = new VastAdUnit(vastAdChain, adContainer, options);
   createVideoAdContainer.mockImplementation(() => Promise.resolve(adContainer));
   startVideoAd.mockImplementation(() => Promise.resolve(adUnit));

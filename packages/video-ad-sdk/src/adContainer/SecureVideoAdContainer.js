@@ -27,26 +27,13 @@ class SecureVideoAdContainer extends VideoAdContainer {
    * Creates a SecureVideoAdContainer.
    *
    * @param {HTMLDivElement} placeholder - DIV that will contain the ad.
-   * @param {Object} options - Options Map.
-   * @param {HTMLVideoElement} [options.videoElement] - optional videoElement that will be used to play the ad.
-   * @param {Object} [options.logger] - Optional logger instance.
-   *                                    Must comply to the [Console interface](https://developer.mozilla.org/es/docs/Web/API/Console).
-   *                                    Defaults to console.
+   * @param {HTMLVideoElement} [videoElement] - optional videoElement that will be used to play the ad.
    */
-  constructor (placeholder, options = {}) {
-    super(placeholder, options);
-
-    const {
-      videoElement,
-      logger = console
-    } = options;
-
-    if (videoElement) {
-      logger.warn('SecureVideoAdContainer ignores the passed video element');
-    }
+  constructor (placeholder, videoElement = null) {
+    super(placeholder, videoElement);
 
     this.context = null;
-    this.videoElement = null;
+    this.videoElement = videoElement;
 
     this.element.classList.add('mol-secure-video-ad-container');
     const iframeElement = createAdContainerIframe();
@@ -60,7 +47,7 @@ class SecureVideoAdContainer extends VideoAdContainer {
 
         this[iframeElementKey] = iframeElement;
         this.context = iframeElement.contentWindow;
-        this.videoElement = createAdVideoElement(iframeDocument);
+        this.videoElement = this.videoElement || createAdVideoElement(iframeDocument);
 
         iframeDocument.body.appendChild(this.videoElement);
         this.resize();

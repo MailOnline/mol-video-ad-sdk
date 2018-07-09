@@ -22,18 +22,14 @@ test('SecureVideoAdContainer must be an instanceof VideoAdContainer', () => {
   expect(secureVideoAdContainer).toBeInstanceOf(VideoAdContainer);
 });
 
-test('SecureVideoAdContainer must log a warning if we pass a videoElement', async () => {
+test('SecureVideoAdContainer use the passed videoElement', async () => {
   const videoElement = document.createElement('VIDEO');
-  const logger = {warn: jest.fn()};
 
-  const secureVideoAdContainer = new SecureVideoAdContainer(placeholder, {
-    logger,
-    videoElement
-  });
+  const secureVideoAdContainer = new SecureVideoAdContainer(placeholder, videoElement);
 
   await secureVideoAdContainer.ready();
 
-  expect(logger.warn).toHaveBeenCalledWith('SecureVideoAdContainer ignores the passed video element');
+  expect(secureVideoAdContainer.videoElement).toBe(videoElement);
 });
 
 test('SecureVideoAdContainer must add the adContainer to the passed placeholder element', () => {

@@ -26,7 +26,7 @@ test('VideoAdContainer must add the adContainer to the passed placeholder elemen
 
 test('VideoAdContainer must use the provided video element', () => {
   const videoElement = document.createElement('VIDEO');
-  const videoAdContainer = new VideoAdContainer(placeholder, {videoElement});
+  const videoAdContainer = new VideoAdContainer(placeholder, videoElement);
 
   expect(videoAdContainer.videoElement).toBe(videoElement);
   expect(videoElement.parentNode).not.toBe(videoAdContainer.element);

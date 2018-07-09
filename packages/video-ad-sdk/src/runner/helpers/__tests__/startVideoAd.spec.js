@@ -50,7 +50,7 @@ beforeEach(async () => {
   };
   const placeholder = document.createElement('div');
 
-  videoAdContainer = await new VideoAdContainer(placeholder, {}).ready();
+  videoAdContainer = await new VideoAdContainer(placeholder).ready();
 });
 
 afterEach(() => {

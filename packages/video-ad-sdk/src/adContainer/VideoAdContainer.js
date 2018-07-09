@@ -22,10 +22,9 @@ class VideoAdContainer {
    * Creates a VideoAdContainer.
    *
    * @param {HTMLDivElement} placeholder - DIV that will contain the ad.
-   * @param {Object} options - Options Map.
-   * @param {HTMLVideoElement} [options.videoElement] - optional videoElement that will be used to play the ad.
+   * @param {HTMLVideoElement} [videoElement] - optional videoElement that will be used to play the ad.
    */
-  constructor (placeholder, {videoElement = null} = {}) {
+  constructor (placeholder, videoElement = null) {
     if (!(placeholder instanceof Element)) {
       throw new TypeError('placeholder is not an Element');
     }
