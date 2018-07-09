@@ -447,6 +447,31 @@ export const getInteractiveCreativeFiles = (ad) => {
   return null;
 };
 
+export const getInteractiveFiles = (ad) => {
+  let interactiveFiles = getInteractiveCreativeFiles(ad);
+
+  if (interactiveFiles) {
+    return interactiveFiles;
+  }
+
+  const mediaFiles = getMediaFiles(ad);
+
+  if (mediaFiles) {
+    interactiveFiles = mediaFiles
+      .filter(({apiFramework = ''}) => apiFramework.toLowerCase() === 'vpaid')
+      .map(({apiFramework, type}) => ({
+        apiFramework,
+        type
+      }));
+
+    if (interactiveFiles.length > 0) {
+      return interactiveFiles;
+    }
+  }
+
+  return null;
+};
+
 const getVideoClicksElement = (ad) => {
   const creativeElement = ad && getLinearCreative(ad);
   const linearElement = creativeElement && get(creativeElement, 'Linear');

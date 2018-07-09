@@ -27,16 +27,7 @@ import {markAdAsRequested} from './helpers/adUtils';
  * Represents the chain of VAST responses that ended up on a playable video ad or an error.
  *
  * @global
- * @typedef VASTChain
- * @type Array.<VASTResponse>
- */
-
-/**
- * Array of VASTResponses sorted backguards. Last response goes first.
- * Represents the chain of VAST responses that ended up on a playable video ad or an error.
- *
- * @global
- * @typedef VASTChain
+ * @typedef VastChain
  * @type Array.<VASTResponse>
  */
 
