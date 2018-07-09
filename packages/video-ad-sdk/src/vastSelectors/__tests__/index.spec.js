@@ -2,6 +2,7 @@ import {
   inlineAd,
   inlineParsedXML,
   podParsedXML,
+  vpaidInlineAd,
   wrapperAd,
   wrapperParsedXML,
   noAdParsedXML
@@ -14,6 +15,7 @@ import {
   getCustomClick,
   getFirstAd,
   getImpressionUri,
+  getInteractiveCreativeFiles,
   getLinearTrackingEvents,
   getMediaFiles,
   getSkipOffset,
@@ -179,6 +181,40 @@ test('getMediaFiles must return the mediafiles', () => {
     type: 'video/mp4',
     universalAdId: 'unknown',
     width: '1920'
+  });
+});
+
+test('getMediaFiles add the apiFramwork if present', () => {
+  const mediaFiles = getMediaFiles(vpaidInlineAd);
+
+  expect(mediaFiles).toBeInstanceOf(Array);
+  expect(mediaFiles.length).toBe(2);
+  expect(mediaFiles[0]).toEqual(expect.objectContaining({
+    apiFramework: 'VPAID',
+    src: 'https://test.example.com/html5.js',
+    type: 'text/javascript'
+  }));
+});
+
+test('getInteractiveCreativeFiles must return null for wrong ads', () => {
+  expect(getInteractiveCreativeFiles()).toEqual(null);
+  expect(getInteractiveCreativeFiles(null)).toEqual(null);
+  expect(getInteractiveCreativeFiles({})).toEqual(null);
+  expect(getInteractiveCreativeFiles(wrapperAd)).toEqual(null);
+});
+
+test('getInteractiveCreativeFiles must return the mediafiles', () => {
+  const interactiveFiles = getInteractiveCreativeFiles(vpaidInlineAd);
+
+  expect(interactiveFiles).toBeInstanceOf(Array);
+  expect(interactiveFiles.length).toBe(2);
+  expect(interactiveFiles[0]).toEqual({
+    apiFramework: 'VPAID',
+    type: 'text/javascript'
+  });
+  expect(interactiveFiles[1]).toEqual({
+    apiFramework: 'VPAID',
+    type: 'application/x-shockwave-flash'
   });
 });
 

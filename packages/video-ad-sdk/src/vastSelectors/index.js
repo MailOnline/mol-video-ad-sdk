@@ -384,6 +384,7 @@ export const getMediaFiles = (ad) => {
       return mediaFileElements.map((mediaFileElement) => {
         const src = getText(mediaFileElement);
         const {
+          apiFramework,
           bitrate,
           codec,
           delivery,
@@ -398,6 +399,7 @@ export const getMediaFiles = (ad) => {
         } = getAttributes(mediaFileElement);
 
         return {
+          apiFramework,
           bitrate,
           codec,
           delivery,
@@ -414,8 +416,32 @@ export const getMediaFiles = (ad) => {
         };
       });
     }
+  }
 
-    return null;
+  return null;
+};
+
+export const getInteractiveCreativeFiles = (ad) => {
+  const creativeElement = ad && getLinearCreative(ad);
+
+  if (creativeElement) {
+    const linearElement = get(creativeElement, 'Linear');
+    const mediaFilesElement = get(linearElement, 'MediaFiles');
+    const interactiveElements = mediaFilesElement && getAll(mediaFilesElement, 'InteractiveCreativeFile');
+
+    if (interactiveElements && interactiveElements.length > 0) {
+      return interactiveElements.map((interactiveElement) => {
+        const {
+          apiFramework,
+          type
+        } = getAttributes(interactiveElement);
+
+        return {
+          apiFramework,
+          type
+        };
+      });
+    }
   }
 
   return null;
