@@ -1,6 +1,16 @@
 /* eslint-disable promise/prefer-await-to-then */
+import loadScript from './helpers/loadScript';
 import createAdVideoElement from './helpers/createAdVideoElement';
-import VideoAdContainer from './VideoAdContainer';
+
+const createAdContainer = () => {
+  const adContainer = document.createElement('DIV');
+
+  adContainer.classList.add('mol-video-ad-container');
+  adContainer.style.width = '100%';
+  adContainer.style.height = '100%';
+
+  return adContainer;
+};
 
 const createAdContainerIframe = () => {
   const iframe = document.createElement('IFRAME');
@@ -12,6 +22,7 @@ const createAdContainerIframe = () => {
 };
 const iframeElementKey = Symbol('iframeElement');
 const readyPromiseKey = Symbol('readyPromiseKey');
+const destroyed = Symbol('destroyed');
 
 const getContentDocument = (iframeElement) => iframeElement.contentDocument || iframeElement.contentWindow.document;
 
@@ -22,7 +33,7 @@ const getContentDocument = (iframeElement) => iframeElement.contentDocument || i
  * On a secure way i.e. within an Iframe.
  * @augments VideoAdContainer
  */
-class SecureVideoAdContainer extends VideoAdContainer {
+class SecureVideoAdContainer {
   /**
    * Creates a SecureVideoAdContainer.
    *
@@ -30,12 +41,14 @@ class SecureVideoAdContainer extends VideoAdContainer {
    * @param {HTMLVideoElement} [videoElement] - optional videoElement that will be used to play the ad.
    */
   constructor (placeholder, videoElement = null) {
-    super(placeholder, videoElement);
+    if (!(placeholder instanceof Element)) {
+      throw new TypeError('placeholder is not an Element');
+    }
 
     this.context = null;
     this.videoElement = videoElement;
+    this.element = createAdContainer();
 
-    this.element.classList.add('mol-secure-video-ad-container');
     const iframeElement = createAdContainerIframe();
 
     this[readyPromiseKey] = new Promise((resolve, reject) => {
@@ -47,15 +60,20 @@ class SecureVideoAdContainer extends VideoAdContainer {
 
         this[iframeElementKey] = iframeElement;
         this.context = iframeElement.contentWindow;
-        this.videoElement = this.videoElement || createAdVideoElement(iframeDocument);
 
-        iframeDocument.body.appendChild(this.videoElement);
+        if (!this.videoElement) {
+          this.videoElement = createAdVideoElement(iframeDocument);
+          iframeDocument.body.appendChild(this.videoElement);
+        }
+
         this.resize();
 
         return this;
       });
 
     this.element.appendChild(iframeElement);
+    placeholder.appendChild(this.element);
+    this[destroyed] = false;
   }
 
   /**
@@ -99,7 +117,8 @@ class SecureVideoAdContainer extends VideoAdContainer {
 
     const placeholder = getContentDocument(this[iframeElementKey]).body;
 
-    return super.addScript(src, {
+    return loadScript(src, {
+      defer: true,
       placeholder,
       ...options
     });
@@ -109,7 +128,17 @@ class SecureVideoAdContainer extends VideoAdContainer {
    * Destroys the VideoAdContainer.
    */
   destroy () {
-    super.destroy();
+    this.element.parentNode.removeChild(this.element);
+    this[destroyed] = true;
+  }
+
+  /**
+   * Checks if the container is destroyed.
+   *
+   * @returns {boolean} - true if the container is destroyed and false otherwise.
+   */
+  isDestroyed () {
+    return this[destroyed];
   }
 }
 

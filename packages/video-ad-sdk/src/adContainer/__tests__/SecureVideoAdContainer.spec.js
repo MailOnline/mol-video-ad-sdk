@@ -1,5 +1,4 @@
 import SecureVideoAdContainer from '../SecureVideoAdContainer';
-import VideoAdContainer from '../VideoAdContainer';
 
 let placeholder;
 
@@ -16,10 +15,10 @@ test('SecureVideoAdContainer must complain if you don\'t pass a placeholder elem
   expect(() => new SecureVideoAdContainer()).toThrowError(TypeError);
 });
 
-test('SecureVideoAdContainer must be an instanceof VideoAdContainer', () => {
-  const secureVideoAdContainer = new SecureVideoAdContainer(placeholder);
+test('SecureVideoAdContainer ready method must resolve with itself', async () => {
+  const videoAdContainer = new SecureVideoAdContainer(placeholder);
 
-  expect(secureVideoAdContainer).toBeInstanceOf(VideoAdContainer);
+  expect(await videoAdContainer.ready()).toBe(videoAdContainer);
 });
 
 test('SecureVideoAdContainer use the passed videoElement', async () => {
@@ -38,12 +37,11 @@ test('SecureVideoAdContainer must add the adContainer to the passed placeholder 
 
   expect(adContainerElement.parentNode).toBe(placeholder);
   expect(adContainerElement.classList.contains('mol-video-ad-container')).toBe(true);
-  expect(adContainerElement.classList.contains('mol-secure-video-ad-container')).toBe(true);
   expect(adContainerElement.style.width).toBe('100%');
   expect(adContainerElement.style.height).toBe('100%');
 });
 
-test('SecureVideoAdContainer must create a video element and add it to the iframe within the adContainer', async () => {
+test('SecureVideoAdContainer if video element is not passed, it must create a video element and add it to the iframe within the adContainer', async () => {
   const secureVideoAdContainer = new SecureVideoAdContainer(placeholder);
 
   await secureVideoAdContainer.ready();
@@ -98,7 +96,7 @@ test('SecureVideoAdContainer destroy must remove the adContainer from the placeH
   expect(secureVideoAdContainer.element).toBeInstanceOf(Element);
   expect(secureVideoAdContainer.videoElement).toEqual(null);
   expect(secureVideoAdContainer.context).toEqual(null);
-  expect(placeholder.querySelector('.mol-secure-video-ad-container')).toBe(secureVideoAdContainer.element);
+  expect(placeholder.querySelector('.mol-video-ad-container')).toBe(secureVideoAdContainer.element);
 
   await secureVideoAdContainer.ready();
 
