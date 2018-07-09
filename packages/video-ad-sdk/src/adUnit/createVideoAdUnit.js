@@ -2,10 +2,24 @@ import {
   linearEvents,
   trackLinearEvent
 } from '../tracker';
-import createVastAdUnit from './createVastAdUnit';
+import VideoAdContainer from '../adContainer/VideoAdContainer';
+import VastAdUnit from './VastAdUnit';
 
-const createVideoAdUnit = async (vastChain, videoAdContainer, options = {}) => {
-  const adUnit = await createVastAdUnit(vastChain, videoAdContainer, options);
+const validate = (vastChain, videoAdContainer) => {
+  if (!Array.isArray(vastChain) || vastChain.length === 0) {
+    throw new TypeError('Invalid vastChain');
+  }
+
+  if (!(videoAdContainer instanceof VideoAdContainer)) {
+    throw new TypeError('Invalid VideoAdContainer');
+  }
+};
+
+const createVastAdUnit = (vastAdChain, videoAdContainer, options) => new VastAdUnit(vastAdChain, videoAdContainer, options);
+
+const createVideoAdUnit = (vastChain, videoAdContainer, options) => {
+  validate(vastChain, videoAdContainer);
+  const adUnit = createVastAdUnit(vastChain, videoAdContainer, options);
   const {
     onLinearEvent,
     tracker

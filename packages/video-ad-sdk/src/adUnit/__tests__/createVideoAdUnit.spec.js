@@ -56,15 +56,22 @@ afterEach(() => {
   trackLinearEvent.mockClear();
 });
 
-test('createVideoAdUnit must return a VideoAdUnit', async () => {
-  const adUnit = await createVideoAdUnit(vastChain, videoAdContainer);
+test('createVastAdUnit must complain if you don\'t pass a vastAdChain or a videoAdContainer', () => {
+  expect(createVideoAdUnit).toThrowError(TypeError);
+  expect(() => createVideoAdUnit([])).toThrowError(TypeError);
+  expect(() => createVideoAdUnit(vastChain)).toThrowError(TypeError);
+  expect(() => createVideoAdUnit(vastChain, {})).toThrowError(TypeError);
+});
+
+test('createVideoAdUnit must return a VideoAdUnit', () => {
+  const adUnit = createVideoAdUnit(vastChain, videoAdContainer, {});
 
   expect(adUnit).toBeInstanceOf(VastAdUnit);
 });
 
 Object.values(linearEvents).forEach((event) => {
   test(`createVideoAdUnit must track the ${event} linear events`, async () => {
-    const adUnit = await createVideoAdUnit(vastChain, videoAdContainer);
+    const adUnit = createVideoAdUnit(vastChain, videoAdContainer, {});
     const data = {
       progressUri: 'http://test.example.com/progress'
     };
@@ -84,7 +91,7 @@ Object.values(linearEvents).forEach((event) => {
 
   test('createVideoAdUnit must call onLinearEvent handler if provided with the emitted event and the payload', async () => {
     const onLinearEvent = jest.fn();
-    const adUnit = await createVideoAdUnit(vastChain, videoAdContainer, {onLinearEvent});
+    const adUnit = createVideoAdUnit(vastChain, videoAdContainer, {onLinearEvent});
     const data = {
       progressUri: 'http://test.example.com/progress'
     };
