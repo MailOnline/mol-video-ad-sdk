@@ -3,8 +3,7 @@ import {linearEvents} from '../../../../tracker';
 
 const {clickThrough} = linearEvents;
 
-const onClickThrough = ({videoElement, context, element}, callback, {clickThroughUrl} = {}) => {
-  const {document} = context;
+const onClickThrough = ({videoElement, element}, callback, {clickThroughUrl} = {}) => {
   const placeholder = element || videoElement.parentNode;
   const anchor = document.createElement('A');
 

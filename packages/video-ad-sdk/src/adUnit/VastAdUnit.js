@@ -25,7 +25,6 @@ class VastAdUnit extends Emitter {
     handleMetric: (event, data) => {
       switch (event) {
       case complete: {
-        this[hidden].onCompleteCallbacks.forEach((callback) => callback(this));
         this.finish();
         break;
       }
@@ -44,7 +43,6 @@ class VastAdUnit extends Emitter {
 
       this.emit(event, event, this, data);
     },
-    onCompleteCallbacks: [],
     onErrorCallbacks: [],
     onFinishCallbacks: [],
     started: false,
@@ -165,12 +163,20 @@ class VastAdUnit extends Emitter {
     videoElement.pause();
   }
 
-  changeVolume (newVolume) {
+  setVolume (newVolume) {
     this[hidden].throwIfFinished();
 
     const {videoElement} = this.videoAdContainer;
 
     videoElement.volume = newVolume;
+  }
+
+  getVolume () {
+    this[hidden].throwIfFinished();
+
+    const {videoElement} = this.videoAdContainer;
+
+    return videoElement.volume;
   }
 
   cancel () {
@@ -181,16 +187,6 @@ class VastAdUnit extends Emitter {
     videoElement.pause();
 
     this.finish();
-  }
-
-  onComplete (callback) {
-    this[hidden].throwIfFinished();
-
-    if (typeof callback !== 'function') {
-      throw new TypeError('Expected a callback function');
-    }
-
-    this[hidden].onCompleteCallbacks.push(safeCallback(callback, this.logger));
   }
 
   onFinish (callback) {
@@ -221,6 +217,7 @@ class VastAdUnit extends Emitter {
     return this[hidden].started;
   }
 
+  // TODO: FINISH SHOULD BE PRIVATE
   finish () {
     this[hidden].throwIfFinished();
     this[hidden].onFinishCallbacks.forEach((callback) => callback());
@@ -229,7 +226,6 @@ class VastAdUnit extends Emitter {
 
   async resize () {
     this[hidden].throwIfFinished();
-    this.videoAdContainer.resize();
 
     if (this.icons) {
       await this.removeIcons();

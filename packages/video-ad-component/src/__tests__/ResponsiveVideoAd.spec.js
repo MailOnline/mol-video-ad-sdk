@@ -114,9 +114,9 @@ test('must call onStart handler if passed', () => {
   const {onStart: simulateOnStart} = videoAd.props();
   const adUnitMock = {
     adUnit: {isFinished: () => false},
-    changeVolume: jest.fn(),
     pause: jest.fn(),
-    resume: jest.fn()
+    resume: jest.fn(),
+    setVolume: jest.fn()
   };
 
   expect(props.onStart).toHaveBeenCalledTimes(0);

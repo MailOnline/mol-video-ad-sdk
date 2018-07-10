@@ -2,10 +2,30 @@ import {
   linearEvents,
   trackLinearEvent
 } from '../tracker';
-import createVastAdUnit from './createVastAdUnit';
+import VideoAdContainer from '../adContainer/VideoAdContainer';
+import {getInteractiveFiles} from '../../../../node_modules/@mol/video-ad-sdk/src/vastSelectors';
+import VastAdUnit from './VastAdUnit';
+import VpaidAdUnit from './VpaidAdUnit';
 
-const createVideoAdUnit = async (vastChain, videoAdContainer, options = {}) => {
-  const adUnit = await createVastAdUnit(vastChain, videoAdContainer, options);
+const validate = (vastChain, videoAdContainer) => {
+  if (!Array.isArray(vastChain) || vastChain.length === 0) {
+    throw new TypeError('Invalid vastChain');
+  }
+
+  if (!(videoAdContainer instanceof VideoAdContainer)) {
+    throw new TypeError('Invalid VideoAdContainer');
+  }
+};
+
+const hasVpaidAd = (vastChain) => {
+  const ad = vastChain[0].ad;
+
+  return Boolean(getInteractiveFiles(ad));
+};
+
+const createVideoAdUnit = (vastChain, videoAdContainer, options) => {
+  validate(vastChain, videoAdContainer);
+  const adUnit = hasVpaidAd(vastChain) ? new VpaidAdUnit(vastChain, videoAdContainer, options) : new VastAdUnit(vastChain, videoAdContainer, options);
   const {
     onLinearEvent,
     tracker

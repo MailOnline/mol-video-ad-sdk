@@ -1,7 +1,9 @@
 import {
   inlineAd,
   inlineParsedXML,
+  legacyVpaidInlineAd,
   podParsedXML,
+  vpaidInlineAd,
   wrapperAd,
   wrapperParsedXML,
   noAdParsedXML
@@ -14,6 +16,8 @@ import {
   getCustomClick,
   getFirstAd,
   getImpressionUri,
+  getInteractiveCreativeFiles,
+  getInteractiveFiles,
   getLinearTrackingEvents,
   getMediaFiles,
   getSkipOffset,
@@ -179,6 +183,40 @@ test('getMediaFiles must return the mediafiles', () => {
     type: 'video/mp4',
     universalAdId: 'unknown',
     width: '1920'
+  });
+});
+
+test('getMediaFiles must add the apiFramwork if present', () => {
+  const mediaFiles = getMediaFiles(vpaidInlineAd);
+
+  expect(mediaFiles).toBeInstanceOf(Array);
+  expect(mediaFiles.length).toBe(2);
+  expect(mediaFiles[0]).toEqual(expect.objectContaining({
+    apiFramework: 'VPAID',
+    src: 'https://test.example.com/html5.js',
+    type: 'text/javascript'
+  }));
+});
+
+test('getInteractiveCreativeFiles must return null for wrong ads', () => {
+  expect(getInteractiveCreativeFiles()).toEqual(null);
+  expect(getInteractiveCreativeFiles(null)).toEqual(null);
+  expect(getInteractiveCreativeFiles({})).toEqual(null);
+  expect(getInteractiveCreativeFiles(wrapperAd)).toEqual(null);
+});
+
+test('getInteractiveCreativeFiles must return the mediafiles', () => {
+  const interactiveFiles = getInteractiveCreativeFiles(vpaidInlineAd);
+
+  expect(interactiveFiles).toBeInstanceOf(Array);
+  expect(interactiveFiles.length).toBe(2);
+  expect(interactiveFiles[0]).toEqual({
+    apiFramework: 'VPAID',
+    type: 'text/javascript'
+  });
+  expect(interactiveFiles[1]).toEqual({
+    apiFramework: 'VPAID',
+    type: 'application/x-shockwave-flash'
   });
 });
 
@@ -488,4 +526,45 @@ test('getSkipOffset must return null if there none', () => {
 
 test('getSkipOffset must return the parsed skipoffset', () => {
   expect(getSkipOffset(inlineAd)).toEqual(5000);
+});
+
+test('getInteractiveFiles must return null for wrong ads', () => {
+  expect(getInteractiveFiles()).toEqual(null);
+  expect(getInteractiveFiles(null)).toEqual(null);
+  expect(getInteractiveFiles({})).toEqual(null);
+  expect(getInteractiveFiles(wrapperAd)).toEqual(null);
+});
+
+test('getInteractiveFiles must return null if there is no vpaid ad', () => {
+  expect(getInteractiveFiles(inlineAd)).toBeNull();
+});
+
+test('getInteractiveFiles must return the interactive files', () => {
+  const interactiveFiles = getInteractiveFiles(vpaidInlineAd);
+
+  expect(interactiveFiles).toBeInstanceOf(Array);
+  expect(interactiveFiles.length).toBe(2);
+  expect(interactiveFiles[0]).toEqual({
+    apiFramework: 'VPAID',
+    type: 'text/javascript'
+  });
+  expect(interactiveFiles[1]).toEqual({
+    apiFramework: 'VPAID',
+    type: 'application/x-shockwave-flash'
+  });
+});
+
+test('getInteractiveFiles must return vast2 interactive files', () => {
+  const interactiveFiles = getInteractiveFiles(legacyVpaidInlineAd);
+
+  expect(interactiveFiles).toBeInstanceOf(Array);
+  expect(interactiveFiles.length).toBe(2);
+  expect(interactiveFiles[0]).toEqual({
+    apiFramework: 'VPAID',
+    type: 'text/javascript'
+  });
+  expect(interactiveFiles[1]).toEqual({
+    apiFramework: 'VPAID',
+    type: 'application/x-shockwave-flash'
+  });
 });

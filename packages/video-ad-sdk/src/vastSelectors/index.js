@@ -384,6 +384,7 @@ export const getMediaFiles = (ad) => {
       return mediaFileElements.map((mediaFileElement) => {
         const src = getText(mediaFileElement);
         const {
+          apiFramework,
           bitrate,
           codec,
           delivery,
@@ -398,6 +399,7 @@ export const getMediaFiles = (ad) => {
         } = getAttributes(mediaFileElement);
 
         return {
+          apiFramework,
           bitrate,
           codec,
           delivery,
@@ -414,8 +416,57 @@ export const getMediaFiles = (ad) => {
         };
       });
     }
+  }
 
-    return null;
+  return null;
+};
+
+export const getInteractiveCreativeFiles = (ad) => {
+  const creativeElement = ad && getLinearCreative(ad);
+
+  if (creativeElement) {
+    const linearElement = get(creativeElement, 'Linear');
+    const mediaFilesElement = get(linearElement, 'MediaFiles');
+    const interactiveElements = mediaFilesElement && getAll(mediaFilesElement, 'InteractiveCreativeFile');
+
+    if (interactiveElements && interactiveElements.length > 0) {
+      return interactiveElements.map((interactiveElement) => {
+        const {
+          apiFramework,
+          type
+        } = getAttributes(interactiveElement);
+
+        return {
+          apiFramework,
+          type
+        };
+      });
+    }
+  }
+
+  return null;
+};
+
+export const getInteractiveFiles = (ad) => {
+  let interactiveFiles = getInteractiveCreativeFiles(ad);
+
+  if (interactiveFiles) {
+    return interactiveFiles;
+  }
+
+  const mediaFiles = getMediaFiles(ad);
+
+  if (mediaFiles) {
+    interactiveFiles = mediaFiles
+      .filter(({apiFramework = ''}) => apiFramework.toLowerCase() === 'vpaid')
+      .map(({apiFramework, type}) => ({
+        apiFramework,
+        type
+      }));
+
+    if (interactiveFiles.length > 0) {
+      return interactiveFiles;
+    }
   }
 
   return null;

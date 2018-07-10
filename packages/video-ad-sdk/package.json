@@ -14,8 +14,8 @@
     "src"
   ],
   "dependencies": {
-    "whatwg-fetch": "^2.0.4",
-    "@mol/vast-xml2js": "^0.1.0"
+    "@mol/vast-xml2js": "^0.1.0",
+    "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
@@ -28,6 +28,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.24.1",
     "jest": "^22.4.0",
+    "jest-environment-jsdom": "^23.3.0",
     "lodash": "^4.17.4",
     "mockdate": "^2.0.2"
   }

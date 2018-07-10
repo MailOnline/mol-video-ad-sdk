@@ -98,9 +98,9 @@ class VideoAd extends Component {
 
       onStart({
         adUnit,
-        changeVolume: (newVolume) => adUnit.changeVolume(newVolume),
         pause: () => adUnit.pause(),
-        resume: () => adUnit.resume()
+        resume: () => adUnit.resume(),
+        setVolume: (newVolume) => adUnit.setVolume(newVolume)
       });
     }
   }

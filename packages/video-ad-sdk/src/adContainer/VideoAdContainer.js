@@ -1,74 +1,49 @@
+/* eslint-disable promise/prefer-await-to-then */
 import loadScript from './helpers/loadScript';
 import createAdVideoElement from './helpers/createAdVideoElement';
+import createAdContainer from './helpers/createAdContainer';
+import createIframe from './helpers/createIframe';
+import getContentDocument from './helpers/getContentDocument';
+import unique from './helpers/unique';
 
-const createAdContainer = () => {
-  const adContainer = document.createElement('DIV');
-
-  adContainer.classList.add('mol-video-ad-container');
-  adContainer.style.width = '100%';
-  adContainer.style.height = '100%';
-
-  return adContainer;
-};
-const destroyed = Symbol('destroyed');
+const nextId = unique('videoAdContainer');
+const hidden = Symbol('hidden');
 
 /**
  * @class
  * @global
- * @description Contains everything necessary to contain and create a video ad within a given placeholder Element.
+ * @description This class provides everything necessary to contain and create a video ad within a given placeholder Element.
  */
 class VideoAdContainer {
+  [hidden] = {
+    destroyed: false,
+    iframe: null,
+    readyPromise: null
+  };
+
   /**
    * Creates a VideoAdContainer.
    *
    * @param {HTMLDivElement} placeholder - DIV that will contain the ad.
-   * @param {Object} options - Options Map.
-   * @param {HTMLVideoElement} [options.videoElement] - optional videoElement that will be used to play the ad.
+   * @param {HTMLVideoElement} [videoElement] - optional videoElement that will be used to play the ad.
    */
-  constructor (placeholder, {videoElement = null} = {}) {
+  constructor (placeholder, videoElement = null) {
     if (!(placeholder instanceof Element)) {
       throw new TypeError('placeholder is not an Element');
     }
 
-    /**
-     * Context the ad will run on. I.E. The `window` of the ads runing environment.
-     *
-     * @name VideoAdContainer#context
-     */
-    this.context = window;
-
-    /**
-     * Element node that will expand using all the available space on the placeholder element
-     *
-     * @name VideoAdContainer#element
-     * @type HTMLElement
-     */
+    this[hidden].id = nextId();
     this.element = createAdContainer();
+    this.executionContext = null;
 
-    /**
-     * The video element that will play the video ad.
-     *
-     * @name VideoAdContainer#videoElement
-     * @type HTMLVideoElement
-    */
-    this.videoElement = videoElement ? videoElement : createAdVideoElement();
-
-    placeholder.appendChild(this.element);
-
-    if (!videoElement) {
+    if (videoElement) {
+      this.videoElement = videoElement;
+    } else {
+      this.videoElement = createAdVideoElement();
       this.element.appendChild(this.videoElement);
     }
 
-    this[destroyed] = false;
-  }
-
-  /**
-   * Returns a promise that will resolve once the VideoAdContainer is ready to be used.
-   *
-   * @returns Promise<VideoAdContainer> - resolves with itself.
-   */
-  ready () {
-    return Promise.resolve(this);
+    placeholder.appendChild(this.element);
   }
 
   /**
@@ -80,12 +55,17 @@ class VideoAdContainer {
    * @param {boolean} options.async - if "true" the "async" attribute is added to the new script. Defaults to false.
    * @param {boolean} options.defer - if "true" the "defer" attribute is added to the new script. Defaults to true.
    */
-  addScript (src, options = {}) {
+  async addScript (src, options = {}) {
     if (this.isDestroyed()) {
       throw new Error('VideoAdContainer has been destroyed');
     }
 
-    const placeholder = options.placeholder || this.element;
+    if (!this[hidden].iframe) {
+      this[hidden].iframe = await createIframe(this.element, this[hidden].id);
+      this.executionContext = this[hidden].iframe.contentWindow;
+    }
+
+    const placeholder = getContentDocument(this[hidden].iframe).body;
 
     return loadScript(src, {
       defer: true,
@@ -99,7 +79,7 @@ class VideoAdContainer {
    */
   destroy () {
     this.element.parentNode.removeChild(this.element);
-    this[destroyed] = true;
+    this[hidden].destroyed = true;
   }
 
   /**
@@ -108,18 +88,7 @@ class VideoAdContainer {
    * @returns {boolean} - true if the container is destroyed and false otherwise.
    */
   isDestroyed () {
-    return this[destroyed];
-  }
-
-  /*
-    This method is not really needed just here to keep the same interface than {@link SecureVideoAdContainer}
-  */
-  resize () {
-    if (this.isDestroyed()) {
-      throw new Error('VideoAdContainer has been destroyed');
-    }
-
-    // Video ad containers resize automatically to the size of the placeholder
+    return this[hidden].destroyed;
   }
 }
 

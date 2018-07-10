@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createIframe must return an empty Iframe element 1`] = `
+<iframe
+  src="about:blank"
+  style="margin: 0px; padding: 0px; width: 0px; height: 0px; position: absolute;"
+/>
+`;

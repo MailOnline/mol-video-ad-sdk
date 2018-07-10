@@ -368,9 +368,10 @@ test('VastAdUnit start must do nothing on a second play', () => {
   'pause',
   'cancel',
   'onError',
-  'onComplete',
+  'onFinish',
   'finish',
-  'changeVolume'
+  'setVolume',
+  'getVolume'
 ].forEach((method) => {
   test(`VastAdUnit ${method} must throw if you call it on a finished adUnit`, () => {
     const adUnit = new VastAdUnit(vastChain, videoAdContainer);
@@ -424,29 +425,48 @@ test('VastAdUnit cancel must stop the ad video and finish the ad unit', () => {
   expect(adUnit.finish).toHaveBeenCalledTimes(1);
 });
 
-test('VastAdUnit onComplete must complain if you don\'t pass a callback', () => {
+test('VastAdUnit onFinish must complain if you don\'t pass a callback', () => {
   canPlay.mockReturnValue(true);
   const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
-  expect(() => adUnit.onComplete()).toThrow(TypeError);
-  expect(() => adUnit.onComplete()).toThrow('Expected a callback function');
+  expect(() => adUnit.onFinish()).toThrow(TypeError);
+  expect(() => adUnit.onFinish()).toThrow('Expected a callback function');
 });
 
-test('VastAdUnit onComplete must call the passed callback once the ad has completed', () => {
+test('VastAdUnit onFinish must call the passed callback once the ad has completed', () => {
   canPlay.mockReturnValue(true);
   const adUnit = new VastAdUnit(vastChain, videoAdContainer, {logger: {error: () => {}}});
   const callback = jest.fn();
 
-  adUnit.onComplete(() => {
+  adUnit.onFinish(() => {
     throw new Error('boom');
   });
 
-  adUnit.onComplete(callback);
+  adUnit.onFinish(callback);
   adUnit.start();
 
   expect(callback).not.toHaveBeenCalled();
 
   videoAdContainer.videoElement.dispatchEvent(new Event('ended'));
+  expect(callback).toHaveBeenCalledTimes(1);
+  expect(adUnit.isFinished()).toBe(true);
+});
+
+test('VastAdUnit onFinish must call the passed callback if the ad is cancelled', () => {
+  canPlay.mockReturnValue(true);
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer, {logger: {error: () => {}}});
+  const callback = jest.fn();
+
+  adUnit.onFinish(() => {
+    throw new Error('boom');
+  });
+
+  adUnit.onFinish(callback);
+  adUnit.start();
+
+  expect(callback).not.toHaveBeenCalled();
+
+  adUnit.cancel();
   expect(callback).toHaveBeenCalledTimes(1);
   expect(adUnit.isFinished()).toBe(true);
 });
@@ -556,26 +576,6 @@ test('VastAdUnit finish must remove the icons of the vastChain', () => {
   });
 });
 
-test('VastAdUnit resize must resize the the passed videoAdContainer', () => {
-  canPlay.mockReturnValue(true);
-  videoAdContainer.resize = jest.fn();
-  retrieveIcons.mockImplementation(() => null);
-
-  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
-
-  adUnit.start();
-
-  expect(videoAdContainer.resize).toHaveBeenCalledTimes(0);
-  expect(mockRemoveIcons).toHaveBeenCalledTimes(0);
-  expect(mockDrawIcons).toHaveBeenCalledTimes(0);
-
-  adUnit.resize();
-
-  expect(videoAdContainer.resize).toHaveBeenCalledTimes(1);
-  expect(mockRemoveIcons).toHaveBeenCalledTimes(0);
-  expect(mockDrawIcons).toHaveBeenCalledTimes(0);
-});
-
 test('VastAdUnit resize must not update the media if the ad has not started', () => {
   canPlay.mockReturnValue(true);
   videoAdContainer.resize = jest.fn();
@@ -634,7 +634,7 @@ test('VastAdUnit must redraw the icons', async () => {
   expect(mockDrawIcons).toHaveBeenCalledTimes(2);
 });
 
-test('VastAdUnit changeVolume must change the volume of the video element', () => {
+test('VastAdUnit setVolume must change the volume of the video element', () => {
   canPlay.mockReturnValue(true);
   retrieveIcons.mockImplementation(() => null);
   const {videoElement} = videoAdContainer;
@@ -643,6 +643,18 @@ test('VastAdUnit changeVolume must change the volume of the video element', () =
 
   expect(videoElement.volume).toBe(1);
 
-  adUnit.changeVolume(0.5);
+  adUnit.setVolume(0.5);
   expect(videoElement.volume).toBe(0.5);
+});
+
+test('VastAdUnit getVolume must return the volume of the video element', () => {
+  canPlay.mockReturnValue(true);
+  retrieveIcons.mockImplementation(() => null);
+
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+  expect(adUnit.getVolume()).toBe(1);
+
+  adUnit.setVolume(0.5);
+  expect(adUnit.getVolume()).toBe(0.5);
 });

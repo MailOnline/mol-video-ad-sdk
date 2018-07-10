@@ -24,7 +24,7 @@ let placeholder;
 let adContainer;
 let adUnit;
 
-beforeEach(async () => {
+beforeEach(() => {
   adTag = 'https://test.example.com/adtag';
   vastAdChain = [
     {
@@ -46,7 +46,7 @@ beforeEach(async () => {
     onError: jest.fn()
   };
   placeholder = document.createElement('div');
-  adContainer = await new VideoAdContainer(placeholder, {videoElement: document.createElement('video')}).ready();
+  adContainer = new VideoAdContainer(placeholder, document.createElement('video'));
   adUnit = new VastAdUnit(vastAdChain, adContainer, options);
 });
 

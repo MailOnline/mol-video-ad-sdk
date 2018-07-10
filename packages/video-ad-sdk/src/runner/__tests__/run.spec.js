@@ -26,7 +26,7 @@ let placeholder;
 let adContainer;
 let adUnit;
 
-beforeEach(async () => {
+beforeEach(() => {
   vastAdChain = [
     {
       ad: inlineAd,
@@ -44,10 +44,11 @@ beforeEach(async () => {
     }
   ];
   options = {
-    tracker: jest.fn()
+    tracker: jest.fn(),
+    videoElement: document.createElement('video')
   };
   placeholder = document.createElement('div');
-  adContainer = await new VideoAdContainer(placeholder, {videoElement: document.createElement('video')}).ready();
+  adContainer = new VideoAdContainer(placeholder, document.createElement('video'));
   adUnit = new VastAdUnit(vastAdChain, adContainer, options);
   createVideoAdContainer.mockImplementation(() => Promise.resolve(adContainer));
   startVideoAd.mockImplementation(() => Promise.resolve(adUnit));
@@ -94,7 +95,7 @@ test('run must throw if the vastChain has an error and track the error', async (
 
 test('must return the started adUnit', async () => {
   expect(await run(vastAdChain, placeholder, options)).toBe(adUnit);
-  expect(createVideoAdContainer).toHaveBeenCalledWith(placeholder, options);
+  expect(createVideoAdContainer).toHaveBeenCalledWith(placeholder, options.videoElement);
   expect(startVideoAd).toHaveBeenCalledWith(vastAdChain, adContainer, options);
 });
 
