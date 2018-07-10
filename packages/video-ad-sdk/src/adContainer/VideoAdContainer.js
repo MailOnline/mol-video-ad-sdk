@@ -12,9 +12,7 @@ const hidden = Symbol('hidden');
 /**
  * @class
  * @global
- * @description This class provides everyting necesary to contain and create a video ad within a given placeholder Element.
- * On a secure way i.e. within an Iframe.
- * @augments VideoAdContainer
+ * @description This class provides everything necessary to contain and create a video ad within a given placeholder Element.
  */
 class VideoAdContainer {
   [hidden] = {
