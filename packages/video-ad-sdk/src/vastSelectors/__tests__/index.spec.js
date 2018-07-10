@@ -212,10 +212,12 @@ test('getInteractiveCreativeFiles must return the mediafiles', () => {
   expect(interactiveFiles.length).toBe(2);
   expect(interactiveFiles[0]).toEqual({
     apiFramework: 'VPAID',
+    src: 'https://test.example.com/html5.js',
     type: 'text/javascript'
   });
   expect(interactiveFiles[1]).toEqual({
     apiFramework: 'VPAID',
+    src: 'https://test.example.com/flash.swf',
     type: 'application/x-shockwave-flash'
   });
 });
@@ -546,10 +548,12 @@ test('getInteractiveFiles must return the interactive files', () => {
   expect(interactiveFiles.length).toBe(2);
   expect(interactiveFiles[0]).toEqual({
     apiFramework: 'VPAID',
+    src: 'https://test.example.com/html5.js',
     type: 'text/javascript'
   });
   expect(interactiveFiles[1]).toEqual({
     apiFramework: 'VPAID',
+    src: 'https://test.example.com/flash.swf',
     type: 'application/x-shockwave-flash'
   });
 });
@@ -561,10 +565,12 @@ test('getInteractiveFiles must return vast2 interactive files', () => {
   expect(interactiveFiles.length).toBe(2);
   expect(interactiveFiles[0]).toEqual({
     apiFramework: 'VPAID',
+    src: 'https://test.example.com/html5.js',
     type: 'text/javascript'
   });
   expect(interactiveFiles[1]).toEqual({
     apiFramework: 'VPAID',
+    src: 'https://test.example.com/flash.swf',
     type: 'application/x-shockwave-flash'
   });
 });

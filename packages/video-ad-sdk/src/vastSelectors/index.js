@@ -435,9 +435,11 @@ export const getInteractiveCreativeFiles = (ad) => {
           apiFramework,
           type
         } = getAttributes(interactiveElement);
+        const src = getText(interactiveElement);
 
         return {
           apiFramework,
+          src,
           type
         };
       });
@@ -459,8 +461,9 @@ export const getInteractiveFiles = (ad) => {
   if (mediaFiles) {
     interactiveFiles = mediaFiles
       .filter(({apiFramework = ''}) => apiFramework.toLowerCase() === 'vpaid')
-      .map(({apiFramework, type}) => ({
+      .map(({apiFramework, src, type}) => ({
         apiFramework,
+        src,
         type
       }));
 
