@@ -2,7 +2,7 @@ const getOrigin = () => {
   const location = window.location;
 
   /* istanbul ignore if */
-  if (location.oring) {
+  if (location.origin) {
     return location.origin;
   } else {
     return location.protocol + '//' +
