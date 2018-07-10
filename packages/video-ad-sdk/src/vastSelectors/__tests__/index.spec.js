@@ -186,7 +186,7 @@ test('getMediaFiles must return the mediafiles', () => {
   });
 });
 
-test('getMediaFiles add the apiFramwork if present', () => {
+test('getMediaFiles must add the apiFramwork if present', () => {
   const mediaFiles = getMediaFiles(vpaidInlineAd);
 
   expect(mediaFiles).toBeInstanceOf(Array);
