@@ -25,11 +25,14 @@ const loadScript = function (src, {async = false, defer = false, type = 'text/ja
     script.onload = () => resolve(script);
 
     if (!scriptPlaceholder) {
-      scriptPlaceholder = document.currentScript ? document.currentScript.parentNode : document.head;
+      scriptPlaceholder = document.currentScript ?
+        /* istanbul ignore next */
+        document.currentScript.parentNode :
+        document.head;
     }
 
-    scriptPlaceholder.appendChild(script);
     script.src = src;
+    scriptPlaceholder.appendChild(script);
   });
 };
 

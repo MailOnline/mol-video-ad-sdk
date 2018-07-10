@@ -1,108 +1,152 @@
 import VideoAdContainer from '../VideoAdContainer';
+import loadScript from '../helpers/loadScript';
+import getContentDocument from '../helpers/getContentDocument';
 
 let placeholder;
 
-beforeEach(() => {
-  placeholder = document.createElement('DIV');
-  document.body.appendChild(placeholder);
-});
+jest.mock('../helpers/loadScript.js');
 
-afterEach(() => {
-  document.body.removeChild(placeholder);
-});
+describe('VideoAdContainer', () => {
+  beforeEach(() => {
+    // eslint-disable-next-line no-undef
+    jsdom.reconfigure({
+      url: 'https://www.example.com/'
+    });
+    placeholder = document.createElement('DIV');
+    document.body.appendChild(placeholder);
+  });
 
-test('VideoAdContainer must complain if you don\'t pass a placeholder element', () => {
-  expect(() => new VideoAdContainer()).toThrowError(TypeError);
-});
+  afterEach(() => {
+    document.body.removeChild(placeholder);
+  });
 
-test('VideoAdContainer must add the adContainer to the passed placeholder element', () => {
-  const videoAdContainer = new VideoAdContainer(placeholder);
-  const adContainerElement = videoAdContainer.element;
+  test('must complain if you don\'t pass a placeholder element', () => {
+    expect(() => new VideoAdContainer()).toThrowError(TypeError);
+  });
 
-  expect(adContainerElement.parentNode).toBe(placeholder);
-  expect(adContainerElement.style.width).toBe('100%');
-  expect(adContainerElement.style.height).toBe('100%');
-});
+  test('must use the passed videoElement', () => {
+    const videoElement = document.createElement('VIDEO');
 
-test('VideoAdContainer must use the provided video element', () => {
-  const videoElement = document.createElement('VIDEO');
-  const videoAdContainer = new VideoAdContainer(placeholder, videoElement);
+    const videoAdContainer = new VideoAdContainer(placeholder, videoElement);
 
-  expect(videoAdContainer.videoElement).toBe(videoElement);
-  expect(videoElement.parentNode).not.toBe(videoAdContainer.element);
-});
+    expect(videoAdContainer.videoElement).toBe(videoElement);
+  });
 
-test('VideoAdContainer if video element is not passed, it must create a video element and addit to the adContainer', () => {
-  const videoAdContainer = new VideoAdContainer(placeholder);
+  test('must add the adContainer to the passed placeholder element', () => {
+    const videoAdContainer = new VideoAdContainer(placeholder);
+    const adContainerElement = videoAdContainer.element;
 
-  expect(videoAdContainer.videoElement).toBeInstanceOf(Element);
-  expect(videoAdContainer.videoElement.tagName).toBe('VIDEO');
-  expect(videoAdContainer.videoElement.style.width).toBe('100%');
-  expect(videoAdContainer.videoElement.style.height).toBe('100%');
-  expect(videoAdContainer.videoElement.parentNode).toBe(videoAdContainer.element);
-});
+    expect(adContainerElement.parentNode).toBe(placeholder);
+    expect(adContainerElement.classList.contains('mol-video-ad-container')).toBe(true);
+    expect(adContainerElement.style.width).toBe('100%');
+    expect(adContainerElement.style.height).toBe('100%');
+  });
 
-test('VideoAdContainer must set the context to window', () => {
-  const videoAdContainer = new VideoAdContainer(placeholder);
+  test('if video element is not passed, it must create a video element and add it to the ad container', () => {
+    const videoAdContainer = new VideoAdContainer(placeholder);
+    const adContainerElement = videoAdContainer.element;
 
-  expect(videoAdContainer.context).toBe(window);
-});
+    expect(videoAdContainer.videoElement).toBeInstanceOf(Element);
+    expect(videoAdContainer.videoElement.tagName).toBe('VIDEO');
+    expect(videoAdContainer.videoElement.style.width).toBe('100%');
+    expect(videoAdContainer.videoElement.style.height).toBe('100%');
+    expect(videoAdContainer.videoElement.parentNode).toBe(adContainerElement);
+  });
 
-test('VideoAdContainer ready method must resolve with itself', async () => {
-  const videoAdContainer = new VideoAdContainer(placeholder);
+  describe('addScript', () => {
+    test('must create an iframe and add the scripts to it', async () => {
+      loadScript.mockReturnValue(Promise.resolve('SCRIPT_MOCK'));
 
-  expect(await videoAdContainer.ready()).toBe(videoAdContainer);
-});
+      const src = 'http://example.com/resource';
+      const scriptOpts = {foo: 'bar'};
+      const videoAdContainer = new VideoAdContainer(placeholder);
 
-test('VideoAdContainer must be possible to add scripts to the adContainer', () => {
-  const videoAdContainer = new VideoAdContainer(placeholder);
-  const src = 'http://example.com/resource';
+      const adContainerElement = videoAdContainer.element;
 
-  const promise = videoAdContainer.addScript(src, {});
-  const script = videoAdContainer.element.querySelector('script');
+      expect(adContainerElement.querySelector('IFRAME')).toBeNull();
+      const script = await videoAdContainer.addScript(src, scriptOpts);
+      const iframe = adContainerElement.querySelector('IFRAME');
+      const iframeBody = getContentDocument(iframe).body;
 
-  expect(script.parentNode).toBe(videoAdContainer.element);
-  expect(script.src).toBe(src);
-  expect(script.defer).toBe(true);
-  expect(script.async).toBe(false);
+      expect(script).toBe('SCRIPT_MOCK');
 
-  script.onload();
+      expect(iframe).toBeInstanceOf(HTMLIFrameElement);
+      expect(loadScript).toHaveBeenCalledTimes(1);
+      expect(loadScript).toBeCalledWith(src, expect.objectContaining({
+        defer: true,
+        placeholder: iframeBody,
+        ...scriptOpts
+      }));
+    });
 
-  expect(promise).resolves.toBe(script);
-});
+    test('must reuse the iframe to add scripts', async () => {
+      loadScript.mockReturnValue(Promise.resolve('SCRIPT_MOCK'));
 
-test('VideoAdContainer destroy must remove the adContainer from the placeHolder', () => {
-  const videoAdContainer = new VideoAdContainer(placeholder);
+      const src = 'http://example.com/resource';
+      const videoAdContainer = new VideoAdContainer(placeholder);
 
-  expect(videoAdContainer.element).toBeInstanceOf(Element);
-  expect(videoAdContainer.videoElement).toBeInstanceOf(Element);
-  expect(placeholder.querySelector('.mol-video-ad-container')).toBe(videoAdContainer.element);
+      const adContainerElement = videoAdContainer.element;
 
-  videoAdContainer.destroy();
+      expect(adContainerElement.querySelector('IFRAME')).toBeNull();
+      await videoAdContainer.addScript(src);
+      await videoAdContainer.addScript(src);
+      await videoAdContainer.addScript(src);
 
-  expect(placeholder.querySelector('.mol-video-ad-container')).toBe(null);
-});
+      expect(adContainerElement.querySelectorAll('IFRAME').length).toBe(1);
+    });
 
-test('VideoAdContainer once destroyed must not allow the addition of scripts and must set the adContainer and videoElement to null', () => {
-  const videoAdContainer = new VideoAdContainer(placeholder);
-  const src = 'http://example.com/resource';
+    test('must set the execution context', async () => {
+      loadScript.mockReturnValue(Promise.resolve('SCRIPT_MOCK'));
 
-  videoAdContainer.destroy();
+      const src = 'http://example.com/resource';
+      const videoAdContainer = new VideoAdContainer(placeholder);
 
-  expect(() => videoAdContainer.addScript(src, {})).toThrowError('VideoAdContainer has been destroyed');
-  expect(() => videoAdContainer.resize()).toThrowError('VideoAdContainer has been destroyed');
-});
+      expect(videoAdContainer.executionContext).toBeNull();
 
-test('VideoAdContainer isDestroy must return true if the ad container is destroyed and false otherwise', () => {
-  const videoAdContainer = new VideoAdContainer(placeholder);
+      const adContainerElement = videoAdContainer.element;
 
-  expect(videoAdContainer.isDestroyed()).toBe(false);
-  videoAdContainer.destroy();
-  expect(videoAdContainer.isDestroyed()).toBe(true);
-});
+      await videoAdContainer.addScript(src);
 
-test('VideoAdContainer resize must do nothing', () => {
-  const videoAdContainer = new VideoAdContainer(placeholder);
+      const iframe = adContainerElement.querySelector('IFRAME');
 
-  expect(() => videoAdContainer.resize()).not.toThrowError();
+      expect(videoAdContainer.executionContext).toBe(iframe.contentWindow);
+    });
+  });
+
+  test('destroy must remove the adContainer from the placeHolder', () => {
+    const videoAdContainer = new VideoAdContainer(placeholder);
+
+    expect(videoAdContainer.element).toBeInstanceOf(Element);
+    expect(videoAdContainer.videoElement).toBeInstanceOf(HTMLVideoElement);
+    expect(placeholder.querySelector('.mol-video-ad-container')).toBe(videoAdContainer.element);
+
+    videoAdContainer.destroy();
+
+    expect(placeholder.querySelector('.mol-video-ad-container')).toBe(null);
+    expect(videoAdContainer.element.parentNode).toBe(null);
+  });
+
+  test('once destroyed must not allow the addition of scripts', async () => {
+    expect.assertions(1);
+    const src = 'http://example.com/resource';
+    const videoAdContainer = new VideoAdContainer(placeholder);
+
+    videoAdContainer.destroy();
+
+    try {
+      await videoAdContainer.addScript(src, {});
+    } catch (error) {
+      expect(error.message).toBe('VideoAdContainer has been destroyed');
+    }
+  });
+
+  test('isDestroy must return true if the ad container is destroyed and false otherwise', () => {
+    const videoAdContainer = new VideoAdContainer(placeholder);
+
+    expect(videoAdContainer.isDestroyed()).toBe(false);
+
+    videoAdContainer.destroy();
+
+    expect(videoAdContainer.isDestroyed()).toBe(true);
+  });
 });

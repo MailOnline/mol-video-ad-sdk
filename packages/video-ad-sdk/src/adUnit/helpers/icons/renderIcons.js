@@ -4,11 +4,9 @@ import canBeShown from './canBeShown';
 
 const renderIcons = (icons, {onIconClick, videoAdContainer, logger}) => {
   const {
-    context,
     element,
     videoElement
   } = videoAdContainer;
-  const document = context.document;
   const drawnIcons = [];
   const {
     iconsToShow,

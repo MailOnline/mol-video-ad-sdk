@@ -226,7 +226,6 @@ class VastAdUnit extends Emitter {
 
   async resize () {
     this[hidden].throwIfFinished();
-    this.videoAdContainer.resize();
 
     if (this.icons) {
       await this.removeIcons();

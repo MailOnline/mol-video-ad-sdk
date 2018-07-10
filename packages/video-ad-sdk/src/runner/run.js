@@ -29,7 +29,7 @@ const run = async (vastChain, placeholder, options) => {
   try {
     validateVastChain(vastChain, options);
 
-    videoAdContainer = await createVideoAdContainer(placeholder, options);
+    videoAdContainer = await createVideoAdContainer(placeholder, options.videoElement);
 
     const adUnit = await startVideoAd(vastChain, videoAdContainer, options);
 

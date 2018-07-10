@@ -576,26 +576,6 @@ test('VastAdUnit finish must remove the icons of the vastChain', () => {
   });
 });
 
-test('VastAdUnit resize must resize the the passed videoAdContainer', () => {
-  canPlay.mockReturnValue(true);
-  videoAdContainer.resize = jest.fn();
-  retrieveIcons.mockImplementation(() => null);
-
-  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
-
-  adUnit.start();
-
-  expect(videoAdContainer.resize).toHaveBeenCalledTimes(0);
-  expect(mockRemoveIcons).toHaveBeenCalledTimes(0);
-  expect(mockDrawIcons).toHaveBeenCalledTimes(0);
-
-  adUnit.resize();
-
-  expect(videoAdContainer.resize).toHaveBeenCalledTimes(1);
-  expect(mockRemoveIcons).toHaveBeenCalledTimes(0);
-  expect(mockDrawIcons).toHaveBeenCalledTimes(0);
-});
-
 test('VastAdUnit resize must not update the media if the ad has not started', () => {
   canPlay.mockReturnValue(true);
   videoAdContainer.resize = jest.fn();

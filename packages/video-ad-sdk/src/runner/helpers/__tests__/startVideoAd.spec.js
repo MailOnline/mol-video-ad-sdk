@@ -28,7 +28,7 @@ let vastAdChain;
 let videoAdContainer;
 let options;
 
-beforeEach(async () => {
+beforeEach(() => {
   vastAdChain = [
     {
       ad: inlineAd,
@@ -50,7 +50,7 @@ beforeEach(async () => {
   };
   const placeholder = document.createElement('div');
 
-  videoAdContainer = await new VideoAdContainer(placeholder).ready();
+  videoAdContainer = new VideoAdContainer(placeholder);
 });
 
 afterEach(() => {

@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createAdContainer must return a video ad container element 1`] = `
+<div
+  class="mol-video-ad-container"
+  style="width: 100%; height: 100%;"
+/>
+`;

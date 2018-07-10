@@ -13,9 +13,8 @@ const {
   playerExpand
 } = linearEvents;
 
-const onFullscreenChange = ({context, videoElement}, callback) => {
+const onFullscreenChange = ({videoElement}, callback) => {
   const fullscreenEvtNames = ['webkitfullscreenchange', 'mozfullscreenchange', 'fullscreenchange', 'MSFullscreenChange'];
-  const {document} = context;
   let fullscreenOn = false;
   const fullscreenchangeHandler = () => {
     if (fullscreenElement() === videoElement) {

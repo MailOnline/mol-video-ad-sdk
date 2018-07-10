@@ -23,10 +23,8 @@ const onSkip = (videoAdContainer, callback, {skipoffset, createSkipControl = cre
   let skipControl;
   const {
     videoElement,
-    element,
-    context
+    element
   } = videoAdContainer;
-  const {document} = context;
 
   const skipHandler = () => {
     const currentTimeMs = videoElement.currentTime * 1000;

@@ -12,7 +12,6 @@ test('onFullscreenChange must call playerExpand on when going fullscreen and pla
   const callback = jest.fn();
   const videoElement = document.createElement('VIDEO');
   const disconnect = onFullscreenChange({
-    context: window,
     videoElement
   }, callback);
 
