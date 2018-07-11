@@ -10,6 +10,7 @@ import {
 } from '../../../fixtures';
 import {
   getAds,
+  getAdParameters,
   getAdErrorURI,
   getClickThrough,
   getClickTracking,
@@ -212,10 +213,12 @@ test('getInteractiveCreativeFiles must return the mediafiles', () => {
   expect(interactiveFiles.length).toBe(2);
   expect(interactiveFiles[0]).toEqual({
     apiFramework: 'VPAID',
+    src: 'https://test.example.com/html5.js',
     type: 'text/javascript'
   });
   expect(interactiveFiles[1]).toEqual({
     apiFramework: 'VPAID',
+    src: 'https://test.example.com/flash.swf',
     type: 'application/x-shockwave-flash'
   });
 });
@@ -546,10 +549,12 @@ test('getInteractiveFiles must return the interactive files', () => {
   expect(interactiveFiles.length).toBe(2);
   expect(interactiveFiles[0]).toEqual({
     apiFramework: 'VPAID',
+    src: 'https://test.example.com/html5.js',
     type: 'text/javascript'
   });
   expect(interactiveFiles[1]).toEqual({
     apiFramework: 'VPAID',
+    src: 'https://test.example.com/flash.swf',
     type: 'application/x-shockwave-flash'
   });
 });
@@ -561,10 +566,26 @@ test('getInteractiveFiles must return vast2 interactive files', () => {
   expect(interactiveFiles.length).toBe(2);
   expect(interactiveFiles[0]).toEqual({
     apiFramework: 'VPAID',
+    src: 'https://test.example.com/html5.js',
     type: 'text/javascript'
   });
   expect(interactiveFiles[1]).toEqual({
     apiFramework: 'VPAID',
+    src: 'https://test.example.com/flash.swf',
     type: 'application/x-shockwave-flash'
   });
+});
+
+test('getAdParameters must return null if there none', () => {
+  expect(getAdParameters()).toEqual(null);
+  expect(getAdParameters(null)).toEqual(null);
+  expect(getAdParameters({})).toEqual(null);
+  expect(getAdParameters(wrapperAd)).toEqual(null);
+});
+
+test('getAdParameters must return the adParameters', () => {
+  expect(getAdParameters(vpaidInlineAd)).toEqual(expect.objectContaining({
+    data: 'AD_PARAMETERS_DATA',
+    xmlEncoded: 'false'
+  }));
 });

@@ -27,6 +27,7 @@
             </CreativeExtension>
           </CreativeExtensions>
           <Linear skipoffset="00:00:05" >
+            <AdParameters xmlEncoded="false"><![CDATA[AD_PARAMETERS_DATA]]></AdParameters>
             <Duration>00:00:30</Duration>
             <TrackingEvents>
               <Tracking event="creativeView">https://test.example.com/creativeView</Tracking>
