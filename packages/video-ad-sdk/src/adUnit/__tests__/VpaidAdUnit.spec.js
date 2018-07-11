@@ -7,10 +7,10 @@ import {
   vastVpaidInlineXML
 } from '../../../fixtures';
 import VideoAdContainer from '../../adContainer/VideoAdContainer';
-import loadCreative from '../helpers/vpaid/loadCreative';
+import init from '../helpers/vpaid/init';
 import VpaidAdUnit from '../VpaidAdUnit';
 
-jest.mock('../helpers/vpaid/loadCreative');
+jest.mock('../helpers/vpaid/init');
 
 describe('VpaidAdUnit', () => {
   let vastChain;
@@ -51,12 +51,12 @@ describe('VpaidAdUnit', () => {
     }
   });
 
-  test('must load the vast creative', () => {
+  test('must init the creative', () => {
     // eslint-disable-next-line no-new
     new VpaidAdUnit(vpaidChain, videoAdContainer);
 
-    expect(loadCreative).toHaveBeenCalledTimes(1);
-    expect(loadCreative).toHaveBeenCalledWith(
+    expect(init).toHaveBeenCalledTimes(1);
+    expect(init).toHaveBeenCalledWith(
       expect.objectContaining({
         apiFramework: 'VPAID',
         src: 'https://test.example.com/html5.js',
@@ -64,4 +64,9 @@ describe('VpaidAdUnit', () => {
       }),
       videoAdContainer);
   });
+
+  // describe('start', () => {
+  //   test('must throw if started');
+  //   test('must throw if finished');
+  // });
 });

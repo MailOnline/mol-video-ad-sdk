@@ -2,13 +2,13 @@
 import {getInteractiveFiles} from '../vastSelectors';
 import Emitter from './helpers/Emitter';
 import isSupported from './helpers/vpaid/isSupported';
-import loadCreative from './helpers/vpaid/loadCreative';
+import init from './helpers/vpaid/init';
 
 const hidden = Symbol('hidden');
 
 class VpaidAdUnit extends Emitter {
   [hidden] = {
-    destroyed: false,
+    finished: false,
     started: false
   };
 
@@ -21,11 +21,13 @@ class VpaidAdUnit extends Emitter {
       throw new TypeError('VastChain does not contain a supported vpaid creative');
     }
 
-    this[hidden].readyPromise = loadCreative(creative, videoAdContainer);
+    this[hidden].initPromise = init(creative, videoAdContainer);
   }
 
   async start () {
+    this.creativeAd = await this[hidden].initPromise;
 
+    return this;
   }
 
   resume () {
