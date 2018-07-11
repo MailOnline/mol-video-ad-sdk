@@ -31,6 +31,7 @@ const run = async (vastChain, placeholder, options) => {
 
     videoAdContainer = await createVideoAdContainer(placeholder, options.videoElement);
 
+    // TODO: HANDLE AD START TIMEOUTS HERE
     const adUnit = await startVideoAd(vastChain, videoAdContainer, options);
 
     return adUnit;

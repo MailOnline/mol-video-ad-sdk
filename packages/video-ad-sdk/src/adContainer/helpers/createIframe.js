@@ -1,17 +1,6 @@
+import defer from '../../utils/defer';
 import getContentDocument from './getContentDocument';
 import getOrigin from './getOrigin';
-
-const defer = () => {
-  const deferred = {};
-  const promise = new Promise((resolve, reject) => {
-    deferred.resolve = resolve;
-    deferred.reject = reject;
-  });
-
-  deferred.promise = promise;
-
-  return deferred;
-};
 
 const createIframe = (placeholder, id) => {
   const deferred = defer();

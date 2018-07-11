@@ -10,6 +10,7 @@ import {
 } from '../../../fixtures';
 import {
   getAds,
+  getAdParameters,
   getAdErrorURI,
   getClickThrough,
   getClickTracking,
@@ -573,4 +574,18 @@ test('getInteractiveFiles must return vast2 interactive files', () => {
     src: 'https://test.example.com/flash.swf',
     type: 'application/x-shockwave-flash'
   });
+});
+
+test('getAdParameters must return null if there none', () => {
+  expect(getAdParameters()).toEqual(null);
+  expect(getAdParameters(null)).toEqual(null);
+  expect(getAdParameters({})).toEqual(null);
+  expect(getAdParameters(wrapperAd)).toEqual(null);
+});
+
+test('getAdParameters must return the adParameters', () => {
+  expect(getAdParameters(vpaidInlineAd)).toEqual(expect.objectContaining({
+    data: 'AD_PARAMETERS_DATA',
+    xmlEncoded: 'false'
+  }));
 });

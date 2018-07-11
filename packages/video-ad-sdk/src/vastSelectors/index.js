@@ -567,6 +567,24 @@ export const getSkipOffset = (ad) => {
   return null;
 };
 
+export const getAdParameters = (ad) => {
+  const creativeElement = ad && getLinearCreative(ad);
+  const linearElement = creativeElement && get(creativeElement, 'Linear');
+  const adParametersElement = linearElement && get(linearElement, 'AdParameters');
+
+  if (!adParametersElement) {
+    return null;
+  }
+
+  const xmlEncoded = getAttribute(adParametersElement, 'xmlEncoded');
+  const data = getText(adParametersElement);
+
+  return {
+    data,
+    xmlEncoded
+  };
+};
+
 export {
 
   /**
