@@ -33,14 +33,14 @@ const validateChain = (VASTChain) => {
  *    If no buffet ad is available it will return the next ad in ad pod sequence.
  *    Set it to true if an ad from an adPod failed and you want to replace it with an ad from the ad buffet.
  *    Defaults to `false`.
- * @param {boolean} [options.fallbackOnNoAd] - tells the video player to select an from any stand-alone ads available.
+ * @param {boolean} [options.fallbackOnNoAd] - tells the video player to select an ad from any stand-alone ads available.
  *    Note: if the {@link VASTChain} contains an adPod this property will be ignored.
  *    Defaults to `true`.
+ * @param {numner} [options.timeout] - timeout number in milliseconds. If Present, the request will timeout if it is not fullfilled before the specified time.
  *
  * @returns Promise<VASTChain>  - Returns a Promise that will resolve a VastChain with the newest VAST response at the begining of the array.
  * If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
  */
-// TODO: MUST ACCEPT TIMEOUT
 const requestNextAd = (VASTChain, options) => {
   validateChain(VASTChain);
 

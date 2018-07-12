@@ -14,7 +14,7 @@ describe('initAd', () => {
   let vpaidChain;
   let videoAdContainer;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     vpaidChain = [
       {
         ad: vpaidInlineAd,
