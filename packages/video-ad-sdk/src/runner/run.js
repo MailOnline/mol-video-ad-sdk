@@ -28,11 +28,32 @@ const run = async (vastChain, placeholder, options) => {
 
   try {
     validateVastChain(vastChain, options);
+    const {timeout} = options;
 
-    videoAdContainer = await createVideoAdContainer(placeholder, options.videoElement);
+    videoAdContainer = createVideoAdContainer(placeholder, options.videoElement);
+    let adUnitPromise = startVideoAd(vastChain, videoAdContainer, options);
 
-    // TODO: HANDLE AD START TIMEOUTS HERE
-    const adUnit = await startVideoAd(vastChain, videoAdContainer, options);
+    if (typeof timeout === 'number') {
+      const timeoutPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const {tracker} = options;
+
+          trackError(vastChain, {
+            errorCode: 402,
+            tracker
+          });
+
+          reject(new Error('Timeout while starting the ad'));
+        }, options.timeout);
+      });
+
+      adUnitPromise = Promise.race([
+        adUnitPromise,
+        timeoutPromise
+      ]);
+    }
+
+    const adUnit = await adUnitPromise;
 
     return adUnit;
   } catch (error) {
