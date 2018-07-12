@@ -107,7 +107,10 @@ const getOptions = (vastChain, options) => {
   const parentAdIsWrapper = Boolean(parentAd) && isWrapper(parentAd.ad);
   const wrapperOptions = parentAdIsWrapper ? getWrapperOptions(parentAd.ad) : {};
 
-  return Object.assign({}, wrapperOptions, options);
+  return {
+    ...wrapperOptions,
+    ...options
+  };
 };
 
 /**
@@ -121,11 +124,12 @@ const getOptions = (vastChain, options) => {
  *  Defaults to `5`.
  * @param {boolean} [options.AllowMultipleAds] - Boolean to indicate whether adPods are allowed or not.
  *  Defaults to `true`.
+ * @param {numner} [options.timeout] - timeout number in milliseconds. If Present, the request will timeout if it is not fullfilled before the specified time.
  * @param {VASTChain} [vastChain] - Optional vastChain with the previous VAST responses.
  * @returns {Promise<VASTChain>} - Returns a Promise that will resolve a VastChain with the newest VAST response at the begining of the array.
  * If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
  */
-const requestAd = async (adTag, options = {}, vastChain = []) => {
+const requestAd = async (adTag, options, vastChain = []) => {
   const VASTAdResponse = {
     ad: null,
     errorCode: null,
@@ -133,24 +137,56 @@ const requestAd = async (adTag, options = {}, vastChain = []) => {
     requestTag: adTag,
     XML: null
   };
+  let opts;
+  let epoch;
+  let timeout;
 
   try {
-    const opts = getOptions(vastChain, options);
-
+    opts = getOptions(vastChain, options);
     validateChain(vastChain, opts);
 
-    VASTAdResponse.XML = await fetchAdXML(adTag, options);
+    let fetchPromise = fetchAdXML(adTag, opts);
+
+    if (typeof opts.timeout === 'number') {
+      timeout = opts.timeout;
+      epoch = Date.now();
+      fetchPromise = Promise.race([
+        fetchPromise,
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            const error = new Error('RequestAd timeout');
+
+            error.errorCode = 301;
+            reject(error);
+          }, timeout);
+        })
+      ]);
+    }
+
+    VASTAdResponse.XML = await fetchPromise;
     VASTAdResponse.parsedXML = parseVASTXML(VASTAdResponse.XML);
     VASTAdResponse.ad = getAd(VASTAdResponse.parsedXML);
 
     validateResponse(VASTAdResponse, opts);
 
     if (isWrapper(VASTAdResponse.ad)) {
-      return requestAd(getVASTAdTagURI(VASTAdResponse.ad), opts, [VASTAdResponse, ...vastChain]);
+      if (epoch) {
+        timeout -= Date.now() - epoch;
+      }
+
+      return requestAd(
+        getVASTAdTagURI(VASTAdResponse.ad),
+        {
+          ...opts,
+          timeout
+        },
+        [VASTAdResponse, ...vastChain]
+      );
     }
 
     return [VASTAdResponse, ...vastChain];
   } catch (error) {
+    /* istanbul ignore if */
     if (!Number.isInteger(error.errorCode)) {
       error.errorCode = 900;
     }

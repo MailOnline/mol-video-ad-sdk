@@ -4,15 +4,29 @@ import run from './run';
 
 const waterfall = async (fetchVastChain, placeholder, options) => {
   let vastChain;
+  let runEpoch;
+
+  const opts = {...options};
 
   try {
+    if (typeof opts.timeout === 'number') {
+      runEpoch = Date.now();
+    }
+
     vastChain = await fetchVastChain();
 
-    const adUnit = await run(vastChain, placeholder, options);
+    if (runEpoch) {
+      const newEpoch = Date.now();
+
+      opts.timeout -= newEpoch - runEpoch;
+      runEpoch = newEpoch;
+    }
+
+    const adUnit = await run(vastChain, placeholder, {...opts});
 
     return adUnit;
   } catch (error) {
-    const onError = options.onError;
+    const onError = opts.onError;
 
     /* istanbul ignore else */
     if (onError) {
@@ -23,7 +37,11 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
     }
 
     if (vastChain) {
-      return waterfall(() => requestNextAd(vastChain, options), placeholder, options);
+      if (runEpoch) {
+        opts.timeout -= Date.now() - runEpoch;
+      }
+
+      return waterfall(() => requestNextAd(vastChain, opts), placeholder, {...opts});
     }
 
     throw error;

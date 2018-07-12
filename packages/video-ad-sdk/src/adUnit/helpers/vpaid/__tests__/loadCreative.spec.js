@@ -14,7 +14,7 @@ describe('loadCreative', () => {
   let vpaidChain;
   let videoAdContainer;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     vastChain = [
       {
         ad: inlineAd,

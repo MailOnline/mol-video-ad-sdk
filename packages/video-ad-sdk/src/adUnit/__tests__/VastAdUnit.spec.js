@@ -369,7 +369,6 @@ test('VastAdUnit start must do nothing on a second play', () => {
   'cancel',
   'onError',
   'onFinish',
-  'finish',
   'setVolume',
   'getVolume'
 ].forEach((method) => {
@@ -415,14 +414,15 @@ test('VastAdUnit cancel must stop the ad video and finish the ad unit', () => {
   });
   const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
-  adUnit.finish = jest.fn();
   adUnit.start();
 
   expect(videoAdContainer.videoElement.pause).toHaveBeenCalledTimes(0);
+  expect(adUnit.isFinished()).toBe(false);
+
   adUnit.cancel();
 
   expect(videoAdContainer.videoElement.pause).toHaveBeenCalledTimes(1);
-  expect(adUnit.finish).toHaveBeenCalledTimes(1);
+  expect(adUnit.isFinished()).toBe(true);
 });
 
 test('VastAdUnit onFinish must complain if you don\'t pass a callback', () => {
@@ -527,7 +527,7 @@ test('VastAdUnit finish must stop the metric handlers ', () => {
   const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.start();
-  adUnit.finish();
+  adUnit.cancel();
 
   expect(mockStopMetricHandler).toHaveBeenCalledTimes(metricHandlers.length);
 });
@@ -545,7 +545,7 @@ test('VastAdUnit finish must remove the icons of the vastChain', () => {
   const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
   adUnit.start();
-  adUnit.finish();
+  adUnit.cancel();
 
   expect(mockRemoveIcons).toHaveBeenCalledTimes(1);
 });

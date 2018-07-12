@@ -22,17 +22,22 @@ const hidden = Symbol('hidden');
 class VastAdUnit extends Emitter {
   [hidden] = {
     destroyed: false,
+    finish: () => {
+      this[hidden].onFinishCallbacks.forEach((callback) => callback());
+      this[hidden].finished = true;
+    },
+    finished: false,
     handleMetric: (event, data) => {
       switch (event) {
       case complete: {
-        this.finish();
+        this[hidden].finish();
         break;
       }
       case errorEvt: {
         this.error = data;
         this.errorCode = this.error && this.error.errorCode ? this.error.errorCode : 405;
         this[hidden].onErrorCallbacks.forEach((callback) => callback(this.error));
-        this.finish();
+        this[hidden].finish();
         break;
       }
       case skip: {
@@ -186,7 +191,7 @@ class VastAdUnit extends Emitter {
 
     videoElement.pause();
 
-    this.finish();
+    this[hidden].finish();
   }
 
   onFinish (callback) {
@@ -215,13 +220,6 @@ class VastAdUnit extends Emitter {
 
   isStarted () {
     return this[hidden].started;
-  }
-
-  // TODO: FINISH SHOULD BE PRIVATE
-  finish () {
-    this[hidden].throwIfFinished();
-    this[hidden].onFinishCallbacks.forEach((callback) => callback());
-    this[hidden].finished = true;
   }
 
   async resize () {
