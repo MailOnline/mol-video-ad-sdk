@@ -40,6 +40,7 @@ const validateChain = (VASTChain) => {
  * @returns Promise<VASTChain>  - Returns a Promise that will resolve a VastChain with the newest VAST response at the begining of the array.
  * If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
  */
+// TODO: MUST ACCEPT TIMEOUT
 const requestNextAd = (VASTChain, options) => {
   validateChain(VASTChain);
 
