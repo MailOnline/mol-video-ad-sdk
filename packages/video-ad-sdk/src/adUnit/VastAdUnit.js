@@ -21,7 +21,6 @@ const hidden = Symbol('hidden');
 
 class VastAdUnit extends Emitter {
   [hidden] = {
-    destroyed: false,
     finish: () => {
       this[hidden].onFinishCallbacks.forEach((callback) => callback());
       this[hidden].finished = true;
