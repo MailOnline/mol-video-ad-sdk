@@ -157,7 +157,7 @@ class VastAdUnit extends Emitter {
 
     const {videoElement} = this.videoAdContainer;
 
-    videoElement.play();
+    return videoElement.play();
   }
 
   pause () {
@@ -165,7 +165,7 @@ class VastAdUnit extends Emitter {
 
     const {videoElement} = this.videoAdContainer;
 
-    videoElement.pause();
+    return videoElement.pause();
   }
 
   setVolume (newVolume) {
