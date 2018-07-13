@@ -9,7 +9,7 @@ import initAd from './helpers/vpaid/initAd';
 const hidden = Symbol('hidden');
 
 const callAndWait = (creativeAd, method, event) => {
-  const waitPromise = waitFor(creativeAd, event);
+  const waitPromise = waitFor(creativeAd, event, 3000);
 
   creativeAd[method]();
 
