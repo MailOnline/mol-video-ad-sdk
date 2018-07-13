@@ -1,6 +1,5 @@
 import defer from '../../../utils/defer';
 
-// TODO: ONCE VPAID AD UNIT IS FINISH, REVIEW IF THE TIMEOUT IS NEEDED IN THE END
 const waitFor = (creativeAd, event, timeout) => {
   // eslint-disable-next-line prefer-const
   let timeoutId;

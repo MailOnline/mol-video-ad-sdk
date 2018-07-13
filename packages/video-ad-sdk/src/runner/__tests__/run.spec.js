@@ -13,6 +13,7 @@ import run from '../run';
 import VideoAdContainer from '../../adContainer/VideoAdContainer';
 import VastAdUnit from '../../adUnit/VastAdUnit';
 import createVideoAdContainer from '../../adContainer/createVideoAdContainer';
+import defer from '../../utils/defer';
 
 jest.mock('../helpers/startVideoAd', () => jest.fn());
 jest.mock('../../adContainer/createVideoAdContainer', () => jest.fn());
@@ -124,6 +125,50 @@ describe('run', () => {
         expect(error.message).toBe('Timeout while starting the ad');
         expect(adContainer.destroy).toHaveBeenCalledTimes(1);
       }
+    });
+
+    test('must cancel the adUnit if it timed out and it was started', async () => {
+      const deferred = defer();
+      const mockAdUnit = {
+        cancel: jest.fn(),
+        isStarted: () => true
+      };
+
+      adContainer.destroy = jest.fn();
+      startVideoAd.mockImplementation(() => deferred.promise);
+
+      try {
+        await run(vastAdChain, placeholder, {timeout: 0});
+      } catch (error) {
+        expect(error.message).toBe('Timeout while starting the ad');
+        expect(adContainer.destroy).toHaveBeenCalledTimes(1);
+      }
+      deferred.resolve(mockAdUnit);
+      await deferred.promise;
+
+      expect(mockAdUnit.cancel).toHaveBeenCalledTimes(1);
+    });
+
+    test('must not cancel the adUnit if it timed out and it was not started', async () => {
+      const deferred = defer();
+      const mockAdUnit = {
+        cancel: jest.fn(),
+        isStarted: () => false
+      };
+
+      adContainer.destroy = jest.fn();
+      startVideoAd.mockImplementation(() => deferred.promise);
+
+      try {
+        await run(vastAdChain, placeholder, {timeout: 0});
+      } catch (error) {
+        expect(error.message).toBe('Timeout while starting the ad');
+        expect(adContainer.destroy).toHaveBeenCalledTimes(1);
+      }
+      deferred.resolve(mockAdUnit);
+      await deferred.promise;
+
+      expect(mockAdUnit.cancel).toHaveBeenCalledTimes(0);
     });
 
     test('must start the ad if the adUnit starts within the timeout', async () => {

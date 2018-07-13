@@ -1,3 +1,5 @@
+import {handshakeVersion} from './api';
+
 const major = (version) => {
   const parts = version.split('.');
 
@@ -15,7 +17,7 @@ const isSupported = (supportedVersion, creativeVersion) => {
 };
 
 const handshake = (creative, supportedVersion) => {
-  const creativeVersion = creative.handshakeVersion(supportedVersion);
+  const creativeVersion = creative[handshakeVersion](supportedVersion);
 
   if (!isSupported(supportedVersion, creativeVersion)) {
     throw new Error(`Creative Version '${creativeVersion}' not supported`);

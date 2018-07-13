@@ -21,7 +21,6 @@ const hidden = Symbol('hidden');
 
 class VastAdUnit extends Emitter {
   [hidden] = {
-    destroyed: false,
     finish: () => {
       this[hidden].onFinishCallbacks.forEach((callback) => callback());
       this[hidden].finished = true;
@@ -56,7 +55,9 @@ class VastAdUnit extends Emitter {
         throw new Error('VastAdUnit is finished');
       }
     },
-    throwIfNotStarted: () => {
+    throwIfNotReady: () => {
+      this[hidden].throwIfFinished();
+
       if (!this.isStarted()) {
         throw new Error('VastAdUnit has not started');
       }
@@ -113,7 +114,7 @@ class VastAdUnit extends Emitter {
     this[hidden].throwIfFinished();
 
     if (this.isStarted()) {
-      return;
+      throw new Error('VastAdUnit already started');
     }
 
     const inlineAd = this.vastChain[0].ad;
@@ -151,25 +152,23 @@ class VastAdUnit extends Emitter {
   }
 
   resume () {
-    this[hidden].throwIfFinished();
-    this[hidden].throwIfNotStarted();
+    this[hidden].throwIfNotReady();
 
     const {videoElement} = this.videoAdContainer;
 
-    videoElement.play();
+    return videoElement.play();
   }
 
   pause () {
-    this[hidden].throwIfFinished();
-    this[hidden].throwIfNotStarted();
+    this[hidden].throwIfNotReady();
 
     const {videoElement} = this.videoAdContainer;
 
-    videoElement.pause();
+    return videoElement.pause();
   }
 
   setVolume (newVolume) {
-    this[hidden].throwIfFinished();
+    this[hidden].throwIfNotReady();
 
     const {videoElement} = this.videoAdContainer;
 
@@ -177,7 +176,7 @@ class VastAdUnit extends Emitter {
   }
 
   getVolume () {
-    this[hidden].throwIfFinished();
+    this[hidden].throwIfNotReady();
 
     const {videoElement} = this.videoAdContainer;
 
@@ -185,7 +184,7 @@ class VastAdUnit extends Emitter {
   }
 
   cancel () {
-    this[hidden].throwIfFinished();
+    this[hidden].throwIfNotReady();
 
     const videoElement = this.videoAdContainer.videoElement;
 
@@ -223,7 +222,7 @@ class VastAdUnit extends Emitter {
   }
 
   async resize () {
-    this[hidden].throwIfFinished();
+    this[hidden].throwIfNotReady();
 
     if (this.icons) {
       await this.removeIcons();
