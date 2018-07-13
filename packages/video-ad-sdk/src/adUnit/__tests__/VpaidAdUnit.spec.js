@@ -183,7 +183,7 @@ describe('VpaidAdUnit', () => {
         expect(() => adUnit.resume()).toThrow('VpaidAdUnit is finished');
       });
 
-      test('must call resumeAd and wait until it recieves adPlaying evt', async () => {
+      test('must call resumeAd and wait until it receives adPlaying evt', async () => {
         await adUnit.start();
         await adUnit.resume();
 
@@ -203,7 +203,7 @@ describe('VpaidAdUnit', () => {
         expect(() => adUnit.pause()).toThrow('VpaidAdUnit is finished');
       });
 
-      test('must call pauseAd and wait until it recieves adPlaying evt', async () => {
+      test('must call pauseAd and wait until it receives adPlaying evt', async () => {
         await adUnit.start();
         await adUnit.pause();
 
