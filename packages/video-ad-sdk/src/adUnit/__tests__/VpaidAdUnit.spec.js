@@ -287,5 +287,34 @@ describe('VpaidAdUnit', () => {
         expect(adUnit.isFinished()).toBe(true);
       });
     });
+
+    describe('onFinish', () => {
+      test('must throw if the adUnit is finished', async () => {
+        await adUnit.start();
+        await adUnit.cancel();
+
+        expect(() => adUnit.onFinish()).toThrow('VpaidAdUnit is finished');
+      });
+
+      test('must throw if you don\'t pass a callback function ', async () => {
+        await adUnit.start();
+
+        expect(() => adUnit.onFinish()).toThrow('Expected a callback function');
+      });
+
+      test('must be called once the ad unit finishes', async () => {
+        const callback = jest.fn();
+
+        adUnit.onFinish(callback);
+
+        await adUnit.start();
+
+        expect(callback).not.toHaveBeenCalled();
+
+        await adUnit.cancel();
+
+        expect(callback).toHaveBeenCalledTimes(1);
+      });
+    });
   });
 });
