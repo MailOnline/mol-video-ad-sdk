@@ -9,7 +9,7 @@ import loadCreative from '../helpers/vpaid/loadCreative';
 import handshake from '../helpers/vpaid/handshake';
 import initAd from '../helpers/vpaid/initAd';
 import VpaidAdUnit from '../VpaidAdUnit';
-import {adLoaded, adStarted} from '../helpers/vpaid/vpaidEvents';
+import {adLoaded, adStarted} from '../helpers/vpaid/api';
 import MockVpaidCreativeAd from './MockVpaidCreativeAd';
 
 jest.mock('../helpers/vpaid/loadCreative');

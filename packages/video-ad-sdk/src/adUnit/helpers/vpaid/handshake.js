@@ -1,4 +1,4 @@
-import {handshakeVersion} from './vpaidMethods';
+import {handshakeVersion} from './api';
 
 const major = (version) => {
   const parts = version.split('.');

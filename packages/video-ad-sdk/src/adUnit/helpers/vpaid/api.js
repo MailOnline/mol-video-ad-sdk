@@ -1,3 +1,23 @@
+export const handshakeVersion = 'handshakeVersion';
+export const initAd = 'initAd';
+export const resizeAd = 'resizeAd';
+export const startAd = 'startAd';
+export const stopAd = 'stopAd';
+export const pauseAd = 'pauseAd';
+export const resumeAd = 'resumeAd';
+export const expandAd = 'expandAd';
+export const collapseAd = 'collapseAd';
+export const getAdLinear = 'getAdLinear';
+export const getAdWidth = 'getAdWidth';
+export const getAdHeight = 'getAdHeight';
+export const getAdExpanded = 'getAdExpanded';
+export const getAdSkippableState = 'getAdSkippableState';
+export const getAdRemainingTime = 'getAdRemainingTime';
+export const getAdDuration = 'getAdDuration';
+export const getAdVolume = 'getAdVolume';
+export const getAdCompanions = 'getAdCompanions';
+export const getAdIcons = 'getAdIcons';
+export const setAdVolume = 'setAdVolume';
 export const adLoaded = 'AdLoaded';
 export const adStarted = 'AdStarted';
 export const adStopped = 'AdStopped';
@@ -25,7 +45,7 @@ export const adPlaying = 'AdPlaying';
 export const adLog = 'AdLog';
 export const adError = 'AdError';
 
-const vpaidEvents = [
+export const EVENTS = [
   adLoaded,
   adStarted,
   adStopped,
@@ -54,4 +74,36 @@ const vpaidEvents = [
   adError
 ];
 
-export default vpaidEvents;
+// NOTE: `skipAd` is not supported on VPAID 1.0 and since it is a convinent method that has proven problematic we have decided not to support custom skip control for vpaid creatives
+// otherwise we risk showing the button twice if the creative is badly written and tell the sdk to show a custom skip control while showing its own control.
+export const METHODS = [
+  handshakeVersion,
+  initAd,
+  resizeAd,
+  startAd,
+  stopAd,
+  pauseAd,
+  resumeAd,
+  expandAd,
+  collapseAd
+];
+
+export const GETTERS = [
+  getAdLinear,
+  getAdExpanded,
+  getAdRemainingTime,
+  getAdVolume,
+
+  // VPAID 2.0 new getters
+  getAdWidth,
+  getAdHeight,
+  getAdSkippableState,
+  getAdDuration,
+  getAdCompanions,
+  getAdIcons
+];
+
+export const SETTERS = [
+  setAdVolume
+];
+

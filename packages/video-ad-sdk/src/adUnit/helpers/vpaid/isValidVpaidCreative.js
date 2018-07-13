@@ -1,5 +1,5 @@
-import vpaidMethods from './vpaidMethods';
+import {METHODS} from './api';
 
-const isValidVpaidCreative = (creative) => vpaidMethods.every((method) => typeof creative[method] === 'function');
+const isValidVpaidCreative = (creative) => METHODS.every((method) => typeof creative[method] === 'function');
 
 export default isValidVpaidCreative;

@@ -1,14 +1,14 @@
-import vpaidMethods from '../vpaidMethods';
+import {METHODS} from '../api';
 import isValidVpaidCreative from '../isValidVpaidCreative';
 
-const createVpaidCreative = () => vpaidMethods.reduce((acc, key) => {
+const createVpaidCreative = () => METHODS.reduce((acc, key) => {
   acc[key] = () => {};
 
   return acc;
 }, {});
 
 test('isValidVpaidCreative must return false if doesn\'t implement the vpaid interface', () => {
-  for (const method of vpaidMethods) {
+  for (const method of METHODS) {
     const creative = createVpaidCreative();
 
     delete creative[method];

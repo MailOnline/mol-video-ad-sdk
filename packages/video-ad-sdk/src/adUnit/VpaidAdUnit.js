@@ -1,7 +1,7 @@
 /* eslint-disable promise/prefer-await-to-callbacks, class-methods-use-this */
 import Emitter from './helpers/Emitter';
 import loadCreative from './helpers/vpaid/loadCreative';
-import {adLoaded, adStarted} from './helpers/vpaid/vpaidEvents';
+import {adLoaded, adStarted, adPlaying, adPaused, startAd, resumeAd, pauseAd} from './helpers/vpaid/api';
 import waitFor from './helpers/vpaid/waitFor';
 import handshake from './helpers/vpaid/handshake';
 import initAd from './helpers/vpaid/initAd';
@@ -61,7 +61,7 @@ class VpaidAdUnit extends Emitter {
 
     // if the ad timed out while trying to load the videoAdContainer will be destroyed
     if (!this.videoAdContainer.isDestroyed()) {
-      await callAndWait(this.creativeAd, 'startAd', adStarted);
+      await callAndWait(this.creativeAd, startAd, adStarted);
       this[hidden].started = true;
     }
 
@@ -70,10 +70,14 @@ class VpaidAdUnit extends Emitter {
 
   resume () {
     this[hidden].throwIfNotReady();
+
+    return callAndWait(this.creativeAd, resumeAd, adPlaying);
   }
 
   pause () {
     this[hidden].throwIfNotReady();
+
+    return callAndWait(this.creativeAd, pauseAd, adPaused);
   }
 
   setVolume () {
