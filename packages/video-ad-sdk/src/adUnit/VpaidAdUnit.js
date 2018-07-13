@@ -1,12 +1,20 @@
 /* eslint-disable promise/prefer-await-to-callbacks, class-methods-use-this */
 import Emitter from './helpers/Emitter';
 import loadCreative from './helpers/vpaid/loadCreative';
-import {adLoaded} from './helpers/vpaid/vpaidEvents';
+import {adLoaded, adStarted} from './helpers/vpaid/vpaidEvents';
 import waitFor from './helpers/vpaid/waitFor';
 import handshake from './helpers/vpaid/handshake';
 import initAd from './helpers/vpaid/initAd';
 
 const hidden = Symbol('hidden');
+
+const callAndWait = (creativeAd, method, event) => {
+  const waitPromise = waitFor(creativeAd, event);
+
+  creativeAd[method]();
+
+  return waitPromise;
+};
 
 class VpaidAdUnit extends Emitter {
   [hidden] = {
@@ -17,7 +25,9 @@ class VpaidAdUnit extends Emitter {
         throw new Error('VpaidAdUnit is finished');
       }
     },
-    throwIfNotStarted: () => {
+    throwIfNotReady: () => {
+      this[hidden].throwIfFinished();
+
       if (!this.isStarted()) {
         throw new Error('VpaidAdUnit has not started');
       }
@@ -37,6 +47,10 @@ class VpaidAdUnit extends Emitter {
   async start () {
     this[hidden].throwIfFinished();
 
+    if (this.isStarted()) {
+      throw new Error('VpaidAdUnit already started');
+    }
+
     this.creativeAd = await this[hidden].loadCreativePromise;
     const adLoadedPromise = waitFor(this.creativeAd, adLoaded);
 
@@ -45,37 +59,41 @@ class VpaidAdUnit extends Emitter {
 
     await adLoadedPromise;
 
-    this[hidden].started = true;
+    // if the ad timed out while trying to load the videoAdContainer will be destroyed
+    if (!this.videoAdContainer.isDestroyed()) {
+      await callAndWait(this.creativeAd, 'startAd', adStarted);
+      this[hidden].started = true;
+    }
 
     return this;
   }
 
   resume () {
-
+    this[hidden].throwIfNotReady();
   }
 
   pause () {
-
+    this[hidden].throwIfNotReady();
   }
 
   setVolume () {
-
+    this[hidden].throwIfNotReady();
   }
 
   getVolume () {
-
+    this[hidden].throwIfNotReady();
   }
 
   cancel () {
-
+    this[hidden].throwIfNotReady();
   }
 
   onFinish () {
-
+    this[hidden].throwIfFinished();
   }
 
   onError () {
-
+    this[hidden].throwIfFinished();
   }
 
   isFinished () {
@@ -87,7 +105,7 @@ class VpaidAdUnit extends Emitter {
   }
 
   async resize () {
-
+    this[hidden].throwIfNotReady();
   }
 }
 

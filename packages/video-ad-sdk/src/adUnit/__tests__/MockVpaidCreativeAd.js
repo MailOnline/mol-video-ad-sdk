@@ -7,6 +7,7 @@ class MockVpaidCreativeAd extends Emitter {
 
     this.handshakeVersion = jest.fn(() => version);
     this.initAd = jest.fn();
+    this.startAd = jest.fn();
   }
 
   subscribe (callback, event) {

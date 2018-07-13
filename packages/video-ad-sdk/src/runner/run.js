@@ -34,6 +34,7 @@ const run = async (vastChain, placeholder, options) => {
     let adUnitPromise = startVideoAd(vastChain, videoAdContainer, options);
 
     if (typeof timeout === 'number') {
+      let timedOut = false;
       const timeoutPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
           const {tracker} = options;
@@ -42,13 +43,20 @@ const run = async (vastChain, placeholder, options) => {
             errorCode: 402,
             tracker
           });
-
+          timedOut = true;
           reject(new Error('Timeout while starting the ad'));
         }, options.timeout);
       });
 
       adUnitPromise = Promise.race([
-        adUnitPromise,
+        // eslint-disable-next-line promise/prefer-await-to-then
+        adUnitPromise.then((newAdUnit) => {
+          if (timedOut && newAdUnit.isStarted()) {
+            newAdUnit.cancel();
+          }
+
+          return newAdUnit;
+        }),
         timeoutPromise
       ]);
     }

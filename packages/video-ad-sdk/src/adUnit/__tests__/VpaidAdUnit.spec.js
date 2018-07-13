@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import {
   vpaidInlineAd,
   vpaidInlineParsedXML,
@@ -8,7 +9,7 @@ import loadCreative from '../helpers/vpaid/loadCreative';
 import handshake from '../helpers/vpaid/handshake';
 import initAd from '../helpers/vpaid/initAd';
 import VpaidAdUnit from '../VpaidAdUnit';
-import {adLoaded} from '../helpers/vpaid/vpaidEvents';
+import {adLoaded, adStarted} from '../helpers/vpaid/vpaidEvents';
 import MockVpaidCreativeAd from './MockVpaidCreativeAd';
 
 jest.mock('../helpers/vpaid/loadCreative');
@@ -45,10 +46,14 @@ describe('VpaidAdUnit', () => {
     test('must start the ad', async () => {
       const mockCreativeAd = new MockVpaidCreativeAd();
 
-      // eslint-disable-next-line max-nested-callbacks
       initAd.mockImplementation(() => {
         mockCreativeAd.emit(adLoaded);
       });
+
+      mockCreativeAd.startAd.mockImplementationOnce(() => {
+        mockCreativeAd.emit(adStarted);
+      });
+
       loadCreative.mockReturnValue(Promise.resolve(mockCreativeAd));
 
       const adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
@@ -64,6 +69,7 @@ describe('VpaidAdUnit', () => {
       expect(handshake).toHaveBeenCalledWith(mockCreativeAd, '2.0');
       expect(initAd).toHaveBeenCalledTimes(1);
       expect(initAd).toHaveBeenCalledWith(mockCreativeAd, videoAdContainer, vpaidChain);
+      expect(mockCreativeAd.startAd).toHaveBeenCalledTimes(1);
     });
   });
 });
