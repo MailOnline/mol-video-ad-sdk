@@ -8,19 +8,22 @@ import VideoAdContainer from '../../adContainer/VideoAdContainer';
 import loadCreative from '../helpers/vpaid/loadCreative';
 import handshake from '../helpers/vpaid/handshake';
 import initAd from '../helpers/vpaid/initAd';
+import callAndWait from '../helpers/vpaid/callAndWait';
 import VpaidAdUnit from '../VpaidAdUnit';
-import {adLoaded, adStarted} from '../helpers/vpaid/api';
+import {adLoaded, adStarted, adStopped, adPlaying, resumeAd, adPaused, pauseAd, resizeAd, adSizeChange} from '../helpers/vpaid/api';
 import MockVpaidCreativeAd from './MockVpaidCreativeAd';
 
 jest.mock('../helpers/vpaid/loadCreative');
 jest.mock('../helpers/vpaid/handshake');
 jest.mock('../helpers/vpaid/initAd');
+jest.mock('../helpers/vpaid/callAndWait');
 
 describe('VpaidAdUnit', () => {
   let vpaidChain;
   let videoAdContainer;
 
   beforeEach(() => {
+    callAndWait.mockImplementation(require.requireActual('../helpers/vpaid/callAndWait').default);
     vpaidChain = [
       {
         ad: vpaidInlineAd,
@@ -33,6 +36,11 @@ describe('VpaidAdUnit', () => {
     videoAdContainer = new VideoAdContainer(document.createElement('DIV'));
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+    jest.clearAllMocks();
+  });
+
   test('must load the creative and publish the passed vastChain and ontainer', () => {
     const adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
 
@@ -43,21 +51,26 @@ describe('VpaidAdUnit', () => {
   });
 
   describe('start', () => {
-    test('must start the ad', async () => {
-      const mockCreativeAd = new MockVpaidCreativeAd();
+    let mockCreativeAd;
+    let adUnit;
+
+    beforeEach(() => {
+      mockCreativeAd = new MockVpaidCreativeAd();
 
       initAd.mockImplementation(() => {
         mockCreativeAd.emit(adLoaded);
       });
 
-      mockCreativeAd.startAd.mockImplementationOnce(() => {
+      mockCreativeAd.startAd.mockImplementation(() => {
         mockCreativeAd.emit(adStarted);
       });
 
       loadCreative.mockReturnValue(Promise.resolve(mockCreativeAd));
 
-      const adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
+      adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
+    });
 
+    test('must start the ad', async () => {
       expect(adUnit.isStarted()).toBe(false);
 
       const res = await adUnit.start();
@@ -70,6 +83,209 @@ describe('VpaidAdUnit', () => {
       expect(initAd).toHaveBeenCalledTimes(1);
       expect(initAd).toHaveBeenCalledWith(mockCreativeAd, videoAdContainer, vpaidChain);
       expect(mockCreativeAd.startAd).toHaveBeenCalledTimes(1);
+      expect(mockCreativeAd.stopAd).toHaveBeenCalledTimes(0);
+    });
+
+    test('must not call startAd if the videoContainer was destroyed while loading the ad', async () => {
+      expect(adUnit.isStarted()).toBe(false);
+      videoAdContainer.destroy();
+
+      const res = await adUnit.start();
+
+      expect(res).toBe(adUnit);
+      expect(adUnit.isStarted()).toBe(false);
+      expect(adUnit.creativeAd).toBe(mockCreativeAd);
+      expect(handshake).toHaveBeenCalledTimes(1);
+      expect(handshake).toHaveBeenCalledWith(mockCreativeAd, '2.0');
+      expect(initAd).toHaveBeenCalledTimes(1);
+      expect(initAd).toHaveBeenCalledWith(mockCreativeAd, videoAdContainer, vpaidChain);
+      expect(mockCreativeAd.startAd).toHaveBeenCalledTimes(0);
+      expect(mockCreativeAd.stopAd).toHaveBeenCalledTimes(0);
+    });
+
+    test('must not call stopAd if adStarted evnt does not get acknoledged', async () => {
+      mockCreativeAd.startAd.mockImplementation(() => {
+        throw new Error('Error starting ad');
+      });
+
+      adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
+
+      expect(adUnit.isStarted()).toBe(false);
+
+      const res = await adUnit.start();
+
+      expect(res).toBe(adUnit);
+      expect(adUnit.isStarted()).toBe(false);
+      expect(adUnit.creativeAd).toBe(mockCreativeAd);
+      expect(handshake).toHaveBeenCalledTimes(1);
+      expect(handshake).toHaveBeenCalledWith(mockCreativeAd, '2.0');
+      expect(initAd).toHaveBeenCalledTimes(1);
+      expect(initAd).toHaveBeenCalledWith(mockCreativeAd, videoAdContainer, vpaidChain);
+      expect(mockCreativeAd.startAd).toHaveBeenCalledTimes(1);
+      expect(mockCreativeAd.stopAd).toHaveBeenCalledTimes(1);
+    });
+
+    test('must throw if the adUnit is started', async () => {
+      await adUnit.start();
+
+      try {
+        await adUnit.start();
+      } catch (error) {
+        expect(error.message).toBe('VpaidAdUnit already started');
+      }
+    });
+  });
+
+  describe('method', () => {
+    let mockCreativeAd;
+    let adUnit;
+
+    beforeEach(() => {
+      mockCreativeAd = new MockVpaidCreativeAd();
+
+      initAd.mockImplementation(() => {
+        mockCreativeAd.emit(adLoaded);
+      });
+
+      mockCreativeAd.startAd.mockImplementationOnce(() => {
+        mockCreativeAd.emit(adStarted);
+      });
+
+      mockCreativeAd.stopAd.mockImplementationOnce(() => {
+        mockCreativeAd.emit(adStopped);
+      });
+
+      mockCreativeAd.resumeAd.mockImplementationOnce(() => {
+        mockCreativeAd.emit(adPlaying);
+      });
+
+      mockCreativeAd.pauseAd.mockImplementationOnce(() => {
+        mockCreativeAd.emit(adPaused);
+      });
+
+      mockCreativeAd.resizeAd.mockImplementationOnce(() => {
+        mockCreativeAd.emit(adSizeChange);
+      });
+
+      loadCreative.mockReturnValue(Promise.resolve(mockCreativeAd));
+      adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
+    });
+
+    describe('resume', () => {
+      test('must throw if the adUnit is not started', () => {
+        expect(() => adUnit.resume()).toThrow('VpaidAdUnit has not started');
+      });
+
+      test('must throw if the adUnit is finished', async () => {
+        await adUnit.start();
+        await adUnit.cancel();
+
+        expect(() => adUnit.resume()).toThrow('VpaidAdUnit is finished');
+      });
+
+      test('must call resumeAd and wait until it recieves adPlaying evt', async () => {
+        await adUnit.start();
+        await adUnit.resume();
+
+        expect(callAndWait).toHaveBeenCalledWith(mockCreativeAd, resumeAd, adPlaying);
+      });
+    });
+
+    describe('pause', () => {
+      test('must throw if the adUnit is not started', () => {
+        expect(() => adUnit.pause()).toThrow('VpaidAdUnit has not started');
+      });
+
+      test('must throw if the adUnit is finished', async () => {
+        await adUnit.start();
+        await adUnit.cancel();
+
+        expect(() => adUnit.pause()).toThrow('VpaidAdUnit is finished');
+      });
+
+      test('must call pauseAd and wait until it recieves adPlaying evt', async () => {
+        await adUnit.start();
+        await adUnit.pause();
+
+        expect(callAndWait).toHaveBeenCalledWith(mockCreativeAd, pauseAd, adPaused);
+      });
+    });
+
+    describe('getVolumen', () => {
+      test('must throw if the adUnit is not started', () => {
+        expect(() => adUnit.getVolume()).toThrow('VpaidAdUnit has not started');
+      });
+
+      test('must throw if the adUnit is finished', async () => {
+        await adUnit.start();
+        await adUnit.cancel();
+
+        expect(() => adUnit.getVolume()).toThrow('VpaidAdUnit is finished');
+      });
+
+      test('must call getAdVolume', async () => {
+        await adUnit.start();
+        await adUnit.getVolume();
+
+        expect(mockCreativeAd.getAdVolume).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('setVolume', () => {
+      test('must throw if the adUnit is not started', () => {
+        expect(() => adUnit.setVolume()).toThrow('VpaidAdUnit has not started');
+      });
+
+      test('must throw if the adUnit is finished', async () => {
+        await adUnit.start();
+        await adUnit.cancel();
+
+        expect(() => adUnit.setVolume()).toThrow('VpaidAdUnit is finished');
+      });
+
+      test('must call getAdVolume', async () => {
+        await adUnit.start();
+        await adUnit.setVolume();
+
+        expect(mockCreativeAd.setAdVolume).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('resize', () => {
+      test('must throw if the adUnit is not started', () => {
+        expect(() => adUnit.resize()).toThrow('VpaidAdUnit has not started');
+      });
+
+      test('must throw if the adUnit is finished', async () => {
+        await adUnit.start();
+        await adUnit.cancel();
+
+        expect(() => adUnit.resize()).toThrow('VpaidAdUnit is finished');
+      });
+
+      test('must call resizeAd', async () => {
+        await adUnit.start();
+        await adUnit.resize();
+
+        expect(callAndWait).toHaveBeenCalledWith(mockCreativeAd, resizeAd, adSizeChange);
+      });
+    });
+
+    describe('cancel', () => {
+      test('must throw if the adUnit is finished', async () => {
+        await adUnit.start();
+        await adUnit.cancel();
+
+        expect(() => adUnit.cancel()).toThrow('VpaidAdUnit is finished');
+      });
+
+      test('must call stopAd and finish the adUnit', async () => {
+        await adUnit.start();
+        await adUnit.cancel();
+
+        expect(mockCreativeAd.stopAd).toHaveBeenCalledTimes(1);
+        expect(adUnit.isFinished()).toBe(true);
+      });
     });
   });
 });

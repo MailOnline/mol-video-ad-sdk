@@ -1,24 +1,37 @@
 /* eslint-disable promise/prefer-await-to-callbacks, class-methods-use-this */
 import Emitter from './helpers/Emitter';
 import loadCreative from './helpers/vpaid/loadCreative';
-import {adLoaded, adStarted, adPlaying, adPaused, startAd, resumeAd, pauseAd} from './helpers/vpaid/api';
+import {
+  adLoaded,
+  adStarted,
+  adPlaying,
+  adPaused,
+  startAd,
+  stopAd,
+  resumeAd,
+  pauseAd,
+  setAdVolume,
+  getAdVolume,
+  resizeAd,
+  adSizeChange
+} from './helpers/vpaid/api';
 import waitFor from './helpers/vpaid/waitFor';
+import callAndWait from './helpers/vpaid/callAndWait';
 import handshake from './helpers/vpaid/handshake';
 import initAd from './helpers/vpaid/initAd';
+import safeCallback from './helpers/safeCallback';
 
 const hidden = Symbol('hidden');
 
-const callAndWait = (creativeAd, method, event) => {
-  const waitPromise = waitFor(creativeAd, event, 3000);
-
-  creativeAd[method]();
-
-  return waitPromise;
-};
-
 class VpaidAdUnit extends Emitter {
   [hidden] = {
+    finish: () => {
+      this[hidden].onFinishCallbacks.forEach((callback) => callback());
+      this[hidden].finished = true;
+    },
     finished: false,
+    onErrorCallbacks: [],
+    onFinishCallbacks: [],
     started: false,
     throwIfFinished: () => {
       if (this.isFinished()) {
@@ -61,8 +74,12 @@ class VpaidAdUnit extends Emitter {
 
     // if the ad timed out while trying to load the videoAdContainer will be destroyed
     if (!this.videoAdContainer.isDestroyed()) {
-      await callAndWait(this.creativeAd, startAd, adStarted);
-      this[hidden].started = true;
+      try {
+        await callAndWait(this.creativeAd, startAd, adStarted);
+        this[hidden].started = true;
+      } catch (error) {
+        this.cancel();
+      }
     }
 
     return this;
@@ -80,24 +97,44 @@ class VpaidAdUnit extends Emitter {
     return callAndWait(this.creativeAd, pauseAd, adPaused);
   }
 
-  setVolume () {
+  setVolume (volume) {
     this[hidden].throwIfNotReady();
+
+    return this.creativeAd[setAdVolume](volume);
   }
 
   getVolume () {
     this[hidden].throwIfNotReady();
+
+    return this.creativeAd[getAdVolume]();
   }
 
   cancel () {
-    this[hidden].throwIfNotReady();
+    this[hidden].throwIfFinished();
+
+    this.creativeAd[stopAd]();
+
+    this[hidden].finish();
   }
 
-  onFinish () {
+  onFinish (callback) {
     this[hidden].throwIfFinished();
+
+    if (typeof callback !== 'function') {
+      throw new TypeError('Expected a callback function');
+    }
+
+    this[hidden].onFinishCallbacks.push(safeCallback(callback, this.logger));
   }
 
-  onError () {
+  onError (callback) {
     this[hidden].throwIfFinished();
+
+    if (typeof callback !== 'function') {
+      throw new TypeError('Expected a callback function');
+    }
+
+    this[hidden].onErrorCallbacks.push(safeCallback(callback, this.logger));
   }
 
   isFinished () {
@@ -108,8 +145,10 @@ class VpaidAdUnit extends Emitter {
     return this[hidden].started;
   }
 
-  async resize () {
+  resize () {
     this[hidden].throwIfNotReady();
+
+    return callAndWait(this.creativeAd, resizeAd, adSizeChange);
   }
 }
 
