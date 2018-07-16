@@ -10,7 +10,7 @@ import handshake from '../helpers/vpaid/handshake';
 import initAd from '../helpers/vpaid/initAd';
 import callAndWait from '../helpers/vpaid/callAndWait';
 import VpaidAdUnit from '../VpaidAdUnit';
-import {adLoaded, adStarted, adStopped, adPlaying, resumeAd, adPaused, pauseAd, resizeAd, adSizeChange} from '../helpers/vpaid/api';
+import {adLoaded, adStarted, adStopped, adPlaying, resumeAd, adPaused, pauseAd, resizeAd, adSizeChange, adVideoComplete, adError} from '../helpers/vpaid/api';
 import MockVpaidCreativeAd from './MockVpaidCreativeAd';
 
 jest.mock('../helpers/vpaid/loadCreative');
@@ -103,7 +103,7 @@ describe('VpaidAdUnit', () => {
       expect(mockCreativeAd.stopAd).toHaveBeenCalledTimes(0);
     });
 
-    test('must not call stopAd if adStarted evnt does not get acknoledged', async () => {
+    test('must call stopAd if adStarted evnt does not get acknowledge', async () => {
       mockCreativeAd.startAd.mockImplementation(() => {
         throw new Error('Error starting ad');
       });
@@ -116,6 +116,7 @@ describe('VpaidAdUnit', () => {
 
       expect(res).toBe(adUnit);
       expect(adUnit.isStarted()).toBe(false);
+      expect(adUnit.isFinished()).toBe(true);
       expect(adUnit.creativeAd).toBe(mockCreativeAd);
       expect(handshake).toHaveBeenCalledTimes(1);
       expect(handshake).toHaveBeenCalledWith(mockCreativeAd, '2.0');
@@ -211,7 +212,7 @@ describe('VpaidAdUnit', () => {
       });
     });
 
-    describe('getVolumen', () => {
+    describe('getVolume', () => {
       test('must throw if the adUnit is not started', () => {
         expect(() => adUnit.getVolume()).toThrow('VpaidAdUnit has not started');
       });
@@ -302,7 +303,7 @@ describe('VpaidAdUnit', () => {
         expect(() => adUnit.onFinish()).toThrow('Expected a callback function');
       });
 
-      test('must be called once the ad unit finishes', async () => {
+      test('must be called if the ad unit gets canceled', async () => {
         const callback = jest.fn();
 
         adUnit.onFinish(callback);
@@ -314,6 +315,73 @@ describe('VpaidAdUnit', () => {
         await adUnit.cancel();
 
         expect(callback).toHaveBeenCalledTimes(1);
+      });
+
+      test('must be called once the ad unit completes', async () => {
+        const callback = jest.fn();
+
+        adUnit.onFinish(callback);
+
+        await adUnit.start();
+
+        expect(callback).not.toHaveBeenCalled();
+
+        adUnit.creativeAd.emit(adVideoComplete);
+
+        expect(callback).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('onError', () => {
+      test('must throw if the adUnit is finished', async () => {
+        await adUnit.start();
+        await adUnit.cancel();
+
+        expect(() => adUnit.onError()).toThrow('VpaidAdUnit is finished');
+      });
+
+      test('must throw if you don\'t pass a callback function ', async () => {
+        await adUnit.start();
+
+        expect(() => adUnit.onError()).toThrow('Expected a callback function');
+      });
+
+      test('must call the callback if there is a problem starting the ad', async () => {
+        const handshakeVersionError = new Error('Handshake version not supported');
+        const callback = jest.fn();
+
+        adUnit.onError(callback);
+
+        handshake.mockImplementationOnce(() => {
+          throw handshakeVersionError;
+        });
+
+        try {
+          await adUnit.start();
+        } catch (error) {
+          expect(error).toBe(handshakeVersionError);
+        }
+
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith(handshakeVersionError);
+      });
+
+      test('must call the callback if there is an error with the creativeAd', async () => {
+        const callback = jest.fn();
+
+        adUnit.onError(callback);
+
+        await adUnit.start();
+
+        expect(callback).not.toHaveBeenCalled();
+
+        adUnit.creativeAd.emit(adError);
+
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith(expect.any(Error));
+        expect(callback).toHaveBeenCalledWith(expect.objectContaining({
+          message: 'VPAID general error'
+        }));
       });
     });
   });
