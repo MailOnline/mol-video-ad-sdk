@@ -16,12 +16,15 @@ export const progress = 'progress';
 export const resume = 'resume';
 export const rewind = 'rewind';
 export const skip = 'skip';
+export const creativeView = 'creativeView';
 export const start = 'start';
 export const thirdQuartile = 'thirdQuartile';
 export const timeSpentViewing = 'timeSpentViewing';
 export const unmute = 'unmute';
 export const iconClick = 'iconClick';
 export const iconView = 'iconView';
+export const adCollapse = 'adCollapse';
+export const close = 'close';
 
 /**
  * List of event names that may be fired while trying to play a linear Ad.
@@ -50,12 +53,18 @@ export const iconView = 'iconView';
  * @property {string} iconClick - the user clicked the creative icon.
  * @property {string} iconView - the user viewed the creative icon.
  * @property {string} impression - there was an impression of the linear creative.
+ * @property {string} adCollapse - the user activated a control to reduce the creative to its original dimensions.
+ * @property {string} close - the user clicked or otherwise activated a control for removing the ad.
+ * @property {string} creativeView - fthis event indicates that an individual creative portion of the ad was viewed.
  * @property {string} clickThrough - fired when a viewer clicks the ad
  */
 const linearEvents = {
   acceptInvitationLinear,
+  adCollapse,
   clickThrough,
+  close,
   complete,
+  creativeView,
   error,
   exitFullscreen,
   firstQuartile,

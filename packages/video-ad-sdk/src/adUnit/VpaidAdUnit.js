@@ -1,5 +1,22 @@
 /* eslint-disable promise/prefer-await-to-callbacks, class-methods-use-this */
-import {linearEvents} from '../tracker';
+import linearEvents, {
+  complete,
+  creativeView,
+  mute,
+  unmute,
+  skip,
+  start,
+  firstQuartile,
+  adCollapse,
+  pause,
+  resume,
+  close,
+  impression,
+  midpoint,
+  thirdQuartile,
+  acceptInvitationLinear,
+  clickThrough
+} from '../tracker/linearEvents';
 import Emitter from './helpers/Emitter';
 import loadCreative from './helpers/vpaid/loadCreative';
 import {
@@ -18,7 +35,17 @@ import {
   adError,
   adVideoComplete,
   adSkipped,
-  EVENTS
+  EVENTS,
+  adVolumeChange,
+  adImpression,
+  adVideoStart,
+  adVideoFirstQuartile,
+  adVideoMidpoint,
+  adVideoThirdQuartile,
+  adUserAcceptInvitation,
+  adUserMinimize,
+  adUserClose,
+  adClickThru
 } from './helpers/vpaid/api';
 import waitFor from './helpers/vpaid/waitFor';
 import callAndWait from './helpers/vpaid/callAndWait';
@@ -27,9 +54,8 @@ import initAd from './helpers/vpaid/initAd';
 import safeCallback from './helpers/safeCallback';
 
 const {
-  complete,
-  error: errorEvt,
-  skip
+  // eslint-disable-next-line import/no-named-as-default-member
+  error: errorEvt
 } = linearEvents;
 
 const hidden = Symbol('hidden');
@@ -41,6 +67,7 @@ class VpaidAdUnit extends Emitter {
       this[hidden].finished = true;
     },
     finished: false,
+    // eslint-disable-next-line complexity
     handleVpaidEvt: (event, data) => {
       switch (event) {
       case adVideoComplete: {
@@ -52,6 +79,7 @@ class VpaidAdUnit extends Emitter {
         this.error = data instanceof Error ? data : new Error('VPAID general error');
 
         this.error.errorCode = 901;
+        this.errorCode = 901;
         this[hidden].onErrorCallbacks.forEach((callback) => callback(this.error));
         this[hidden].finish();
         this.emit(errorEvt, errorEvt, this, this.error);
@@ -62,10 +90,75 @@ class VpaidAdUnit extends Emitter {
         this.emit(skip, skip, this);
         break;
       }
+      case adStarted: {
+        this.emit(creativeView, creativeView, this);
+        break;
+      }
+      case adImpression: {
+        this.emit(impression, impression, this);
+        break;
+      }
+      case adVideoStart: {
+        this.emit(start, start, this);
+        break;
+      }
+      case adVideoFirstQuartile: {
+        this.emit(firstQuartile, firstQuartile, this);
+        break;
+      }
+      case adVideoMidpoint: {
+        this.emit(midpoint, midpoint, this);
+        break;
+      }
+      case adVideoThirdQuartile: {
+        this.emit(thirdQuartile, thirdQuartile, this);
+        break;
+      }
+      case adUserAcceptInvitation: {
+        this.emit(acceptInvitationLinear, acceptInvitationLinear, this);
+        break;
+      }
+      case adUserMinimize: {
+        this.emit(adCollapse, adCollapse, this);
+        break;
+      }
+      case adUserClose: {
+        this.emit(close, close, this);
+        break;
+      }
+      case adPaused: {
+        this.emit(pause, pause, this);
+        break;
+      }
+      case adPlaying: {
+        this.emit(resume, resume, this);
+        break;
+      }
+      case adClickThru: {
+        this.emit(clickThrough, clickThrough, this);
+        break;
+      }
+      case adVolumeChange: {
+        const volume = this.getVolume();
+
+        if (volume === 0 && !this[hidden].muted) {
+          this[hidden].muted = true;
+          this.emit(mute, mute, this);
+        }
+
+        if (volume > 0 && this[hidden].muted) {
+          this[hidden].muted = false;
+
+          this.emit(unmute, unmute, this);
+        }
+
+        break;
+      }
       }
 
       this.emit(event, event, this);
     },
+    muted: false,
     onErrorCallbacks: [],
     onFinishCallbacks: [],
     started: false,

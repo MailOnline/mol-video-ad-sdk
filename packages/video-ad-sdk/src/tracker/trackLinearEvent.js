@@ -55,6 +55,8 @@ const clickTrackingSelector = (ad) => {
 
   return trackingURIs;
 };
+
+// TODO: ADD HANDLER FOR creativeView, adCollapse, close
 const linearTrakingEventSelector = (event) => (ad) => getLinearTrackingEvents(ad, event);
 const linearTrackers = {
   [clickThrough]: createLinearEventTracker(clickTrackingSelector),

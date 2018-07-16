@@ -1,4 +1,4 @@
-/* eslint-disable max-nested-callbacks */
+/* eslint-disable no-loop-func, max-nested-callbacks,  */
 import {
   vpaidInlineAd,
   vpaidInlineParsedXML,
@@ -10,7 +10,49 @@ import handshake from '../helpers/vpaid/handshake';
 import initAd from '../helpers/vpaid/initAd';
 import callAndWait from '../helpers/vpaid/callAndWait';
 import VpaidAdUnit from '../VpaidAdUnit';
-import {adLoaded, adStarted, adStopped, adPlaying, resumeAd, adPaused, pauseAd, resizeAd, adSizeChange, adVideoComplete, adError} from '../helpers/vpaid/api';
+import {
+  adLoaded,
+  adStarted,
+  adStopped,
+  adPlaying,
+  resumeAd,
+  adPaused,
+  pauseAd,
+  resizeAd,
+  adSizeChange,
+  adVideoComplete,
+  adError,
+  EVENTS,
+  adSkipped,
+  adVolumeChange,
+  adImpression,
+  adVideoStart,
+  adVideoFirstQuartile,
+  adVideoMidpoint,
+  adVideoThirdQuartile,
+  adUserAcceptInvitation,
+  adUserMinimize,
+  adUserClose,
+  adClickThru
+} from '../helpers/vpaid/api';
+import linearEvents, {
+  skip,
+  start,
+  creativeView,
+  mute,
+  unmute,
+  impression,
+  midpoint,
+  complete,
+  firstQuartile,
+  thirdQuartile,
+  acceptInvitationLinear,
+  adCollapse,
+  pause,
+  resume,
+  close,
+  clickThrough
+} from '../../tracker/linearEvents';
 import MockVpaidCreativeAd from './MockVpaidCreativeAd';
 
 jest.mock('../helpers/vpaid/loadCreative');
@@ -382,6 +424,170 @@ describe('VpaidAdUnit', () => {
         expect(callback).toHaveBeenCalledWith(expect.objectContaining({
           message: 'VPAID general error'
         }));
+      });
+    });
+  });
+
+  describe('creative vpaid event', () => {
+    let mockCreativeAd;
+    let adUnit;
+
+    beforeEach(() => {
+      mockCreativeAd = new MockVpaidCreativeAd();
+
+      initAd.mockImplementation(() => {
+        mockCreativeAd.emit(adLoaded);
+      });
+
+      mockCreativeAd.startAd.mockImplementationOnce(() => {
+        mockCreativeAd.emit(adStarted);
+      });
+
+      loadCreative.mockReturnValue(Promise.resolve(mockCreativeAd));
+      adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
+    });
+
+    for (const vpaidEvt of EVENTS) {
+      test(`${vpaidEvt} must be emitted by the ad unit`, async () => {
+        const callback = jest.fn();
+
+        adUnit.on(vpaidEvt, callback);
+        await adUnit.start();
+
+        adUnit.creativeAd.emit(vpaidEvt);
+
+        expect(callback).toHaveBeenCalledWith(vpaidEvt, adUnit);
+      });
+    }
+
+    [
+      {
+        vastEvt: skip,
+        vpaidEvt: adSkipped
+      },
+      {
+        vastEvt: creativeView,
+        vpaidEvt: adStarted
+      },
+      {
+        vastEvt: impression,
+        vpaidEvt: adImpression
+      },
+      {
+        vastEvt: skip,
+        vpaidEvt: adSkipped
+      },
+      {
+        vastEvt: start,
+        vpaidEvt: adVideoStart
+      },
+      {
+        vastEvt: firstQuartile,
+        vpaidEvt: adVideoFirstQuartile
+      },
+      {
+        vastEvt: midpoint,
+        vpaidEvt: adVideoMidpoint
+      },
+      {
+        vastEvt: thirdQuartile,
+        vpaidEvt: adVideoThirdQuartile
+      },
+      {
+        vastEvt: complete,
+        vpaidEvt: adVideoComplete
+      },
+      {
+        vastEvt: acceptInvitationLinear,
+        vpaidEvt: adUserAcceptInvitation
+      },
+      {
+        vastEvt: adCollapse,
+        vpaidEvt: adUserMinimize
+      },
+      {
+        vastEvt: close,
+        vpaidEvt: adUserClose
+      },
+      {
+        vastEvt: pause,
+        vpaidEvt: adPaused
+      },
+      {
+        vastEvt: resume,
+        vpaidEvt: adPlaying
+      },
+      {
+        vastEvt: clickThrough,
+        vpaidEvt: adClickThru
+      }
+    ].forEach(({vpaidEvt, vastEvt}) => {
+      describe(vpaidEvt, () => {
+        test(`must emit ${vastEvt} event`, async () => {
+          const callback = jest.fn();
+
+          adUnit.on(vastEvt, callback);
+          await adUnit.start();
+
+          adUnit.creativeAd.emit(vpaidEvt);
+
+          expect(callback).toHaveBeenCalledWith(vastEvt, adUnit);
+        });
+      });
+    });
+
+    describe(adError, () => {
+      // eslint-disable-next-line import/no-named-as-default-member
+      const vastEvt = linearEvents.error;
+
+      test(`must emit ${vastEvt} event`, async () => {
+        const callback = jest.fn();
+
+        adUnit.on(vastEvt, callback);
+        await adUnit.start();
+
+        adUnit.creativeAd.emit(adError);
+
+        expect(callback).toHaveBeenCalledWith(vastEvt, adUnit, expect.any(Error));
+        const error = callback.mock.calls[0][2];
+
+        expect(error.message).toBe('VPAID general error');
+        expect(error.errorCode).toBe(901);
+        expect(adUnit.errorCode).toBe(901);
+      });
+    });
+    describe(adVolumeChange, () => {
+      test(`must emit ${mute} event if it becomes muted`, async () => {
+        const callback = jest.fn();
+
+        adUnit.on(mute, callback);
+        await adUnit.start();
+
+        adUnit.creativeAd.setAdVolume(0);
+        expect(callback).toHaveBeenCalled();
+      });
+
+      test(`must emit ${unmute} event if it becomes unmuted`, async () => {
+        const callback = jest.fn();
+
+        adUnit.on(unmute, callback);
+        await adUnit.start();
+
+        adUnit.creativeAd.setAdVolume(0);
+        expect(callback).not.toHaveBeenCalled();
+        adUnit.creativeAd.setAdVolume(0.5);
+        expect(callback).toHaveBeenCalled();
+      });
+
+      test('must not emit any evnt on normal volume change', async () => {
+        const callback = jest.fn();
+
+        adUnit.on(unmute, callback);
+        await adUnit.start();
+
+        adUnit.creativeAd.setAdVolume(0.5);
+        adUnit.creativeAd.setAdVolume(0.5);
+        expect(callback).not.toHaveBeenCalled();
       });
     });
   });
