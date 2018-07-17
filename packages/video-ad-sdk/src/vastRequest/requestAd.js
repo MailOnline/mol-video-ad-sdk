@@ -23,7 +23,7 @@ import {markAdAsRequested} from './helpers/adUtils';
  */
 
 /**
- * Array of VASTResponses sorted blackguards. Last response goes first.
+ * Array of VASTResponses sorted backwards. Last response goes first.
  * Represents the chain of VAST responses that ended up on a playable video ad or an error.
  *
  * @global

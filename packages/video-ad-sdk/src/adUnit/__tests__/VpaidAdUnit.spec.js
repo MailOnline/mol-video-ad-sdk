@@ -389,8 +389,8 @@ describe('VpaidAdUnit', () => {
 
       retrieveIcons.mockReturnValue(icons);
       mockCreativeAd[getAdIcons].mockReturnValue(true);
-      mockHasPendingRedraws.mockRejectedValueOnce(true);
-      mockHasPendingRedraws.mockRejectedValueOnce(false);
+      mockHasPendingRedraws.mockReturnValueOnce(true);
+      mockHasPendingRedraws.mockReturnValueOnce(false);
 
       await adUnit.start();
       expect(mockDrawIcons).toHaveBeenCalledTimes(1);
@@ -410,8 +410,8 @@ describe('VpaidAdUnit', () => {
 
       retrieveIcons.mockReturnValue(icons);
       mockCreativeAd[getAdIcons].mockReturnValue(true);
-      mockHasPendingRedraws.mockRejectedValueOnce(true);
-      mockHasPendingRedraws.mockRejectedValueOnce(false);
+      mockHasPendingRedraws.mockReturnValueOnce(true);
+      mockHasPendingRedraws.mockReturnValueOnce(false);
 
       await adUnit.start();
       expect(mockDrawIcons).toHaveBeenCalledTimes(1);
@@ -541,6 +541,8 @@ describe('VpaidAdUnit', () => {
 
     describe('resize', () => {
       test('must throw if the adUnit is not started', async () => {
+        expect.assertions(1);
+
         try {
           await adUnit.resize();
         } catch (error) {
@@ -549,6 +551,8 @@ describe('VpaidAdUnit', () => {
       });
 
       test('must throw if the adUnit is finished', async () => {
+        expect.assertions(1);
+
         await adUnit.start();
         await adUnit.cancel();
 
