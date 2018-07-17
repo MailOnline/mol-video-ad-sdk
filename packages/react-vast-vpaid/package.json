@@ -1,5 +1,5 @@
 {
-  "name": "@mol/video-ad-component",
+  "name": "@mol/react-vast-vpaid",
   "version": "0.1.0",
   "description": "React component that loads video-ads using @mol/video-ad-sdk",
   "author": "MailOnline <fe@mailonline.co.uk>",

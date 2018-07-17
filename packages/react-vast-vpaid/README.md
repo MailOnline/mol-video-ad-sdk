@@ -1,4 +1,4 @@
-# @mol/video-ad-component
+# @mol/react-vast-vpaid
 
 > React component that loads video-ads using @mol/video-ad-sdk
 
