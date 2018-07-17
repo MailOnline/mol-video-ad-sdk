@@ -80,19 +80,20 @@ test('onStart must pass the adUnit and some convenience methods', (done) => {
   expect(wrapper.html().includes('spinner')).toBe(true);
 });
 
-test('must call onNonRecoverable error when an adUnit has an error', (done) => {
-  expect.assertions(4);
-  const onNonRecoverableError = jest.fn();
+test('must call onError with isRecoverable flag set to false when an adUnit has an error', (done) => {
+  expect.assertions(5);
+  const onError = jest.fn();
 
   const onStart = () => {
     const error = new Error('boom');
     const simulateError = mockAdUnit.onError.mock.calls[0][0];
 
-    expect(onNonRecoverableError).toHaveBeenCalledTimes(0);
+    expect(onError).toHaveBeenCalledTimes(0);
     expect(mockAdUnit.onError).toHaveBeenCalledTimes(1);
     simulateError(error);
-    expect(onNonRecoverableError).toHaveBeenCalledTimes(1);
-    expect(onNonRecoverableError).toHaveBeenCalledWith(error);
+    expect(onError).toHaveBeenCalledTimes(1);
+    expect(onError).toHaveBeenCalledWith(error);
+    expect(error.isRecoverable).toBe(false);
 
     done();
   };
@@ -100,7 +101,7 @@ test('must call onNonRecoverable error when an adUnit has an error', (done) => {
   mount(<div>
     <VideoAd
       getTag={getTag}
-      onNonRecoverableError={onNonRecoverableError}
+      onError={onError}
       onStart={onStart}
     >
       <Spinner />
@@ -220,23 +221,24 @@ test('must call onFinish once the adUnit is finished', (done) => {
   </div>);
 });
 
-test('must call onNonRecoverable error if there is a problem starting the ad', (done) => {
-  expect.assertions(1);
+test('must call onError with isRecoverable flag set to false if there is a problem starting the ad', (done) => {
+  expect.assertions(2);
 
   const error = new Error('boom');
 
   runWaterfall.mockImplementation(() => {
     throw error;
   });
-  const onNonRecoverableError = (err) => {
-    expect(err).toBe(error);
+  const onError = (err) => {
+    expect(err).toEqual(error);
+    expect(err.isRecoverable).toBe(false);
     done();
   };
 
   mount(<div>
     <VideoAd
       getTag={getTag}
-      onNonRecoverableError={onNonRecoverableError}
+      onError={onError}
     >
       <Spinner />
     </VideoAd>
