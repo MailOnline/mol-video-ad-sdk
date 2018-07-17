@@ -13,12 +13,12 @@ const getLinearTrackingEvents = (ad, eventName) => {
   if (creativeElement) {
     const linearElement = get(creativeElement, 'Linear');
     const trackingEventsElement = linearElement && get(linearElement, 'TrackingEvents');
-    const trackinEventElements = trackingEventsElement && getAll(trackingEventsElement, 'Tracking');
+    const trackingEventElements = trackingEventsElement && getAll(trackingEventsElement, 'Tracking');
 
-    if (trackinEventElements && trackinEventElements.length > 0) {
-      const trackingEvents = trackinEventElements.map((trackinEventElement) => {
-        const {event, offset} = getAttributes(trackinEventElement);
-        const uri = getText(trackinEventElement);
+    if (trackingEventElements && trackingEventElements.length > 0) {
+      const trackingEvents = trackingEventElements.map((trackingEventElement) => {
+        const {event, offset} = getAttributes(trackingEventElement);
+        const uri = getText(trackingEventElement);
 
         return {
           event,

@@ -34,7 +34,6 @@ import {
   error
 } from './linearEvents';
 
-// TODO: IMPLEMENT VPAID CLICK LOGIC
 const clickTrackingSelector = (ad) => {
   const trackingURIs = [];
   const clickTrackings = getClickTracking(ad);
@@ -91,7 +90,7 @@ const trackLinearEvent = (event, vastChain, {data, errorCode, tracker = pixelTra
       tracker
     });
   } else {
-    logger.error(`Event '${event}' can not be tracked`);
+    logger.error(`Event '${event}' cannot be tracked`);
   }
 };
 

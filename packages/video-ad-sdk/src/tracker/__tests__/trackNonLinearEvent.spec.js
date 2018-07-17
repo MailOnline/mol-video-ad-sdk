@@ -52,7 +52,7 @@ describe('trackNonLinearEvent', () => {
     });
 
     expect(logger.error).toHaveBeenCalledTimes(1);
-    expect(logger.error).toHaveBeenCalledWith('Event \'UNKNOWN\' can not be tracked');
+    expect(logger.error).toHaveBeenCalledWith('Event \'UNKNOWN\' cannot be tracked');
   });
 
   test('must use pixelTracker by default', () => {

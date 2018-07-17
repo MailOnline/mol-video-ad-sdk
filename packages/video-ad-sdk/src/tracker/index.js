@@ -14,7 +14,7 @@ export {
   linearEvents,
 
   /**
-   * @see LinearEvents
+   * @see NonLinearEvents
    */
   nonLinearEvents,
 

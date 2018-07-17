@@ -19,6 +19,7 @@ import {
   adCollapse,
   close
 } from '../tracker/nonLinearEvents';
+import {getClickThrough} from '../vastSelectors';
 import Emitter from './helpers/Emitter';
 import loadCreative from './helpers/vpaid/loadCreative';
 import {
@@ -137,7 +138,20 @@ class VpaidAdUnit extends Emitter {
         break;
       }
       case adClickThru: {
-        this.emit(clickThrough, clickThrough, this, payload);
+        if (payload && payload.data) {
+          const {
+            url,
+            playerHandles
+          } = payload.data;
+
+          if (playerHandles) {
+            const clickThroughUrl = url ? url : getClickThrough(this.vastChain[0].ad);
+
+            window.open(clickThroughUrl, '_blank');
+          }
+        }
+
+        this.emit(clickThrough, clickThrough, this);
         break;
       }
       case adVolumeChange: {
