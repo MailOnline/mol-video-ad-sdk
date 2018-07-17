@@ -12,7 +12,7 @@ const getNextPod = (currentPod, ads) => {
   return ads.find((ad) => getPodAdSequence(ad) === nextPodSequence) || null;
 };
 
-const getNextAd = ({ad, parsedXML}, {fallbackOnNoAd = true, useAdBuffet = false} = {}) => {
+const getNextAd = ({ad, parsedXML}, {fallbackOnNoAd = true, useAdBuffet = false}) => {
   const ads = getAds(parsedXML);
   const availableAds = ads.filter((adDefinition) => !hasAdBeenRequested(adDefinition));
   let nextAd = null;

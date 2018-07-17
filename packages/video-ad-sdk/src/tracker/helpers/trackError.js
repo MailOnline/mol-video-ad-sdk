@@ -4,7 +4,7 @@ import {
 } from '../../vastSelectors';
 import pixelTracker from './pixelTracker';
 
-const trackError = (vastChain, {errorCode, tracker = pixelTracker} = {}) => {
+const trackError = (vastChain, {errorCode, tracker = pixelTracker}) => {
   vastChain.forEach(({ad, parsedXML}) => {
     const errorURI = getAdErrorURI(ad) || getVastErrorURI(parsedXML);
 

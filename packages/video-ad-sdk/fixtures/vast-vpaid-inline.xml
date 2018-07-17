@@ -86,14 +86,19 @@
               </Icon>
             </Icons>
           </Linear>
+          <NonLinearAds>>
+            <TrackingEvents>
+                <Tracking event="acceptInvitation">https://test.example.com/vpaid/acceptInvitation</Tracking>
+                <Tracking event="adCollapse">https://test.example.com/vpaid/adCollapse</Tracking>
+                <Tracking event="close">https://test.example.com/vpaid/close</Tracking>
+                <Tracking event="creativeView">https://test.example.com/vpaid/creativeView</Tracking>
+            </TrackingEvents>
+          </NonLinearAds>>
         </Creative>
         <Creative AdID="123-Companion">
           <CompanionAds>
             <Companion width="1920" height="1080" assetWidth="1920" assetHeight="1080">
               <HTMLResource>http://adserver.com/htmlresourcefile.htm</HTMLResource>
-              <TrackingEvents>
-                <Tracking event="creativeView">https://test.example.com/firstCompanionCreativeView</Tracking>
-              </TrackingEvents>
             </Companion>
             <Companion width="1920" height="80">
               <StaticResource creativeType="image/jpeg"><![CDATA[https://test.example.com/companion.jpg?test1=true&test2=false]]></StaticResource>

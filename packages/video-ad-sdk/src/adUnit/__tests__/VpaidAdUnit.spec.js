@@ -38,7 +38,6 @@ import {
 import linearEvents, {
   skip,
   start,
-  creativeView,
   mute,
   unmute,
   impression,
@@ -46,13 +45,16 @@ import linearEvents, {
   complete,
   firstQuartile,
   thirdQuartile,
-  acceptInvitationLinear,
-  adCollapse,
   pause,
   resume,
-  close,
   clickThrough
 } from '../../tracker/linearEvents';
+import {
+  acceptInvitation,
+  creativeView,
+  adCollapse,
+  close
+} from '../../tracker/nonLinearEvents';
 import MockVpaidCreativeAd from './MockVpaidCreativeAd';
 
 jest.mock('../helpers/vpaid/loadCreative');
@@ -498,7 +500,7 @@ describe('VpaidAdUnit', () => {
         vpaidEvt: adVideoComplete
       },
       {
-        vastEvt: acceptInvitationLinear,
+        vastEvt: acceptInvitation,
         vpaidEvt: adUserAcceptInvitation
       },
       {
@@ -518,10 +520,17 @@ describe('VpaidAdUnit', () => {
         vpaidEvt: adPlaying
       },
       {
+        payload: {
+          data: {
+            playerHandles: true,
+            url: 'https://test.example.com/clickThrough'
+          }
+        },
         vastEvt: clickThrough,
         vpaidEvt: adClickThru
+
       }
-    ].forEach(({vpaidEvt, vastEvt}) => {
+    ].forEach(({vpaidEvt, vastEvt, payload}) => {
       describe(vpaidEvt, () => {
         test(`must emit ${vastEvt} event`, async () => {
           const callback = jest.fn();
@@ -529,9 +538,13 @@ describe('VpaidAdUnit', () => {
           adUnit.on(vastEvt, callback);
           await adUnit.start();
 
-          adUnit.creativeAd.emit(vpaidEvt);
+          adUnit.creativeAd.emit(vpaidEvt, payload);
 
-          expect(callback).toHaveBeenCalledWith(vastEvt, adUnit);
+          if (payload) {
+            expect(callback).toHaveBeenCalledWith(vastEvt, adUnit, payload);
+          } else {
+            expect(callback).toHaveBeenCalledWith(vastEvt, adUnit);
+          }
         });
       });
     });

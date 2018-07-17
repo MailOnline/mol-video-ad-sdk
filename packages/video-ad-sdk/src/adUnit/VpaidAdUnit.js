@@ -1,22 +1,24 @@
 /* eslint-disable promise/prefer-await-to-callbacks, class-methods-use-this */
 import linearEvents, {
   complete,
-  creativeView,
   mute,
   unmute,
   skip,
   start,
   firstQuartile,
-  adCollapse,
   pause,
   resume,
-  close,
   impression,
   midpoint,
   thirdQuartile,
-  acceptInvitationLinear,
   clickThrough
 } from '../tracker/linearEvents';
+import {
+  acceptInvitation,
+  creativeView,
+  adCollapse,
+  close
+} from '../tracker/nonLinearEvents';
 import Emitter from './helpers/Emitter';
 import loadCreative from './helpers/vpaid/loadCreative';
 import {
@@ -68,7 +70,7 @@ class VpaidAdUnit extends Emitter {
     },
     finished: false,
     // eslint-disable-next-line complexity
-    handleVpaidEvt: (event, data) => {
+    handleVpaidEvt: (event, payload) => {
       switch (event) {
       case adVideoComplete: {
         this[hidden].finish();
@@ -76,7 +78,7 @@ class VpaidAdUnit extends Emitter {
         break;
       }
       case adError: {
-        this.error = data instanceof Error ? data : new Error('VPAID general error');
+        this.error = payload instanceof Error ? payload : new Error('VPAID general error');
 
         this.error.errorCode = 901;
         this.errorCode = 901;
@@ -115,7 +117,7 @@ class VpaidAdUnit extends Emitter {
         break;
       }
       case adUserAcceptInvitation: {
-        this.emit(acceptInvitationLinear, acceptInvitationLinear, this);
+        this.emit(acceptInvitation, acceptInvitation, this);
         break;
       }
       case adUserMinimize: {
@@ -135,7 +137,7 @@ class VpaidAdUnit extends Emitter {
         break;
       }
       case adClickThru: {
-        this.emit(clickThrough, clickThrough, this);
+        this.emit(clickThrough, clickThrough, this, payload);
         break;
       }
       case adVolumeChange: {
