@@ -49,7 +49,7 @@ describe('waitFor', () => {
     }
   });
 
-  test('must not call setTimeot if no time is passed', async () => {
+  test('must not call setTimeout if no time is passed', async () => {
     setTimeout.mockClear();
     clearTimeout.mockClear();
     const waitFor = require('../waitFor').default;

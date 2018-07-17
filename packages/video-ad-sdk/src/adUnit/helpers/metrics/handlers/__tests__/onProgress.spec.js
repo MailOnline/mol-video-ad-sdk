@@ -20,7 +20,7 @@ afterEach(() => {
   videoElement = null;
 });
 
-test('onProgress must call the callback with uri of the event that fullfilled the offset', () => {
+test('onProgress must call the callback with uri of the event that fulfilled the offset', () => {
   const callback = jest.fn();
   const progressEvents = [
     {

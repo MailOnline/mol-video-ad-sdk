@@ -7,8 +7,8 @@ const findBestMedia = (inlineAd, videoElement, container) => {
   const mediaFiles = getMediaFiles(inlineAd);
 
   if (mediaFiles) {
-    const suportedMediaFiles = mediaFiles.filter((mediaFile) => canPlay(videoElement, mediaFile));
-    const sortedMediaFiles = sortMediaByBestFit(suportedMediaFiles, screenRect);
+    const supportedMediaFiles = mediaFiles.filter((mediaFile) => canPlay(videoElement, mediaFile));
+    const sortedMediaFiles = sortMediaByBestFit(supportedMediaFiles, screenRect);
 
     return sortedMediaFiles[0];
   }

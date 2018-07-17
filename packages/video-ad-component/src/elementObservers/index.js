@@ -43,7 +43,7 @@ export {
    * @param {number} [options.threshold] - sets a debounce threshold for the callback. Defaults to 100 milliseconds.
    * @param {HTMLElement} [options.scrollableElement] - specifies the hook element for the scroll to check for visibility changes.
    *  Defaults to [window]{@link https://developer.mozilla.org/en-US/docs/Web/API/Window}.
-   * @param {number} [options.viewabilityOffset] - Offset fraction. Percentage of the element that needs to be hidden to be considered not vissible.
+   * @param {number} [options.viewabilityOffset] - Offset fraction. Percentage of the element that needs to be hidden to be considered not visible.
    *  Defaults to 0.4
    *
    * @returns {function} - unsubscribe function.

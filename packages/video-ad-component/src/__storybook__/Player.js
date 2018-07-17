@@ -86,7 +86,7 @@ class Player extends Component {
           <ResponsiveVideoAd
             getTag={() => adTag}
             onFinish={this.handleAdFinish}
-            onLinearEvent={(eventname, ...args) => logger(eventname)(...args)}
+            onLinearEvent={(eventName, ...args) => logger(eventName)(...args)}
             onNonRecoverableError={logger('NonRecoverableError')}
             onRecoverableError={logger('RecoverableError')}
             onStart={logger('start')}

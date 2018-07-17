@@ -22,7 +22,7 @@ const fetchHtml = async (endpoint) => {
   }
 
   if (!isValidContentType(contentType)) {
-    const error = new Error(`fethHtml error, invalid Content-Type ${contentType}`);
+    const error = new Error(`fetchHtml error, invalid Content-Type ${contentType}`);
 
     error.response = response;
     throw error;

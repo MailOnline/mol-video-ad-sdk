@@ -38,7 +38,7 @@ afterEach(() => {
   config = null;
 });
 
-test('hasSpace must return false the icons used area is avove the allowed space and true otherwise', () => {
+test('hasSpace must return false the icons used area is above the allowed space and true otherwise', () => {
   mockClientRect(placeholder, {
     height: 10,
     width: 10

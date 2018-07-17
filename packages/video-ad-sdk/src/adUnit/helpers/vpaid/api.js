@@ -74,7 +74,7 @@ export const EVENTS = [
   adError
 ];
 
-// NOTE: `skipAd` is not supported on VPAID 1.0 and since it is a convinent method that has proven problematic we have decided not to support custom skip control for vpaid creatives
+// NOTE: `skipAd` is not supported on VPAID 1.0 and since it is a convenient method that has proven problematic we have decided not to support custom skip control for vpaid creatives
 // otherwise we risk showing the button twice if the creative is badly written and tell the sdk to show a custom skip control while showing its own control.
 export const METHODS = [
   handshakeVersion,

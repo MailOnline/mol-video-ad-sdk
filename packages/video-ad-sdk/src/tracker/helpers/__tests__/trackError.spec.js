@@ -44,7 +44,7 @@ test('trackError must track the errors using pixelTracker fn', () => {
   expect(pixelTracker).toHaveBeenCalledWith(getAdErrorURI(wrapperAd), {errorCode: 203});
 });
 
-test('trackError must accept an optional track funnction', () => {
+test('trackError must accept an optional track function', () => {
   const mockTrack = jest.fn();
 
   trackError(vastChain, {

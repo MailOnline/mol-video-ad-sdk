@@ -46,7 +46,7 @@ class Emitter {
   /**
    * Removes all listeners, or those of the specified eventName.
    *
-   * @param {string} eventName - The name of the event. Optional if ommited all listeners will be removed.
+   * @param {string} eventName - The name of the event. Optional if omitted all listeners will be removed.
    * @returns {Emitter} - The Emitter instance.
    */
   removeAllListeners (eventName) {
@@ -104,6 +104,6 @@ class Emitter {
 
 /**
  * @module tiny-emitter
- * @description Exports the emitter class wich is a subset of node's [Emitter class]{@link https://nodejs.org/api/events.html#events_class_eventemitter}
+ * @description Exports the emitter class which is a subset of node's [Emitter class]{@link https://nodejs.org/api/events.html#events_class_eventemitter}
  */
 export default Emitter;

@@ -52,29 +52,29 @@ const clickTrackingSelector = (ad) => {
   return trackingURIs;
 };
 
-const linearTrakingEventSelector = (event) => (ad) => getLinearTrackingEvents(ad, event);
+const linearTrackingEventSelector = (event) => (ad) => getLinearTrackingEvents(ad, event);
 const linearTrackers = {
   [clickThrough]: createVastEventTracker(clickTrackingSelector),
-  [complete]: createVastEventTracker(linearTrakingEventSelector(complete)),
+  [complete]: createVastEventTracker(linearTrackingEventSelector(complete)),
   [error]: trackError,
-  [exitFullscreen]: createVastEventTracker(linearTrakingEventSelector(exitFullscreen)),
-  [firstQuartile]: createVastEventTracker(linearTrakingEventSelector(firstQuartile)),
-  [fullscreen]: createVastEventTracker(linearTrakingEventSelector(fullscreen)),
+  [exitFullscreen]: createVastEventTracker(linearTrackingEventSelector(exitFullscreen)),
+  [firstQuartile]: createVastEventTracker(linearTrackingEventSelector(firstQuartile)),
+  [fullscreen]: createVastEventTracker(linearTrackingEventSelector(fullscreen)),
   [iconClick]: trackIconClick,
   [iconView]: trackIconView,
   [impression]: createVastEventTracker(getImpressionUri),
-  [midpoint]: createVastEventTracker(linearTrakingEventSelector(midpoint)),
-  [mute]: createVastEventTracker(linearTrakingEventSelector(mute)),
-  [pause]: createVastEventTracker(linearTrakingEventSelector(pause)),
-  [playerCollapse]: createVastEventTracker(linearTrakingEventSelector(playerCollapse)),
-  [playerExpand]: createVastEventTracker(linearTrakingEventSelector(playerExpand)),
+  [midpoint]: createVastEventTracker(linearTrackingEventSelector(midpoint)),
+  [mute]: createVastEventTracker(linearTrackingEventSelector(mute)),
+  [pause]: createVastEventTracker(linearTrackingEventSelector(pause)),
+  [playerCollapse]: createVastEventTracker(linearTrackingEventSelector(playerCollapse)),
+  [playerExpand]: createVastEventTracker(linearTrackingEventSelector(playerExpand)),
   [progress]: trackProgress,
-  [resume]: createVastEventTracker(linearTrakingEventSelector(resume)),
-  [rewind]: createVastEventTracker(linearTrakingEventSelector(rewind)),
-  [skip]: createVastEventTracker(linearTrakingEventSelector(skip)),
-  [start]: createVastEventTracker(linearTrakingEventSelector(start)),
-  [thirdQuartile]: createVastEventTracker(linearTrakingEventSelector(thirdQuartile)),
-  [unmute]: createVastEventTracker(linearTrakingEventSelector(unmute))
+  [resume]: createVastEventTracker(linearTrackingEventSelector(resume)),
+  [rewind]: createVastEventTracker(linearTrackingEventSelector(rewind)),
+  [skip]: createVastEventTracker(linearTrackingEventSelector(skip)),
+  [start]: createVastEventTracker(linearTrackingEventSelector(start)),
+  [thirdQuartile]: createVastEventTracker(linearTrackingEventSelector(thirdQuartile)),
+  [unmute]: createVastEventTracker(linearTrackingEventSelector(unmute))
 };
 
 const trackLinearEvent = (event, vastChain, {data, errorCode, tracker = pixelTracker, logger = console}) => {

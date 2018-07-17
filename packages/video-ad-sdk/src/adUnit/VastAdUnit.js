@@ -101,13 +101,13 @@ class VastAdUnit extends Emitter {
       onFinishCallbacks.push(removeIcons);
     }
 
-    const removeMetrichandlers = setupMetricHandlers({
+    const removeMetricHandlers = setupMetricHandlers({
       hooks: this.hooks,
       vastChain: this.vastChain,
       videoAdContainer: this.videoAdContainer
     }, handleMetric);
 
-    onFinishCallbacks.push(removeMetrichandlers);
+    onFinishCallbacks.push(removeMetricHandlers);
   }
 
   async start () {

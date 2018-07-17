@@ -105,7 +105,7 @@ describe('VpaidAdUnit', () => {
     jest.clearAllMocks();
   });
 
-  test('must load the creative and publish the passed vastChain and ontainer', () => {
+  test('must load the creative and publish the passed vastChain and container', () => {
     const adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
 
     expect(adUnit.vastChain).toBe(vpaidChain);
@@ -167,7 +167,7 @@ describe('VpaidAdUnit', () => {
       expect(mockCreativeAd.stopAd).toHaveBeenCalledTimes(0);
     });
 
-    test('must call stopAd if adStarted evnt does not get acknowledged', async () => {
+    test('must call stopAd if adStarted event does not get acknowledged', async () => {
       mockCreativeAd.startAd.mockImplementation(() => {
         throw new Error('Error starting ad');
       });
@@ -897,7 +897,7 @@ describe('VpaidAdUnit', () => {
         expect(callback).toHaveBeenCalled();
       });
 
-      test('must not emit any evnt on normal volume change', async () => {
+      test('must not emit any event on normal volume change', async () => {
         const callback = jest.fn();
 
         adUnit.on(unmute, callback);

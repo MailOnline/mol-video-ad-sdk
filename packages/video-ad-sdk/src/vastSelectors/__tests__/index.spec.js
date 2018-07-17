@@ -34,7 +34,7 @@ import {
 
 const clone = (obj) => JSON.parse(JSON.stringify(obj));
 
-test('getVastErrorURI must return the error uri of the VAST eleent', () => {
+test('getVastErrorURI must return the error uri of the VAST element', () => {
   expect(getVastErrorURI(inlineParsedXML)).toEqual(null);
   expect(getVastErrorURI(noAdParsedXML)).toEqual('https://test.example.com/error/[ERRORCODE]');
   expect(getVastErrorURI(null)).toEqual(null);
@@ -187,7 +187,7 @@ test('getMediaFiles must return the mediafiles', () => {
   });
 });
 
-test('getMediaFiles must add the apiFramwork if present', () => {
+test('getMediaFiles must add the apiFramework if present', () => {
   const mediaFiles = getMediaFiles(vpaidInlineAd);
 
   expect(mediaFiles).toBeInstanceOf(Array);

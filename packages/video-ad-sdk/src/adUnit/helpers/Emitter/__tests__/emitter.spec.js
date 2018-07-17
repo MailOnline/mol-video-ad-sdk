@@ -16,7 +16,7 @@ test('Emitter `on` method must return this', () => {
   expect(emitter.on('bla', listener)).toBe(emitter);
 });
 
-test('Emitter `removeListener` method must remove a previosly registered listener', () => {
+test('Emitter `removeListener` method must remove a previously registered listener', () => {
   const emitter = new Emitter();
   const listener = function () {};
 
@@ -100,7 +100,7 @@ test('Emitter `once` method must return this', () => {
   expect(emitter.once('bla', listener)).toBe(emitter);
 });
 
-test('Emitter `emit` method must call all the prevously registered listeners with the passed args', () => {
+test('Emitter `emit` method must call all the previously registered listeners with the passed args', () => {
   const emitter = new Emitter();
   const listener = jest.fn();
   const listener2 = jest.fn();
@@ -118,7 +118,7 @@ test('Emitter `emit` method must call all the prevously registered listeners wit
 test('Emitter `emit` method must still call all the listeners if a listener throws an exception', () => {
   const emitter = new Emitter({error: () => {}});
   const listener = function () {
-    throw new Error('BOOOM!!');
+    throw new Error('Test error!!');
   };
   const listener2 = jest.fn();
 

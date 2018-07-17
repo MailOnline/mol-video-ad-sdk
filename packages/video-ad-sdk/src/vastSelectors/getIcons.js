@@ -102,7 +102,7 @@ const getIconClicks = (iconElement) => {
  * @typedef VastIcon
  * @type Object
  *
- * @property {ParsedOffset} [offset] - The time of delay from when the associated linear creative begins playing to when the ixcon should be displayed.
+ * @property {ParsedOffset} [offset] - The time of delay from when the associated linear creative begins playing to when the icon should be displayed.
  * @property {ParsedOffset} [duration] - The duration the icon should be displayed unless ad is finished playing.
  * @property {number} [height] - Pixel height of the icon.
  * @property {number} [width] - Pixel width of the icon.
@@ -111,10 +111,10 @@ const getIconClicks = (iconElement) => {
  *                                The pixel ratio is the ratio of physical pixels on the device to the device-independent pixels.
  *                                An ad intended for display on a device with a pixel ratio that is twice that of a standard 1:1 pixel ratio would use the value "2."
  *                                Default value is "1.".
- * @property {string|number} [xPosition] - The x-cooridinate of the top, left corner of the icon asset relative to the ad display area.
+ * @property {string|number} [xPosition] - The x-coordinate of the top, left corner of the icon asset relative to the ad display area.
  *                                Values of "left" or "right" also accepted and indicate the leftmost or rightmost available position for the icon asset.
- * @property {string|number} [yPosition] - The y-cooridinate of the top left corner of the icon asset relative to the ad display area.
- *                                Values of "top" or "bottom" also accepted and indicate the topmost or bottom most vailable position for the icon asset
+ * @property {string|number} [yPosition] - The y-coordinate of the top left corner of the icon asset relative to the ad display area.
+ *                                Values of "top" or "bottom" also accepted and indicate the topmost or bottom most available position for the icon asset
  * @property {string} [staticResource] - The URI to a static creative file to be used as the icon.
  * @property {string} [htmlResource] - The URI to a static creative file to be used as the icon.
  * @property {string} [iFrameResource] - The URI to a static creative file to be used as the icon.
