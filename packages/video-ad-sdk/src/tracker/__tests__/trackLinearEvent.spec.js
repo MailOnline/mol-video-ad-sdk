@@ -69,6 +69,7 @@ test('trackLinearEvent must track the error linear event with the default pixelT
   expect(trackError).toHaveBeenCalledTimes(1);
   expect(trackError).toHaveBeenCalledWith(vastChain, {
     data: {errorCode},
+    errorCode,
     tracker: pixelTracker
   });
 });
@@ -101,7 +102,7 @@ test('trackLinearEvent must log an error if the the event can\'t be tracked', ()
     logger
   });
 
-  expect(logger.error).toHaveBeenCalledWith('Event \'wrongEvent\' is not trackable');
+  expect(logger.error).toHaveBeenCalledWith('Event \'wrongEvent\' can not be tracked');
 });
 
 test(`trackLinearEvent must track ${clickThrough} linear event with the default pixelTracker`, () => {

@@ -1,6 +1,6 @@
 import pixelTracker from './pixelTracker';
 
-const trackIconView = (vastChain, {data, tracker = pixelTracker} = {}) => {
+const trackIconView = (vastChain, {data, tracker = pixelTracker}) => {
   const {iconViewTracking} = data;
 
   if (Array.isArray(iconViewTracking)) {

@@ -1,6 +1,8 @@
 import {
   linearEvents,
-  trackLinearEvent
+  nonLinearEvents,
+  trackLinearEvent,
+  trackNonLinearEvent
 } from '../tracker';
 import VideoAdContainer from '../adContainer/VideoAdContainer';
 import {getInteractiveFiles} from '../../../../node_modules/@mol/video-ad-sdk/src/vastSelectors';
@@ -26,8 +28,11 @@ const hasVpaidAd = (vastChain) => {
 const createVideoAdUnit = (vastChain, videoAdContainer, options) => {
   validate(vastChain, videoAdContainer);
   const adUnit = hasVpaidAd(vastChain) ? new VpaidAdUnit(vastChain, videoAdContainer, options) : new VastAdUnit(vastChain, videoAdContainer, options);
+
+  // TODO: merge onLinearEvent and onNonLinearEvent into once single handler
   const {
     onLinearEvent,
+    onNonLinearEvent,
     tracker
   } = options;
 
@@ -43,6 +48,21 @@ const createVideoAdUnit = (vastChain, videoAdContainer, options) => {
 
       if (typeof onLinearEvent === 'function') {
         onLinearEvent(linearEvent, vastChain, payload);
+      }
+    })
+  );
+
+  Object.values(nonLinearEvents).forEach((nonLinearEvent) =>
+    adUnit.on(nonLinearEvent, (event, _, data) => {
+      const payload = {
+        data,
+        tracker
+      };
+
+      trackNonLinearEvent(event, vastChain, payload);
+
+      if (typeof onNonLinearEvent === 'function') {
+        onNonLinearEvent(nonLinearEvent, vastChain, payload);
       }
     })
   );

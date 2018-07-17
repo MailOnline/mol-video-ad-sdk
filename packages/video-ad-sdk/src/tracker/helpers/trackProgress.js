@@ -1,6 +1,6 @@
 import pixelTracker from './pixelTracker';
 
-const trackProgress = (vastChain, {data, tracker = pixelTracker} = {}) => {
+const trackProgress = (vastChain, {data, tracker = pixelTracker}) => {
   const {progressUri} = data;
 
   if (Boolean(progressUri)) {

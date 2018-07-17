@@ -1,4 +1,3 @@
-export const acceptInvitationLinear = 'acceptInvitationLinear';
 export const complete = 'complete';
 export const clickThrough = 'clickThrough';
 export const error = 'error';
@@ -43,7 +42,6 @@ export const iconView = 'iconView';
  * @property {string} midpoint - the creative played continuously for at least 50% of the total duration at normal speed.
  * @property {string} thirdQuartile - the creative played continuously for at least 75% of the duration at normal speed.
  * @property {string} complete - the creative was played to the end at normal speed so that 100% of the creative was played.
- * @property {string} acceptInvitationLinear - the user activated a control that launched an additional portion of the linear creative.
  * @property {string} timeSpentViewing - amount of video viewed at normal speed in seconds or other appropriate time-based units. If a rewind event occurs during play, time spent viewing may be calculated on total amount of video viewed at normal speed, which may include additional amounts of video viewed after rewinding. The offset attribute for the <Tracking> element under Linear ads may be used to track when time spent viewing meets the threshold. Otherwise, a macro may be provided so that the player may return a time value. VAST does not provide a standard macro for this value, so the involved parties must establish these parameters if this metric is to be used.
  * @property {string} otherAdInteraction - an optional metric that can capture all other user interactions under one metric such a s hover-overs, or custom clicks. It should NOT replace clickthrough events or other existing events like mute, unmute, pause, etc.
  * @property {string} progress - the creative played for a duration at normal speed that is equal to or greater than the value provided in an additional offset attribute for the <Tracking> element under Linear ads. Values can be time in the format HH:MM:SS or HH:MM:SS.mmm or a percentage value in the format n%.
@@ -53,7 +51,6 @@ export const iconView = 'iconView';
  * @property {string} clickThrough - fired when a viewer clicks the ad
  */
 const linearEvents = {
-  acceptInvitationLinear,
   clickThrough,
   complete,
   error,

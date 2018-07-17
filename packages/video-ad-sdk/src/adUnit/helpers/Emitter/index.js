@@ -88,7 +88,7 @@ class Emitter {
   emit (eventName, ...args) {
     const evts = this.evts;
     const evtListeners = evts[eventName] || (evts[eventName] = []);
-    const haveListeners = evtListeners.length > 0;
+    const hasListeners = evtListeners.length > 0;
 
     evtListeners.forEach((handler) => {
       try {
@@ -98,7 +98,7 @@ class Emitter {
       }
     });
 
-    return haveListeners;
+    return hasListeners;
   }
 }
 

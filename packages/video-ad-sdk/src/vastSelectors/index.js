@@ -10,6 +10,7 @@ import {
 import parseOffset from './helpers/parseOffset';
 import getLinearCreative from './helpers/getLinearCreative';
 import getLinearTrackingEvents from './getLinearTrackingEvents';
+import getNonLinearTrackingEvents from './getNonLinearTrackingEvents';
 import getIcons from './getIcons';
 
 const getBooleanValue = (val) => {
@@ -618,5 +619,15 @@ export {
    * @param {string} [eventName] - If provided it will filter-out the array events against it.
    * @returns {?Array.<VastTrackingEvent>} - Array of Tracking event definitions
    */
-  getLinearTrackingEvents
+  getLinearTrackingEvents,
+
+  /**
+   * Gets the Non Linear tracking events from the Vast Ad
+   *
+   * @function
+   * @param {ParsedAd} ad - VAST ad object.
+   * @param {string} [eventName] - If provided it will filter-out the array events against it.
+   * @returns {?Array.<VastTrackingEvent>} - Array of Tracking event definitions
+   */
+  getNonLinearTrackingEvents
 };

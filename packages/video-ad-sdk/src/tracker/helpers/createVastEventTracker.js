@@ -1,6 +1,6 @@
 import pixelTracker from './pixelTracker';
 
-const createLinearEventTracker = (vastChainSelector) => (vastChain, {data, tracker = pixelTracker} = {}) => {
+const createVastEventTracker = (vastChainSelector) => (vastChain, {data, tracker = pixelTracker}) => {
   vastChain.forEach(({ad}) => {
     const value = vastChainSelector(ad);
 
@@ -19,4 +19,4 @@ const createLinearEventTracker = (vastChainSelector) => (vastChain, {data, track
   });
 };
 
-export default createLinearEventTracker;
+export default createVastEventTracker;
