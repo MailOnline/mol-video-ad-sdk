@@ -102,7 +102,7 @@ test('trackLinearEvent must log an error if the the event can\'t be tracked', ()
     logger
   });
 
-  expect(logger.error).toHaveBeenCalledWith('Event \'wrongEvent\' can not be tracked');
+  expect(logger.error).toHaveBeenCalledWith('Event \'wrongEvent\' cannot be tracked');
 });
 
 test(`trackLinearEvent must track ${clickThrough} linear event with the default pixelTracker`, () => {

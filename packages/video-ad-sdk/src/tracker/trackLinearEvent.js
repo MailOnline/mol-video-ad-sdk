@@ -90,7 +90,7 @@ const trackLinearEvent = (event, vastChain, {data, errorCode, tracker = pixelTra
       tracker
     });
   } else {
-    logger.error(`Event '${event}' can not be tracked`);
+    logger.error(`Event '${event}' cannot be tracked`);
   }
 };
 

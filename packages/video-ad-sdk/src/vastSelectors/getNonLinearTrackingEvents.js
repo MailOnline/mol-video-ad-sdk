@@ -12,12 +12,12 @@ const getNonLinearTrackingEvents = (ad, eventName) => {
   if (creativeElement) {
     const NonLinearAdsElement = get(creativeElement, 'NonLinearAds');
     const trackingEventsElement = NonLinearAdsElement && get(NonLinearAdsElement, 'TrackingEvents');
-    const trackinEventElements = trackingEventsElement && getAll(trackingEventsElement, 'Tracking');
+    const trackingEventElements = trackingEventsElement && getAll(trackingEventsElement, 'Tracking');
 
-    if (trackinEventElements && trackinEventElements.length > 0) {
-      const trackingEvents = trackinEventElements.map((trackinEventElement) => {
-        const {event} = getAttributes(trackinEventElement);
-        const uri = getText(trackinEventElement);
+    if (trackingEventElements && trackingEventElements.length > 0) {
+      const trackingEvents = trackingEventElements.map((trackingEventElement) => {
+        const {event} = getAttributes(trackingEventElement);
+        const uri = getText(trackingEventElement);
 
         return {
           event,
