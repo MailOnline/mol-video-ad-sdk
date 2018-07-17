@@ -11,9 +11,8 @@ class VideoAd extends Component {
     children: undefined,
     height: undefined,
     logger: console,
+    onError: noop,
     onFinish: noop,
-    onNonRecoverableError: noop,
-    onRecoverableError: noop,
     onStart: noop,
     skipControl: undefined,
     tracker: undefined,
@@ -32,9 +31,8 @@ class VideoAd extends Component {
       error: PropTypes.func,
       log: PropTypes.func
     }),
+    onError: PropTypes.func,
     onFinish: PropTypes.func,
-    onNonRecoverableError: PropTypes.func,
-    onRecoverableError: PropTypes.func,
     onStart: PropTypes.func,
     skipControl: PropTypes.oneOfType([
       PropTypes.func,
@@ -108,16 +106,25 @@ class VideoAd extends Component {
       getTag,
       logger,
       onFinish,
-      onNonRecoverableError,
-      onRecoverableError: onError,
+      onError,
       skipControl,
       tracker,
       videoElement
     } = this.props;
 
+    const onRecoverableError = (error) => {
+      error.isRecoverable = true;
+      onError(error);
+    };
+
+    const onNonRecoverableError = (error) => {
+      error.isRecoverable = false;
+      onError(error);
+    };
+
     const options = {
       logger,
-      onError,
+      onError: onRecoverableError,
       tracker,
       videoElement
     };

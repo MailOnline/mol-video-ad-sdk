@@ -85,9 +85,8 @@ class Player extends Component {
         <div className={styles.adContainer} >
           <ResponsiveVideoAd
             getTag={() => adTag}
+            onError={logger('VideoAdError')}
             onFinish={this.handleAdFinish}
-            onNonRecoverableError={logger('NonRecoverableError')}
-            onRecoverableError={logger('RecoverableError')}
             onStart={logger('start')}
             skipControl={skipBtn}
             tracker={logger('Tracking')}
