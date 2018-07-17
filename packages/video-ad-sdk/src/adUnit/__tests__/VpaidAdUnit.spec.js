@@ -1,4 +1,4 @@
-/* eslint-disable no-loop-func, max-nested-callbacks,  */
+/* eslint-disable no-loop-func, max-nested-callbacks */
 import {
   vpaidInlineAd,
   vpaidInlineParsedXML,
@@ -33,7 +33,8 @@ import {
   adUserAcceptInvitation,
   adUserMinimize,
   adUserClose,
-  adClickThru
+  adClickThru,
+  getAdIcons
 } from '../helpers/vpaid/api';
 import linearEvents, {
   skip,
@@ -47,7 +48,9 @@ import linearEvents, {
   thirdQuartile,
   pause,
   resume,
-  clickThrough
+  clickThrough,
+  iconClick,
+  iconView
 } from '../../tracker/linearEvents';
 import {
   acceptInvitation,
@@ -55,12 +58,29 @@ import {
   adCollapse,
   close
 } from '../../tracker/nonLinearEvents';
+import addIcons from '../helpers/icons/addIcons';
+import retrieveIcons from '../helpers/icons/retrieveIcons';
 import MockVpaidCreativeAd from './MockVpaidCreativeAd';
 
 jest.mock('../helpers/vpaid/loadCreative');
 jest.mock('../helpers/vpaid/handshake');
 jest.mock('../helpers/vpaid/initAd');
 jest.mock('../helpers/vpaid/callAndWait');
+
+const mockDrawIcons = jest.fn();
+const mockRemoveIcons = jest.fn();
+const mockHasPendingRedraws = jest.fn(() => false);
+
+jest.mock('../helpers/icons/addIcons.js', () =>
+  jest.fn(
+    () => ({
+      drawIcons: mockDrawIcons,
+      hasPendingIconRedraws: mockHasPendingRedraws,
+      removeIcons: mockRemoveIcons
+    })
+  )
+);
+jest.mock('../helpers/icons/retrieveIcons.js', () => jest.fn());
 
 describe('VpaidAdUnit', () => {
   let vpaidChain;
@@ -147,7 +167,7 @@ describe('VpaidAdUnit', () => {
       expect(mockCreativeAd.stopAd).toHaveBeenCalledTimes(0);
     });
 
-    test('must call stopAd if adStarted evnt does not get acknowledge', async () => {
+    test('must call stopAd if adStarted evnt does not get acknowledged', async () => {
       mockCreativeAd.startAd.mockImplementation(() => {
         throw new Error('Error starting ad');
       });
@@ -178,6 +198,229 @@ describe('VpaidAdUnit', () => {
       } catch (error) {
         expect(error.message).toBe('VpaidAdUnit already started');
       }
+    });
+
+    describe('with creativeAd\'s adIcon property', () => {
+      test('undefined (VPAID 1) must not render the icons', async () => {
+        delete mockCreativeAd[getAdIcons];
+        await adUnit.start();
+
+        expect(retrieveIcons).not.toHaveBeenCalled();
+        expect(addIcons).not.toHaveBeenCalled();
+      });
+
+      test('false, must not render the icons', async () => {
+        mockCreativeAd[getAdIcons].mockReturnValue(false);
+        await adUnit.start();
+
+        expect(retrieveIcons).not.toHaveBeenCalled();
+        expect(addIcons).not.toHaveBeenCalled();
+      });
+
+      describe('true,', () => {
+        test('without vast icons, must not add the icons', async () => {
+          retrieveIcons.mockReturnValue(null);
+          mockCreativeAd[getAdIcons].mockReturnValue(true);
+          await adUnit.start();
+
+          expect(retrieveIcons).toHaveBeenCalledTimes(1);
+          expect(retrieveIcons).toHaveBeenCalledWith(adUnit.vastChain);
+          expect(addIcons).not.toHaveBeenCalled();
+        });
+
+        test('with vast icons, must render the icons', async () => {
+          const icons = [{
+            height: 20,
+            width: 20,
+            xPosition: 'left',
+            yPosition: 'top'
+          }];
+
+          retrieveIcons.mockReturnValue(icons);
+          mockCreativeAd[getAdIcons].mockReturnValue(true);
+          await adUnit.start();
+
+          expect(retrieveIcons).toHaveBeenCalledTimes(1);
+          expect(retrieveIcons).toHaveBeenCalledWith(adUnit.vastChain);
+          expect(addIcons).toHaveBeenCalledTimes(1);
+          expect(addIcons).toHaveBeenCalledWith(icons, {
+            logger: adUnit.logger,
+            onIconClick: expect.any(Function),
+            onIconView: expect.any(Function),
+            videoAdContainer
+          });
+
+          expect(mockDrawIcons).toHaveBeenCalledTimes(1);
+        });
+      });
+    });
+  });
+
+  describe('with icons', () => {
+    let mockCreativeAd;
+    let adUnit;
+
+    beforeEach(() => {
+      jest.useFakeTimers();
+
+      mockCreativeAd = new MockVpaidCreativeAd();
+
+      initAd.mockImplementation(() => {
+        mockCreativeAd.emit(adLoaded);
+      });
+
+      mockCreativeAd.startAd.mockImplementationOnce(() => {
+        mockCreativeAd.emit(adStarted);
+      });
+
+      mockCreativeAd.resizeAd.mockImplementationOnce(() => {
+        mockCreativeAd.emit(adSizeChange);
+      });
+
+      loadCreative.mockReturnValue(Promise.resolve(mockCreativeAd));
+      adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
+    });
+
+    afterEach(() => {
+      jest.clearAllTimers();
+    });
+
+    test('must remove the icons on ad finish', async () => {
+      const icons = [{
+        height: 20,
+        width: 20,
+        xPosition: 'left',
+        yPosition: 'top'
+      }];
+
+      retrieveIcons.mockReturnValue(icons);
+      mockCreativeAd[getAdIcons].mockReturnValue(true);
+      await adUnit.start();
+
+      adUnit.cancel();
+
+      expect(mockRemoveIcons).toHaveBeenCalledTimes(1);
+    });
+
+    test('must redraw the icons on adUnit resize', async () => {
+      const icons = [{
+        height: 20,
+        width: 20,
+        xPosition: 'left',
+        yPosition: 'top'
+      }];
+
+      retrieveIcons.mockReturnValue(icons);
+      mockCreativeAd[getAdIcons].mockReturnValue(true);
+      await adUnit.start();
+
+      expect(mockDrawIcons).toHaveBeenCalledTimes(1);
+
+      await adUnit.resize();
+
+      expect(mockDrawIcons).toHaveBeenCalledTimes(2);
+    });
+
+    test(`must emit '${iconClick}' event on click`, async () => {
+      const icons = [{
+        height: 20,
+        width: 20,
+        xPosition: 'left',
+        yPosition: 'top'
+      }];
+
+      retrieveIcons.mockReturnValue(icons);
+      mockCreativeAd[getAdIcons].mockReturnValue(true);
+      await adUnit.start();
+
+      expect(addIcons).toHaveBeenCalledTimes(1);
+
+      const passedConfig = addIcons.mock.calls[0][1];
+
+      const promise = new Promise((resolve) => {
+        adUnit.on(iconClick, (...args) => {
+          resolve(args);
+        });
+      });
+
+      passedConfig.onIconClick(icons[0]);
+
+      const passedArgs = await promise;
+
+      expect(passedArgs).toEqual([iconClick, adUnit, icons[0]]);
+    });
+
+    test(`must emit '${iconView}' event on view`, async () => {
+      const icons = [{
+        height: 20,
+        width: 20,
+        xPosition: 'left',
+        yPosition: 'top'
+      }];
+
+      retrieveIcons.mockReturnValue(icons);
+      mockCreativeAd[getAdIcons].mockReturnValue(true);
+      await adUnit.start();
+
+      expect(addIcons).toHaveBeenCalledTimes(1);
+
+      const passedConfig = addIcons.mock.calls[0][1];
+
+      const promise = new Promise((resolve) => {
+        adUnit.on(iconView, (...args) => {
+          resolve(args);
+        });
+      });
+
+      passedConfig.onIconView(icons[0]);
+
+      const passedArgs = await promise;
+
+      expect(passedArgs).toEqual([iconView, adUnit, icons[0]]);
+    });
+
+    test('must periodically redraw the icons while it has pendingIconRedraws', async () => {
+      const icons = [{
+        height: 20,
+        width: 20,
+        xPosition: 'left',
+        yPosition: 'top'
+      }];
+
+      retrieveIcons.mockReturnValue(icons);
+      mockCreativeAd[getAdIcons].mockReturnValue(true);
+      mockHasPendingRedraws.mockRejectedValueOnce(true);
+      mockHasPendingRedraws.mockRejectedValueOnce(false);
+
+      await adUnit.start();
+      expect(mockDrawIcons).toHaveBeenCalledTimes(1);
+      jest.runOnlyPendingTimers();
+      expect(mockDrawIcons).toHaveBeenCalledTimes(2);
+      jest.runOnlyPendingTimers();
+      expect(mockDrawIcons).toHaveBeenCalledTimes(2);
+    });
+
+    test('must avoid redraw the icons if the adUnit is finished', async () => {
+      const icons = [{
+        height: 20,
+        width: 20,
+        xPosition: 'left',
+        yPosition: 'top'
+      }];
+
+      retrieveIcons.mockReturnValue(icons);
+      mockCreativeAd[getAdIcons].mockReturnValue(true);
+      mockHasPendingRedraws.mockRejectedValueOnce(true);
+      mockHasPendingRedraws.mockRejectedValueOnce(false);
+
+      await adUnit.start();
+      expect(mockDrawIcons).toHaveBeenCalledTimes(1);
+      adUnit.cancel();
+
+      expect(mockDrawIcons).toHaveBeenCalledTimes(1);
+
+      jest.runAllTimers();
+      expect(mockDrawIcons).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -297,15 +540,23 @@ describe('VpaidAdUnit', () => {
     });
 
     describe('resize', () => {
-      test('must throw if the adUnit is not started', () => {
-        expect(() => adUnit.resize()).toThrow('VpaidAdUnit has not started');
+      test('must throw if the adUnit is not started', async () => {
+        try {
+          await adUnit.resize();
+        } catch (error) {
+          expect(error.message).toBe('VpaidAdUnit has not started');
+        }
       });
 
       test('must throw if the adUnit is finished', async () => {
         await adUnit.start();
         await adUnit.cancel();
 
-        expect(() => adUnit.resize()).toThrow('VpaidAdUnit is finished');
+        try {
+          await adUnit.resize();
+        } catch (error) {
+          expect(error.message).toBe('VpaidAdUnit is finished');
+        }
       });
 
       test('must call resizeAd', async () => {
@@ -391,6 +642,7 @@ describe('VpaidAdUnit', () => {
       });
 
       test('must call the callback if there is a problem starting the ad', async () => {
+        expect.assertions(3);
         const handshakeVersionError = new Error('Handshake version not supported');
         const callback = jest.fn();
 
@@ -404,10 +656,9 @@ describe('VpaidAdUnit', () => {
           await adUnit.start();
         } catch (error) {
           expect(error).toBe(handshakeVersionError);
+          expect(callback).toHaveBeenCalledTimes(1);
+          expect(callback).toHaveBeenCalledWith(handshakeVersionError);
         }
-
-        expect(callback).toHaveBeenCalledTimes(1);
-        expect(callback).toHaveBeenCalledWith(handshakeVersionError);
       });
 
       test('must call the callback if there is an error with the creativeAd', async () => {
