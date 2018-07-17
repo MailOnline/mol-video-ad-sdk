@@ -1,18 +1,5 @@
-/* eslint-disable promise/prefer-await-to-callbacks, class-methods-use-this */
-import linearEvents, {
-  complete,
-  mute,
-  unmute,
-  skip,
-  start,
-  firstQuartile,
-  pause,
-  resume,
-  impression,
-  midpoint,
-  thirdQuartile,
-  clickThrough
-} from '../tracker/linearEvents';
+/* eslint-disable promise/prefer-await-to-callbacks, class-methods-use-this, import/no-named-as-default-member */
+import linearEvents from '../tracker/linearEvents';
 import {
   acceptInvitation,
   creativeView,
@@ -48,8 +35,11 @@ import {
   adUserAcceptInvitation,
   adUserMinimize,
   adUserClose,
-  adClickThru
+  adClickThru,
+  getAdIcons
 } from './helpers/vpaid/api';
+import retrieveIcons from './helpers/icons/retrieveIcons';
+import addIcons from './helpers/icons/addIcons';
 import waitFor from './helpers/vpaid/waitFor';
 import callAndWait from './helpers/vpaid/callAndWait';
 import handshake from './helpers/vpaid/handshake';
@@ -57,7 +47,20 @@ import initAd from './helpers/vpaid/initAd';
 import safeCallback from './helpers/safeCallback';
 
 const {
-  // eslint-disable-next-line import/no-named-as-default-member
+  complete,
+  mute,
+  unmute,
+  skip,
+  start,
+  firstQuartile,
+  pause,
+  resume,
+  impression,
+  midpoint,
+  thirdQuartile,
+  clickThrough,
+  iconClick,
+  iconView,
   error: errorEvt
 } = linearEvents;
 
@@ -217,6 +220,29 @@ class VpaidAdUnit extends Emitter {
         this.creativeAd.subscribe(this[hidden].handleVpaidEvt.bind(this, creativeEvt), creativeEvt);
       }
 
+      const icons = this.creativeAd[getAdIcons] && this.creativeAd[getAdIcons]() && retrieveIcons(this.vastChain);
+
+      if (icons) {
+        this.icons = icons;
+
+        const {
+          drawIcons,
+          hasPendingIconRedraws,
+          removeIcons
+        } = addIcons(this.icons, {
+          logger: this.logger,
+          onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
+          onIconView: (icon) => this.emit(iconView, iconView, this, icon),
+          videoAdContainer: this.videoAdContainer
+        });
+
+        this.drawIcons = drawIcons;
+        this.removeIcons = removeIcons;
+        this.hasPendingIconRedraws = hasPendingIconRedraws;
+
+        this[hidden].onFinishCallbacks.push(removeIcons);
+      }
+
       handshake(this.creativeAd, '2.0');
       initAd(this.creativeAd, this.videoAdContainer, this.vastChain);
 
@@ -226,6 +252,23 @@ class VpaidAdUnit extends Emitter {
       if (!this.videoAdContainer.isDestroyed()) {
         try {
           await callAndWait(this.creativeAd, startAd, adStarted);
+
+          if (this.icons) {
+            const drawIcons = async () => {
+              if (this.isFinished()) {
+                return;
+              }
+
+              await this.drawIcons();
+
+              if (this.hasPendingIconRedraws() && !this.isFinished()) {
+                setTimeout(drawIcons, 500);
+              }
+            };
+
+            await drawIcons();
+          }
+
           this[hidden].started = true;
         } catch (error) {
           this.cancel();
@@ -299,8 +342,13 @@ class VpaidAdUnit extends Emitter {
     return this[hidden].started;
   }
 
-  resize () {
+  async resize () {
     this[hidden].throwIfNotReady();
+
+    if (this.icons) {
+      await this.removeIcons();
+      await this.drawIcons();
+    }
 
     return callAndWait(this.creativeAd, resizeAd, adSizeChange);
   }

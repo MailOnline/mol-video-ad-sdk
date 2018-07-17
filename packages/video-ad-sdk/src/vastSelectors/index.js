@@ -58,7 +58,7 @@ const compareBySequence = (itemA, itemB) => {
  * time using the formatting conventions of ISO 8601. However, ISO 8601 does not
  * provide a convention for adding milliseconds. To add milliseconds, use the
  * convention .mmm at the end of the time provided and before any time zone
- * indicator. For example, January 17, 2016 at 8:15:07 and 127 milleseconds, Eastern
+ * indicator. For example, January 17, 2016 at 8:15:07 and 127 milliseconds, Eastern
  * Time would be formatted as follows: 2016-01-17T8:15:07.127-05
  * When replacing macros, the video player must correctly percent-encode any characters as
  * defined by RFC 3986.
@@ -511,7 +511,7 @@ export const getClickThrough = (ad) => {
  *
  * @function
  * @param {ParsedAd} ad - VAST ad object.
- * @returns {?Array.<VAST-macro>} - click tracking mavro macro
+ * @returns {?Array.<VAST-macro>} - click tracking macro
  */
 export const getClickTracking = (ad) => {
   const videoClicksElement = getVideoClicksElement(ad);
@@ -529,7 +529,7 @@ export const getClickTracking = (ad) => {
  *
  * @function
  * @param {ParsedAd} ad - VAST ad object.
- * @returns {?Array.<VAST-macro>} - click tracking mavro macro
+ * @returns {?Array.<VAST-macro>} - click tracking macro
  */
 export const getCustomClick = (ad) => {
   const videoClicksElement = getVideoClicksElement(ad);

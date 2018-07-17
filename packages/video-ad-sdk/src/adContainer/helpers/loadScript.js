@@ -1,7 +1,7 @@
 /**
  * Loads the script source.
  *
- * @param {string} src - The scrit source.
+ * @param {string} src - The script source.
  * @param {Object} options - The allowed options are:
  *                           type: Defaults to 'text/javascript'.
  *                           async<Boolean> : if "true" the "async" attribute is added to the new script. Defaults to false.

@@ -1,5 +1,5 @@
 import Emitter from '../helpers/Emitter';
-import {initAd, startAd, stopAd, resumeAd, pauseAd, setAdVolume, getAdVolume, resizeAd, adVolumeChange} from '../helpers/vpaid/api';
+import {initAd, startAd, stopAd, resumeAd, pauseAd, setAdVolume, getAdVolume, resizeAd, adVolumeChange, getAdIcons} from '../helpers/vpaid/api';
 
 class MockVpaidCreativeAd extends Emitter {
   constructor (version = '2.0') {
@@ -13,6 +13,7 @@ class MockVpaidCreativeAd extends Emitter {
     this[stopAd] = jest.fn();
     this[resumeAd] = jest.fn();
     this[pauseAd] = jest.fn();
+    this[getAdIcons] = jest.fn();
     this[setAdVolume] = jest.fn((volume) => {
       this.volume = volume;
       this.emit(adVolumeChange);

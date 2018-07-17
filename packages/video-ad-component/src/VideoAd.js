@@ -12,7 +12,6 @@ class VideoAd extends Component {
     height: undefined,
     logger: console,
     onFinish: noop,
-    onLinearEvent: noop,
     onNonRecoverableError: noop,
     onRecoverableError: noop,
     onStart: noop,
@@ -34,7 +33,6 @@ class VideoAd extends Component {
       log: PropTypes.func
     }),
     onFinish: PropTypes.func,
-    onLinearEvent: PropTypes.func,
     onNonRecoverableError: PropTypes.func,
     onRecoverableError: PropTypes.func,
     onStart: PropTypes.func,
@@ -110,7 +108,6 @@ class VideoAd extends Component {
       getTag,
       logger,
       onFinish,
-      onLinearEvent,
       onNonRecoverableError,
       onRecoverableError: onError,
       skipControl,
@@ -121,7 +118,6 @@ class VideoAd extends Component {
     const options = {
       logger,
       onError,
-      onLinearEvent,
       tracker,
       videoElement
     };

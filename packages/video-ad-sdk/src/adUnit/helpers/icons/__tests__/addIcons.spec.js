@@ -70,7 +70,7 @@ test('addIcons must add the icons to the video ad container', async () => {
   });
 
   drawIcons();
-  await waitFor(element, 'iconsdrawn');
+  await waitFor(element, 'iconsDrawn');
 
   icons.forEach((icon) => expect(element.contains(icon.element)).toBe(true));
 });
@@ -100,7 +100,7 @@ test('addIcons must not add the the icons whose offset is not meet yet', async (
 
   drawIcons();
 
-  await waitFor(element, 'iconsdrawn');
+  await waitFor(element, 'iconsDrawn');
 
   expect(element.contains(icons[0].element)).toBe(false);
   expect(element.contains(icons[1].element)).toBe(true);
@@ -109,7 +109,7 @@ test('addIcons must not add the the icons whose offset is not meet yet', async (
 
   drawIcons();
 
-  await waitFor(element, 'iconsdrawn');
+  await waitFor(element, 'iconsDrawn');
 
   expect(element.contains(icons[0].element)).toBe(true);
   expect(element.contains(icons[1].element)).toBe(true);
@@ -140,7 +140,7 @@ test('addIcons must remove the icons once the duration is met', async () => {
 
   drawIcons();
 
-  await waitFor(element, 'iconsdrawn');
+  await waitFor(element, 'iconsDrawn');
 
   expect(element.contains(icons[0].element)).toBe(true);
   expect(element.contains(icons[1].element)).toBe(true);
@@ -149,7 +149,7 @@ test('addIcons must remove the icons once the duration is met', async () => {
 
   drawIcons();
 
-  await waitFor(element, 'iconsdrawn');
+  await waitFor(element, 'iconsDrawn');
 
   expect(element.contains(icons[0].element)).toBe(false);
   expect(element.contains(icons[1].element)).toBe(true);
@@ -217,7 +217,7 @@ test('addIcons must call onIconView hook the moment the icon gets added to the p
   });
 
   drawIcons();
-  await waitFor(element, 'iconsdrawn');
+  await waitFor(element, 'iconsDrawn');
 
   expect(onIconView).toHaveBeenCalledTimes(1);
   expect(onIconView).toHaveBeenCalledWith(icons[1]);
@@ -226,7 +226,7 @@ test('addIcons must call onIconView hook the moment the icon gets added to the p
 
   drawIcons();
 
-  await waitFor(element, 'iconsdrawn');
+  await waitFor(element, 'iconsDrawn');
 
   expect(onIconView).toHaveBeenCalledTimes(2);
   expect(onIconView).toHaveBeenCalledWith(icons[0]);

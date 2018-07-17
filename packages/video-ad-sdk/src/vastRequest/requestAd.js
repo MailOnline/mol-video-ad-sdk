@@ -14,16 +14,16 @@ import {markAdAsRequested} from './helpers/adUtils';
  * An Object representing a processed VAST response.
  * @global
  * @typedef {Object} VASTResponse
- * @property {Object} ad - The selected ad extracted from the pasedXML.
+ * @property {Object} ad - The selected ad extracted from the passed XML.
  * @property {Object} parsedXML - The XML parsed object.
- * @property {number} errorCode - VAST error code number to idenitfy the error or null if there is no error.
+ * @property {number} errorCode - VAST error code number to identify the error or null if there is no error.
  * @property {Error} error - Error instance with a human readable description of the error or undefined if there is no error.
  * @property {string} requestTag - Ad tag that was used to get this `VastResponse`.
  * @property {string} XML - RAW XML as it came from the server.
  */
 
 /**
- * Array of VASTResponses sorted backguards. Last response goes first.
+ * Array of VASTResponses sorted backwards. Last response goes first.
  * Represents the chain of VAST responses that ended up on a playable video ad or an error.
  *
  * @global
@@ -124,9 +124,9 @@ const getOptions = (vastChain, options) => {
  *  Defaults to `5`.
  * @param {boolean} [options.AllowMultipleAds] - Boolean to indicate whether adPods are allowed or not.
  *  Defaults to `true`.
- * @param {numner} [options.timeout] - timeout number in milliseconds. If Present, the request will timeout if it is not fullfilled before the specified time.
+ * @param {number} [options.timeout] - timeout number in milliseconds. If Present, the request will timeout if it is not fulfilled before the specified time.
  * @param {VASTChain} [vastChain] - Optional vastChain with the previous VAST responses.
- * @returns {Promise<VASTChain>} - Returns a Promise that will resolve a VastChain with the newest VAST response at the begining of the array.
+ * @returns {Promise<VASTChain>} - Returns a Promise that will resolve a VastChain with the newest VAST response at the beginning of the array.
  * If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
  */
 const requestAd = async (adTag, options, vastChain = []) => {

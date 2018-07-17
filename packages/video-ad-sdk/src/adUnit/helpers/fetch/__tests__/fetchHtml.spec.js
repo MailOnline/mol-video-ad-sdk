@@ -58,7 +58,7 @@ test('fetchHtml must throw an error if the response\'s Content-Type is not valid
   try {
     await fetchHtml('http://example.com');
   } catch (error) {
-    expect(error.message).toBe('fethHtml error, invalid Content-Type text/json');
+    expect(error.message).toBe('fetchHtml error, invalid Content-Type text/json');
     expect(error.response).toEqual(invalidResponse);
   }
 });

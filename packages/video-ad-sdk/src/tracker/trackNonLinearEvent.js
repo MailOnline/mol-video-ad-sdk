@@ -8,12 +8,12 @@ import {
   creativeView
 } from './nonLinearEvents';
 
-const trakingEventSelector = (event) => (ad) => getNonLinearTrackingEvents(ad, event);
+const trackingEventSelector = (event) => (ad) => getNonLinearTrackingEvents(ad, event);
 const linearTrackers = {
-  [acceptInvitation]: createVastEventTracker(trakingEventSelector(acceptInvitation)),
-  [adCollapse]: createVastEventTracker(trakingEventSelector(adCollapse)),
-  [close]: createVastEventTracker(trakingEventSelector(close)),
-  [creativeView]: createVastEventTracker(trakingEventSelector(creativeView))
+  [acceptInvitation]: createVastEventTracker(trackingEventSelector(acceptInvitation)),
+  [adCollapse]: createVastEventTracker(trackingEventSelector(adCollapse)),
+  [close]: createVastEventTracker(trackingEventSelector(close)),
+  [creativeView]: createVastEventTracker(trackingEventSelector(creativeView))
 
 };
 

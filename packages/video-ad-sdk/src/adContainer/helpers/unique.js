@@ -1,5 +1,5 @@
 /**
- * unique will create a unique string everytime is called, sequentially and namespaced
+ * unique will create a unique string every time is called, sequentially and namespaced
  *
  * @param {string} namespace
  */

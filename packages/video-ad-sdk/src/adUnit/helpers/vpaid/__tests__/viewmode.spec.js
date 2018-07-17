@@ -5,11 +5,11 @@ describe('viewmode', () => {
     expect(viewmode(innerWidth, innerHeight)).toBe('fullscreen');
   });
 
-  test('must return `thumbail` if the width is smaller than 400', () => {
+  test('must return `thumbnail` if the width is smaller than 400', () => {
     expect(viewmode(300, 200)).toBe('thumbnail');
   });
 
-  test('must reutn `normal` if width is bigger 400 and not in fullscreen', () => {
+  test('must return `normal` if width is bigger 400 and not in fullscreen', () => {
     expect(viewmode(640, 328)).toBe('normal');
   });
 });

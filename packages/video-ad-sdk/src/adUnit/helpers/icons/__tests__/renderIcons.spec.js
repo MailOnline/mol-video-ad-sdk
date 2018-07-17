@@ -35,7 +35,7 @@ afterEach(() => {
   icons = null;
 });
 
-test('renderIcons must filterout the icons that can not be shown due to their offset or duration', () => {
+test('renderIcons must filter out the icons that can not be shown due to their offset or duration', () => {
   const iconElement = document.createElement('DIV');
 
   icons[0].element = iconElement;

@@ -7,12 +7,12 @@ const hasPendingIconRedraws = (icons, videoElement) => {
   const currentTimeInMs = videoElement.currentTime * 1000;
   const videoDurationInMs = videoElement.duration * 1000;
 
-  const iconsPendingToBedrawn = icons
+  const iconsPendingToRedraw = icons
     .filter((icon) => !icon.offset || icon.offset < currentTimeInMs);
   const iconsPendingToBeRemoved = icons
     .filter((icon) => icon.duration && icon.duration < videoDurationInMs);
 
-  return iconsPendingToBedrawn.length > 0 || iconsPendingToBeRemoved.length > 0;
+  return iconsPendingToRedraw.length > 0 || iconsPendingToBeRemoved.length > 0;
 };
 
 const removeDrawnIcons = (icons) => icons
@@ -28,7 +28,7 @@ const addIcons = (icons, {videoAdContainer, onIconView = noop, onIconClick = noo
       ...rest
     });
 
-    element.dispatchEvent(new CustomEvent('iconsdrawn'));
+    element.dispatchEvent(new CustomEvent('iconsDrawn'));
 
     drawnIcons.forEach((icon) => {
       if (icon[firstRenderPending]) {

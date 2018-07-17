@@ -8,7 +8,7 @@ test('loadScript must return a promise', () => {
   expect(loadScript('http://example.com/script')).toBeInstanceOf(Promise);
 });
 
-test('loadScript load the script synchrounous by default', () => {
+test('loadScript load the script synchronous by default', () => {
   const placeholder = document.createElement('div');
   const src = 'http://example.com/script';
 
@@ -93,7 +93,7 @@ test('loadScript must add the script to the given placeholder', async () => {
   expect(await promise).toBe(script);
 });
 
-test('loadScript must reject the promise if tere is an error loading the script', () => {
+test('loadScript must reject the promise if there is an error loading the script', () => {
   const placeholder = document.createElement('div');
   const src = 'http://example.com/script';
   const promise = loadScript(src, {placeholder});

@@ -26,7 +26,7 @@ jest.mock('../../tracker', () => ({
   trackNonLinearEvent: jest.fn()
 }));
 
-describe('createVastAdUnit', () => {
+describe('createVideoAdUnit', () => {
   let vastChain;
   let vpaidChain;
   let videoAdContainer;
@@ -113,28 +113,6 @@ describe('createVastAdUnit', () => {
         errorCode: adUnit.errorCode
       });
     });
-
-    test('must call onLinearEvent handler if provided with the emitted event and the payload', async () => {
-      const onLinearEvent = jest.fn();
-      const adUnit = createVideoAdUnit(vastChain, videoAdContainer, {onLinearEvent});
-      const data = {
-        progressUri: 'http://test.example.com/progress'
-      };
-      const eventPromise = new Promise((resolve) => adUnit.on(event, resolve));
-
-      adUnit.errorCode = 999;
-      adUnit.emit(event, event, adUnit, data);
-
-      await eventPromise;
-
-      expect(onLinearEvent).toHaveBeenCalledTimes(1);
-      expect(onLinearEvent).toHaveBeenCalledWith(event, vastChain, {
-        data,
-        errorCode: adUnit.errorCode
-      });
-
-      onLinearEvent.mockClear();
-    });
   });
 
   Object.values(nonLinearEvents).forEach((event) => {
@@ -153,26 +131,6 @@ describe('createVastAdUnit', () => {
       expect(trackNonLinearEvent).toHaveBeenCalledWith(event, vastChain, {
         data
       });
-    });
-
-    test('must call onNonLinearEvent handler if provided with the emitted event and the payload', async () => {
-      const onNonLinearEvent = jest.fn();
-      const adUnit = createVideoAdUnit(vastChain, videoAdContainer, {onNonLinearEvent});
-      const data = {
-        progressUri: 'http://test.example.com/progress'
-      };
-      const eventPromise = new Promise((resolve) => adUnit.on(event, resolve));
-
-      adUnit.emit(event, event, adUnit, data);
-
-      await eventPromise;
-
-      expect(onNonLinearEvent).toHaveBeenCalledTimes(1);
-      expect(onNonLinearEvent).toHaveBeenCalledWith(event, vastChain, {
-        data
-      });
-
-      onNonLinearEvent.mockClear();
     });
   });
 });

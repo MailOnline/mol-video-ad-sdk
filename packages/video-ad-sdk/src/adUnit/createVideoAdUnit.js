@@ -29,10 +29,7 @@ const createVideoAdUnit = (vastChain, videoAdContainer, options) => {
   validate(vastChain, videoAdContainer);
   const adUnit = hasVpaidAd(vastChain) ? new VpaidAdUnit(vastChain, videoAdContainer, options) : new VastAdUnit(vastChain, videoAdContainer, options);
 
-  // TODO: merge onLinearEvent and onNonLinearEvent into once single handler
   const {
-    onLinearEvent,
-    onNonLinearEvent,
     tracker
   } = options;
 
@@ -45,10 +42,6 @@ const createVideoAdUnit = (vastChain, videoAdContainer, options) => {
       };
 
       trackLinearEvent(event, vastChain, payload);
-
-      if (typeof onLinearEvent === 'function') {
-        onLinearEvent(linearEvent, vastChain, payload);
-      }
     })
   );
 
@@ -60,10 +53,6 @@ const createVideoAdUnit = (vastChain, videoAdContainer, options) => {
       };
 
       trackNonLinearEvent(event, vastChain, payload);
-
-      if (typeof onNonLinearEvent === 'function') {
-        onNonLinearEvent(nonLinearEvent, vastChain, payload);
-      }
     })
   );
 
