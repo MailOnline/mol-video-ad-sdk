@@ -539,12 +539,65 @@ describe('VpaidAdUnit', () => {
           await adUnit.start();
 
           adUnit.creativeAd.emit(vpaidEvt, payload);
+          expect(callback).toHaveBeenCalledWith(vastEvt, adUnit);
+        });
+      });
+    });
 
-          if (payload) {
-            expect(callback).toHaveBeenCalledWith(vastEvt, adUnit, payload);
-          } else {
-            expect(callback).toHaveBeenCalledWith(vastEvt, adUnit);
+    describe(adClickThru, () => {
+      let origOpen;
+
+      beforeEach(() => {
+        origOpen = window.open;
+        window.open = jest.fn();
+      });
+
+      afterEach(() => {
+        window.open = origOpen;
+      });
+
+      test('must not open a new tab if `playerHandles` is false', async () => {
+        const payload = {
+          data: {
+            playerHandles: false,
+            url: 'https://test.example.com/clickThrough'
           }
+        };
+
+        await adUnit.start();
+
+        adUnit.creativeAd.emit(adClickThru, payload);
+        expect(window.open).not.toHaveBeenCalled();
+      });
+
+      describe('with `playerHandles` true', () => {
+        test('must open the provided url in a new tab', async () => {
+          const payload = {
+            data: {
+              playerHandles: true,
+              url: 'https://test.example.com/vpaid/clickUrl'
+            }
+          };
+
+          await adUnit.start();
+
+          adUnit.creativeAd.emit(adClickThru, payload);
+          expect(window.open).toHaveBeenCalledTimes(1);
+          expect(window.open).toHaveBeenCalledWith('https://test.example.com/vpaid/clickUrl', '_blank');
+        });
+
+        test('must use vast clickthrough url if no url is provided', async () => {
+          const payload = {
+            data: {
+              playerHandles: true
+            }
+          };
+
+          await adUnit.start();
+
+          adUnit.creativeAd.emit(adClickThru, payload);
+          expect(window.open).toHaveBeenCalledTimes(1);
+          expect(window.open).toHaveBeenCalledWith('https://test.example.com/clickthrough', '_blank');
         });
       });
     });
@@ -569,6 +622,7 @@ describe('VpaidAdUnit', () => {
         expect(adUnit.errorCode).toBe(901);
       });
     });
+
     describe(adVolumeChange, () => {
       test(`must emit ${mute} event if it becomes muted`, async () => {
         const callback = jest.fn();

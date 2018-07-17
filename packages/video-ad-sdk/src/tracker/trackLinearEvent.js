@@ -34,7 +34,6 @@ import {
   error
 } from './linearEvents';
 
-// TODO: IMPLEMENT VPAID CLICK LOGIC
 const clickTrackingSelector = (ad) => {
   const trackingURIs = [];
   const clickTrackings = getClickTracking(ad);
