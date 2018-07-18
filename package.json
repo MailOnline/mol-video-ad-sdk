@@ -15,7 +15,7 @@
     "prepush": "npm test",
     "test": "lerna run test"
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/MailOnline/@mol/video-ad-sdk/issues"
   },
