@@ -22,7 +22,7 @@ const linearTrackers = {
  *
  * @ignore
  * @param {string} event - name of the linear event we need to track. @see LinearEvents
- * @param {VASTChain} vastChain - the ad VAST Chain.
+ * @param {VastChain} vastChain - the ad VAST Chain.
  * @param {Object} options - Options Map. The allowed properties are:
  * @param {Object} [options.logger] - Optional logger instance.
  *                                    Must comply to the [Console interface](https://developer.mozilla.org/es/docs/Web/API/Console).

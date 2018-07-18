@@ -8,7 +8,7 @@ import pixelTracker from './pixelTracker';
  * Tracks an error.
  *
  * @ignore
- * @param {VASTChain} vastChain - the ad VAST Chain.
+ * @param {VastChain} vastChain - the ad VAST Chain.
  * @param {Object} options - Options Map. The allowed properties are:
  * @param {Object} [options.logger] - Optional logger instance.
  *                                    Must comply to the [Console interface](https://developer.mozilla.org/es/docs/Web/API/Console).

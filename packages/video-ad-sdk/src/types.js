@@ -3,7 +3,7 @@
 /**
  * An Object representing a processed VAST response.
  * @global
- * @typedef {Object} VASTResponse
+ * @typedef {Object} VastResponse
  * @property {Object} ad - The selected ad extracted from the passed XML.
  * @property {Object} parsedXML - The XML parsed object.
  * @property {number} errorCode - VAST error code number to identify the error or null if there is no error.
@@ -13,12 +13,12 @@
  */
 
 /**
- * Array of VASTResponses sorted backwards. Last response goes first.
+ * Array of {@link VastResponse} sorted backwards. Last response goes first.
  * Represents the chain of VAST responses that ended up on a playable video ad or an error.
  *
  * @global
  * @typedef VastChain
- * @type Array.<VASTResponse>
+ * @type Array.<VastResponse>
  */
 
 /**
@@ -51,6 +51,7 @@
  * simplifies trafficking, enabling ad servers to easily search and replace the appropriate
  * macro for cache busting.
  *
+ * @global
  * @typedef VAST-macro
  * @type {string}
  */
@@ -58,6 +59,7 @@
 /**
  * JS XML deserialised object.
  *
+ * @global
  * @typedef ParsedVast
  * @type Object
  *
@@ -66,6 +68,7 @@
 /**
  * Deserialised ad object from a [parsedVast]{@link module:vast-selectors~parsedVast} object.
  *
+ * @global
  * @typedef ParsedAd
  * @type Object
  *
@@ -75,6 +78,7 @@
  * VastIcon.
  * For more info please take a look at the [VAST specification]{@link https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}
  *
+ * @global
  * @typedef VastIcon
  * @type Object
  *
@@ -104,6 +108,7 @@
  * VAST MediaFile representation.
  * For more info please take a look at the [VAST specification]{@link https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}
  *
+ * @global
  * @typedef MediaFile
  * @type Object
  * @property {string} [codec] - The codec used to encode the file which can take values as specified by [RFC 4281]{@link http://tools.ietf.org/html/rfc4281}.
@@ -127,6 +132,7 @@
  * VastTrackingEvent.
  * For more info please take a look at the [VAST specification]{@link https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}
  *
+ * @global
  * @typedef VastTrackingEvent
  * @type Object
  *
@@ -139,12 +145,14 @@
 /**
  * The parsed time offset in milliseconds or a string with the percentage
  *
+ * @global
  * @typedef ParsedOffset
  */
 
 /**
  * Wrapper ad options.
  *
+ * @global
  * @typedef WrapperOptions
  * @type Object
  * @property {boolean} [allowMultipleAds] - a Boolean value that identifies whether multiple ads are allowed in the
@@ -167,6 +175,7 @@
 /**
  * Function to track VAST events.
  *
+ * @global
  * @typedef {function} tracker
  * @name tracker
  * @description Tracking function.

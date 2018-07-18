@@ -124,15 +124,15 @@ export const hasAdPod = (parsedVAST) => {
 };
 
 /**
- * Returns true if the passed VASTChain has an ad pod or false otherwise.
+ * Returns true if the passed VastChain has an ad pod or false otherwise.
  *
- * @param {Array} VASTChain - Array of VAST responses. See `load` or `requestAd` for more info.
+ * @param {Array} VastChain - Array of VAST responses. See `load` or `requestAd` for more info.
  *
- * @returns {boolean} - True if the VASTChain contains an ad pod and false otherwise.
+ * @returns {boolean} - True if the VastChain contains an ad pod and false otherwise.
  * @static
  * @ignore
  */
-export const isAdPod = (VASTChain = []) => VASTChain.map(({parsedXML}) => parsedXML).some(hasAdPod);
+export const isAdPod = (VastChain = []) => VastChain.map(({parsedXML}) => parsedXML).some(hasAdPod);
 
 /**
  * Selects the first ad of the passed VAST. If the passed VAST response contains an ad pod it will return the first ad in the ad pod sequence.

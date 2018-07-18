@@ -180,7 +180,7 @@ test('requestNextAd must throw an error if there are no more ads to play in the 
   markAdAsRequested(inlineAd);
   markAdAsRequested(wrapperAd);
 
-  const VASTChain = [
+  const VastChain = [
     {
       ad: inlineAd,
       errorCode: null,
@@ -204,8 +204,8 @@ test('requestNextAd must throw an error if there are no more ads to play in the 
     }
   ];
 
-  expect(() => requestNextAd(VASTChain, {})).toThrowError('No next ad to request');
-  expect(() => requestNextAd(VASTChain, {})).toThrowError(Error);
+  expect(() => requestNextAd(VastChain, {})).toThrowError('No next ad to request');
+  expect(() => requestNextAd(VastChain, {})).toThrowError(Error);
 
   unmarkAdAsRequested(inlineAd);
   unmarkAdAsRequested(wrapperAd);

@@ -98,18 +98,18 @@ const getOptions = (vastChain, options) => {
  * @memberof module:@mol/video-ad-sdk
  * @async
  * @static
- * @description Request the ad using the passed ad tag and returns an array with the [VAST responses]{@link VASTResponse} needed to get an inline ad.
+ * @description Request the ad using the passed ad tag and returns an array with the [VAST responses]{@link VastResponse} needed to get an inline ad.
  *
  * @param {string} adTag - The VAST ad tag request url.
  * @param {Object} options - Options Map. The allowed properties are:
- * @param {number} [options.wrapperLimit] - Sets the maximum number of wrappers allowed in the vastChain.
+ * @param {number} [options.wrapperLimit] - Sets the maximum number of wrappers allowed in the {@link VastChain}.
  *  Defaults to `5`.
  * @param {boolean} [options.AllowMultipleAds] - Boolean to indicate whether adPods are allowed or not.
  *  Defaults to `true`.
  * @param {number} [options.timeout] - timeout number in milliseconds. If Present, the request will timeout if it is not fulfilled before the specified time.
- * @param {VASTChain} [vastChain] - Optional vastChain with the previous VAST responses.
- * @returns {Promise<VASTChain>} - Returns a Promise that will resolve a VastChain with the newest VAST response at the beginning of the array.
- * If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
+ * @param {VastChain} [vastChain] - Optional vastChain with the previous VAST responses.
+ * @returns {Promise.<VastChain>} - Returns a Promise that will resolve a VastChain with the newest VAST response at the beginning of the array.
+ * If the {@link VastChain} had an error. The first VAST response of the array will contain an error and an errorCode entry.
  */
 const requestAd = async (adTag, options, vastChain = []) => {
   const VASTAdResponse = {
