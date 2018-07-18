@@ -24,7 +24,7 @@ export const iconView = 'iconView';
 
 /**
  * List of event names that may be fired while trying to play a linear Ad.
- * @global
+ *
  * @typedef {Object} LinearEvents
  * @property {string} error - there was an error with the linear creative.
  * @property {string} mute - the user activated the mute control and muted the creative.
