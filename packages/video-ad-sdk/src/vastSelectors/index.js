@@ -1,4 +1,3 @@
-/** @module vast-selectors */
 import {
   get,
   getAll,
@@ -37,65 +36,13 @@ const compareBySequence = (itemA, itemB) => {
 };
 
 /**
- * From [VAST specification]{@link https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}:
- *
- * Sometimes ad servers would like to collect metadata from the video player when tracking
- * event URIs are accessed. For example, the position of the video player playhead at the time
- * a tracking event URI is accessed is useful to the ad server and is data that can only be
- * known at the time of the prescribed tracking event. This data cannot be built into the URI at
- * the time the VAST response is built and served.
- *
- * The following macros enable the video player to provide certain details to the ad server at
- * the time tracking URIs are accessed.
- *  * *[ERRORCODE]*: replaced with one of the error codes listed in section 2.3.6.3 when the
- * associated error occurs; reserved for error tracking URIs.
- *  * *[CONTENTPLAYHEAD]*: replaced with the current time offset “HH:MM:SS.mmm” of the
- * video content.
- *  * *[CACHEBUSTING]*: replaced with a random 8-digit number.
- *  * *[ASSETURI]*: replaced with the URI of the ad asset being played.
- *  * *[TIMESTAMP]*: the date and time at which the URI using this macro is accessed.
- * Used where ever a time stamp is needed, the macro is replaced with the date and
- * time using the formatting conventions of ISO 8601. However, ISO 8601 does not
- * provide a convention for adding milliseconds. To add milliseconds, use the
- * convention .mmm at the end of the time provided and before any time zone
- * indicator. For example, January 17, 2016 at 8:15:07 and 127 milliseconds, Eastern
- * Time would be formatted as follows: 2016-01-17T8:15:07.127-05
- * When replacing macros, the video player must correctly percent-encode any characters as
- * defined by RFC 3986.
- * VAST doesn’t provide any guidance on URI format, but using the [CACHEBUSTING] macro
- * simplifies trafficking, enabling ad servers to easily search and replace the appropriate
- * macro for cache busting.
- *
- * @typedef VAST-macro
- * @type {string}
- * @global
- */
-
-/**
- * JS XML deserialised object.
- *
- * @typedef ParsedVast
- * @type Object
- *
- * @global
- */
-
-/**
- * Deserialised ad object from a [parsedVast]{@link module:vast-selectors~parsedVast} object.
- *
- * @typedef ParsedAd
- * @type Object
- *
- * @global
- */
-
-/**
  * Selects the ads of the passed VAST.
  *
  * @function
  * @param {ParsedVast} parsedVAST - Parsed VAST xml.
  * @returns {?Array} - Array of ads or `null`.
  * @static
+ * @ignore
  */
 export const getAds = (parsedVAST) => {
   const vastElement = parsedVAST && get(parsedVAST, 'VAST');
@@ -115,6 +62,7 @@ export const getAds = (parsedVAST) => {
  * @param {ParsedVast} parsedVAST - Parsed VAST xml.
  * @returns {?VAST-macro} - Vast Error URI or `null` otherwise.
  * @static
+ * @ignore
  */
 export const getVastErrorURI = (parsedVAST) => {
   const vastElement = parsedVAST && get(parsedVAST, 'VAST');
@@ -136,6 +84,8 @@ export const getVastErrorURI = (parsedVAST) => {
  * @function
  * @param {ParsedAd} ad - Parsed ad definition object.
  * @returns {?number} - The pod ad sequence number or `null`.
+ * @static
+ * @ignore
  */
 export const getPodAdSequence = (ad) => {
   const sequence = parseInt(getAttribute(ad, 'sequence'), 10);
@@ -153,6 +103,8 @@ export const getPodAdSequence = (ad) => {
  * @function
  * @param {ParsedAd} ad - Parsed ad definition object.
  * @returns {?boolean} - Returns true if there the ad is a pod ad and false otherwise.
+ * @static
+ * @ignore
  */
 export const isPodAd = (ad) => Boolean(getPodAdSequence(ad));
 
@@ -162,6 +114,8 @@ export const isPodAd = (ad) => Boolean(getPodAdSequence(ad));
  * @function
  * @param {ParsedVAST} parsedVAST - Parsed VAST xml.
  * @returns {?boolean} - Returns true if there is an ad pod in the array and false otherwise.
+ * @static
+ * @ignore
  */
 export const hasAdPod = (parsedVAST) => {
   const ads = getAds(parsedVAST);
@@ -176,6 +130,7 @@ export const hasAdPod = (parsedVAST) => {
  *
  * @returns {boolean} - True if the VASTChain contains an ad pod and false otherwise.
  * @static
+ * @ignore
  */
 export const isAdPod = (VASTChain = []) => VASTChain.map(({parsedXML}) => parsedXML).some(hasAdPod);
 
@@ -186,6 +141,7 @@ export const isAdPod = (VASTChain = []) => VASTChain.map(({parsedXML}) => parsed
  * @param {ParsedVAST} parsedVAST - Parsed VAST xml.
  * @returns {?ParsedAd} - First ad of the VAST xml or `null`.
  * @static
+ * @ignore
  */
 export const getFirstAd = (parsedVAST) => {
   const ads = getAds(parsedVAST);
@@ -209,6 +165,7 @@ export const getFirstAd = (parsedVAST) => {
  * @param {ParsedAd} ad - VAST ad object.
  * @returns {boolean} - `true` if the ad contains a wrapper and `false` otherwise.
  * @static
+ * @ignore
  */
 export const isWrapper = (ad = {}) => Boolean(get(ad || {}, 'Wrapper'));
 
@@ -219,6 +176,7 @@ export const isWrapper = (ad = {}) => Boolean(get(ad || {}, 'Wrapper'));
  * @param {ParsedAd} ad - VAST ad object.
  * @returns {boolean} - Returns `true` if the ad contains an Inline or `false` otherwise.
  * @static
+ * @ignore
  */
 export const isInline = (ad) => Boolean(get(ad || {}, 'Inline'));
 
@@ -229,6 +187,7 @@ export const isInline = (ad) => Boolean(get(ad || {}, 'Inline'));
  * @param {ParsedAd} ad - VAST ad object.
  * @returns {?string} - Returns the VASTAdTagURI from the wrapper ad or `null` otherwise.
  * @static
+ * @ignore
  */
 export const getVASTAdTagURI = (ad) => {
   const wrapperElement = get(ad, 'Wrapper');
@@ -242,35 +201,13 @@ export const getVASTAdTagURI = (ad) => {
 };
 
 /**
- * Wrapper ad options.
- *
- * @typedef WrapperOptions
- * @type Object
- * @property {boolean} [allowMultipleAds] - a Boolean value that identifies whether multiple ads are allowed in the
- * requested VAST response. If true, both Pods and stand-alone ads are
- * allowed. If false, only the first stand-alone Ad (with no sequence values)
- * in the requested VAST response is allowed. Default value is “false.”
- * @property {boolean} [fallbackOnNoAd] - a Boolean value that provides instruction for using an available Ad when
- * the requested VAST response returns no ads. If true, the video player
- * should select from any stand-alone ads available. If false and the Wrapper
- * represents an Ad in a Pod, the video player should move on to the next Ad
- * in a Pod; otherwise, the video player can follow through at its own
- * discretion where no-ad responses are concerned.
- * @property {boolean} [followAdditionalWrappers] - s a Boolean value that identifies whether subsequent wrappers after a
- * requested VAST response is allowed. If false, any Wrappers received (i.e.
- * not an Inline VAST response) should be ignored. Otherwise, VAST
- * Wrappers received should be accepted (default value is “true.”)
- *
- * @global
- */
-
-/**
  * Returns the options from the wrapper ad.
  *
  * @function
  * @param {Object} ad - VAST ad object.
  * @returns {WrapperOptions} - Returns the options from the wrapper ad.
  * @static
+ * @ignore
  */
 export const getWrapperOptions = (ad) => {
   const {
@@ -303,6 +240,7 @@ export const getWrapperOptions = (ad) => {
  * @param {ParsedAd} ad - VAST ad object.
  * @returns {?string} - Vast ad Error URI or `null` otherwise.
  * @static
+ * @ignore
  */
 export const getAdErrorURI = (ad) => {
   const adTypeElement = ad && getFirstChild(ad);
@@ -325,6 +263,7 @@ export const getAdErrorURI = (ad) => {
  * @param {ParsedAd} ad - VAST ad object.
  * @returns {?string} - Vast ad Impression URI or `null` otherwise.
  * @static
+ * @ignore
  */
 export const getImpressionUri = (ad) => {
   const adTypeElement = ad && getFirstChild(ad);
@@ -341,35 +280,13 @@ export const getImpressionUri = (ad) => {
 };
 
 /**
- * VAST MediaFile representation.
- * For more info please take a look at the [VAST specification]{@link https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}
- *
- * @global
- * @typedef MediaFile
- * @type Object
- * @property {string} [codec] - The codec used to encode the file which can take values as specified by [RFC 4281]{@link http://tools.ietf.org/html/rfc4281}.
- * @property {string} [delivery] - Either `progressive` for progressive download protocols (such as HTTP) or `streaming` for streaming protocols.
- * @property {number} [height] - The native height of the video file, in pixels.
- * @property {string} [id] - An identifier for the media file.
- * @property {string} [maintainAspectRatio] - Boolean value that indicates whether aspect ratio for media file dimensions
- *  should be maintained when scaled to new dimensions
- * @property {string} [bitrate] - For progressive load video, the bitrate value specifies the average bitrate for the media file
- * @property {string} [maxBitrate] - max bitrate for streaming videos.
- * @property {string} [minBitrate] - min bitrate for streaming videos.
- * @property {string} [scalable] - Boolean value that indicates whether the media file is meant to scale to larger dimensions
- * @property {string} [src] - The source file url.
- * @property {string} [type] - MIME type for the file container. Popular MIME types include,
- * but are not limited to “video/x-flv” for Flash Video and “video/mp4” for MP4.
- * @property {number} [width] - The native width of the video file, in pixels.
- * @property {string} [universalAdId] - A string identifying the unique creative identifier.
- */
-
-/**
  * Gets the ads MediaFiles.
  *
  * @function
  * @param {ParsedAd} ad - VAST ad object.
  * @returns {?Array.<MediaFile>} - array of media files or null
+ * @static
+ * @ignore
  */
 export const getMediaFiles = (ad) => {
   const creativeElement = ad && getLinearCreative(ad);
@@ -494,6 +411,8 @@ const getVideoClicksElement = (ad) => {
  * @function
  * @param {ParsedAd} ad - VAST ad object.
  * @returns {?VAST-macro} - clickthrough macro
+ * @static
+ * @ignore
  */
 export const getClickThrough = (ad) => {
   const videoClicksElement = getVideoClicksElement(ad);
@@ -512,6 +431,8 @@ export const getClickThrough = (ad) => {
  * @function
  * @param {ParsedAd} ad - VAST ad object.
  * @returns {?Array.<VAST-macro>} - click tracking macro
+ * @static
+ * @ignore
  */
 export const getClickTracking = (ad) => {
   const videoClicksElement = getVideoClicksElement(ad);
@@ -530,6 +451,8 @@ export const getClickTracking = (ad) => {
  * @function
  * @param {ParsedAd} ad - VAST ad object.
  * @returns {?Array.<VAST-macro>} - click tracking macro
+ * @static
+ * @ignore
  */
 export const getCustomClick = (ad) => {
   const videoClicksElement = getVideoClicksElement(ad);
@@ -543,18 +466,13 @@ export const getCustomClick = (ad) => {
 };
 
 /**
- * The parsed time offset in milliseconds or a string with the percentage
- *
- * @typedef ParsedOffset
- * @global
- */
-
-/**
  * Gets the skipoffset.
  *
  * @function
  * @param {Object} ad - VAST ad object.
  * @returns {?ParsedOffset} - the time offset in milliseconds or a string with the percentage or null
+ * @static
+ * @ignore
  */
 export const getSkipOffset = (ad) => {
   const creativeElement = ad && getLinearCreative(ad);
@@ -587,47 +505,7 @@ export const getAdParameters = (ad) => {
 };
 
 export {
-
-  /**
-   * Gets the Vast Icon definitions from the Vast Ad
-   *
-   * @function
-   * @param {ParsedAd} ad - VAST ad object.
-   * @returns {?Array.<VastIcon>} - Array of VAST icon definitions
-   */
   getIcons,
-
-  /**
-   * VastTrackingEvent.
-   * For more info please take a look at the [VAST specification]{@link https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}
-   *
-   * @global
-   * @typedef VastTrackingEvent
-   * @type Object
-   *
-   * @property {string} [event] - A string that defines the event being track.
-   * @property {ParsedOffset} [offset] - When the progress of the linear creative has matched the value specified, the included URI is triggered
-   * @property {string} [uri] - A URI to the tracking resource for the event specified using the event attribute
-   *
-   */
-
-  /**
-   * Gets the Linear tracking events from the Vast Ad
-   *
-   * @function
-   * @param {ParsedAd} ad - VAST ad object.
-   * @param {string} [eventName] - If provided it will filter-out the array events against it.
-   * @returns {?Array.<VastTrackingEvent>} - Array of Tracking event definitions
-   */
   getLinearTrackingEvents,
-
-  /**
-   * Gets the Non Linear tracking events from the Vast Ad
-   *
-   * @function
-   * @param {ParsedAd} ad - VAST ad object.
-   * @param {string} [eventName] - If provided it will filter-out the array events against it.
-   * @returns {?Array.<VastTrackingEvent>} - Array of Tracking event definitions
-   */
   getNonLinearTrackingEvents
 };
