@@ -71,6 +71,8 @@ const hidden = Symbol('hidden');
  * @class
  * @alias VpaidAdUnit
  * @extends Emitter
+ * @implements NonLinearEvents
+ * @implements LinearEvents
  * @description This class provides everything necessary to run a Vpaid ad.
  */
 class VpaidAdUnit extends Emitter {
@@ -435,29 +437,5 @@ class VpaidAdUnit extends Emitter {
     return callAndWait(this.creativeAd, resizeAd, adSizeChange);
   }
 }
-
-/**
- * Fires when the user clicked or otherwise activated a control used to pause streaming content, which either expands the ad within the player’s viewable area or “takes-over” the streaming content area by launching an additional portion of the ad.
- *
- * @event VpaidAdUnit#acceptInvitation
- */
-
-/**
- * Fires when the user clicked or otherwise activated a control used to pause streaming content, which either expands the ad within the player’s viewable area or “takes-over” the streaming content area by launching an additional portion of the ad.
- *
- * @event VpaidAdUnit#adCollapse
- */
-
-/**
- * Fires when the user clicked or otherwise activated a control for removing the ad.
- *
- * @event VpaidAdUnit#close
- */
-
-/**
- * Not to be confused with an impression, this event indicates that an individual creative portion of the ad was viewed.
- *
- * @event VpaidAdUnit#creativeView
- */
 
 export default VpaidAdUnit;

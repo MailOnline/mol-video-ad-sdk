@@ -23,6 +23,7 @@ const hidden = Symbol('hidden');
  * @memberof module:@mol/video-ad-sdk
  * @class
  * @extends Emitter
+ * @implements LinearEvents
  * @description This class provides everything necessary to run a Vast ad.
  */
 class VastAdUnit extends Emitter {
