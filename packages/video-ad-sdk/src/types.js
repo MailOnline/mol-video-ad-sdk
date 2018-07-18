@@ -163,3 +163,13 @@
  * Wrappers received should be accepted (default value is “true.”)
  *
  */
+
+/**
+ * Function to track VAST events.
+ *
+ * @typedef {function} tracker
+ * @name tracker
+ * @description Tracking function.
+ * @param {string} URLMacro - URL Macro that need to be tracked.
+ * @param {Object} data - data to use for the URL Macro.
+ */

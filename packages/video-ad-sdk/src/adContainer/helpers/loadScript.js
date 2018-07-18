@@ -1,6 +1,7 @@
 /**
  * Loads the script source.
  *
+ * @ignore
  * @param {string} src - The script source.
  * @param {Object} options - The allowed options are:
  *                           type: Defaults to 'text/javascript'.

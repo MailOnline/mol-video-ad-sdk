@@ -13,6 +13,7 @@ const toUpperKeys = (map) => {
  * If no CACHEBUSTING property is passed in the data it will generate a random one on its own.
  * If no TIMESTAMP property is passed in the data it will generate a one on its own.
  *
+ * @ignore
  * @param {string} macro - The string macro to be parsed.
  * @param {Object} data - The data used by the macro.
  * @returns {string} - The parsed macro.
