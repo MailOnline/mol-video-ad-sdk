@@ -359,11 +359,10 @@ class VpaidAdUnit extends Emitter {
   /**
    * Cancels the ad unit.
    *
-   * @throws if ad unit is not started.
    * @throws if ad unit is finished.
    */
   cancel () {
-    this[hidden].throwIfNotReady();
+    this[hidden].throwIfFinished();
 
     this.creativeAd[stopAd]();
 

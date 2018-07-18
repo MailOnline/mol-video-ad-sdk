@@ -236,11 +236,10 @@ class VastAdUnit extends Emitter {
   /**
    * Cancels the ad unit.
    *
-   * @throws if ad unit is not started.
    * @throws if ad unit is finished.
    */
   cancel () {
-    this[hidden].throwIfNotReady();
+    this[hidden].throwIfFinished();
 
     const videoElement = this.videoAdContainer.videoElement;
 
