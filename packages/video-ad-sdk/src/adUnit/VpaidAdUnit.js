@@ -204,6 +204,7 @@ class VpaidAdUnit extends Emitter {
     }
   };
 
+  /** Reference to the Vpaid Creative ad unit. Will be null before the ad unit starts. */
   creativeAd = null;
 
   /**
@@ -218,7 +219,10 @@ class VpaidAdUnit extends Emitter {
   constructor (vastChain, videoAdContainer, {logger = console} = {}) {
     super(logger);
 
+    /** Reference to the {@see VastChain} used to load the ad. */
     this.vastChain = vastChain;
+
+    /** Reference to the {@see VideoAdContainer} that contains the ad. */
     this.videoAdContainer = videoAdContainer;
     this[hidden].loadCreativePromise = loadCreative(vastChain, videoAdContainer);
   }

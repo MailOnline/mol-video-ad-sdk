@@ -95,7 +95,11 @@ class VastAdUnit extends Emitter {
     } = this[hidden];
 
     this.hooks = hooks;
+
+    /** Reference to the {@see VastChain} used to load the ad. */
     this.vastChain = vastChain;
+
+    /** Reference to the {@see VideoAdContainer} that contains the ad. */
     this.videoAdContainer = videoAdContainer;
 
     this.icons = retrieveIcons(vastChain);
