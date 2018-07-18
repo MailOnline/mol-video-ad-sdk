@@ -11,6 +11,7 @@
     "lint-scripts": "eslint --ignore-path .gitignore './**/*.js'",
     "postinstall": "yarn build",
     "precommit": "npm run lint",
+    "commitmsg": "commitlint -e $GIT_PARAMS",
     "prepush": "npm test",
     "test": "lerna run test"
   },
@@ -28,7 +29,13 @@
       "path": "./node_modules/mol-conventional-changelog"
     }
   },
+  "commitlint": {
+    "extends": ["@commitlint/config-conventional"]
+  },
   "devDependencies": {
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/config-conventional": "^7.0.1",
+    "@commitlint/travis-cli": "^7.0.0",
     "cross-env": "^5.2.0",
     "husky": "^0.14.3",
     "jsdoc": "^3.5.5",
