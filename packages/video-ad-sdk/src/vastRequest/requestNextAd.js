@@ -16,6 +16,7 @@ const validateChain = (VastChain) => {
   }
 };
 
+// eslint-disable-next-line jsdoc/check-tag-names
 /**
  * @function requestNextAd
  *
@@ -41,7 +42,7 @@ const validateChain = (VastChain) => {
  *    Defaults to `true`.
  * @param {number} [options.timeout] - timeout number in milliseconds. If Present, the request will timeout if it is not fulfilled before the specified time.
  *
- * @returns {Promise.<VastChain>}  - Returns a Promise that will resolve a VastChain with the newest VAST response at the beginning of the array.
+ * @returns {Promise.<VastChain>}  - Returns a Promise that will resolve with a VastChain with the newest VAST response at the beginning of the array.
  * If the {@link VastChain} had an error. The first VAST response of the array will contain an error and an errorCode entry.
  */
 const requestNextAd = (VastChain, options) => {

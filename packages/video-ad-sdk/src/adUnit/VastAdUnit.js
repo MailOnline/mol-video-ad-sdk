@@ -129,7 +129,9 @@ class VastAdUnit extends Emitter {
 
   /**
    * Starts the ad unit.
-   * Note: Will throw if called twice or if the ad unit is finished
+   *
+   * @throws if called twice.
+   * @throws if ad unit is finished.
    */
   async start () {
     this[hidden].throwIfFinished();
@@ -174,7 +176,9 @@ class VastAdUnit extends Emitter {
 
   /**
    * Resumes a previously paused ad unit.
-   * Note: Will throw if called before the ad unit has started or after it has finished.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
    */
   resume () {
     this[hidden].throwIfNotReady();
@@ -185,7 +189,9 @@ class VastAdUnit extends Emitter {
 
   /**
    * Pauses the ad unit.
-   * Note: Will throw if called before the ad unit has started or after it has finished.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
    */
   pause () {
     this[hidden].throwIfNotReady();
@@ -196,7 +202,9 @@ class VastAdUnit extends Emitter {
 
   /**
    * Sets the volume of the ad unit.
-   * Note: Will throw if called before the ad unit has started or after it has finished.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
    *
    * @param {number} volume - must be a value between 0 and 1;
    */
@@ -210,7 +218,9 @@ class VastAdUnit extends Emitter {
 
   /**
    * Gets the volume of the ad unit.
-   * Note: Will throw if called before the ad unit has started or after it has finished.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
    *
    * @returns {number} - the volume of the ad unit.
    */
@@ -224,7 +234,9 @@ class VastAdUnit extends Emitter {
 
   /**
    * Cancels the ad unit.
-   * Note: Will throw if called before the ad unit has started or after it has finished.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
    */
   cancel () {
     this[hidden].throwIfNotReady();
@@ -238,7 +250,8 @@ class VastAdUnit extends Emitter {
 
   /**
    * Register a callback function that will be called whenever the ad finishes. No matter if it was finished because de ad ended, or cancelled or there was an error playing the ad.
-   * Note: it will throw if called after the ad unit finishes.
+   *
+   * @throws if ad unit is finished.
    *
    * @param {Function} callback - will be called once the ad unit finished
    */
@@ -254,7 +267,8 @@ class VastAdUnit extends Emitter {
 
   /**
    * Register a callback function that will be called if there is an error while running the ad.
-   * Note: it will throw if called after the ad unit finishes.
+   *
+   * @throws if ad unit is finished.
    *
    * @param {Function} callback - will be called on ad unit error passing the Error instance as the only argument if available.
    */
@@ -284,6 +298,9 @@ class VastAdUnit extends Emitter {
 
   /**
    * This method resizes the ad unit to fit the available space in the passed {@see VideoAdContainer}
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
    *
    * @returns {Promise} - that resolves once the unit was resized
    */

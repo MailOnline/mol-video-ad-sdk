@@ -69,6 +69,7 @@ const hidden = Symbol('hidden');
 /**
  * @memberof module:@mol/video-ad-sdk
  * @class
+ * @alias VpaidAdUnit
  * @extends Emitter
  * @description This class provides everything necessary to run a Vpaid ad.
  */
@@ -222,7 +223,9 @@ class VpaidAdUnit extends Emitter {
 
   /**
    * Starts the ad unit.
-   * Note: Will throw if called twice or if the ad unit is finished
+   *
+   * @throws if called twice.
+   * @throws if ad unit is finished.
    */
   async start () {
     this[hidden].throwIfFinished();
@@ -303,7 +306,9 @@ class VpaidAdUnit extends Emitter {
 
   /**
    * Resumes a previously paused ad unit.
-   * Note: Will throw if called before the ad unit has started or after it has finished.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
    */
   resume () {
     this[hidden].throwIfNotReady();
@@ -312,7 +317,9 @@ class VpaidAdUnit extends Emitter {
 
   /**
    * Pauses the ad unit.
-   * Note: Will throw if called before the ad unit has started or after it has finished.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
    */
   pause () {
     this[hidden].throwIfNotReady();
@@ -321,7 +328,9 @@ class VpaidAdUnit extends Emitter {
 
   /**
    * Sets the volume of the ad unit.
-   * Note: Will throw if called before the ad unit has started or after it has finished.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
    *
    * @param {number} volume - must be a value between 0 and 1;
    */
@@ -333,7 +342,9 @@ class VpaidAdUnit extends Emitter {
 
   /**
    * Gets the volume of the ad unit.
-   * Note: Will throw if called before the ad unit has started or after it has finished.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
    *
    * @returns {number} - the volume of the ad unit.
    */
@@ -345,10 +356,12 @@ class VpaidAdUnit extends Emitter {
 
   /**
    * Cancels the ad unit.
-   * Note: Will throw if called before the ad unit has started or after it has finished.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
    */
   cancel () {
-    this[hidden].throwIfFinished();
+    this[hidden].throwIfNotReady();
 
     this.creativeAd[stopAd]();
 
@@ -357,7 +370,8 @@ class VpaidAdUnit extends Emitter {
 
   /**
    * Register a callback function that will be called whenever the ad finishes. No matter if it was finished because de ad ended, or cancelled or there was an error playing the ad.
-   * Note: it will throw if called after the ad unit finishes.
+   *
+   * @throws if ad unit is finished.
    *
    * @param {Function} callback - will be called once the ad unit finished
    */
@@ -373,7 +387,8 @@ class VpaidAdUnit extends Emitter {
 
   /**
    * Register a callback function that will be called if there is an error while running the ad.
-   * Note: it will throw if called after the ad unit finishes.
+   *
+   * @throws if ad unit is finished.
    *
    * @param {Function} callback - will be called on ad unit error passing the Error instance as the only argument if available.
    */
@@ -404,6 +419,9 @@ class VpaidAdUnit extends Emitter {
   /**
    * This method resizes the ad unit to fit the available space in the passed {@see VideoAdContainer}
    *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
+   *
    * @returns {Promise} - that resolves once the unit was resized
    */
   async resize () {
@@ -417,5 +435,29 @@ class VpaidAdUnit extends Emitter {
     return callAndWait(this.creativeAd, resizeAd, adSizeChange);
   }
 }
+
+/**
+ * Fires when the user clicked or otherwise activated a control used to pause streaming content, which either expands the ad within the player’s viewable area or “takes-over” the streaming content area by launching an additional portion of the ad.
+ *
+ * @event VpaidAdUnit#acceptInvitation
+ */
+
+/**
+ * Fires when the user clicked or otherwise activated a control used to pause streaming content, which either expands the ad within the player’s viewable area or “takes-over” the streaming content area by launching an additional portion of the ad.
+ *
+ * @event VpaidAdUnit#adCollapse
+ */
+
+/**
+ * Fires when the user clicked or otherwise activated a control for removing the ad.
+ *
+ * @event VpaidAdUnit#close
+ */
+
+/**
+ * Not to be confused with an impression, this event indicates that an individual creative portion of the ad was viewed.
+ *
+ * @event VpaidAdUnit#creativeView
+ */
 
 export default VpaidAdUnit;
