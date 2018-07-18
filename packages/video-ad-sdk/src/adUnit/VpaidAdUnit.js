@@ -66,6 +66,12 @@ const {
 
 const hidden = Symbol('hidden');
 
+/**
+ * @memberof module:@mol/video-ad-sdk
+ * @class
+ * @extends Emitter
+ * @description This class provides everything necessary to run a Vpaid ad.
+ */
 class VpaidAdUnit extends Emitter {
   [hidden] = {
     finish: () => {
@@ -197,6 +203,15 @@ class VpaidAdUnit extends Emitter {
 
   creativeAd = null;
 
+  /**
+   * Creates a {VpaidAdUnit}.
+   *
+   * @param {VastChain} vastChain - The {@see VastChain} with all the {@see VastResponse}
+   * @param {VideoAdContainer} videoAdContainer - container instance to place the ad
+   * @param {Object} [options] - Options Map. The allowed properties are:
+   * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
+   * Defaults to `window.console`
+   */
   constructor (vastChain, videoAdContainer, {logger = console} = {}) {
     super(logger);
 
@@ -205,6 +220,10 @@ class VpaidAdUnit extends Emitter {
     this[hidden].loadCreativePromise = loadCreative(vastChain, videoAdContainer);
   }
 
+  /**
+   * Starts the ad unit.
+   * Note: Will throw if called twice or if the ad unit is finished
+   */
   async start () {
     this[hidden].throwIfFinished();
 
@@ -282,30 +301,52 @@ class VpaidAdUnit extends Emitter {
     }
   }
 
+  /**
+   * Resumes a previously paused ad unit.
+   * Note: Will throw if called before the ad unit has started or after it has finished.
+   */
   resume () {
     this[hidden].throwIfNotReady();
-
-    return callAndWait(this.creativeAd, resumeAd, adPlaying);
+    this.creativeAd[resumeAd]();
   }
 
+  /**
+   * Pauses the ad unit.
+   * Note: Will throw if called before the ad unit has started or after it has finished.
+   */
   pause () {
     this[hidden].throwIfNotReady();
-
-    return callAndWait(this.creativeAd, pauseAd, adPaused);
+    this.creativeAd[pauseAd]();
   }
 
+  /**
+   * Sets the volume of the ad unit.
+   * Note: Will throw if called before the ad unit has started or after it has finished.
+   *
+   * @param {number} volume - must be a value between 0 and 1;
+   */
   setVolume (volume) {
     this[hidden].throwIfNotReady();
 
-    return this.creativeAd[setAdVolume](volume);
+    this.creativeAd[setAdVolume](volume);
   }
 
+  /**
+   * Gets the volume of the ad unit.
+   * Note: Will throw if called before the ad unit has started or after it has finished.
+   *
+   * @returns {number} - the volume of the ad unit.
+   */
   getVolume () {
     this[hidden].throwIfNotReady();
 
     return this.creativeAd[getAdVolume]();
   }
 
+  /**
+   * Cancels the ad unit.
+   * Note: Will throw if called before the ad unit has started or after it has finished.
+   */
   cancel () {
     this[hidden].throwIfFinished();
 
@@ -314,6 +355,12 @@ class VpaidAdUnit extends Emitter {
     this[hidden].finish();
   }
 
+  /**
+   * Register a callback function that will be called whenever the ad finishes. No matter if it was finished because de ad ended, or cancelled or there was an error playing the ad.
+   * Note: it will throw if called after the ad unit finishes.
+   *
+   * @param {Function} callback - will be called once the ad unit finished
+   */
   onFinish (callback) {
     this[hidden].throwIfFinished();
 
@@ -324,6 +371,12 @@ class VpaidAdUnit extends Emitter {
     this[hidden].onFinishCallbacks.push(safeCallback(callback, this.logger));
   }
 
+  /**
+   * Register a callback function that will be called if there is an error while running the ad.
+   * Note: it will throw if called after the ad unit finishes.
+   *
+   * @param {Function} callback - will be called on ad unit error passing the Error instance as the only argument if available.
+   */
   onError (callback) {
     this[hidden].throwIfFinished();
 
@@ -334,14 +387,25 @@ class VpaidAdUnit extends Emitter {
     this[hidden].onErrorCallbacks.push(safeCallback(callback, this.logger));
   }
 
+  /**
+   * @returns {boolean} - true if the ad unit is finished and false otherwise
+   */
   isFinished () {
     return this[hidden].finished;
   }
 
+  /**
+   * @returns {boolean} - true if the ad unit has started and false otherwise
+   */
   isStarted () {
     return this[hidden].started;
   }
 
+  /**
+   * This method resizes the ad unit to fit the available space in the passed {@see VideoAdContainer}
+   *
+   * @returns {Promise} - that resolves once the unit was resized
+   */
   async resize () {
     this[hidden].throwIfNotReady();
 

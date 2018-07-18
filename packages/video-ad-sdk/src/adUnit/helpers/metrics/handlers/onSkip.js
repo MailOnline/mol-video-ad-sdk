@@ -2,7 +2,7 @@
 import {linearEvents} from '../../../../tracker';
 
 const {skip} = linearEvents;
-const createDefaultSkipControl = (document) => {
+const createDefaultSkipControl = () => {
   const skipBtn = document.createElement('BUTTON');
 
   skipBtn.classList.add('mol-vast-skip-control');
@@ -30,7 +30,7 @@ const onSkip = (videoAdContainer, callback, {skipoffset, createSkipControl = cre
     const currentTimeMs = videoElement.currentTime * 1000;
 
     if (!Boolean(skipControl) && currentTimeMs >= skipoffset) {
-      skipControl = createSkipControl(document);
+      skipControl = createSkipControl();
 
       skipControl.onclick = (event) => {
         if (Event.prototype.stopPropagation !== undefined) {
