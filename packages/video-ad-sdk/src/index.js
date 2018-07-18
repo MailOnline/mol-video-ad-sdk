@@ -1,3 +1,5 @@
+/** @module @mol/video-ad-sdk */
+
 import VideoAdContainer from './adContainer/VideoAdContainer';
 import VastAdUnit from './adUnit/VastAdUnit';
 import run from './runner/run';

@@ -1,6 +1,27 @@
 /* eslint-disable import/unambiguous */
 
 /**
+ * An Object representing a processed VAST response.
+ * @global
+ * @typedef {Object} VASTResponse
+ * @property {Object} ad - The selected ad extracted from the passed XML.
+ * @property {Object} parsedXML - The XML parsed object.
+ * @property {number} errorCode - VAST error code number to identify the error or null if there is no error.
+ * @property {Error} error - Error instance with a human readable description of the error or undefined if there is no error.
+ * @property {string} requestTag - Ad tag that was used to get this `VastResponse`.
+ * @property {string} XML - RAW XML as it came from the server.
+ */
+
+/**
+ * Array of VASTResponses sorted backwards. Last response goes first.
+ * Represents the chain of VAST responses that ended up on a playable video ad or an error.
+ *
+ * @global
+ * @typedef VastChain
+ * @type Array.<VASTResponse>
+ */
+
+/**
  * From [VAST specification]{@link https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}:
  *
  * Sometimes ad servers would like to collect metadata from the video player when tracking

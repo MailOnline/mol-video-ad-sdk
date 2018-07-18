@@ -18,6 +18,9 @@ const validateChain = (VASTChain) => {
 
 /**
  * @function requestNextAd
+ *
+ * @memberof module:@mol/video-ad-sdk
+ * @async
  * @static
  * @description Requests the next ad in the VAST Chain.
  *
