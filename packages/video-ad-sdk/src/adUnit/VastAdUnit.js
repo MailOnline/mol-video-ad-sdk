@@ -19,6 +19,7 @@ const _private = Symbol('_private');
  * @memberof module:@mol/video-ad-sdk
  * @class
  * @extends VideoAdUnit
+ * @alias VastAdUnit
  * @implements LinearEvents
  * @description This class provides everything necessary to run a Vast ad.
  */

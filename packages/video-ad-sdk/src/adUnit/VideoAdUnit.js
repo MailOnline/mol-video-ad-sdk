@@ -21,6 +21,7 @@ export const _protected = Symbol('_protected');
 /**
  * @class
  * @extends Emitter
+ * @alias VideoAdUnit
  * @implements LinearEvents
  * @description This class provides shared logic among all the ad units.
  */
