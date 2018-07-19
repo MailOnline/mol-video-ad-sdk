@@ -107,10 +107,6 @@
     lodash.pick "4.4.0"
     meow "^5.0.0"
 
-"@commitlint/config-conventional@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@commitlint/config-conventional/-/config-conventional-7.0.1.tgz#276977f8ee60d8c56d7fdd43296af76dfee9b5f7"
-
 "@commitlint/ensure@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@commitlint/ensure/-/ensure-7.0.0.tgz#3d5210bb988416844926895a782a55815731779d"
@@ -7282,6 +7278,10 @@ mockdate@^2.0.2:
 modify-values@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/modify-values/-/modify-values-1.0.1.tgz#b3939fa605546474e3e3e3c63d64bd43b4ee6022"
+
+mol-commitlint-config@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/mol-commitlint-config/-/mol-commitlint-config-1.0.0.tgz#8112115117fbf4ae0778f0abde18e39bf9c38014"
 
 mol-conventional-changelog@^1.2.0:
   version "1.4.0"
