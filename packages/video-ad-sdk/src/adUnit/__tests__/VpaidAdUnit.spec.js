@@ -130,6 +130,7 @@ describe('VpaidAdUnit', () => {
       });
 
       loadCreative.mockReturnValue(Promise.resolve(mockCreativeAd));
+      retrieveIcons.mockReturnValue(null);
 
       adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
     });
@@ -205,21 +206,18 @@ describe('VpaidAdUnit', () => {
         delete mockCreativeAd[getAdIcons];
         await adUnit.start();
 
-        expect(retrieveIcons).not.toHaveBeenCalled();
-        expect(addIcons).not.toHaveBeenCalled();
+        expect(adUnit.icons).toBe(null);
       });
 
       test('false, must not render the icons', async () => {
         mockCreativeAd[getAdIcons].mockReturnValue(false);
         await adUnit.start();
 
-        expect(retrieveIcons).not.toHaveBeenCalled();
-        expect(addIcons).not.toHaveBeenCalled();
+        expect(adUnit.icons).toBe(null);
       });
 
       describe('true,', () => {
         test('without vast icons, must not add the icons', async () => {
-          retrieveIcons.mockReturnValue(null);
           mockCreativeAd[getAdIcons].mockReturnValue(true);
           await adUnit.start();
 
@@ -229,6 +227,9 @@ describe('VpaidAdUnit', () => {
         });
 
         test('with vast icons, must render the icons', async () => {
+          addIcons.mockClear();
+          retrieveIcons.mockClear();
+
           const icons = [{
             height: 20,
             width: 20,
@@ -238,6 +239,8 @@ describe('VpaidAdUnit', () => {
 
           retrieveIcons.mockReturnValue(icons);
           mockCreativeAd[getAdIcons].mockReturnValue(true);
+          adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
+
           await adUnit.start();
 
           expect(retrieveIcons).toHaveBeenCalledTimes(1);
@@ -295,6 +298,8 @@ describe('VpaidAdUnit', () => {
 
       retrieveIcons.mockReturnValue(icons);
       mockCreativeAd[getAdIcons].mockReturnValue(true);
+      adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
+
       await adUnit.start();
 
       adUnit.cancel();
@@ -312,6 +317,8 @@ describe('VpaidAdUnit', () => {
 
       retrieveIcons.mockReturnValue(icons);
       mockCreativeAd[getAdIcons].mockReturnValue(true);
+      adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
+
       await adUnit.start();
 
       expect(mockDrawIcons).toHaveBeenCalledTimes(1);
@@ -322,6 +329,8 @@ describe('VpaidAdUnit', () => {
     });
 
     test(`must emit '${iconClick}' event on click`, async () => {
+      addIcons.mockClear();
+
       const icons = [{
         height: 20,
         width: 20,
@@ -331,9 +340,11 @@ describe('VpaidAdUnit', () => {
 
       retrieveIcons.mockReturnValue(icons);
       mockCreativeAd[getAdIcons].mockReturnValue(true);
+      adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
+
       await adUnit.start();
 
-      expect(addIcons).toHaveBeenCalledTimes(1);
+      expect(adUnit.icons).toBe(icons);
 
       const passedConfig = addIcons.mock.calls[0][1];
 
@@ -351,6 +362,7 @@ describe('VpaidAdUnit', () => {
     });
 
     test(`must emit '${iconView}' event on view`, async () => {
+      addIcons.mockClear();
       const icons = [{
         height: 20,
         width: 20,
@@ -360,9 +372,10 @@ describe('VpaidAdUnit', () => {
 
       retrieveIcons.mockReturnValue(icons);
       mockCreativeAd[getAdIcons].mockReturnValue(true);
+      adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
       await adUnit.start();
 
-      expect(addIcons).toHaveBeenCalledTimes(1);
+      expect(adUnit.icons).toBe(icons);
 
       const passedConfig = addIcons.mock.calls[0][1];
 
@@ -391,6 +404,7 @@ describe('VpaidAdUnit', () => {
       mockCreativeAd[getAdIcons].mockReturnValue(true);
       mockHasPendingRedraws.mockReturnValueOnce(true);
       mockHasPendingRedraws.mockReturnValueOnce(false);
+      adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
 
       await adUnit.start();
       expect(mockDrawIcons).toHaveBeenCalledTimes(1);
@@ -412,6 +426,7 @@ describe('VpaidAdUnit', () => {
       mockCreativeAd[getAdIcons].mockReturnValue(true);
       mockHasPendingRedraws.mockReturnValueOnce(true);
       mockHasPendingRedraws.mockReturnValueOnce(false);
+      adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
 
       await adUnit.start();
       expect(mockDrawIcons).toHaveBeenCalledTimes(1);
@@ -461,14 +476,14 @@ describe('VpaidAdUnit', () => {
 
     describe('resume', () => {
       test('must throw if the adUnit is not started', () => {
-        expect(() => adUnit.resume()).toThrow('VpaidAdUnit has not started');
+        expect(() => adUnit.resume()).toThrow('VideoAdUnit has not started');
       });
 
       test('must throw if the adUnit is finished', async () => {
         await adUnit.start();
         await adUnit.cancel();
 
-        expect(() => adUnit.resume()).toThrow('VpaidAdUnit is finished');
+        expect(() => adUnit.resume()).toThrow('VideoAdUnit is finished');
       });
 
       test('must call resumeAd', async () => {
@@ -481,14 +496,14 @@ describe('VpaidAdUnit', () => {
 
     describe('pause', () => {
       test('must throw if the adUnit is not started', () => {
-        expect(() => adUnit.pause()).toThrow('VpaidAdUnit has not started');
+        expect(() => adUnit.pause()).toThrow('VideoAdUnit has not started');
       });
 
       test('must throw if the adUnit is finished', async () => {
         await adUnit.start();
         await adUnit.cancel();
 
-        expect(() => adUnit.pause()).toThrow('VpaidAdUnit is finished');
+        expect(() => adUnit.pause()).toThrow('VideoAdUnit is finished');
       });
 
       test('must call pauseAd', async () => {
@@ -501,14 +516,14 @@ describe('VpaidAdUnit', () => {
 
     describe('getVolume', () => {
       test('must throw if the adUnit is not started', () => {
-        expect(() => adUnit.getVolume()).toThrow('VpaidAdUnit has not started');
+        expect(() => adUnit.getVolume()).toThrow('VideoAdUnit has not started');
       });
 
       test('must throw if the adUnit is finished', async () => {
         await adUnit.start();
         await adUnit.cancel();
 
-        expect(() => adUnit.getVolume()).toThrow('VpaidAdUnit is finished');
+        expect(() => adUnit.getVolume()).toThrow('VideoAdUnit is finished');
       });
 
       test('must call getAdVolume', async () => {
@@ -521,14 +536,14 @@ describe('VpaidAdUnit', () => {
 
     describe('setVolume', () => {
       test('must throw if the adUnit is not started', () => {
-        expect(() => adUnit.setVolume()).toThrow('VpaidAdUnit has not started');
+        expect(() => adUnit.setVolume()).toThrow('VideoAdUnit has not started');
       });
 
       test('must throw if the adUnit is finished', async () => {
         await adUnit.start();
         await adUnit.cancel();
 
-        expect(() => adUnit.setVolume()).toThrow('VpaidAdUnit is finished');
+        expect(() => adUnit.setVolume()).toThrow('VideoAdUnit is finished');
       });
 
       test('must call getAdVolume', async () => {
@@ -546,7 +561,7 @@ describe('VpaidAdUnit', () => {
         try {
           await adUnit.resize();
         } catch (error) {
-          expect(error.message).toBe('VpaidAdUnit has not started');
+          expect(error.message).toBe('VideoAdUnit has not started');
         }
       });
 
@@ -559,7 +574,7 @@ describe('VpaidAdUnit', () => {
         try {
           await adUnit.resize();
         } catch (error) {
-          expect(error.message).toBe('VpaidAdUnit is finished');
+          expect(error.message).toBe('VideoAdUnit is finished');
         }
       });
 
@@ -576,7 +591,7 @@ describe('VpaidAdUnit', () => {
         await adUnit.start();
         await adUnit.cancel();
 
-        expect(() => adUnit.cancel()).toThrow('VpaidAdUnit is finished');
+        expect(() => adUnit.cancel()).toThrow('VideoAdUnit is finished');
       });
 
       test('must call stopAd and finish the adUnit', async () => {
@@ -593,7 +608,7 @@ describe('VpaidAdUnit', () => {
         await adUnit.start();
         await adUnit.cancel();
 
-        expect(() => adUnit.onFinish()).toThrow('VpaidAdUnit is finished');
+        expect(() => adUnit.onFinish()).toThrow('VideoAdUnit is finished');
       });
 
       test('must throw if you don\'t pass a callback function ', async () => {
@@ -636,7 +651,7 @@ describe('VpaidAdUnit', () => {
         await adUnit.start();
         await adUnit.cancel();
 
-        expect(() => adUnit.onError()).toThrow('VpaidAdUnit is finished');
+        expect(() => adUnit.onError()).toThrow('VideoAdUnit is finished');
       });
 
       test('must throw if you don\'t pass a callback function ', async () => {

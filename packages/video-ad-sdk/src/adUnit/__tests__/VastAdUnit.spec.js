@@ -382,7 +382,7 @@ test('VastAdUnit start must throw if called twice', async () => {
     await adUnit.start();
     adUnit.cancel();
 
-    expect(() => adUnit[method]()).toThrowError('VastAdUnit is finished');
+    expect(() => adUnit[method]()).toThrowError('VideoAdUnit is finished');
   });
 });
 
@@ -397,7 +397,7 @@ test('VastAdUnit `resize` must throw if you call it on a finished adUnit', async
   try {
     await adUnit.resize();
   } catch (error) {
-    expect(error.message).toBe('VastAdUnit is finished');
+    expect(error.message).toBe('VideoAdUnit is finished');
   }
 });
 
@@ -412,7 +412,7 @@ test('VastAdUnit `start` must throw if you call it on a finished adUnit', async 
   try {
     await adUnit.start();
   } catch (error) {
-    expect(error.message).toBe('VastAdUnit is finished');
+    expect(error.message).toBe('VideoAdUnit is finished');
   }
 });
 
@@ -567,7 +567,7 @@ test('VastAdUnit cancel must remove the icons of the vastChain', async () => {
   test(`VastAdUnit ${method} must throw if the ad unit has not started`, () => {
     const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
-    expect(() => adUnit[method]()).toThrowError('VastAdUnit has not started');
+    expect(() => adUnit[method]()).toThrowError('VideoAdUnit has not started');
   });
 
   test(`VastAdUnit ${method} must call ${vpMethod} on the video element`, () => {
