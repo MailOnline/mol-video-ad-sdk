@@ -6,6 +6,13 @@ import makeCancelable from './helpers/makeCancelable';
 
 const noop = () => {};
 
+/**
+  * @memberof module:@mol/react-vast-vpaid
+  * @class
+  * @extends React.Component
+  * @alias VideoAd
+  * @description React component to lad a vast/vpaid video ad.
+  */
 class VideoAd extends Component {
   static defaultProps = {
     children: undefined,
@@ -41,6 +48,27 @@ class VideoAd extends Component {
     width: PropTypes.number
   };
 
+  /**
+   * Create a {@link VideoAd} component.
+   *
+   * @param {Object} props - react props.
+   * @param {Function} props.getTag - must return an ad tag or a promise that will resolve with an ad tag.
+   * @param {React.nodes} [props.children] - whatever you pass as children will be displayed while the ad is loading.
+   * @param {Function|HTMLElement} [props.skipControl] - If a function is provided it will be called to generate the skip control. The skip control must be a clickable [HTMLElement](https://developer.mozilla.org/es/docs/Web/API/HTMLElement) that is detached from the DOM.
+   * @param {number} [props.height] - the component will resize the ad unit if the passed height changes.
+   * @param {number} [props.width] - the component will resize the ad unit if the passed width changes.
+   * @param {Console} [props.logger] - must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
+   * Defaults to `window.console`
+   * @param {VideoAd~onStart} [props.onStart] - will be called once the ad starts
+   * @param {VideoAd~onError} [props.onError] - will be called if there is an error with the video ad.
+   * @param {VideoAd~onFinish} [props.onFinish] - will be called whenever the ad finishes.
+   * @param {TrackerFn} [props.tracker] - If provided it will be used to track the VAST events instead of the default {@link pixelTracker}.
+   * @param {HTMLVideoElement} [props.videoElement] - If provided it will be used to display the video ad. Beware that it will not clean the sources after the ad is finished.
+   * @param {boolean} [props.viewability] - if true it will pause the ad whenever is not visible for the viewer.
+   * Defaults to `false`
+   * @param {boolean} [props.responsive] - if true it will resize the ad unit whenever the ad container changes sizes.
+   * Defaults to `false`
+   */
   constructor (props) {
     super(props);
 
@@ -172,5 +200,26 @@ class VideoAd extends Component {
     </div>;
   }
 }
+
+/**
+ * Called once the ad starts.
+ *
+ * @callback VideoAd~onStart
+ * @param {VastAdUnit | VideoAdUnit} adUnit - the ad unit instance.
+ */
+
+/**
+ * Called whenever the an error occurs within the ad unit.
+ *
+ * @callback VideoAd~onError
+ * @param {Error} error - the ad unit error.
+ * @param {boolean} error.isRecoverable - if true the component will try to recover searching for another ad in the waterfall. If false it means that the component won't recover and you should unmount the component.
+ */
+
+/**
+ * Called once the ad is finished. It will also be called if there is an error with the ad. It can be used to know when to unmount the component.
+ *
+ * @callback VideoAd~onFinish
+ */
 
 export default VideoAd;
