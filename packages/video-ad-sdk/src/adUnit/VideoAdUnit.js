@@ -107,7 +107,7 @@ class VideoAdUnit extends Emitter {
 
     if (viewability) {
       this.once(start, () => {
-        onElementVisibilityChange(this.videoAdContainer.element, (visible) => {
+        const unsubscribe = onElementVisibilityChange(this.videoAdContainer.element, (visible) => {
           if (this.isFinished()) {
             return;
           }
@@ -118,6 +118,8 @@ class VideoAdUnit extends Emitter {
             this.pause();
           }
         });
+
+        onFinishCallbacks.push(unsubscribe);
       });
     }
 
@@ -129,7 +131,11 @@ class VideoAdUnit extends Emitter {
           height: element.clientHeight,
           width: element.clientWidth
         };
-        onElementResize(element, () => {
+        const unsubscribe = onElementResize(element, () => {
+          if (this.isFinished()) {
+            return;
+          }
+
           const prevSize = this[_protected].size;
           const height = element.clientHeight;
           const width = element.clientWidth;
@@ -139,10 +145,12 @@ class VideoAdUnit extends Emitter {
             width: element.clientWidth
           };
 
-          if (height !== prevSize.height || width !== prevSize.width && !this.isFinished()) {
+          if (height !== prevSize.height || width !== prevSize.width) {
             this.resize();
           }
         });
+
+        onFinishCallbacks.push(unsubscribe);
       });
     }
   }
