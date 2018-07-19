@@ -186,7 +186,7 @@ class VpaidAdUnit extends VideoAdUnit {
   /**
    * Creates a {VpaidAdUnit}.
    *
-   * @param {VastChain} vastChain - The {@see VastChain} with all the {@see VastResponse}
+   * @param {VastChain} vastChain - The {@link VastChain} with all the {@link VastResponse}
    * @param {VideoAdContainer} videoAdContainer - container instance to place the ad
    * @param {Object} [options] - Options Map. The allowed properties are:
    * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
@@ -331,7 +331,7 @@ class VpaidAdUnit extends VideoAdUnit {
   }
 
   /**
-   * This method resizes the ad unit to fit the available space in the passed {@see VideoAdContainer}
+   * This method resizes the ad unit to fit the available space in the passed {@link VideoAdContainer}
    *
    * @throws if ad unit is not started.
    * @throws if ad unit is finished.

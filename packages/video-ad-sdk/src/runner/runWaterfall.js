@@ -66,6 +66,7 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
  * @param {boolean} [options.responsive] - if true it will resize the ad unit whenever the ad container changes sizes.
  * Defaults to `false`
  * @param {number} [options.timeout] - timeout number in milliseconds. If set, the video ad will time out if it doesn't start within the specified time.
+ * @param {TrackerFn} [options.tracker] - If provided it will be used to track the VAST events instead of the default {@link pixelTracker}.
  * @param {Object} [options.hooks] - Optional map with hooks to configure the behaviour of the ad.
  * @param {Function} [options.hooks.createSkipControl] - If provided it will be called to generate the skip control. Must return a clickable [HTMLElement](https://developer.mozilla.org/es/docs/Web/API/HTMLElement) that is detached from the DOM.
  * @returns {Promise.<VastAdUnit|VpaidAdUnit>} - The video ad unit.

@@ -59,9 +59,9 @@ class VideoAdUnit extends Emitter {
   errorCode = null;
 
   /**
-   * Creates a {@see VideoAdUnit}.
+   * Creates a {@link VideoAdUnit}.
    *
-   * @param {VastChain} vastChain - The {@see VastChain} with all the {@see VastResponse}
+   * @param {VastChain} vastChain - The {@link VastChain} with all the {@link VastResponse}
    * @param {VideoAdContainer} videoAdContainer - container instance to place the ad
    * @param {Object} [options] - Options Map. The allowed properties are:
    * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
@@ -78,13 +78,13 @@ class VideoAdUnit extends Emitter {
       onFinishCallbacks
     } = this[_protected];
 
-    /** Reference to the {@see VastChain} used to load the ad. */
+    /** Reference to the {@link VastChain} used to load the ad. */
     this.vastChain = vastChain;
 
-    /** Reference to the {@see VideoAdContainer} that contains the ad. */
+    /** Reference to the {@link VideoAdContainer} that contains the ad. */
     this.videoAdContainer = videoAdContainer;
 
-    /** Array of {@see VastIcon} definitions to display from the passed {@see VastChain} or null if there are no icons.*/
+    /** Array of {@link VastIcon} definitions to display from the passed {@link VastChain} or null if there are no icons.*/
     this.icons = retrieveIcons(vastChain);
 
     if (this.icons) {
@@ -269,7 +269,7 @@ class VideoAdUnit extends Emitter {
   }
 
   /**
-   * This method resizes the ad unit to fit the available space in the passed {@see VideoAdContainer}
+   * This method resizes the ad unit to fit the available space in the passed {@link VideoAdContainer}
    *
    * @throws if ad unit is not started.
    * @throws if ad unit is finished.
