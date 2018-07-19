@@ -62,6 +62,8 @@ class VideoAd extends Component {
       this.setState({
         ready: true
       });
+
+      this.props.onStart(adUnit);
     });
   }
 
@@ -79,8 +81,7 @@ class VideoAd extends Component {
   componentDidUpdate (prevProps) {
     const {
       height,
-      width,
-      onStart
+      width
     } = this.props;
 
     const adUnit = this.adUnit;
@@ -89,14 +90,6 @@ class VideoAd extends Component {
       if (height !== prevProps.height || width !== prevProps.width && !adUnit.isFinished()) {
         adUnit.resize();
       }
-
-      // TODO: onStart gets called too many times ...
-      onStart({
-        adUnit,
-        pause: () => adUnit.pause(),
-        resume: () => adUnit.resume(),
-        setVolume: (newVolume) => adUnit.setVolume(newVolume)
-      });
     }
   }
 
