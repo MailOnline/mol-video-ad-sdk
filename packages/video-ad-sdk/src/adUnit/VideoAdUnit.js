@@ -14,7 +14,6 @@ const {
 export const _protected = Symbol('_protected');
 
 /**
- * @memberof module:@mol/video-ad-sdk
  * @class
  * @extends Emitter
  * @implements LinearEvents
@@ -101,7 +100,7 @@ class VideoAdUnit extends Emitter {
       onFinishCallbacks.push(removeIcons);
     }
 
-    // TODO: add viewability and responsive logic
+    // TODO: implement viewability and responsive logic
   }
 
   /*
