@@ -14,17 +14,16 @@ class VideoAd extends Component {
     onError: noop,
     onFinish: noop,
     onStart: noop,
+    responsive: false,
     skipControl: undefined,
     tracker: undefined,
     videoElement: undefined,
+    viewability: false,
     width: undefined
   };
 
   static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.any),
-      PropTypes.any
-    ]),
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.any), PropTypes.any]),
     getTag: PropTypes.func.isRequired,
     height: PropTypes.number,
     logger: PropTypes.shape({
@@ -34,12 +33,11 @@ class VideoAd extends Component {
     onError: PropTypes.func,
     onFinish: PropTypes.func,
     onStart: PropTypes.func,
-    skipControl: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.any
-    ]),
+    responsive: PropTypes.bool,
+    skipControl: PropTypes.oneOfType([PropTypes.func, PropTypes.any]),
     tracker: PropTypes.func,
     videoElement: PropTypes.any,
+    viewability: PropTypes.bool,
     width: PropTypes.number
   };
 
@@ -108,8 +106,10 @@ class VideoAd extends Component {
       logger,
       onFinish,
       onError,
+      responsive,
       skipControl,
       tracker,
+      viewability,
       videoElement
     } = this.props;
 
@@ -126,8 +126,10 @@ class VideoAd extends Component {
     const options = {
       logger,
       onError: onRecoverableError,
+      responsive,
       tracker,
-      videoElement
+      videoElement,
+      viewability
     };
 
     if (skipControl) {
