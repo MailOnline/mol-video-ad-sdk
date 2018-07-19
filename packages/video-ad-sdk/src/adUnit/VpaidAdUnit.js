@@ -191,6 +191,11 @@ class VpaidAdUnit extends VideoAdUnit {
    * @param {Object} [options] - Options Map. The allowed properties are:
    * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
    * Defaults to `window.console`
+   * @param {boolean} [options.viewability] - if true it will pause the ad whenever is not visible for the viewer.
+   * Defaults to `false`
+   * @param {boolean} [options.responsive] - if true it will resize the ad unit whenever the ad container changes sizes
+   * Defaults to `false`
+   * Defaults to `window.console`
    */
   constructor (vastChain, videoAdContainer, options = {}) {
     super(vastChain, videoAdContainer, options);

@@ -1,11 +1,16 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
 import {linearEvents} from '../tracker';
+import {
+  onElementVisibilityChange,
+  onElementResize
+} from './helpers/dom/elementObservers';
 import Emitter from './helpers/Emitter';
 import retrieveIcons from './helpers/icons/retrieveIcons';
 import addIcons from './helpers/icons/addIcons';
 import safeCallback from './helpers/safeCallback';
 
 const {
+  start,
   iconClick,
   iconView
 } = linearEvents;
@@ -60,12 +65,12 @@ class VideoAdUnit extends Emitter {
    * @param {Object} [options] - Options Map. The allowed properties are:
    * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
    * Defaults to `window.console`
-   * @param {true} [options.viewability] - if true it will pause the ad whenever is not visible for the viewer.
+   * @param {boolean} [options.viewability] - if true it will pause the ad whenever is not visible for the viewer.
    * Defaults to `false`
-   * @param {true} [options.responsive] - if true it will resize the ad unit whenever the ad container changes sizes
+   * @param {boolean} [options.responsive] - if true it will resize the ad unit whenever the ad container changes sizes
    * Defaults to `false`
    */
-  constructor (vastChain, videoAdContainer, {logger = console} = {}) {
+  constructor (vastChain, videoAdContainer, {viewability = false, responsive = false, logger = console} = {}) {
     super(logger);
 
     const {
@@ -100,7 +105,46 @@ class VideoAdUnit extends Emitter {
       onFinishCallbacks.push(removeIcons);
     }
 
-    // TODO: implement viewability and responsive logic
+    if (viewability) {
+      this.once(start, () => {
+        onElementVisibilityChange(this.videoAdContainer.element, (visible) => {
+          if (this.isFinished()) {
+            return;
+          }
+
+          if (visible) {
+            this.resume();
+          } else {
+            this.pause();
+          }
+        });
+      });
+    }
+
+    if (responsive) {
+      this.once(start, () => {
+        const {element} = this.videoAdContainer;
+
+        this[_protected].size = {
+          height: element.clientHeight,
+          width: element.clientWidth
+        };
+        onElementResize(element, () => {
+          const prevSize = this[_protected].size;
+          const height = element.clientHeight;
+          const width = element.clientWidth;
+
+          this[_protected].size = {
+            height: element.clientHeight,
+            width: element.clientWidth
+          };
+
+          if (height !== prevSize.height || width !== prevSize.width && !this.isFinished()) {
+            this.resize();
+          }
+        });
+      });
+    }
   }
 
   /*

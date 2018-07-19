@@ -59,8 +59,12 @@ class VastAdUnit extends VideoAdUnit {
    * @param {Object} [options] - Options Map. The allowed properties are:
    * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
    * Defaults to `window.console`
-   * @param {Object} [options.hooks] - Optional map with hooks to configure the behaviour of the ad
+   * @param {Object} [options.hooks] - Optional map with hooks to configure the behaviour of the ad.
    * @param {Function} [options.hooks.createSkipControl] - If provided it will be called to generate the skip control. Must return a clickable [HTMLElement](https://developer.mozilla.org/es/docs/Web/API/HTMLElement) that is detached from the DOM.
+   * @param {boolean} [options.viewability] - if true it will pause the ad whenever is not visible for the viewer.
+   * Defaults to `false`
+   * @param {boolean} [options.responsive] - if true it will resize the ad unit whenever the ad container changes sizes.
+   * Defaults to `false`
    */
   constructor (vastChain, videoAdContainer, options = {}) {
     super(vastChain, videoAdContainer, options);

@@ -92,6 +92,7 @@ class VideoAd extends Component {
         adUnit.resize();
       }
 
+      // TODO: onStart gets called too many times ...
       onStart({
         adUnit,
         pause: () => adUnit.pause(),
