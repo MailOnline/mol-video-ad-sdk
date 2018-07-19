@@ -202,6 +202,22 @@ describe('VideoAdUnit', () => {
 
       expect(callback).toHaveBeenCalledTimes(1);
     });
+
+    // REGRESSION
+    test('mut be already finished on callback execution', () => {
+      expect.assertions(3);
+      let callbackFinishState;
+      const callback = () => {
+        callbackFinishState = adUnit.isFinished();
+      };
+
+      expect(adUnit.isFinished()).toBe(false);
+      adUnit.onFinish(callback);
+
+      adUnit[_protected].finish();
+      expect(adUnit.isFinished()).toBe(true);
+      expect(callbackFinishState).toBe(true);
+    });
   });
 
   describe('onError', () => {
