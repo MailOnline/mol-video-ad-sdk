@@ -40,7 +40,7 @@ const validateChain = (VastChain) => {
  * @param {boolean} [options.fallbackOnNoAd] - tells the video player to select an ad from any stand-alone ads available.
  *    Note: if the {@link VastChain} contains an adPod this property will be ignored.
  *    Defaults to `true`.
- * @param {number} [options.timeout] - timeout number in milliseconds. If Present, the request will timeout if it is not fulfilled before the specified time.
+ * @param {number} [options.timeout] - timeout number in milliseconds. If set, the request will timeout if it is not fulfilled before the specified time.
  *
  * @returns {Promise.<VastChain>}  - Returns a Promise that will resolve with a VastChain with the newest VAST response at the beginning of the array.
  * If the {@link VastChain} had an error. The first VAST response of the array will contain an error and an errorCode entry.

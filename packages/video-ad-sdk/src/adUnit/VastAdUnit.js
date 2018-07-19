@@ -1,49 +1,41 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
 import {linearEvents} from '../tracker';
-import Emitter from './helpers/Emitter';
 import findBestMedia from './helpers/media/findBestMedia';
 import once from './helpers/dom/once';
 import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';
-import retrieveIcons from './helpers/icons/retrieveIcons';
-import addIcons from './helpers/icons/addIcons';
-import safeCallback from './helpers/safeCallback';
 import updateMedia from './helpers/media/updateMedia';
+import VideoAdUnit, {_protected} from './VideoAdUnit';
 
 const {
   complete,
-  iconClick,
-  iconView,
   error: errorEvt,
   skip
 } = linearEvents;
 
-const hidden = Symbol('hidden');
+// eslint-disable-next-line id-match
+const _private = Symbol('_private');
 
 /**
  * @memberof module:@mol/video-ad-sdk
  * @class
- * @extends Emitter
+ * @extends VideoAdUnit
+ * @alias VastAdUnit
  * @implements LinearEvents
  * @description This class provides everything necessary to run a Vast ad.
  */
-class VastAdUnit extends Emitter {
-  [hidden] = {
-    finish: () => {
-      this[hidden].onFinishCallbacks.forEach((callback) => callback());
-      this[hidden].finished = true;
-    },
-    finished: false,
+class VastAdUnit extends VideoAdUnit {
+  [_private] = {
     handleMetric: (event, data) => {
       switch (event) {
       case complete: {
-        this[hidden].finish();
+        this[_protected].finish();
         break;
       }
       case errorEvt: {
         this.error = data;
         this.errorCode = this.error && this.error.errorCode ? this.error.errorCode : 405;
-        this[hidden].onErrorCallbacks.forEach((callback) => callback(this.error));
-        this[hidden].finish();
+        this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
+        this[_protected].finish();
         break;
       }
       case skip: {
@@ -53,21 +45,6 @@ class VastAdUnit extends Emitter {
       }
 
       this.emit(event, event, this, data);
-    },
-    onErrorCallbacks: [],
-    onFinishCallbacks: [],
-    started: false,
-    throwIfFinished: () => {
-      if (this.isFinished()) {
-        throw new Error('VastAdUnit is finished');
-      }
-    },
-    throwIfNotReady: () => {
-      this[hidden].throwIfFinished();
-
-      if (!this.isStarted()) {
-        throw new Error('VastAdUnit has not started');
-      }
     }
   };
 
@@ -78,50 +55,25 @@ class VastAdUnit extends Emitter {
   /**
    * Creates a {VastAdUnit}.
    *
-   * @param {VastChain} vastChain - The {@see VastChain} with all the {@see VastResponse}
+   * @param {VastChain} vastChain - The {@link VastChain} with all the {@link VastResponse}
    * @param {VideoAdContainer} videoAdContainer - container instance to place the ad
    * @param {Object} [options] - Options Map. The allowed properties are:
    * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
    * Defaults to `window.console`
-   * @param {Object} [options.hooks] - Optional map with hooks to configure the behaviour of the ad
+   * @param {Object} [options.hooks] - Optional map with hooks to configure the behaviour of the ad.
    * @param {Function} [options.hooks.createSkipControl] - If provided it will be called to generate the skip control. Must return a clickable [HTMLElement](https://developer.mozilla.org/es/docs/Web/API/HTMLElement) that is detached from the DOM.
+   * @param {boolean} [options.viewability] - if true it will pause the ad whenever is not visible for the viewer.
+   * Defaults to `false`
+   * @param {boolean} [options.responsive] - if true it will resize the ad unit whenever the ad container changes sizes.
+   * Defaults to `false`
    */
-  constructor (vastChain, videoAdContainer, {hooks = {}, logger = console} = {}) {
-    super(logger);
+  constructor (vastChain, videoAdContainer, options = {}) {
+    super(vastChain, videoAdContainer, options);
 
-    const {
-      handleMetric,
-      onFinishCallbacks
-    } = this[hidden];
+    const {onFinishCallbacks} = this[_protected];
+    const {handleMetric} = this[_private];
 
-    this.hooks = hooks;
-
-    /** Reference to the {@see VastChain} used to load the ad. */
-    this.vastChain = vastChain;
-
-    /** Reference to the {@see VideoAdContainer} that contains the ad. */
-    this.videoAdContainer = videoAdContainer;
-
-    this.icons = retrieveIcons(vastChain);
-
-    if (this.icons) {
-      const {
-        drawIcons,
-        hasPendingIconRedraws,
-        removeIcons
-      } = addIcons(this.icons, {
-        logger,
-        onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
-        onIconView: (icon) => this.emit(iconView, iconView, this, icon),
-        videoAdContainer
-      });
-
-      this.drawIcons = drawIcons;
-      this.removeIcons = removeIcons;
-      this.hasPendingIconRedraws = hasPendingIconRedraws;
-
-      onFinishCallbacks.push(removeIcons);
-    }
+    this.hooks = options.hooks || {};
 
     const removeMetricHandlers = setupMetricHandlers({
       hooks: this.hooks,
@@ -139,7 +91,7 @@ class VastAdUnit extends Emitter {
    * @throws if ad unit is finished.
    */
   async start () {
-    this[hidden].throwIfFinished();
+    this[_protected].throwIfFinished();
 
     if (this.isStarted()) {
       throw new Error('VastAdUnit already started');
@@ -156,9 +108,9 @@ class VastAdUnit extends Emitter {
             return;
           }
 
-          await this.drawIcons();
+          await this[_protected].drawIcons();
 
-          if (this.hasPendingIconRedraws() && !this.isFinished()) {
+          if (this[_protected].hasPendingIconRedraws() && !this.isFinished()) {
             once(videoElement, 'timeupdate', drawIcons);
           }
         };
@@ -173,10 +125,10 @@ class VastAdUnit extends Emitter {
       const adUnitError = new Error('Can\'t find a suitable media to play');
 
       adUnitError.errorCode = 403;
-      this[hidden].handleMetric(errorEvt, adUnitError);
+      this[_private].handleMetric(errorEvt, adUnitError);
     }
 
-    this[hidden].started = true;
+    this[_protected].started = true;
   }
 
   /**
@@ -186,7 +138,7 @@ class VastAdUnit extends Emitter {
    * @throws if ad unit is finished.
    */
   resume () {
-    this[hidden].throwIfNotReady();
+    this[_protected].throwIfNotReady();
     const {videoElement} = this.videoAdContainer;
 
     videoElement.play();
@@ -199,7 +151,7 @@ class VastAdUnit extends Emitter {
    * @throws if ad unit is finished.
    */
   pause () {
-    this[hidden].throwIfNotReady();
+    this[_protected].throwIfNotReady();
     const {videoElement} = this.videoAdContainer;
 
     videoElement.pause();
@@ -214,7 +166,7 @@ class VastAdUnit extends Emitter {
    * @param {number} volume - must be a value between 0 and 1;
    */
   setVolume (volume) {
-    this[hidden].throwIfNotReady();
+    this[_protected].throwIfNotReady();
 
     const {videoElement} = this.videoAdContainer;
 
@@ -230,7 +182,7 @@ class VastAdUnit extends Emitter {
    * @returns {number} - the volume of the ad unit.
    */
   getVolume () {
-    this[hidden].throwIfNotReady();
+    this[_protected].throwIfNotReady();
 
     const {videoElement} = this.videoAdContainer;
 
@@ -243,65 +195,15 @@ class VastAdUnit extends Emitter {
    * @throws if ad unit is finished.
    */
   cancel () {
-    this[hidden].throwIfFinished();
+    this[_protected].throwIfFinished();
 
-    const videoElement = this.videoAdContainer.videoElement;
+    this.videoAdContainer.videoElement.pause();
 
-    videoElement.pause();
-
-    this[hidden].finish();
+    this[_protected].finish();
   }
 
   /**
-   * Register a callback function that will be called whenever the ad finishes. No matter if it was finished because de ad ended, or cancelled or there was an error playing the ad.
-   *
-   * @throws if ad unit is finished.
-   *
-   * @param {Function} callback - will be called once the ad unit finished
-   */
-  onFinish (callback) {
-    this[hidden].throwIfFinished();
-
-    if (typeof callback !== 'function') {
-      throw new TypeError('Expected a callback function');
-    }
-
-    this[hidden].onFinishCallbacks.push(safeCallback(callback, this.logger));
-  }
-
-  /**
-   * Register a callback function that will be called if there is an error while running the ad.
-   *
-   * @throws if ad unit is finished.
-   *
-   * @param {Function} callback - will be called on ad unit error passing the Error instance as the only argument if available.
-   */
-  onError (callback) {
-    this[hidden].throwIfFinished();
-
-    if (typeof callback !== 'function') {
-      throw new TypeError('Expected a callback function');
-    }
-
-    this[hidden].onErrorCallbacks.push(safeCallback(callback, this.logger));
-  }
-
-  /**
-   * @returns {boolean} - true if the ad unit is finished and false otherwise
-   */
-  isFinished () {
-    return this[hidden].finished;
-  }
-
-  /**
-   * @returns {boolean} - true if the ad unit has started and false otherwise
-   */
-  isStarted () {
-    return this[hidden].started;
-  }
-
-  /**
-   * This method resizes the ad unit to fit the available space in the passed {@see VideoAdContainer}
+   * This method resizes the ad unit to fit the available space in the passed {@link VideoAdContainer}
    *
    * @throws if ad unit is not started.
    * @throws if ad unit is finished.
@@ -309,12 +211,7 @@ class VastAdUnit extends Emitter {
    * @returns {Promise} - that resolves once the unit was resized
    */
   async resize () {
-    this[hidden].throwIfNotReady();
-
-    if (this.icons) {
-      await this.removeIcons();
-      await this.drawIcons();
-    }
+    await super.resize();
 
     if (this.isStarted()) {
       const inlineAd = this.vastChain[0].ad;

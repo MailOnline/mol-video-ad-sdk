@@ -176,8 +176,8 @@
  * Function to track VAST events.
  *
  * @global
- * @typedef {function} tracker
- * @name tracker
+ * @typedef {function} TrackerFn
+ * @name TrackerFn
  * @description Tracking function.
  * @param {string} URLMacro - URL Macro that need to be tracked.
  * @param {Object} data - data to use for the URL Macro.

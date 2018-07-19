@@ -51,20 +51,11 @@ test('must display the children until it is ready to start the ad', (done) => {
   expect(wrapper.html().includes('spinner')).toBe(true);
 });
 
-test('onStart must pass the adUnit and some convenience methods', (done) => {
-  expect.assertions(8);
+test('onStart must handler must be called with the adUnit', (done) => {
+  expect.assertions(2);
 
-  const onStart = ({adUnit, setVolume, pause, resume}) => {
+  const onStart = (adUnit) => {
     expect(adUnit).toBe(mockAdUnit);
-    expect(adUnit.setVolume).toHaveBeenCalledTimes(0);
-    expect(adUnit.pause).toHaveBeenCalledTimes(0);
-    expect(adUnit.resume).toHaveBeenCalledTimes(0);
-    setVolume();
-    expect(adUnit.setVolume).toHaveBeenCalledTimes(1);
-    pause();
-    expect(adUnit.pause).toHaveBeenCalledTimes(1);
-    resume();
-    expect(adUnit.resume).toHaveBeenCalledTimes(1);
     done();
   };
 

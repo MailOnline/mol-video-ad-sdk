@@ -23,6 +23,27 @@ const validateVastChain = (vastChain, options) => {
   }
 };
 
+/**
+ * Will try to start video ad in the passed {@link VastChain} and return the started VideoAdUnit.
+ *
+ * @memberof module:@mol/video-ad-sdk
+ * @static
+ * @throws if there is an error starting the ad or it times out (by throw I mean that it will reject promise with the error).
+ * @param {VastChain} vastChain - The {@link VastChain} with all the {@link VastResponse}s.
+ * @param {HTMLElement} placeholder - placeholder element that will contain the video ad.
+ * @param {Object} [options] - Options Map. The allowed properties are:
+ * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
+ * Defaults to `window.console`
+ * @param {boolean} [options.viewability] - if true it will pause the ad whenever is not visible for the viewer.
+ * Defaults to `false`
+ * @param {boolean} [options.responsive] - if true it will resize the ad unit whenever the ad container changes sizes.
+ * Defaults to `false`
+ * @param {number} [options.timeout] - timeout number in milliseconds. If set, the video ad will time out if it doesn't start within the specified time.
+ * @param {TrackerFn} [options.tracker] - If provided it will be used to track the VAST events instead of the default {@link pixelTracker}.
+ * @param {Object} [options.hooks] - Optional map with hooks to configure the behaviour of the ad.
+ * @param {Function} [options.hooks.createSkipControl] - If provided it will be called to generate the skip control. Must return a clickable [HTMLElement](https://developer.mozilla.org/es/docs/Web/API/HTMLElement) that is detached from the DOM.
+ * @returns {Promise.<VastAdUnit|VpaidAdUnit>} - The video ad unit.
+ */
 const run = async (vastChain, placeholder, options) => {
   let videoAdContainer;
 

@@ -107,7 +107,7 @@ const getOptions = (vastChain, options) => {
  *  Defaults to `5`.
  * @param {boolean} [options.AllowMultipleAds] - Boolean to indicate whether adPods are allowed or not.
  *  Defaults to `true`.
- * @param {number} [options.timeout] - timeout number in milliseconds. If Present, the request will timeout if it is not fulfilled before the specified time.
+ * @param {number} [options.timeout] - timeout number in milliseconds. If set, the request will timeout if it is not fulfilled before the specified time.
  * @param {VastChain} [vastChain] - Optional vastChain with the previous VAST responses.
  * @returns {Promise.<VastChain>} - Returns a Promise that will resolve with a VastChain with the newest VAST response at the beginning of the array.
  * If the {@link VastChain} had an error. The first VAST response of the array will contain an error and an errorCode entry.

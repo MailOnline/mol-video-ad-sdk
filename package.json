@@ -6,7 +6,7 @@
   "scripts": {
     "build": "lerna run build",
     "clean": "git clean -fdX",
-    "docs": "rimraf docs && node_modules/.bin/jsdoc -c jsdoc.json",
+    "docs": "rimraf docs && jsdoc -c jsdoc.json",
     "lint": "yarn lint-scripts && lerna run lint",
     "lint-scripts": "eslint --ignore-path .gitignore './**/*.js'",
     "postinstall": "yarn build",

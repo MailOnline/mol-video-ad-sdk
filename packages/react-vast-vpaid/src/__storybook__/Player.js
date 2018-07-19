@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {ResponsiveVideoAd} from '../index';
+import {VideoAd} from '../index';
 import styles from './styles.css';
 
 class Player extends Component {
@@ -83,14 +83,16 @@ class Player extends Component {
       </video>
       {started && !adFinished &&
         <div className={styles.adContainer} >
-          <ResponsiveVideoAd
+          <VideoAd
             getTag={() => adTag}
             onError={logger('VideoAdError')}
             onFinish={this.handleAdFinish}
             onStart={logger('start')}
+            responsive={true}
             skipControl={skipBtn}
             tracker={logger('Tracking')}
             videoElement={this.videoElement.current}
+            viewability={true}
           />
         </div>
       }
