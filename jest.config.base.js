@@ -6,7 +6,6 @@ module.exports = {
     '**/src/**/*.tsx',
     '**/src/**/*.ts',
     '!**/src/**/*.d.ts',
-    '!/packages/vast-fixtures/**/*',
     '!/packages/vast-xml2js/**/*',
     '!**/src/**/__tests__/**/*',
     '!**/src/**/__storybook__/**/*',

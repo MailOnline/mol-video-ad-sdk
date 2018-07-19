@@ -1,6 +1,7 @@
 /**
  * unique will create a unique string every time is called, sequentially and namespaced
  *
+ * @ignore
  * @param {string} namespace
  */
 const unique = (namespace) => {

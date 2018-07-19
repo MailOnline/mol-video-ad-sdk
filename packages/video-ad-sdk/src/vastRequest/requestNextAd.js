@@ -6,22 +6,26 @@ import requestAd from './requestAd';
 import getNextAd from './helpers/getNextAd';
 import {markAdAsRequested} from './helpers/adUtils';
 
-const validateChain = (VASTChain) => {
-  if (!Array.isArray(VASTChain)) {
+const validateChain = (VastChain) => {
+  if (!Array.isArray(VastChain)) {
     throw new TypeError('Invalid VAST chain');
   }
 
-  if (VASTChain.length === 0) {
+  if (VastChain.length === 0) {
     throw new Error('No next ad to request');
   }
 };
 
+// eslint-disable-next-line jsdoc/check-tag-names
 /**
  * @function requestNextAd
+ *
+ * @memberof module:@mol/video-ad-sdk
+ * @async
  * @static
  * @description Requests the next ad in the VAST Chain.
  *
- * @param {VASTChain} VASTChain - Array of VAST responses. See requestAd for more info.
+ * @param {VastChain} VastChain - Array of {@link VastResponse}.
  * @param {Object} options - Options Map. The allowed properties are:
  * @param {number} [options.wrapperLimit] - Sets the maximum number of wrappers allowed in the vastChain.
  *  Defaults to `5`.
@@ -34,24 +38,24 @@ const validateChain = (VASTChain) => {
  *    Set it to true if an ad from an adPod failed and you want to replace it with an ad from the ad buffet.
  *    Defaults to `false`.
  * @param {boolean} [options.fallbackOnNoAd] - tells the video player to select an ad from any stand-alone ads available.
- *    Note: if the {@link VASTChain} contains an adPod this property will be ignored.
+ *    Note: if the {@link VastChain} contains an adPod this property will be ignored.
  *    Defaults to `true`.
  * @param {number} [options.timeout] - timeout number in milliseconds. If Present, the request will timeout if it is not fulfilled before the specified time.
  *
- * @returns Promise<VASTChain>  - Returns a Promise that will resolve a VastChain with the newest VAST response at the beginning of the array.
- * If the VastChain had an error. The first VAST response of the array will contain an error and an errorCode entry.
+ * @returns {Promise.<VastChain>}  - Returns a Promise that will resolve with a VastChain with the newest VAST response at the beginning of the array.
+ * If the {@link VastChain} had an error. The first VAST response of the array will contain an error and an errorCode entry.
  */
-const requestNextAd = (VASTChain, options) => {
-  validateChain(VASTChain);
+const requestNextAd = (VastChain, options) => {
+  validateChain(VastChain);
 
-  const vastResponse = VASTChain[0];
+  const vastResponse = VastChain[0];
   const nextAd = getNextAd(vastResponse, options);
 
   if (Boolean(nextAd)) {
     const newVastResponse = Object.assign({}, vastResponse, {
       ad: nextAd
     });
-    const newVastChain = [newVastResponse, ...VASTChain.slice(1)];
+    const newVastChain = [newVastResponse, ...VastChain.slice(1)];
 
     markAdAsRequested(nextAd);
 
@@ -62,7 +66,7 @@ const requestNextAd = (VASTChain, options) => {
     return Promise.resolve(newVastChain);
   }
 
-  return requestNextAd(VASTChain.slice(1), options);
+  return requestNextAd(VastChain.slice(1), options);
 };
 
 export default requestNextAd;

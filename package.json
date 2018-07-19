@@ -6,7 +6,7 @@
   "scripts": {
     "build": "lerna run build",
     "clean": "git clean -fdX",
-    "generate-docs": "rimraf docs && node_modules/.bin/jsdoc -c jsdoc.json",
+    "docs": "rimraf docs && node_modules/.bin/jsdoc -c jsdoc.json",
     "lint": "yarn lint-scripts && lerna run lint",
     "lint-scripts": "eslint --ignore-path .gitignore './**/*.js'",
     "postinstall": "yarn build",
@@ -30,11 +30,11 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "docdash": "^0.4.0",
     "husky": "^0.14.3",
     "jsdoc": "^3.5.5",
     "lerna": "^2.9.1",
-    "mol-conventional-changelog": "^1.2.0"
+    "mol-conventional-changelog": "^1.2.0",
+    "tui-jsdoc-template": "^1.2.2"
   },
   "workspaces": [
     "packages/*"

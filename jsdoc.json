@@ -1,28 +1,44 @@
 {
   "tags": {
-      "allowUnknownTags": false
+    "allowUnknownTags": false
   },
   "source": {
-      "include": ["./packages"],
-      "includePattern": ".+\\/src\\/.+\\.js$",
-      "excludePattern": "(node_modules/|docs)"
+    "include": ["./packages"],
+    "includePattern": ".+\\/src\\/.+\\.js(doc|x)?$",
+    "excludePattern": "(node_modules/|docs)"
   },
   "plugins": [
-      "plugins/markdown"
+    "plugins/markdown"
   ],
   "opts": {
-      "template": "./node_modules/docdash/",
-      "encoding": "utf8",
-      "destination": "docs/",
-      "recurse": true,
-      "verbose": true
+    "template": "node_modules/tui-jsdoc-template",
+    "encoding": "utf8",
+    "destination": "docs/",
+    "recurse": true,
+    "verbose": true
   },
   "templates": {
-      "cleverLinks": false,
-      "monospaceLinks": false
+    "logo": {
+      "url": "assets/logo.svg",
+      "width": "150px",
+      "height": "150px",
+      "link": "https://github.com/mailonline/mol-video-ad-sdk"
   },
-  "docdash": {
-    "static": true,
-    "sort": true
+    "name": "Video Ad SDK",
+    "footerText": "Powered by <a href='http://www.mailonline.com' target='_blank' class='link'>MailOnline</a> - logo by <a class='link' href='https://www.iconfinder.com/iconbaandar' rel='nofollow'>iconbaandar</a>&nbsp;licensed under <a class='link' href='https://creativecommons.org/licenses/by/2.5/' rel='nofollow'>CC BY 2.5</a>",
+    "tabNames": {
+      "api": "API"
+    },
+    "default": {
+      "staticFiles": {
+          "include": [
+            "static/"
+          ]
+      }
+  },
+    "css": [
+      "styles/tui_overwrites.css",
+      "https://fonts.googleapis.com/css?family=Jura"
+    ]
   }
 }

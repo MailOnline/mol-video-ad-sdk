@@ -1,6 +1,5 @@
 /* eslint-disable filenames/match-exported */
 /**
- * @alias module:tiny-emitter
  * @class
  * @description Subset of  node's [Emitter class]{@link https://nodejs.org/api/events.html#events_class_eventemitter}
  * @param {Object} logger - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
@@ -102,8 +101,4 @@ class Emitter {
   }
 }
 
-/**
- * @module tiny-emitter
- * @description Exports the emitter class which is a subset of node's [Emitter class]{@link https://nodejs.org/api/events.html#events_class_eventemitter}
- */
 export default Emitter;

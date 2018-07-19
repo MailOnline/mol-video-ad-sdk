@@ -14,6 +14,8 @@ const isPassMidPoint = (currentTime, duration) => percentageProgress(currentTime
 const isPassThirdQuartile = (currentTime, duration) => percentageProgress(currentTime, duration) >= 75;
 const isCompleted = (currentTime, duration) => percentageProgress(currentTime, duration) >= 99;
 
+// TODO: implement logic to track `timeSpentViewing` linear event
+
 const onTimeUpdate = ({videoElement}, callback) => {
   let started = false;
   let passFirstQuartile = false;

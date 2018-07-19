@@ -6,6 +6,16 @@ import {
 } from '@mol/vast-xml2js';
 import getLinearCreative from './helpers/getLinearCreative';
 
+/**
+ * Gets the Non Linear tracking events from the Vast Ad
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @param {string} [eventName] - If provided it will filter-out the array events against it.
+ * @returns {?Array.<VastTrackingEvent>} - Array of Tracking event definitions
+ * @static
+ * @ignore
+ */
 const getNonLinearTrackingEvents = (ad, eventName) => {
   const creativeElement = ad && getLinearCreative(ad);
 

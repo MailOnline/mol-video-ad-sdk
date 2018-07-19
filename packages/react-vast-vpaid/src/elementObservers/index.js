@@ -1,18 +1,20 @@
 import onElementResize from './onElementResize';
 import onElementVisibilityChange from './onElementVisibilityChange';
 
-/** @module element-observers */
 export {
 
   /**
    * onElementResize callback will be called whenever the target element resized.
    * Note: called with no params
    *
+   * @ignore
    * @callback resizeCallback
    */
 
   /**
    * @function onElementResize
+   *
+   * @ignore
    * @static
    * @description Helper function to know if an element has been resized.
    *
@@ -22,18 +24,22 @@ export {
    * @param {number} [options.threshold] - sets a debounce threshold for the callback. Defaults to 20 milliseconds
    *
    * @returns {function} - unsubscribe function.
+   * @ignore
    */
   onElementResize,
 
   /**
    * onElementResize callback called whenever the target element resized.
    *
+   * @ignore
    * @param {boolean} isVisible - true if the target element is visible and false otherwise.
    * @callback visibilityCallback
    */
 
   /**
    * @function onElementVisibilityChange
+   *
+   * @ignore
    * @static
    * @description Helper function to know if the visibility of an element has changed.
    *

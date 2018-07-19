@@ -19,6 +19,13 @@ const {
 
 const hidden = Symbol('hidden');
 
+/**
+ * @memberof module:@mol/video-ad-sdk
+ * @class
+ * @extends Emitter
+ * @implements LinearEvents
+ * @description This class provides everything necessary to run a Vast ad.
+ */
 class VastAdUnit extends Emitter {
   [hidden] = {
     finish: () => {
@@ -68,6 +75,17 @@ class VastAdUnit extends Emitter {
   errorCode = null;
   assetUri = null;
 
+  /**
+   * Creates a {VastAdUnit}.
+   *
+   * @param {VastChain} vastChain - The {@see VastChain} with all the {@see VastResponse}
+   * @param {VideoAdContainer} videoAdContainer - container instance to place the ad
+   * @param {Object} [options] - Options Map. The allowed properties are:
+   * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
+   * Defaults to `window.console`
+   * @param {Object} [options.hooks] - Optional map with hooks to configure the behaviour of the ad
+   * @param {Function} [options.hooks.createSkipControl] - If provided it will be called to generate the skip control. Must return a clickable [HTMLElement](https://developer.mozilla.org/es/docs/Web/API/HTMLElement) that is detached from the DOM.
+   */
   constructor (vastChain, videoAdContainer, {hooks = {}, logger = console} = {}) {
     super(logger);
 
@@ -77,7 +95,11 @@ class VastAdUnit extends Emitter {
     } = this[hidden];
 
     this.hooks = hooks;
+
+    /** Reference to the {@see VastChain} used to load the ad. */
     this.vastChain = vastChain;
+
+    /** Reference to the {@see VideoAdContainer} that contains the ad. */
     this.videoAdContainer = videoAdContainer;
 
     this.icons = retrieveIcons(vastChain);
@@ -110,6 +132,12 @@ class VastAdUnit extends Emitter {
     onFinishCallbacks.push(removeMetricHandlers);
   }
 
+  /**
+   * Starts the ad unit.
+   *
+   * @throws if called twice.
+   * @throws if ad unit is finished.
+   */
   async start () {
     this[hidden].throwIfFinished();
 
@@ -151,30 +179,56 @@ class VastAdUnit extends Emitter {
     this[hidden].started = true;
   }
 
+  /**
+   * Resumes a previously paused ad unit.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
+   */
   resume () {
     this[hidden].throwIfNotReady();
-
     const {videoElement} = this.videoAdContainer;
 
-    return videoElement.play();
+    videoElement.play();
   }
 
+  /**
+   * Pauses the ad unit.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
+   */
   pause () {
     this[hidden].throwIfNotReady();
-
     const {videoElement} = this.videoAdContainer;
 
-    return videoElement.pause();
+    videoElement.pause();
   }
 
-  setVolume (newVolume) {
+  /**
+   * Sets the volume of the ad unit.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
+   *
+   * @param {number} volume - must be a value between 0 and 1;
+   */
+  setVolume (volume) {
     this[hidden].throwIfNotReady();
 
     const {videoElement} = this.videoAdContainer;
 
-    videoElement.volume = newVolume;
+    videoElement.volume = volume;
   }
 
+  /**
+   * Gets the volume of the ad unit.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
+   *
+   * @returns {number} - the volume of the ad unit.
+   */
   getVolume () {
     this[hidden].throwIfNotReady();
 
@@ -183,8 +237,13 @@ class VastAdUnit extends Emitter {
     return videoElement.volume;
   }
 
+  /**
+   * Cancels the ad unit.
+   *
+   * @throws if ad unit is finished.
+   */
   cancel () {
-    this[hidden].throwIfNotReady();
+    this[hidden].throwIfFinished();
 
     const videoElement = this.videoAdContainer.videoElement;
 
@@ -193,6 +252,13 @@ class VastAdUnit extends Emitter {
     this[hidden].finish();
   }
 
+  /**
+   * Register a callback function that will be called whenever the ad finishes. No matter if it was finished because de ad ended, or cancelled or there was an error playing the ad.
+   *
+   * @throws if ad unit is finished.
+   *
+   * @param {Function} callback - will be called once the ad unit finished
+   */
   onFinish (callback) {
     this[hidden].throwIfFinished();
 
@@ -203,6 +269,13 @@ class VastAdUnit extends Emitter {
     this[hidden].onFinishCallbacks.push(safeCallback(callback, this.logger));
   }
 
+  /**
+   * Register a callback function that will be called if there is an error while running the ad.
+   *
+   * @throws if ad unit is finished.
+   *
+   * @param {Function} callback - will be called on ad unit error passing the Error instance as the only argument if available.
+   */
   onError (callback) {
     this[hidden].throwIfFinished();
 
@@ -213,14 +286,28 @@ class VastAdUnit extends Emitter {
     this[hidden].onErrorCallbacks.push(safeCallback(callback, this.logger));
   }
 
+  /**
+   * @returns {boolean} - true if the ad unit is finished and false otherwise
+   */
   isFinished () {
     return this[hidden].finished;
   }
 
+  /**
+   * @returns {boolean} - true if the ad unit has started and false otherwise
+   */
   isStarted () {
     return this[hidden].started;
   }
 
+  /**
+   * This method resizes the ad unit to fit the available space in the passed {@see VideoAdContainer}
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
+   *
+   * @returns {Promise} - that resolves once the unit was resized
+   */
   async resize () {
     this[hidden].throwIfNotReady();
 
