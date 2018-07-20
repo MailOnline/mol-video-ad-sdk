@@ -11,10 +11,11 @@
     "lint-scripts": "eslint --ignore-path .gitignore './**/*.js'",
     "postinstall": "yarn build",
     "precommit": "npm run lint",
+    "commitmsg": "commitlint -e $GIT_PARAMS",
     "prepush": "npm test",
     "test": "lerna run test"
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/MailOnline/@mol/video-ad-sdk/issues"
   },
@@ -28,11 +29,19 @@
       "path": "./node_modules/mol-conventional-changelog"
     }
   },
+  "commitlint": {
+    "extends": [
+      "./node_modules/mol-commitlint-config"
+    ]
+  },
   "devDependencies": {
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/travis-cli": "^7.0.0",
     "cross-env": "^5.2.0",
     "husky": "^0.14.3",
     "jsdoc": "^3.5.5",
     "lerna": "^2.9.1",
+    "mol-commitlint-config": "^1.0.0",
     "mol-conventional-changelog": "^1.2.0",
     "tui-jsdoc-template": "^1.2.2"
   },

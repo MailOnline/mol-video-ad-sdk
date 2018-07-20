@@ -2,10 +2,16 @@
   "name": "@mol/react-vast-vpaid",
   "version": "0.1.0",
   "description": "React component that loads video-ads using @mol/video-ad-sdk",
+  "keywords": [
+    "vast",
+    "vpaid",
+    "ads",
+    "video"
+  ],
   "author": "MailOnline <fe@mailonline.co.uk>",
   "browser": "src/index.js",
   "main": "src/index.js",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "lint-scripts": "eslint --ignore-path ../../.gitignore './**/*.js'",
     "lint-styles": "stylelint './src/**/*.css'",
