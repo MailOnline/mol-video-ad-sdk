@@ -13,7 +13,8 @@
     "precommit": "npm run lint",
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "prepush": "npm test",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "publish-ci": "lerna publish --conventional-commits --changelog-preset mol-conventional-changelog"
   },
   "license": "MIT",
   "bugs": {

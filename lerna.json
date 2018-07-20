@@ -1,12 +1,16 @@
 {
   "command": {
     "publish": {
-      "ignoreChanges": ["*.md"]
+      "ignoreChanges": [
+        "*.md"
+      ]
     }
   },
   "lerna": "2.9.1",
   "npmClient": "yarn",
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "useWorkspaces": true,
   "version": "0.1.0"
 }
