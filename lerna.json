@@ -3,7 +3,8 @@
     "publish": {
       "ignoreChanges": [
         "*.md"
-      ]
+      ],
+      "allowBranch": "master"
     }
   },
   "lerna": "2.9.1",
