@@ -53,5 +53,23 @@
     </div>
 
   <script src="https://vjs.zencdn.net/7.0.5/video.js"></script>
+  <script>
+    const logger = (ns) => (...args) => console.log(`${ns}: `, ...args);
+    const getAdTag = () => '/vastFiles/prerollChain/start-wrapper.xml';
+    const player = videojs('demo-video', {
+      plugins: {
+        vastVpaid: {
+          responsive: true,
+          timeout: 15000,
+          tracker: logger('vast tracker')
+        }
+      }
+    });
+
+    player.one('play', () => player.trigger('adStart'));
+    player.on('adStarted', logger('adStarted'));
+    player.on('adError', logger('adError'));
+    player.on('adFinished', logger('adFinished'));
+  </script>
 </body>
 </html>
