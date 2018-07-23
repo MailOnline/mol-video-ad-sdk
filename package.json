@@ -8,7 +8,7 @@
     "clean": "git clean -fdX",
     "docs": "rimraf docs && jsdoc -c jsdoc.json",
     "lint": "yarn lint-scripts && lerna run lint",
-    "start": "node start-demo.js",
+    "start": "browser-sync start -c ./bs-config.js",
     "lint-scripts": "eslint --ignore-path .gitignore './*.js'",
     "precommit": "npm run lint",
     "commitmsg": "commitlint -e $GIT_PARAMS",
@@ -38,12 +38,12 @@
   "devDependencies": {
     "@commitlint/cli": "^7.0.0",
     "@commitlint/travis-cli": "^7.0.0",
+    "browser-sync": "^2.24.6",
     "cross-env": "^5.2.0",
     "husky": "^0.14.3",
     "jsdoc": "^3.5.5",
     "lerna": "^2.9.1",
     "mol-commitlint-config": "^1.0.0",
-    "lite-dev-server": "^3.2.6",
     "mol-conventional-changelog": "^1.2.0",
     "tui-jsdoc-template": "^1.2.2"
   },

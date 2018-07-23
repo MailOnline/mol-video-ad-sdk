@@ -21,7 +21,6 @@
     "react"
   ],
   "plugins": [
-    "syntax-dynamic-import",
     [
       "transform-runtime",
       {
@@ -30,7 +29,7 @@
         "regenerator": true
       }
     ],
-    "babel-plugin-transform-class-properties"
+    "transform-class-properties"
   ],
   "env": {
     "test": {
@@ -50,7 +49,6 @@
         "react"
       ],
       "plugins": [
-        "dynamic-import-node",
         [
           "transform-runtime",
           {

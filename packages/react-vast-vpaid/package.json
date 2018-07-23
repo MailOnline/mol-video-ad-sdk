@@ -17,7 +17,8 @@
     "lint-styles": "stylelint './src/**/*.css'",
     "lint": "yarn run lint-scripts && yarn run lint-styles",
     "prebuild": "rimraf dist",
-    "build": "cross-env NODE_ENV=production webpack",
+    "build": "webpack --config webpack.production.config.js",
+    "watch": "webpack --config webpack.development.config.js --watch",
     "test": "cross-env NODE_ENV=test jest",
     "start": "start-storybook -s ./.storybook/static -p 9001",
     "test-karma": "karma start"
@@ -30,16 +31,13 @@
     "@mol/video-ad-sdk": "^0.1.0",
     "prop-types": "^15.6.0",
     "react": "^16.1.1",
-    "react-dom": "^16.1.1"
+    "react-dom": "^16.4.1"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^3.2.16",
-    "@storybook/react": "^3.2.16",
     "autoprefixer": "^9.0.1",
     "babel-core": "^6.25.0",
     "babel-jest": "^23.4.0",
     "babel-loader": "^7.1.5",
-    "babel-plugin-dynamic-import-node": "^2.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
