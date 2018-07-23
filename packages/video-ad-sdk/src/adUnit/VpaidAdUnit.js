@@ -63,7 +63,6 @@ const {
 const _private = Symbol('_private');
 
 /**
- * @memberof module:@mol/video-ad-sdk
  * @class
  * @alias VpaidAdUnit
  * @extends VideoAdUnit
