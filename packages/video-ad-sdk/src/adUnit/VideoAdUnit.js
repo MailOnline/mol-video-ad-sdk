@@ -52,6 +52,9 @@ class VideoAdUnit extends Emitter {
    }
  };
 
+   /** Ad unit type */
+   type=null;
+
   /** If an error occurs it will contain the reference to the error otherwise it will be bull */
   error = null;
 
