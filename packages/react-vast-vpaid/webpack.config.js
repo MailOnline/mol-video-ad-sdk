@@ -45,6 +45,7 @@ const rules = [
 ];
 
 module.exports = {
+  mode: 'development',
   devtool: 'source-map',
   entry: {
     index: './src/index.js'
@@ -55,5 +56,10 @@ module.exports = {
     devtoolModuleFilenameTemplate: `webpack:///${pkgName}/[resource-path]`,
     filename: '[name].js',
     path: path.join(__dirname, 'dist')
+  },
+  optimization: {
+    namedModules: true,
+    noEmitOnErrors: true,
+    concatenateModules: true
   }
 };

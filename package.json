@@ -10,7 +10,6 @@
     "lint": "yarn lint-scripts && lerna run lint",
     "start": "node start-demo.js",
     "lint-scripts": "eslint --ignore-path .gitignore './*.js'",
-    "postinstall": "yarn build",
     "precommit": "npm run lint",
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "prepush": "npm test",
