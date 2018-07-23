@@ -35,7 +35,7 @@
     "babel-register": "^6.24.1",
     "jest": "^22.4.0",
     "jest-environment-jsdom": "^23.3.0",
-    "lodash": "^4.17.4",
+    "lodash.debounce": "^4.0.8",
     "mockdate": "^2.0.2"
   }
 }

@@ -15,7 +15,7 @@ const waitForEvent = (eventName, context = window) => new Promise((resolve) => {
 
 let mockIsElementVisibleValue = true;
 
-jest.mock('lodash/debounce', () => (fn) => fn);
+jest.mock('lodash.debounce', () => (fn) => fn);
 jest.mock('../helpers/isElementVisible', () => () => mockIsElementVisibleValue);
 
 test('onElementVisibilityChange must be a function', () => {
