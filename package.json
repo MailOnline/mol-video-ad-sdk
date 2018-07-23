@@ -8,6 +8,7 @@
     "clean": "git clean -fdX",
     "docs": "rimraf docs && jsdoc -c jsdoc.json",
     "lint": "yarn lint-scripts && lerna run lint",
+    "start": "node start-demo.js",
     "lint-scripts": "eslint --ignore-path .gitignore './*.js'",
     "postinstall": "yarn build",
     "precommit": "npm run lint",
@@ -43,6 +44,7 @@
     "jsdoc": "^3.5.5",
     "lerna": "^2.9.1",
     "mol-commitlint-config": "^1.0.0",
+    "lite-dev-server": "^3.2.6",
     "mol-conventional-changelog": "^1.2.0",
     "tui-jsdoc-template": "^1.2.2"
   },

@@ -10,7 +10,7 @@
     "lint": "eslint --ignore-path ../../.gitignore './**/*.js'",
     "prebuild": "rimraf dist",
     "build": "echo 'this project has no build yet'; exit 0;",
-    "test": "echo 'this project has no tests yet'; exit 0;"
+    "test": "cross-env NODE_ENV=test jest"
   },
   "files": [
     "dist",

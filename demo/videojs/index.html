@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Video Ad SDK - Demo</title>
+  <link href="https://vjs.zencdn.net/7.0.5/video-js.css" rel="stylesheet">
+  <style>
+    .container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .video-container {
+      position: relative;
+      overflow: hidden;
+      height: 0;
+      padding-top: 56.25%;
+      width: 100%;
+    }
+
+    .video-container .video-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="video-container">
+      <video
+      id="demo-video"
+      class="video-js"
+      controls
+      preload="auto"
+      poster="http://vjs.zencdn.net/v/oceans.png"
+      data-setup="{}"
+      >
+      <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+        <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm">
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+        </video>
+      </div>
+    </div>
+
+  <script src="https://vjs.zencdn.net/7.0.5/video.js"></script>
+</body>
+</html>
