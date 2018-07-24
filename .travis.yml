@@ -21,6 +21,6 @@ deploy:
   - provider: script
     skip-cleanup: true
     script:
-      - lerna publish
+      - yarn publish-ci --yes
     on:
       branch: master
