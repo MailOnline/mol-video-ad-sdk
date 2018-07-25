@@ -38,6 +38,7 @@
     "eslint-config-mailonline": "^9.0.0",
     "eslint-plugin-jsdoc": "^3.2.0",
     "rimraf": "^2.6.2",
+    "source-map-loader": "^0.2.3",
     "webpack": "^4.16.2",
     "webpack-cli": "^3.1.0"
   }

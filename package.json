@@ -9,7 +9,7 @@
     "clean": "git clean -fdX",
     "docs": "rimraf docs && jsdoc -c jsdoc.json",
     "lint": "yarn lint-scripts && lerna run lint",
-    "start": "browser-sync start -c ./bs-config.js",
+    "start": "yarn dev && browser-sync start -c ./bs-config.js",
     "lint-scripts": "eslint --ignore-path .gitignore './*.js'",
     "precommit": "npm run lint",
     "commitmsg": "commitlint -e $GIT_PARAMS",

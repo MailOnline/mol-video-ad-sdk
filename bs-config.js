@@ -6,7 +6,11 @@ module.exports = {
   files: [
     'static',
     'packages/react-vast-vpaid/dist',
-    'packages/react-vast-vpaid/demo'
+    'packages/react-vast-vpaid/demo',
+    'packages/videojs-vast-vpaid/dist',
+    'packages/videojs-vast-vpaid/demo',
+    'packages/video-ad-sdk/dist',
+    'packages/vast-xml2js/dist'
   ],
   watchEvents: [
     'change'
