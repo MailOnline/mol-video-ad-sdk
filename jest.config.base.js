@@ -12,12 +12,12 @@ module.exports = {
   ],
   coverageReporters: ['json', 'html'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  moduleNameMapper: {
+    '^@mol\\/([^/]+)': '<rootDir>/../$1/src'
+  },
   testRegex: '__tests__/.*\\.spec\\.(jsx?|tsx?)$',
   transform: {
     '.+\\.jsx?$': 'babel-jest'
-
-    // TODO: uncomment once we start usint TS
-    // '.+\\.tsx?$': 'ts-jest'
   },
-  transformIgnorePatterns: ['/node_modules/(?!@mol-fe/).*']
+  transformIgnorePatterns: ['/node_modules/(?!@mol/).*']
 };
