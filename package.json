@@ -5,6 +5,7 @@
   "author": "MailOnline <fe@mailonline.co.uk>",
   "scripts": {
     "build": "lerna run build",
+    "dev": "lerna run dev",
     "clean": "git clean -fdX",
     "docs": "rimraf docs && jsdoc -c jsdoc.json",
     "lint": "yarn lint-scripts && lerna run lint",

@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "description": "VAST plugin to use with video.js",
   "author": "MailOnline <fe@mailonline.co.uk>",
-  "browser": "src/index.js",
+  "browser": "dist/main.js",
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ignore-path ../../.gitignore './**/*.js'",
     "prebuild": "rimraf dist",
-    "build": "echo 'this project has no build yet'; exit 0;",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
     "test": "cross-env NODE_ENV=test jest"
   },
   "files": [
@@ -36,7 +37,8 @@
     "jest": "^23.4.1",
     "jest-enzyme": "^6.0.0",
     "raf-polyfill": "^1.0.0",
-    "regenerator-runtime": "^0.12.0",
-    "stylelint": "^9.3.0"
+    "rimraf": "^2.6.2",
+    "webpack": "^4.16.2",
+    "webpack-cli": "^3.1.0"
   }
 }

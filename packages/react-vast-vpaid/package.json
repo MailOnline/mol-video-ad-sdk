@@ -9,7 +9,7 @@
     "video"
   ],
   "author": "MailOnline <fe@mailonline.co.uk>",
-  "browser": "src/index.js",
+  "browser": "dist/main.js",
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
@@ -64,7 +64,7 @@
     "mocha": "^5.0.5",
     "postcss-loader": "^2.1.6",
     "raf-polyfill": "^1.0.0",
-    "regenerator-runtime": "^0.12.0",
+    "rimraf": "^2.6.2",
     "style-loader": "^0.21.0",
     "stylelint": "^9.3.0",
     "stylelint-config-mailonline": "^4.0.0",
