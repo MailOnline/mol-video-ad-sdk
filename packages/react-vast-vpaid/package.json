@@ -17,8 +17,8 @@
     "lint-styles": "stylelint './src/**/*.css'",
     "lint": "yarn run lint-scripts && yarn run lint-styles",
     "prebuild": "rimraf dist",
-    "build": "webpack --config webpack.production.config.js",
-    "watch": "webpack --config webpack.development.config.js --watch",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
     "test": "cross-env NODE_ENV=test jest",
     "start": "start-storybook -s ./.storybook/static -p 9001",
     "test-karma": "karma start"

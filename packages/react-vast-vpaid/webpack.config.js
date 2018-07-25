@@ -1,5 +1,6 @@
 /* eslint-disable import/unambiguous, import/no-commonjs, sort-keys, global-require */
 const path = require('path');
+const baseConfig = require('../../webpack.base.config');
 const {name: pkgName} = require('./package.json');
 
 const cssLoaders = [
@@ -27,11 +28,7 @@ const cssLoaders = [
 ];
 
 const rules = [
-  {
-    exclude: /node_modules\/(?!@mol\/).*/,
-    loader: 'babel-loader',
-    test: /\.jsx?$/
-  },
+  ...baseConfig.module.rules,
   {
     test: /\.svg$/,
     use: ['babel-loader', 'svg-react-loader']
@@ -44,17 +41,27 @@ const rules = [
   }
 ];
 
-module.exports = {
-  mode: 'development',
-  devtool: 'source-map',
-  entry: {
-    index: './demo/index.js'
-  },
-  module: {rules},
-  output: {
-    devtoolFallbackModuleFilenameTemplate: `webpack:///${pkgName}/[resource-path]?[hash]`,
-    devtoolModuleFilenameTemplate: `webpack:///${pkgName}/[resource-path]`,
-    path: path.join(__dirname, 'dist'),
-    filename: '[name].js'
+module.exports = (env, {mode}) => {
+  const config = {
+    ...baseConfig,
+    output: {
+      devtoolFallbackModuleFilenameTemplate: `webpack:///${pkgName}/[resource-path]?[hash]`,
+      devtoolModuleFilenameTemplate: `webpack:///${pkgName}/[resource-path]`,
+      path: path.join(__dirname, 'dist'),
+      filename: '[name].js',
+      library: 'reactVastVpaid',
+      libraryTarget: 'umd',
+      umdNamedDefine: true
+    }
+  };
+
+  if (mode === 'development') {
+    config.entry = {
+      main: './src/index.js',
+      demo: './demo/index.js'
+    };
+    config.module.rules = rules;
   }
+
+  return config;
 };
