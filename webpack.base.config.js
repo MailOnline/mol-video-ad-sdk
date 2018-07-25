@@ -7,7 +7,7 @@ const rules = [
     use: ['source-map-loader']
   },
   {
-    exclude: /node_modules/,
+    exclude: /node_modules\/(?!@mol\/).*/,
     loader: 'babel-loader',
     test: /\.jsx?$/
   }
