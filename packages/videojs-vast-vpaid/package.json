@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "description": "VAST plugin to use with video.js",
   "author": "MailOnline <fe@mailonline.co.uk>",
-  "browser": "dist/main.js",
-  "main": "src/index.js",
+  "main": "dist/main.js",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ignore-path ../../.gitignore './**/*.js'",
