@@ -57,6 +57,7 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
  * @param {string} adTag - The VAST ad tag request url.
  * @param {HTMLElement} placeholder - placeholder element that will contain the video ad.
  * @param {Object} [options] - Options Map. The allowed properties are:
+ * @param {HTMLVideoElement} [options.videoElement] - optional videoElement that will be used to play the ad.
  * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
  * Defaults to `window.console`
  * @param {number} [options.wrapperLimit] - Sets the maximum number of wrappers allowed in the {@link VastChain}.
