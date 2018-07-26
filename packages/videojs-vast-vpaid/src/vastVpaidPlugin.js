@@ -5,7 +5,7 @@ import restoreSnapshot from '../../../node_modules/@mol/videojs-vast-vpaid/src/h
 const createPlaceholder = (player) => {
   const element = document.createElement('div');
 
-  element.classList.add('mol-video-ad-container');
+  element.classList.add('videojs-vast-vpaid-container');
   element.style.position = 'absolute';
   element.style.top = 0;
   element.style.left = 0;
@@ -112,15 +112,18 @@ const vastVpaidPlugin = function (options) {
   } = options;
   let snapshot = null;
   let adUnit = null;
+  let adRunning = false;
   const placeholderElem = placeholder || createPlaceholder(player);
 
   const handleAdFinish = () => {
+    adUnit = null;
+    adRunning = false;
+
     if (snapshot) {
       restoreSnapshot(player, snapshot);
       snapshot = null;
     }
 
-    adUnit = null;
     player.trigger(adFinishedEvent);
   };
 
@@ -134,6 +137,12 @@ const vastVpaidPlugin = function (options) {
 
   player.on(adStartEvent, async () => {
     try {
+      if (adRunning) {
+        return;
+      }
+
+      adRunning = true;
+
       const adTag = await Promise.resolve(getAdTag());
       const tech = player.el().querySelector('.vjs-tech');
 

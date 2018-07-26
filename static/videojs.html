@@ -98,7 +98,6 @@
       }
     });
 
-    player.one('play', () => player.trigger('adStart'));
     player.on('adStarted', logger('adStarted'));
     player.on('adError', logger('adError'));
     player.on('adFinished', logger('adFinished'));
