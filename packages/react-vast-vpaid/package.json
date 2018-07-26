@@ -9,7 +9,6 @@
     "video"
   ],
   "author": "MailOnline <fe@mailonline.co.uk>",
-  "browser": "dist/main.js",
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
