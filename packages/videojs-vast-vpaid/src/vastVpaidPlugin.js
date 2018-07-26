@@ -10,8 +10,7 @@ const createPlaceholder = (player) => {
   element.style.top = 0;
   element.style.left = 0;
   element.style.width = '100%';
-  element.style.width = '100%';
-  element.style.height = 0;
+  element.style.height = '100%';
 
   player.el().appendChild(element);
 
