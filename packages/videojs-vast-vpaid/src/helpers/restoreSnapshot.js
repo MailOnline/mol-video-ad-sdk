@@ -14,14 +14,6 @@ const ensureCanplayGetsFired = (player) => {
   });
 };
 
-const hasSrcChanged = (player, snapshot) => {
-  if (player.src()) {
-    return player.src() !== snapshot.src;
-  }
-
-  return player.currentSrc() !== snapshot.src;
-};
-
 const restoreTracks = (snapshot) => {
   const suppressedTracks = snapshot.suppressedTracks;
 
@@ -64,16 +56,15 @@ const tryToResume = (player, snapshot, attempts) => {
     setTimeout(() => tryToResume(player, snapshot, pendingAttempts), 50);
   } else {
     try {
-      if (player.currentTime() !== snapshot.currentTime) {
-        if (snapshot.playing) {
-          player.one('seeked', () => {
-            player.play();
-          });
-        }
-        player.currentTime(snapshot.currentTime);
-      } else if (snapshot.playing) {
+      if (player.currentTime() === snapshot.currentTime) {
         // if needed and no seek has been performed, restore playing status immediately
         player.play();
+      } else {
+        player.one('seeked', () => {
+          player.play();
+        });
+
+        player.currentTime(snapshot.currentTime);
       }
     } catch (error) {
       videojs.log.warn('Failed to resume the content after an advertisement', error);
@@ -92,11 +83,14 @@ const restoreSnapshot = (player, snapshot, attempts = 20) => {
     tech.setAttribute('style', snapshot.style || '');
   }
 
-  if (hasSrcChanged(player, snapshot)) {
+  if (tech.src === snapshot.src) {
+    restoreTracks(snapshot);
+    player.play();
+  } else {
     // on ios7, fiddling with textTracks too early will cause safari to crash
     player.one('contentloadedmetadata', () => restoreTracks(snapshot));
     player.one('canplay', () => tryToResume(player, snapshot, attempts));
-    ensureCanplayGetsFired();
+    ensureCanplayGetsFired(player);
 
     // if the src changed for ad playback, reset it
     player.src({
@@ -106,12 +100,6 @@ const restoreSnapshot = (player, snapshot, attempts = 20) => {
 
     // safari requires a call to `load` to pick up a changed source
     player.load();
-  } else {
-    restoreTracks(snapshot);
-
-    if (snapshot.playing) {
-      player.play();
-    }
   }
 };
 

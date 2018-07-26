@@ -81,6 +81,8 @@
         event.preventDefault();
       }
 
+      blocker.parentElement.removeChild(blocker);
+
       player.trigger('adStart')
       return false;
     });

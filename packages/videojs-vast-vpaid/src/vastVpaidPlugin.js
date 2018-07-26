@@ -6,14 +6,16 @@ const createPlaceholder = (player) => {
   const element = document.createElement('div');
 
   element.classList.add('mol-video-ad-container');
-  element.styles.position = 'absolute';
-  element.styles.top = 0;
-  element.styles.left = 0;
-  element.styles.width = '100%';
-  element.styles.width = '100%';
-  element.styles.height = 0;
+  element.style.position = 'absolute';
+  element.style.top = 0;
+  element.style.left = 0;
+  element.style.width = '100%';
+  element.style.width = '100%';
+  element.style.height = 0;
 
   player.el().appendChild(element);
+
+  return element;
 };
 
 /**
@@ -111,7 +113,7 @@ const vastVpaidPlugin = function (options) {
   } = options;
   let snapshot = null;
   let adUnit = null;
-  const placeholderElem = placeholder || createPlaceholder();
+  const placeholderElem = placeholder || createPlaceholder(player);
 
   const handleAdFinish = () => {
     if (snapshot) {
@@ -138,10 +140,12 @@ const vastVpaidPlugin = function (options) {
 
       snapshot = getSnapshot(player);
       adUnit = await runWaterfall(adTag, placeholderElem, {
+        onError: handleAdError,
         videoElement: tech,
         ...options
       });
 
+      // TODO: onError, onFinish and onStart should be part of runWaterfall and run
       adUnit.onError(handleAdError);
       adUnit.onFinish(handleAdFinish);
 

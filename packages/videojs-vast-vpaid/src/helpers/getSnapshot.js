@@ -28,7 +28,6 @@ const getSnapshot = (player) => {
   const snapshot = {
     currentTime: player.currentTime(),
     ended: player.ended(),
-    playing: !player.paused(),
     src: player.currentSrc(),
     suppressedTracks: suppressTracks(player),
     type: player.currentType()
