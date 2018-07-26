@@ -29,6 +29,15 @@
       width: 100%;
       height: 100%;
     }
+
+    #video-play-blocker {
+      cursor: pointer;
+      position: absolute;
+      top:0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
   </style>
 </head>
 <body>
@@ -40,25 +49,46 @@
       controls
       preload="auto"
       poster="http://vjs.zencdn.net/v/oceans.png"
-      data-setup="{}"
       >
       <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-        <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm">
-          <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser that
-            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-          </p>
-        </video>
+      <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm">
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a web browser that
+          <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+      </video>
+      <div id="video-play-blocker"></div>
       </div>
     </div>
 
   <script src="https://vjs.zencdn.net/7.0.5/video.js"></script>
+  <script src="/packages/videojs-vast-vpaid/dist/main.js"></script>
   <script>
     const logger = (ns) => (...args) => console.log(`${ns}: `, ...args);
     const getAdTag = () => '/vastFiles/prerollChain/start-wrapper.xml';
+    const blocker = document.getElementById('video-play-blocker');
+
+    blocker.addEventListener('click', (event) => {
+      if (event.stopImmediatePropagation) {
+        event.stopImmediatePropagation();
+      }
+
+      if (event.stopPropagation) {
+        event.stopPropagation();
+      }
+
+      if (event.preventDefault) {
+        event.preventDefault();
+      }
+
+      player.trigger('adStart')
+      return false;
+    });
+
     const player = videojs('demo-video', {
       plugins: {
         vastVpaid: {
+          getAdTag,
           responsive: true,
           timeout: 15000,
           tracker: logger('vast tracker')
@@ -71,5 +101,8 @@
     player.on('adError', logger('adError'));
     player.on('adFinished', logger('adFinished'));
   </script>
+  <script id="__bs_script__">//<![CDATA[
+    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.6'><\/script>".replace("HOST", location.hostname));
+  //]]></script>
 </body>
 </html>

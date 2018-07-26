@@ -2,6 +2,20 @@ import {runWaterfall} from '@mol/video-ad-sdk';
 import getSnapshot from '../../../node_modules/@mol/videojs-vast-vpaid/src/helpers/getSnapshot';
 import restoreSnapshot from '../../../node_modules/@mol/videojs-vast-vpaid/src/helpers/restoreSnapshot';
 
+const createPlaceholder = (player) => {
+  const element = document.createElement('div');
+
+  element.classList.add('mol-video-ad-container');
+  element.styles.position = 'absolute';
+  element.styles.top = 0;
+  element.styles.left = 0;
+  element.styles.width = '100%';
+  element.styles.width = '100%';
+  element.styles.height = 0;
+
+  player.el().appendChild(element);
+};
+
 /**
  * VideoJS Vast Vpaid plugin class
  *
@@ -10,7 +24,7 @@ import restoreSnapshot from '../../../node_modules/@mol/videojs-vast-vpaid/src/h
  *
  * @param {Object} options - Options Map. The allowed properties are:
  * @param {Function} options.getAdTag - will be called to get the vast tag must return a vast tag (string) or a promise that will resolve with a vast tag.
- * @param {HTMLElement} options.placeholder - placeholder element that will contain the video ad.
+ * @param {HTMLElement} [options.placeholder] - placeholder element that will contain the video ad. If not provider the plugin will create one.
  * @param {string} [options.adStartEvent] - name of the event to run an ad. The plugin try to run an ad if that event is triggered by the player.
  * Defaults to `adStart`
  * @param {string} [options.adStartedEvent] - name of the event the player will trigger to indicate an ad has started.
@@ -41,7 +55,7 @@ import restoreSnapshot from '../../../node_modules/@mol/videojs-vast-vpaid/src/h
  * @fires adErrorEvent
  * @fires adFinishedEvent
  */
-const vastVpaidPlugin = (options) => {
+const vastVpaidPlugin = function (options) {
   // eslint-disable-next-line babel/no-invalid-this, consistent-this
   const player = this;
   const {
@@ -97,10 +111,11 @@ const vastVpaidPlugin = (options) => {
   } = options;
   let snapshot = null;
   let adUnit = null;
+  const placeholderElem = placeholder || createPlaceholder();
 
   const handleAdFinish = () => {
     if (snapshot) {
-      restoreSnapshot(snapshot);
+      restoreSnapshot(player, snapshot);
       snapshot = null;
     }
 
@@ -119,9 +134,13 @@ const vastVpaidPlugin = (options) => {
   player.on(adStartEvent, async () => {
     try {
       const adTag = await Promise.resolve(getAdTag());
+      const tech = player.el().querySelector('.vjs-tech');
 
       snapshot = getSnapshot(player);
-      adUnit = await runWaterfall(adTag, placeholder, options);
+      adUnit = await runWaterfall(adTag, placeholderElem, {
+        videoElement: tech,
+        ...options
+      });
 
       adUnit.onError(handleAdError);
       adUnit.onFinish(handleAdFinish);
