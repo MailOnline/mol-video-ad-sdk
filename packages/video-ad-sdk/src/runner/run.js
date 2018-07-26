@@ -57,8 +57,9 @@ const run = async (vastChain, placeholder, options) => {
 
     if (typeof timeout === 'number') {
       let timedOut = false;
+      let timeoutId;
       const timeoutPromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
           const {tracker} = options;
 
           trackError(vastChain, {
@@ -73,8 +74,12 @@ const run = async (vastChain, placeholder, options) => {
       adUnitPromise = Promise.race([
         // eslint-disable-next-line promise/prefer-await-to-then
         adUnitPromise.then((newAdUnit) => {
-          if (timedOut && newAdUnit.isStarted()) {
-            newAdUnit.cancel();
+          if (timedOut) {
+            if (newAdUnit.isStarted()) {
+              newAdUnit.cancel();
+            }
+          } else {
+            clearTimeout(timeoutId);
           }
 
           return newAdUnit;
