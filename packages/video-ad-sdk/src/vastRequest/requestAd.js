@@ -1,4 +1,4 @@
-import xml2js from '@mol/vast-xml2js';
+import {parseXml} from '@mol/vast-xml2js';
 import {
   getWrapperOptions,
   getFirstAd,
@@ -32,9 +32,9 @@ const fetchAdXML = async (adTag, options) => {
   }
 };
 
-const parseVASTXML = (xml) => {
+const parseVastXml = (xml) => {
   try {
-    return xml2js(xml);
+    return parseXml(xml);
   } catch (error) {
     error.errorCode = 100;
     throw error;
@@ -147,7 +147,7 @@ const requestAd = async (adTag, options, vastChain = []) => {
     }
 
     VASTAdResponse.XML = await fetchPromise;
-    VASTAdResponse.parsedXML = parseVASTXML(VASTAdResponse.XML);
+    VASTAdResponse.parsedXML = parseVastXml(VASTAdResponse.XML);
     VASTAdResponse.ad = getAd(VASTAdResponse.parsedXML);
 
     validateResponse(VASTAdResponse, opts);

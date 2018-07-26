@@ -8,15 +8,6 @@ import {
   getAttribute
 } from './helpers/xmlSelectors';
 
-export {
-  get,
-  getAll,
-  getFirstChild,
-  getText,
-  getAttributes,
-  getAttribute
-};
-
 /**
  * Parses the passed xml text.
  *
@@ -25,5 +16,14 @@ export {
  * @returns {Object} - Returns the parsed xml as a js object.
  * @static
  */
-// eslint-disable-next-line import/no-anonymous-default-export
-export default (xml) => xml2js(xml, {compact: false});
+const parseXml = (xml) => xml2js(xml, {compact: false});
+
+export {
+  get,
+  getAll,
+  getFirstChild,
+  getText,
+  getAttributes,
+  getAttribute,
+  parseXml
+};

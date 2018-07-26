@@ -43,7 +43,7 @@ module.exports = {
   port: 3000,
   logLevel: 'info',
   open: 'local',
-  browser: ['google chrome', 'firefox'],
+  browser: [],
   cors: true,
   notify: true,
   injectChanges: true,
