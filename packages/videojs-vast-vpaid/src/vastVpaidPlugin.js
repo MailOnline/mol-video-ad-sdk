@@ -33,8 +33,8 @@ const createPlaceholder = (player) => {
  * @param {string} [options.adStartedEvent.adUnit] - the video ad unit will be added to the `adStartedEvent` event object.
  * @param {string} [options.adCancelEvent] - name of the event to cancel an ad. The plugin will cancel any running ad if that event is triggered by the player
  * Defaults to `adCancel`
- * @param {string} [options.adFinishedEvent] - name of the event the player must trigger to indicate that the ad finished. Will be called if an ad completes or gets cancel or has an error.
- * Defaults to `adFinished`
+ * @param {string} [options.adRunFinishEvent] - name of the event the player must trigger to indicate that the ad finished. Will be called if an ad completes or gets cancel or has an error.
+ * Defaults to `adRunFinish`
  * @param {string} [options.adErrorEvent] - name of the event the player must trigger to indicate that there was an error playing the video ad.
  * Defaults to `adError`
  * @param {runWaterfall~onAdStart} [options.onAdStart] - will be called once the ad starts with the ad unit.
@@ -56,7 +56,7 @@ const createPlaceholder = (player) => {
  * @listens adCancelEvent
  * @fires adStartedEvent
  * @fires adErrorEvent
- * @fires adFinishedEvent
+ * @fires adRunFinishEvent
  */
 const vastVpaidPlugin = function (options) {
   // eslint-disable-next-line babel/no-invalid-this, consistent-this
@@ -93,11 +93,11 @@ const vastVpaidPlugin = function (options) {
     /**
      * Fired by {@link vastVpaidPlugin} plugin once an ad has finished. It will be fired no matter how the ad ended.
      *
-     * @event module:@mol/videojs-vast-vpaid#adFinishedEvent
+     * @event module:@mol/videojs-vast-vpaid#adRunFinishEvent
      * @type {object}
-     * @property {string} type - The event type (name) is configurable and defaults to `adFinished`
+     * @property {string} type - The event type (name) is configurable and defaults to `adRunFinish`
      */
-    adFinishedEvent = 'adFinished',
+    adRunFinishEvent = 'adRunFinish',
 
     /**
      * Fired by {@link vastVpaidPlugin} plugin if there is an error while running the ad.
@@ -113,12 +113,12 @@ const vastVpaidPlugin = function (options) {
     placeholder
   } = options;
   let snapshot = null;
-  let adUnit = null;
+  let cancelAdRun = null;
   let adRunning = false;
   const placeholderElem = placeholder || createPlaceholder(player);
 
-  const handleAdFinish = () => {
-    adUnit = null;
+  const handleAdRunFinish = () => {
+    cancelAdRun = null;
     adRunning = false;
 
     if (snapshot) {
@@ -126,7 +126,7 @@ const vastVpaidPlugin = function (options) {
       snapshot = null;
     }
 
-    player.trigger(adFinishedEvent);
+    player.trigger(adRunFinishEvent);
   };
 
   const handleAdError = (error) => {
@@ -134,6 +134,13 @@ const vastVpaidPlugin = function (options) {
     player.trigger({
       error,
       type: adErrorEvent
+    });
+  };
+
+  const handleAdStart = (adUnit) => {
+    player.trigger({
+      adUnit,
+      type: adStartedEvent
     });
   };
 
@@ -149,26 +156,22 @@ const vastVpaidPlugin = function (options) {
       const tech = player.el().querySelector('.vjs-tech');
 
       snapshot = getSnapshot(player);
-      adUnit = await runWaterfall(adTag, placeholderElem, {
+      cancelAdRun = runWaterfall(adTag, placeholderElem, {
+        onAdStart: handleAdStart,
         onError: handleAdError,
-        onRunFinish: handleAdFinish,
+        onRunFinish: handleAdRunFinish,
         videoElement: tech,
         ...options
       });
-
-      player.trigger({
-        adUnit,
-        type: adStartedEvent
-      });
     } catch (error) {
       handleAdError(error);
-      handleAdFinish();
+      handleAdRunFinish();
     }
   });
 
   player.on(adCancelEvent, () => {
-    if (adUnit) {
-      adUnit.cancel();
+    if (cancelAdRun) {
+      cancelAdRun();
     }
   });
 };
