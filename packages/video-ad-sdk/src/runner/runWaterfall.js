@@ -1,12 +1,24 @@
+/* eslint-disable promise/prefer-await-to-callbacks, consistent-return, callback-return */
 import requestAd from '../vastRequest/requestAd';
 import requestNextAd from '../vastRequest/requestNextAd';
 import run from './run';
 
+const callbackHandler = (cb) => (...args) => {
+  if (typeof cb === 'function') {
+    cb(...args);
+  }
+};
 const waterfall = async (fetchVastChain, placeholder, options) => {
   let vastChain;
   let runEpoch;
+  let adUnit;
 
   const opts = {...options};
+  const {
+    onAdStart,
+    onError,
+    onRunFinish
+  } = opts;
 
   try {
     if (typeof opts.timeout === 'number') {
@@ -22,19 +34,13 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
       runEpoch = newEpoch;
     }
 
-    const adUnit = await run(vastChain, placeholder, {...opts});
+    adUnit = await run(vastChain, placeholder, {...opts});
 
-    return adUnit;
+    onAdStart(adUnit);
+    adUnit.onError(onError);
+    adUnit.onFinish(onRunFinish);
   } catch (error) {
-    const onError = opts.onError;
-
-    /* istanbul ignore else */
-    if (onError) {
-      onError({
-        error,
-        vastChain
-      });
-    }
+    onError(error);
 
     if (vastChain) {
       if (runEpoch) {
@@ -44,8 +50,14 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
       return waterfall(() => requestNextAd(vastChain, opts), placeholder, {...opts});
     }
 
-    throw error;
+    onRunFinish();
   }
+
+  return () => {
+    if (adUnit && !adUnit.isFinished()) {
+      adUnit.cancel();
+    }
+  };
 };
 
 /**
@@ -53,7 +65,7 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
  *
  * @memberof module:@mol/video-ad-sdk
  * @static
- * @throws if there is an error starting the ad or it times out (by throw I mean that it will reject promise with the error).
+ * @alias runWaterfall
  * @param {string} adTag - The VAST ad tag request url.
  * @param {HTMLElement} placeholder - placeholder element that will contain the video ad.
  * @param {Object} [options] - Options Map. The allowed properties are:
@@ -61,6 +73,9 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
  * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
  * Defaults to `window.console`
  * @param {number} [options.wrapperLimit] - Sets the maximum number of wrappers allowed in the {@link VastChain}.
+ * @param {runWaterfall~onAdStart} [options.onAdStart] - will be called once the ad starts with the ad unit.
+ * @param {runWaterfall~onError} [options.onError] - will be called if there is an error with the video ad with the error instance.
+ * @param {runWaterfall~onRunFinish} [options.onRunFinish] - will be called whenever the ad run finishes.
  *  Defaults to `5`.
  * @param {boolean} [options.viewability] - if true it will pause the ad whenever is not visible for the viewer.
  * Defaults to `false`
@@ -70,13 +85,41 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
  * @param {TrackerFn} [options.tracker] - If provided it will be used to track the VAST events instead of the default {@link pixelTracker}.
  * @param {Object} [options.hooks] - Optional map with hooks to configure the behaviour of the ad.
  * @param {Function} [options.hooks.createSkipControl] - If provided it will be called to generate the skip control. Must return a clickable [HTMLElement](https://developer.mozilla.org/es/docs/Web/API/HTMLElement) that is detached from the DOM.
- * @returns {Promise.<VastAdUnit|VpaidAdUnit>} - The video ad unit.
+ * @returns {Promise.<undefined>} - You should assume it returns void and and use callbacks to know when and ad starts or if there is an error or if the run finished.
  */
-const runWaterfall = (adTag, placeholder, options) =>
-  waterfall(
-    () => requestAd(adTag, options),
+const runWaterfall = (adTag, placeholder, options) => {
+  const opts = {
+    ...options,
+    onAdStart: callbackHandler(options.onAdStart),
+    onError: callbackHandler(options.onError),
+    onRunFinish: callbackHandler(options.onRunFinish)
+  };
+
+  return waterfall(
+    () => requestAd(adTag, opts),
     placeholder,
-    options
+    opts
   );
+};
 
 export default runWaterfall;
+
+/**
+ * Called once the ad starts.
+ *
+ * @callback RunWaterfall~onAdStart
+ * @param {VastAdUnit | VideoAdUnit} adUnit - the ad unit instance.
+ */
+
+/**
+ * Called whenever the an error occurs within the ad unit. It may be called several times with different errors
+ *
+ * @callback RunWaterfall~onError
+ * @param {Error} error - the ad unit error.
+ */
+
+/**
+ * Called once the ad run is finished. It will be called no matter how the run was finished (due to an ad complete or an error). It can be used to know when to unmount the component.
+ *
+ * @callback RunWaterfall~onRunFinish
+ */

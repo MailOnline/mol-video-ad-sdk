@@ -37,6 +37,8 @@ const createPlaceholder = (player) => {
  * Defaults to `adFinished`
  * @param {string} [options.adErrorEvent] - name of the event the player must trigger to indicate that there was an error playing the video ad.
  * Defaults to `adError`
+ * @param {runWaterfall~onAdStart} [options.onAdStart] - will be called once the ad starts with the ad unit.
+ * @param {runWaterfall~onRunFinish} [options.onRunFinish] - will be called whenever the ad run finishes. Can be used to know when to unmount the component
  * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
  * Defaults to `window.console`
  * @param {number} [options.wrapperLimit] - Sets the maximum number of wrappers allowed in the {@link VastChain}.
@@ -149,13 +151,10 @@ const vastVpaidPlugin = function (options) {
       snapshot = getSnapshot(player);
       adUnit = await runWaterfall(adTag, placeholderElem, {
         onError: handleAdError,
+        onRunFinish: handleAdFinish,
         videoElement: tech,
         ...options
       });
-
-      // TODO: onError, onFinish and onStart should be part of runWaterfall and run
-      adUnit.onError(handleAdError);
-      adUnit.onFinish(handleAdFinish);
 
       player.trigger({
         adUnit,

@@ -85,9 +85,9 @@ class Player extends Component {
         <div className={styles.adContainer} >
           <VideoAd
             getTag={() => adTag}
+            onAdStart={logger('start')}
             onError={logger('VideoAdError')}
-            onFinish={this.handleAdFinish}
-            onStart={logger('start')}
+            onRunFinish={this.handleAdFinish}
             responsive={true}
             skipControl={skipBtn}
             tracker={logger('Tracking')}

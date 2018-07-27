@@ -8,7 +8,7 @@ const mockAdUnit = {
   cancel: jest.fn(),
   isFinished: jest.fn(),
   onError: jest.fn(),
-  onFinish: jest.fn(),
+  onRunFinish: jest.fn(),
   pause: jest.fn(),
   resize: jest.fn(),
   resume: jest.fn(),
@@ -25,7 +25,9 @@ beforeEach(() => {
   jest.clearAllMocks();
   jest.resetAllMocks();
   jest.resetModules();
-  runWaterfall.mockImplementation(() => Promise.resolve(mockAdUnit));
+  runWaterfall.mockImplementation((adTag, placeholder, {onAdStart}) => {
+    onAdStart(mockAdUnit);
+  });
 });
 
 test('must display the children until it is ready to start the ad', (done) => {
@@ -33,7 +35,7 @@ test('must display the children until it is ready to start the ad', (done) => {
   // eslint-disable-next-line prefer-const
   let wrapper;
 
-  const onStart = () => {
+  const onAdStart = () => {
     expect(wrapper.html().includes('spinner')).toBe(false);
 
     done();
@@ -42,7 +44,7 @@ test('must display the children until it is ready to start the ad', (done) => {
   wrapper = mount(<div>
     <VideoAd
       getTag={getTag}
-      onStart={onStart}
+      onAdStart={onAdStart}
     >
       <Spinner />
     </VideoAd>
@@ -51,10 +53,10 @@ test('must display the children until it is ready to start the ad', (done) => {
   expect(wrapper.html().includes('spinner')).toBe(true);
 });
 
-test('onStart must handler must be called with the adUnit', (done) => {
+test('onAdStart must handler must be called with the adUnit', (done) => {
   expect.assertions(2);
 
-  const onStart = (adUnit) => {
+  const onAdStart = (adUnit) => {
     expect(adUnit).toBe(mockAdUnit);
     done();
   };
@@ -62,42 +64,13 @@ test('onStart must handler must be called with the adUnit', (done) => {
   const wrapper = mount(<div>
     <VideoAd
       getTag={getTag}
-      onStart={onStart}
+      onAdStart={onAdStart}
     >
       <Spinner />
     </VideoAd>
   </div>);
 
   expect(wrapper.html().includes('spinner')).toBe(true);
-});
-
-test('must call onError with isRecoverable flag set to false when an adUnit has an error', (done) => {
-  expect.assertions(5);
-  const onError = jest.fn();
-
-  const onStart = () => {
-    const error = new Error('boom');
-    const simulateError = mockAdUnit.onError.mock.calls[0][0];
-
-    expect(onError).toHaveBeenCalledTimes(0);
-    expect(mockAdUnit.onError).toHaveBeenCalledTimes(1);
-    simulateError(error);
-    expect(onError).toHaveBeenCalledTimes(1);
-    expect(onError).toHaveBeenCalledWith(error);
-    expect(error.isRecoverable).toBe(false);
-
-    done();
-  };
-
-  mount(<div>
-    <VideoAd
-      getTag={getTag}
-      onError={onError}
-      onStart={onStart}
-    >
-      <Spinner />
-    </VideoAd>
-  </div>);
 });
 
 test('must resize the adUnit if the width or the height of the component changes', () => {
@@ -133,13 +106,13 @@ test('must resize the adUnit if the width or the height of the component changes
   });
 });
 
-test('must on unmount cancel the adUnit', (done) => {
+test('must on `unmount` cancel the adUnit', (done) => {
   expect.assertions(3);
   // eslint-disable-next-line prefer-const
   let wrapper;
 
   mockAdUnit.isFinished.mockImplementation(() => false);
-  const onStart = () => {
+  const onAdStart = () => {
     expect(mockAdUnit.cancel).toHaveBeenCalledTimes(0);
     wrapper.unmount();
     process.nextTick(() => {
@@ -151,7 +124,7 @@ test('must on unmount cancel the adUnit', (done) => {
   wrapper = mount(<div>
     <VideoAd
       getTag={getTag}
-      onStart={onStart}
+      onAdStart={onAdStart}
     >
       <Spinner />
     </VideoAd>
@@ -166,7 +139,7 @@ test('must not cancel the ad unit on unmount if the adUnit has already finished'
   let wrapper;
 
   mockAdUnit.isFinished.mockImplementation(() => true);
-  const onStart = () => {
+  const onAdStart = () => {
     expect(mockAdUnit.cancel).toHaveBeenCalledTimes(0);
     wrapper.unmount();
     process.nextTick(() => {
@@ -178,7 +151,7 @@ test('must not cancel the ad unit on unmount if the adUnit has already finished'
   wrapper = mount(<div>
     <VideoAd
       getTag={getTag}
-      onStart={onStart}
+      onAdStart={onAdStart}
     >
       <Spinner />
     </VideoAd>
@@ -187,33 +160,8 @@ test('must not cancel the ad unit on unmount if the adUnit has already finished'
   expect(wrapper.html().includes('spinner')).toBe(true);
 });
 
-test('must call onFinish once the adUnit is finished', (done) => {
-  expect.assertions(2);
-
-  const onFinish = jest.fn();
-  const onStart = () => {
-    const simulateComplete = mockAdUnit.onFinish.mock.calls[0][0];
-
-    simulateComplete();
-    expect(mockAdUnit.onFinish).toHaveBeenCalledTimes(1);
-    expect(onFinish).toHaveBeenCalledTimes(1);
-
-    done();
-  };
-
-  mount(<div>
-    <VideoAd
-      getTag={getTag}
-      onFinish={onFinish}
-      onStart={onStart}
-    >
-      <Spinner />
-    </VideoAd>
-  </div>);
-});
-
-test('must call onError with isRecoverable flag set to false if there is a problem starting the ad', (done) => {
-  expect.assertions(2);
+test('must call onError if there is a problem starting the ad', (done) => {
+  expect.assertions(1);
 
   const error = new Error('boom');
 
@@ -222,7 +170,6 @@ test('must call onError with isRecoverable flag set to false if there is a probl
   });
   const onError = (err) => {
     expect(err).toEqual(error);
-    expect(err.isRecoverable).toBe(false);
     done();
   };
 
