@@ -59,6 +59,11 @@ class VideoAd extends Component {
     width: PropTypes.number
   };
 
+  canceled = false;
+  state = {
+    ready: false
+  };
+
   /**
    * Create a {@link VideoAd} component.
    *
@@ -86,10 +91,6 @@ class VideoAd extends Component {
     this.videoAdPlaceholder = React.createRef();
   }
 
-  state = {
-    ready: false
-  };
-
   componentDidMount () {
     this.adUnitPromise = this.startAd();
     this.stateUpdate = makeCancelable(this.adUnitPromise);
@@ -110,13 +111,12 @@ class VideoAd extends Component {
   }
 
   componentWillUnmount () {
+    this.canceled = true;
+
     if (this.stateUpdate.isPending()) {
       this.stateUpdate.cancel();
-    }
-    const adUnit = this.adUnit;
-
-    if (adUnit && !adUnit.isFinished()) {
-      adUnit.cancel();
+    } else {
+      this.cancelAdRun();
     }
   }
 
@@ -165,16 +165,21 @@ class VideoAd extends Component {
     }
 
     try {
-      const adTag = await Promise.resolve(getTag());
       const deferred = defer();
-      const onAdStart = (adUnit) => {
-        deferred.resolve(adUnit);
-      };
+      const adTag = await Promise.resolve(getTag());
 
-      runWaterfall(adTag, this.videoAdPlaceholder.current, {
-        ...options,
-        onAdStart
-      });
+      if (this.canceled) {
+        defer.resolve(null);
+      } else {
+        const onAdStart = (adUnit) => {
+          deferred.resolve(adUnit);
+        };
+
+        this.cancelAdRun = runWaterfall(adTag, this.videoAdPlaceholder.current, {
+          ...options,
+          onAdStart
+        });
+      }
 
       return deferred.promise;
     } catch (error) {
