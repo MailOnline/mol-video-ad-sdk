@@ -1,4 +1,4 @@
-/* eslint-disable promise/prefer-await-to-callbacks, consistent-return, callback-return */
+/* eslint-disable promise/prefer-await-to-callbacks, callback-return */
 import requestAd from '../vastRequest/requestAd';
 import requestNextAd from '../vastRequest/requestNextAd';
 import run from './run';
@@ -8,11 +8,10 @@ const callbackHandler = (cb) => (...args) => {
     cb(...args);
   }
 };
-const waterfall = async (fetchVastChain, placeholder, options) => {
+const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
   let vastChain;
   let runEpoch;
   let adUnit;
-
   const opts = {...options};
   const {
     onAdStart,
@@ -27,6 +26,12 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
 
     vastChain = await fetchVastChain();
 
+    if (isCanceled()) {
+      onRunFinish();
+
+      return;
+    }
+
     if (runEpoch) {
       const newEpoch = Date.now();
 
@@ -36,28 +41,31 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
 
     adUnit = await run(vastChain, placeholder, {...opts});
 
+    if (isCanceled()) {
+      adUnit.cancel();
+      onRunFinish();
+
+      return;
+    }
+
     onAdStart(adUnit);
     adUnit.onError(onError);
     adUnit.onFinish(onRunFinish);
   } catch (error) {
     onError(error);
 
-    if (vastChain) {
+    if (vastChain && !isCanceled()) {
       if (runEpoch) {
         opts.timeout -= Date.now() - runEpoch;
       }
 
-      return waterfall(() => requestNextAd(vastChain, opts), placeholder, {...opts});
+      waterfall(() => requestNextAd(vastChain, opts), placeholder, {...opts}, isCanceled);
+
+      return;
     }
 
     onRunFinish();
   }
-
-  return () => {
-    if (adUnit && !adUnit.isFinished()) {
-      adUnit.cancel();
-    }
-  };
 };
 
 /**
@@ -85,21 +93,39 @@ const waterfall = async (fetchVastChain, placeholder, options) => {
  * @param {TrackerFn} [options.tracker] - If provided it will be used to track the VAST events instead of the default {@link pixelTracker}.
  * @param {Object} [options.hooks] - Optional map with hooks to configure the behaviour of the ad.
  * @param {Function} [options.hooks.createSkipControl] - If provided it will be called to generate the skip control. Must return a clickable [HTMLElement](https://developer.mozilla.org/es/docs/Web/API/HTMLElement) that is detached from the DOM.
- * @returns {Promise.<undefined>} - You should assume it returns void and and use callbacks to know when and ad starts or if there is an error or if the run finished.
+ * @returns {Function} - Cancel function. If called it will cancel the ad run. {@link runWaterfall~onRunFinish} will still be called;
  */
 const runWaterfall = (adTag, placeholder, options) => {
+  let canceled = false;
+  let adUnit = null;
+  const isCanceled = () => canceled;
+  const onAdStartHandler = callbackHandler(options.onAdStart);
+  const onAdStart = (newAdUnit) => {
+    adUnit = newAdUnit;
+    onAdStartHandler(adUnit);
+  };
+
   const opts = {
     ...options,
-    onAdStart: callbackHandler(options.onAdStart),
+    onAdStart,
     onError: callbackHandler(options.onError),
     onRunFinish: callbackHandler(options.onRunFinish)
   };
 
-  return waterfall(
+  waterfall(
     () => requestAd(adTag, opts),
     placeholder,
-    opts
+    opts,
+    isCanceled
   );
+
+  return () => {
+    canceled = true;
+
+    if (adUnit && !adUnit.isFinished()) {
+      adUnit.cancel();
+    }
+  };
 };
 
 export default runWaterfall;

@@ -7,6 +7,7 @@ import {
   wrapperAd,
   inlineAd
 } from '../../../fixtures';
+import defer from '../../utils/defer';
 import requestAd from '../../vastRequest/requestAd';
 import requestNextAd from '../../vastRequest/requestNextAd';
 import run from '../run';
@@ -45,8 +46,7 @@ describe('runWaterfall', () => {
         XML: vastWrapperXML
       }
     ];
-    options = {
-    };
+    options = {};
     placeholder = document.createElement('div');
     adContainer = new VideoAdContainer(placeholder, document.createElement('video'));
     adUnit = new VastAdUnit(vastAdChain, adContainer, options);
@@ -59,15 +59,22 @@ describe('runWaterfall', () => {
 
   describe('options.onAdStart', () => {
     test('must be called once the adUnit starts with the started ad unit', async () => {
+      const deferred = defer();
+
       requestAd.mockReturnValue(Promise.resolve(vastAdChain));
       run.mockReturnValue(Promise.resolve(adUnit));
 
       const onAdStart = jest.fn();
 
-      await runWaterfall(adTag, placeholder, {
+      runWaterfall(adTag, placeholder, {
         ...options,
-        onAdStart
+        onAdStart: (...args) => {
+          deferred.resolve();
+          onAdStart(...args);
+        }
       });
+
+      await deferred.promise;
 
       expect(onAdStart).toHaveBeenCalledTimes(1);
       expect(onAdStart).toHaveBeenCalledWith(adUnit);
@@ -83,15 +90,19 @@ describe('runWaterfall', () => {
       const runError = new Error('Error running the ad');
       const requestError = new Error('Error with the request');
       const onError = jest.fn();
+      const deferred = defer();
 
       run.mockReturnValue(Promise.reject(runError));
       requestAd.mockReturnValue(Promise.resolve(vastAdChain));
       requestNextAd.mockReturnValueOnce(Promise.resolve(vastAdChain));
       requestNextAd.mockReturnValueOnce(Promise.reject(requestError));
 
-      await runWaterfall(adTag, placeholder, {
-        onError
+      runWaterfall(adTag, placeholder, {
+        onError,
+        onRunFinish: () => deferred.resolve()
       });
+
+      await deferred.promise;
 
       expect(onError).toHaveBeenCalledTimes(3);
       expect(onError).toHaveBeenCalledWith(runError);
@@ -108,15 +119,17 @@ describe('runWaterfall', () => {
       requestAd.mockReturnValue(Promise.resolve(vastAdChain));
       run.mockReturnValue(Promise.resolve(adUnit));
 
-      const onRunFinish = jest.fn();
+      const deferred = defer();
       const onError = jest.fn();
 
       adUnit.onError = jest.fn();
-      await runWaterfall(adTag, placeholder, {
+
+      runWaterfall(adTag, placeholder, {
         ...options,
-        onError,
-        onRunFinish
+        onAdStart: () => deferred.resolve(),
+        onError
       });
+      await deferred.promise;
 
       const simulateAdUnitError = adUnit.onError.mock.calls[0][0];
       const mockError = new Error('mock error');
@@ -133,14 +146,18 @@ describe('runWaterfall', () => {
       requestAd.mockReturnValue(Promise.resolve(vastAdChain));
       run.mockReturnValue(Promise.resolve(adUnit));
 
+      const deferred = defer();
       const onRunFinish = jest.fn();
 
-      await runWaterfall(adTag, placeholder, {
+      runWaterfall(adTag, placeholder, {
         ...options,
-        onRunFinish
+        onRunFinish: () => {
+          deferred.resolve();
+          onRunFinish();
+        }
       });
-
       adUnit[_protected].finish();
+      await deferred.promise;
 
       expect(onRunFinish).toHaveBeenCalledTimes(1);
     });
@@ -149,15 +166,20 @@ describe('runWaterfall', () => {
       const runError = new Error('Error running the ad');
       const requestError = new Error('Error with the request');
       const onRunFinish = jest.fn();
+      const deferred = defer();
 
       run.mockReturnValue(Promise.reject(runError));
       requestAd.mockReturnValue(Promise.resolve(vastAdChain));
       requestNextAd.mockReturnValueOnce(Promise.resolve(vastAdChain));
       requestNextAd.mockReturnValueOnce(Promise.reject(requestError));
 
-      await runWaterfall(adTag, placeholder, {
-        onRunFinish
+      runWaterfall(adTag, placeholder, {
+        onRunFinish: () => {
+          deferred.resolve();
+          onRunFinish();
+        }
       });
+      await deferred.promise;
 
       expect(onRunFinish).toHaveBeenCalledTimes(1);
     });
@@ -176,6 +198,7 @@ describe('runWaterfall', () => {
     });
 
     test('must update the timeout', async () => {
+      const deferred = defer();
       const opts = {
         timeout: 1000
       };
@@ -186,7 +209,12 @@ describe('runWaterfall', () => {
       run.mockReturnValue(Promise.resolve(adUnit));
       requestAd.mockReturnValue(Promise.resolve(vastAdChain));
 
-      await runWaterfall(adTag, placeholder, opts);
+      runWaterfall(adTag, placeholder, {
+        ...opts,
+        onAdStart: () => deferred.resolve()
+      });
+
+      await deferred.promise;
 
       expect(requestAd).toHaveBeenCalledTimes(1);
       expect(requestAd).toHaveBeenCalledWith(adTag, expect.objectContaining({
@@ -202,6 +230,7 @@ describe('runWaterfall', () => {
     });
 
     test('must update the timeout with each loop', async () => {
+      const deferred = defer();
       const runError = new Error('Error running the ad');
       const requestError = new Error('Error with the request');
       const opts = {
@@ -221,7 +250,12 @@ describe('runWaterfall', () => {
       requestNextAd.mockReturnValueOnce(Promise.resolve(vastAdChain));
       requestNextAd.mockReturnValueOnce(Promise.reject(requestError));
 
-      await runWaterfall(adTag, placeholder, opts);
+      runWaterfall(adTag, placeholder, {
+        ...opts,
+        onRunFinish: () => deferred.resolve()
+      });
+
+      await deferred.promise;
 
       expect(requestAd).toHaveBeenCalledTimes(1);
       expect(requestNextAd).toHaveBeenCalledTimes(2);
@@ -246,6 +280,99 @@ describe('runWaterfall', () => {
       expect(requestNextAd).toHaveBeenCalledWith(vastAdChain, expect.objectContaining({
         timeout: 600
       }));
+    });
+  });
+
+  describe('cancel fn', () => {
+    test('if called while fetching the vast chain, must prevent the ad run', async () => {
+      requestAd.mockReturnValue(Promise.resolve(vastAdChain));
+      run.mockReturnValue(Promise.resolve(adUnit));
+
+      const deferred = defer();
+
+      const cancelWaterfall = runWaterfall(adTag, placeholder, {
+        ...options,
+        onRunFinish: () => deferred.resolve()
+      });
+
+      cancelWaterfall();
+      await deferred.promise;
+
+      expect(requestAd).toHaveBeenCalledTimes(1);
+      expect(run).not.toHaveBeenCalled();
+    });
+
+    test('if called while starting the adUnit it must cancel the ad unit and call onRunFinish', async () => {
+      // eslint-disable-next-line prefer-const
+      let cancelWaterfall;
+
+      jest.spyOn(adUnit, 'cancel');
+      requestAd.mockReturnValue(Promise.resolve(vastAdChain));
+      run.mockImplementation(() => {
+        cancelWaterfall();
+
+        return Promise.resolve(adUnit);
+      });
+
+      const deferred = defer();
+      const onAdStart = jest.fn();
+
+      cancelWaterfall = runWaterfall(adTag, placeholder, {
+        ...options,
+        onAdStart,
+        onRunFinish: () => deferred.resolve()
+      });
+
+      await deferred.promise;
+
+      expect(requestAd).toHaveBeenCalledTimes(1);
+      expect(run).toHaveBeenCalledTimes(1);
+      expect(onAdStart).not.toHaveBeenCalled();
+      expect(adUnit.cancel).toHaveBeenCalledTimes(1);
+    });
+
+    test('if called after an ad unit started it must cancel the ad unit.', async () => {
+      const deferred = defer();
+
+      jest.spyOn(adUnit, 'cancel');
+      requestAd.mockReturnValue(Promise.resolve(vastAdChain));
+      run.mockReturnValue(Promise.resolve(adUnit));
+
+      const cancelWaterfall = runWaterfall(adTag, placeholder, {
+        ...options,
+        onAdStart: () => deferred.resolve()
+      });
+
+      await deferred.promise;
+      expect(adUnit.cancel).not.toHaveBeenCalled();
+
+      cancelWaterfall();
+      expect(adUnit.cancel).toHaveBeenCalledTimes(1);
+    });
+
+    test('if called after the ad run finished, it must do nothing', async () => {
+      requestAd.mockReturnValue(Promise.resolve(vastAdChain));
+      run.mockReturnValue(Promise.resolve(adUnit));
+      jest.spyOn(adUnit, 'cancel');
+
+      const deferred = defer();
+      const onRunFinish = jest.fn();
+
+      const cancelWaterfall = runWaterfall(adTag, placeholder, {
+        ...options,
+        onRunFinish: () => {
+          deferred.resolve();
+          onRunFinish();
+        }
+      });
+
+      adUnit[_protected].finish();
+      await deferred.promise;
+
+      expect(adUnit.cancel).not.toHaveBeenCalled();
+
+      cancelWaterfall();
+      expect(adUnit.cancel).toHaveBeenCalledTimes(0);
     });
   });
 });
