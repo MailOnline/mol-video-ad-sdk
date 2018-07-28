@@ -1,10 +1,6 @@
 const suppressTracks = (player) => {
   let tracks = player.remoteTextTracks ? player.remoteTextTracks() : [];
 
-  if (tracks && Array.isArray(tracks.tracks_)) {
-    tracks = tracks.tracks_;
-  }
-
   if (!Array.isArray(tracks)) {
     tracks = [];
   }
