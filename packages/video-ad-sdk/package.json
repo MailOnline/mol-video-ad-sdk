@@ -27,20 +27,20 @@
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
-    "babel-jest": "^23.4.0",
+    "babel-jest": "^23.4.2",
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.24.1",
-    "jest": "^23.4.1",
+    "jest": "^23.4.2",
     "jest-environment-jsdom": "^23.4.0",
     "lodash.debounce": "^4.0.8",
     "mockdate": "^2.0.2",
     "rimraf": "^2.6.2",
     "source-map-loader": "^0.2.3",
-    "webpack": "^4.16.2",
+    "webpack": "^4.16.3",
     "webpack-cli": "^3.1.0"
   }
 }
