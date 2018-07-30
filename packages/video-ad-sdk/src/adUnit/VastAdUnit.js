@@ -16,7 +16,6 @@ const {
 const _private = Symbol('_private');
 
 /**
- * @memberof module:@mol/video-ad-sdk
  * @class
  * @extends VideoAdUnit
  * @alias VastAdUnit
@@ -48,9 +47,10 @@ class VastAdUnit extends VideoAdUnit {
     }
   };
 
-  error = null;
-  errorCode = null;
   assetUri = null;
+
+  /** Ad unit type. Will be `VAST` for VastAdUnit */
+  type='VAST';
 
   /**
    * Creates a {VastAdUnit}.

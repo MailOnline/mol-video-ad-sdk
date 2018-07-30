@@ -1,5 +1,5 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
-import debounce from 'lodash/debounce';
+import debounce from 'lodash.debounce';
 import MutationObserver from './helpers/MutationObserver';
 
 const validate = (target, callback) => {

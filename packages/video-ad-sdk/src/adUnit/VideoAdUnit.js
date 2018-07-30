@@ -4,6 +4,7 @@ import {
   onElementVisibilityChange,
   onElementResize
 } from './helpers/dom/elementObservers';
+import preventManualProgress from './helpers/dom/preventManualProgress';
 import Emitter from './helpers/Emitter';
 import retrieveIcons from './helpers/icons/retrieveIcons';
 import addIcons from './helpers/icons/addIcons';
@@ -52,6 +53,9 @@ class VideoAdUnit extends Emitter {
    }
  };
 
+   /** Ad unit type */
+   type=null;
+
   /** If an error occurs it will contain the reference to the error otherwise it will be bull */
   error = null;
 
@@ -86,6 +90,8 @@ class VideoAdUnit extends Emitter {
 
     /** Array of {@link VastIcon} definitions to display from the passed {@link VastChain} or null if there are no icons.*/
     this.icons = retrieveIcons(vastChain);
+
+    onFinishCallbacks.push(preventManualProgress(this.videoAdContainer.videoElement));
 
     if (this.icons) {
       const {

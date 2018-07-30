@@ -32,7 +32,7 @@
     "default": {
       "staticFiles": {
           "include": [
-            "static/"
+            "static/jsdoc"
           ]
       }
   },

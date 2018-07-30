@@ -5,6 +5,17 @@ import {runWaterfall} from '@mol/video-ad-sdk';
 import makeCancelable from './helpers/makeCancelable';
 
 const noop = () => {};
+const defer = () => {
+  const deferred = {};
+  const promise = new Promise((resolve, reject) => {
+    deferred.resolve = resolve;
+    deferred.reject = reject;
+  });
+
+  deferred.promise = promise;
+
+  return deferred;
+};
 
 /**
   * @memberof module:@mol/react-vast-vpaid
@@ -18,9 +29,9 @@ class VideoAd extends Component {
     children: undefined,
     height: undefined,
     logger: console,
+    onAdStart: noop,
     onError: noop,
-    onFinish: noop,
-    onStart: noop,
+    onRunFinish: noop,
     responsive: false,
     skipControl: undefined,
     tracker: undefined,
@@ -37,15 +48,20 @@ class VideoAd extends Component {
       error: PropTypes.func,
       log: PropTypes.func
     }),
+    onAdStart: PropTypes.func,
     onError: PropTypes.func,
-    onFinish: PropTypes.func,
-    onStart: PropTypes.func,
+    onRunFinish: PropTypes.func,
     responsive: PropTypes.bool,
     skipControl: PropTypes.oneOfType([PropTypes.func, PropTypes.any]),
     tracker: PropTypes.func,
     videoElement: PropTypes.any,
     viewability: PropTypes.bool,
     width: PropTypes.number
+  };
+
+  canceled = false;
+  state = {
+    ready: false
   };
 
   /**
@@ -59,9 +75,9 @@ class VideoAd extends Component {
    * @param {number} [props.width] - the component will resize the ad unit if the passed width changes.
    * @param {Console} [props.logger] - must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
    * Defaults to `window.console`
-   * @param {VideoAd~onStart} [props.onStart] - will be called once the ad starts
-   * @param {VideoAd~onError} [props.onError] - will be called if there is an error with the video ad.
-   * @param {VideoAd~onFinish} [props.onFinish] - will be called whenever the ad finishes.
+   * @param {runWaterfall~onAdStart} [props.onAdStart] - will be called once the ad starts with the ad unit.
+   * @param {runWaterfall~onError} [props.onError] - will be called if there is an error with the video ad with the error instance.
+   * @param {runWaterfall~onRunFinish} [props.onRunFinish] - will be called whenever the ad run finishes. Can be used to know when to unmount the component
    * @param {TrackerFn} [props.tracker] - If provided it will be used to track the VAST events instead of the default {@link pixelTracker}.
    * @param {HTMLVideoElement} [props.videoElement] - If provided it will be used to display the video ad. Beware that it will not clean the sources after the ad is finished.
    * @param {boolean} [props.viewability] - if true it will pause the ad whenever is not visible for the viewer.
@@ -75,10 +91,6 @@ class VideoAd extends Component {
     this.videoAdPlaceholder = React.createRef();
   }
 
-  state = {
-    ready: false
-  };
-
   componentDidMount () {
     this.adUnitPromise = this.startAd();
     this.stateUpdate = makeCancelable(this.adUnitPromise);
@@ -91,18 +103,20 @@ class VideoAd extends Component {
         ready: true
       });
 
-      this.props.onStart(adUnit);
+      // eslint-disable-next-line promise/always-return
+      if (typeof this.props.onAdStart === 'function') {
+        this.props.onAdStart(adUnit);
+      }
     });
   }
 
   componentWillUnmount () {
+    this.canceled = true;
+
     if (this.stateUpdate.isPending()) {
       this.stateUpdate.cancel();
-    }
-    const adUnit = this.adUnit;
-
-    if (adUnit && !adUnit.isFinished()) {
-      adUnit.cancel();
+    } else {
+      this.cancelAdRun();
     }
   }
 
@@ -125,8 +139,8 @@ class VideoAd extends Component {
     const {
       getTag,
       logger,
-      onFinish,
       onError,
+      onRunFinish,
       responsive,
       skipControl,
       tracker,
@@ -134,19 +148,10 @@ class VideoAd extends Component {
       videoElement
     } = this.props;
 
-    const onRecoverableError = (error) => {
-      error.isRecoverable = true;
-      onError(error);
-    };
-
-    const onNonRecoverableError = (error) => {
-      error.isRecoverable = false;
-      onError(error);
-    };
-
     const options = {
       logger,
-      onError: onRecoverableError,
+      onError,
+      onRunFinish,
       responsive,
       tracker,
       videoElement,
@@ -160,16 +165,25 @@ class VideoAd extends Component {
     }
 
     try {
+      const deferred = defer();
       const adTag = await Promise.resolve(getTag());
-      const adUnit = await runWaterfall(adTag, this.videoAdPlaceholder.current, options);
 
-      adUnit.onError(onNonRecoverableError);
-      adUnit.onFinish(onFinish);
+      if (this.canceled) {
+        defer.resolve(null);
+      } else {
+        const onAdStart = (adUnit) => {
+          deferred.resolve(adUnit);
+        };
 
-      return adUnit;
+        this.cancelAdRun = runWaterfall(adTag, this.videoAdPlaceholder.current, {
+          ...options,
+          onAdStart
+        });
+      }
+
+      return deferred.promise;
     } catch (error) {
-      onNonRecoverableError(error);
-
+      onError(error);
       throw error;
     }
   }
@@ -200,26 +214,5 @@ class VideoAd extends Component {
     </div>;
   }
 }
-
-/**
- * Called once the ad starts.
- *
- * @callback VideoAd~onStart
- * @param {VastAdUnit | VideoAdUnit} adUnit - the ad unit instance.
- */
-
-/**
- * Called whenever the an error occurs within the ad unit.
- *
- * @callback VideoAd~onError
- * @param {Error} error - the ad unit error.
- * @param {boolean} error.isRecoverable - if true the component will try to recover searching for another ad in the waterfall. If false it means that the component won't recover and you should unmount the component.
- */
-
-/**
- * Called once the ad is finished. It will also be called if there is an error with the ad. It can be used to know when to unmount the component.
- *
- * @callback VideoAd~onFinish
- */
 
 export default VideoAd;

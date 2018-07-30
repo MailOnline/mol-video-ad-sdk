@@ -1,0 +1,6 @@
+{
+  "extends": "mailonline/react",
+  "rules": {
+    "react/sort-comp": "off"
+  }
+}

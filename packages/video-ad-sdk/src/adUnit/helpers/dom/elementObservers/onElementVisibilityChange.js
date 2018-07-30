@@ -1,5 +1,5 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
-import debounce from 'lodash/debounce';
+import debounce from 'lodash.debounce';
 import isElementVisible from './helpers/isElementVisible';
 
 let elementEntries = [];

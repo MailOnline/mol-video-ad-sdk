@@ -63,7 +63,6 @@ const {
 const _private = Symbol('_private');
 
 /**
- * @memberof module:@mol/video-ad-sdk
  * @class
  * @alias VpaidAdUnit
  * @extends VideoAdUnit
@@ -179,6 +178,9 @@ class VpaidAdUnit extends VideoAdUnit {
     },
     muted: false
   };
+
+  /** Ad unit type. Will be `VPAID` for VpaidAdUnit */
+  type='VPAID';
 
   /** Reference to the Vpaid Creative ad unit. Will be null before the ad unit starts. */
   creativeAd = null;

@@ -10,7 +10,6 @@ const nextId = unique('videoAdContainer');
 const hidden = Symbol('hidden');
 
 /**
- * @memberof module:@mol/video-ad-sdk
  * @class
  * @alias VideoAdContainer
  * @description This class provides everything necessary to contain and create a video ad within a given placeholder Element.

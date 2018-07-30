@@ -32,6 +32,7 @@ const validateVastChain = (vastChain, options) => {
  * @param {VastChain} vastChain - The {@link VastChain} with all the {@link VastResponse}s.
  * @param {HTMLElement} placeholder - placeholder element that will contain the video ad.
  * @param {Object} [options] - Options Map. The allowed properties are:
+ * @param {HTMLVideoElement} [options.videoElement] - optional videoElement that will be used to play the ad.
  * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
  * Defaults to `window.console`
  * @param {boolean} [options.viewability] - if true it will pause the ad whenever is not visible for the viewer.
@@ -56,8 +57,9 @@ const run = async (vastChain, placeholder, options) => {
 
     if (typeof timeout === 'number') {
       let timedOut = false;
+      let timeoutId;
       const timeoutPromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
           const {tracker} = options;
 
           trackError(vastChain, {
@@ -72,8 +74,12 @@ const run = async (vastChain, placeholder, options) => {
       adUnitPromise = Promise.race([
         // eslint-disable-next-line promise/prefer-await-to-then
         adUnitPromise.then((newAdUnit) => {
-          if (timedOut && newAdUnit.isStarted()) {
-            newAdUnit.cancel();
+          if (timedOut) {
+            if (newAdUnit.isStarted()) {
+              newAdUnit.cancel();
+            }
+          } else {
+            clearTimeout(timeoutId);
           }
 
           return newAdUnit;

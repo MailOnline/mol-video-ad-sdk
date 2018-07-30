@@ -1,7 +1,7 @@
 import onElementResize from '../onElementResize';
 import MutationObserver from '../helpers/MutationObserver';
 
-jest.mock('lodash/debounce', () => (fn) => fn);
+jest.mock('lodash.debounce', () => (fn) => fn);
 jest.mock('../helpers/MutationObserver', () => {
   const observe = jest.fn();
   const disconnect = jest.fn();

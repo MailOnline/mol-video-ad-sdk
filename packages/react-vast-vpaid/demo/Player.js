@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {VideoAd} from '../index';
+import {VideoAd} from '../src/index';
 import styles from './styles.css';
 
 class Player extends Component {
@@ -85,9 +85,9 @@ class Player extends Component {
         <div className={styles.adContainer} >
           <VideoAd
             getTag={() => adTag}
+            onAdStart={logger('start')}
             onError={logger('VideoAdError')}
-            onFinish={this.handleAdFinish}
-            onStart={logger('start')}
+            onRunFinish={this.handleAdFinish}
             responsive={true}
             skipControl={skipBtn}
             tracker={logger('Tracking')}

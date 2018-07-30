@@ -1,5 +1,5 @@
 /* eslint-disable id-match */
-import xml2js from '@mol/vast-xml2js';
+import {parseXml} from '@mol/vast-xml2js';
 import {
   getAds,
   getFirstAd
@@ -263,7 +263,7 @@ describe('requestAd', () => {
 
   test('must set errorCode 203 if the wrapper comes with allowMultipleAds is set to false and receives an ad pod', async () => {
     const newWrapperXML = vastWrapperXML.replace('allowMultipleAds="true"', 'allowMultipleAds="false"');
-    const parsedWrapperXML = xml2js(newWrapperXML);
+    const parsedWrapperXML = parseXml(newWrapperXML);
     const newWrapperAd = getFirstAd(parsedWrapperXML);
     const wrapperResponse = {
       status: 200,
@@ -306,7 +306,7 @@ describe('requestAd', () => {
 
   test('must set errorCode 200 if the wrapper comes with followAdditionalWrappers  set to false and receives a wrapper', async () => {
     const newWrapperXML = vastWrapperXML.replace('allowMultipleAds="true"', 'followAdditionalWrappers="false"');
-    const parsedWrapperXML = xml2js(newWrapperXML);
+    const parsedWrapperXML = parseXml(newWrapperXML);
     const newWrapperAd = getFirstAd(parsedWrapperXML);
     const wrapperResponse = {
       status: 200,

@@ -17,6 +17,7 @@ import {
   onElementVisibilityChange
 } from '../helpers/dom/elementObservers';
 import VideoAdUnit, {_protected} from '../VideoAdUnit';
+import preventManualProgress from '../helpers/dom/preventManualProgress';
 
 const mockDrawIcons = jest.fn();
 const mockRemoveIcons = jest.fn();
@@ -31,15 +32,17 @@ jest.mock('../helpers/icons/addIcons.js', () =>
     })
   )
 );
-jest.mock('../helpers/icons/retrieveIcons.js', () => jest.fn());
+jest.mock('../helpers/icons/retrieveIcons.js');
 jest.mock('../helpers/dom/elementObservers', () => ({
   onElementResize: jest.fn(),
   onElementVisibilityChange: jest.fn()
 }));
 
+jest.mock('../helpers/dom/preventManualProgress');
 describe('VideoAdUnit', () => {
   let vpaidChain;
   let videoAdContainer;
+  let stopPreventManualProgress;
 
   beforeEach(() => {
     vpaidChain = [
@@ -52,11 +55,25 @@ describe('VideoAdUnit', () => {
       }
     ];
     videoAdContainer = new VideoAdContainer(document.createElement('DIV'));
+    stopPreventManualProgress = jest.fn();
+    preventManualProgress.mockReturnValue(stopPreventManualProgress);
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
     jest.clearAllMocks();
+  });
+
+  test('must prevent manual progress while the ad unit is running', () => {
+    const adUnit = new VideoAdUnit(vpaidChain, videoAdContainer);
+
+    expect(preventManualProgress).toHaveBeenCalledTimes(1);
+    expect(preventManualProgress).toHaveBeenCalledWith(videoAdContainer.videoElement);
+    expect(stopPreventManualProgress).not.toHaveBeenCalled();
+
+    adUnit[_protected].finish();
+    expect(preventManualProgress).toHaveBeenCalledTimes(1);
+    expect(stopPreventManualProgress).toHaveBeenCalledTimes(1);
   });
 
   describe('icons', () => {
