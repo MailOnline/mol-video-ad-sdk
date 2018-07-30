@@ -5,6 +5,10 @@ const {name: pkgName} = require('./package.json');
 
 module.exports = {
   ...baseConfig,
+  entry: {
+    main: './src/index.js',
+    'main.browser': './src/index.browser.js'
+  },
   output: {
     devtoolFallbackModuleFilenameTemplate: `webpack:///${pkgName}/[resource-path]?[hash]`,
     devtoolModuleFilenameTemplate: `webpack:///${pkgName}/[resource-path]`,

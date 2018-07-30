@@ -1,4 +1,3 @@
-import xmldom from 'xmldom';
 import xml2js from './helpers/xml2js';
 import {
   get,
@@ -18,7 +17,7 @@ import {
  * @returns {Object} - Returns the parsed xml document as a js object.
  * @static
  */
-const parseXml = (xmlText) => xml2js(xmldom.DOMParser, xmlText);
+const parseXml = (xmlText) => xml2js(DOMParser, xmlText);
 
 export {
   get,

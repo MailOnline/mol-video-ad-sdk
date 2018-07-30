@@ -20,12 +20,6 @@ describe('parseXml', () => {
     const data = parseXml(xml);
 
     expect(data).toEqual({
-      declaration: {
-        attributes: {
-          encoding: 'utf-8',
-          version: '1.0'
-        }
-      },
       elements: [{
         attributes: {
           importance: 'high',
@@ -33,8 +27,8 @@ describe('parseXml', () => {
         },
         elements: [{
           elements: [{
-            cdata: 'Happy',
-            type: 'cdata'
+            text: 'Happy',
+            type: 'text'
           }],
           name: 'title',
           type: 'element'
@@ -55,7 +49,8 @@ describe('parseXml', () => {
         }],
         name: 'note',
         type: 'element'
-      }]
+      }],
+      type: 'document'
     });
   });
 });
@@ -83,8 +78,8 @@ describe('helpers', () => {
         },
         elements: [{
           elements: [{
-            cdata: 'Happy',
-            type: 'cdata'
+            text: 'Happy',
+            type: 'text'
           }],
           name: 'title',
           type: 'element'
@@ -108,8 +103,8 @@ describe('helpers', () => {
       });
       expect(titleElement).toEqual({
         elements: [{
-          cdata: 'Happy',
-          type: 'cdata'
+          text: 'Happy',
+          type: 'text'
         }],
         name: 'title',
         type: 'element'

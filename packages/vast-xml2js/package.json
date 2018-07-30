@@ -10,6 +10,7 @@
   ],
   "author": "MailOnline <fe@mailonline.co.uk>",
   "main": "dist/main.js",
+  "browser": "dist/main.browser.js",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ignore-path ../../.gitignore './**/*.js'",
@@ -22,7 +23,8 @@
     "src"
   ],
   "dependencies": {
-    "xml-js": "^1.3.4"
+    "sane-domparser-error": "^0.2.0",
+    "xmldom": "^0.1.27"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
