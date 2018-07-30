@@ -3,20 +3,20 @@ const getChildren = ({elements = []} = {}) => elements;
 const findChildByName = (element, childName) =>
   getChildren(element).find(({name = ''}) => name.toUpperCase() === childName.toUpperCase());
 
-const filterChildrendByName = (element, childrentName) =>
-  getChildren(element).filter(({name = ''}) => name.toUpperCase() === childrentName.toUpperCase());
+const filterChildrenByName = (element, childrenName) =>
+  getChildren(element).filter(({name = ''}) => name.toUpperCase() === childrenName.toUpperCase());
 
 export const get = findChildByName;
 
 export const getAll = (element, childName) => {
   if (typeof childName === 'string') {
-    return filterChildrendByName(element, childName);
+    return filterChildrenByName(element, childName);
   }
 
   return getChildren(element);
 };
 
-export const getFirstChild = (ad) => getChildren(ad)[0] || null;
+export const getFirstChild = (element) => getChildren(element)[0];
 
 export const getText = (element) => {
   const firstChild = element && getFirstChild(element);
