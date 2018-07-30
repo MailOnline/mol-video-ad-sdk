@@ -43,6 +43,7 @@ const isReadyToResume = (player) => {
   return false;
 };
 
+// TODO: TEST THIS LOGIC
 /**
  * Determine if the video element has loaded enough of the snapshot source
  * to be ready to apply the rest of the state
@@ -52,9 +53,7 @@ const tryToResume = (player, snapshot, attempts) => {
 
   // if some period of the video is seekable, resume playback
   // otherwise delay a bit and then check again unless we're out of attempts
-  if (!isReadyToResume(player) && pendingAttempts--) {
-    setTimeout(() => tryToResume(player, snapshot, pendingAttempts), 50);
-  } else {
+  if (isReadyToResume(player) && pendingAttempts--) {
     try {
       if (player.currentTime() === snapshot.currentTime) {
         // if needed and no seek has been performed, restore playing status immediately
@@ -69,6 +68,8 @@ const tryToResume = (player, snapshot, attempts) => {
     } catch (error) {
       videojs.log.warn('Failed to resume the content after an advertisement', error);
     }
+  } else {
+    setTimeout(() => tryToResume(player, snapshot, pendingAttempts), 50);
   }
 };
 
