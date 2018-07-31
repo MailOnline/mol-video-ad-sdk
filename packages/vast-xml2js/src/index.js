@@ -1,4 +1,9 @@
-import xml2js from 'xml-js/lib/xml2js';
+/**
+ * @module @mol/vast-xml2js
+ * @description Simple wrapper on top of [xml-js](https://www.npmjs.com/package/xml-js) to ensure that is used on a consistent way and to make it easy to change in case is needed on the future.
+ */
+import xmldom from 'xmldom';
+import xml2js from './helpers/xml2js';
 import {
   get,
   getAll,
@@ -8,15 +13,17 @@ import {
   getAttribute
 } from './helpers/xmlSelectors';
 
+const parser = new xmldom.DOMParser();
+
 /**
  * Parses the passed xml text.
  *
- * @ignore
- * @param {string} xml - XML text to be parsed.
- * @returns {Object} - Returns the parsed xml as a js object.
+ * @throws if there is an error parsing the xml.
+ * @param {string} xmlText - XML text to be parsed.
+ * @returns {Object} - Returns the parsed xml document as a js object.
  * @static
  */
-const parseXml = (xml) => xml2js(xml, {compact: false});
+const parseXml = (xmlText) => xml2js(parser, xmlText);
 
 export {
   get,
