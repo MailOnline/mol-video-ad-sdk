@@ -8,7 +8,8 @@ import {
   getAttribute
 } from './helpers/xmlSelectors';
 
-const parseXml = (xmlText) => xml2js(DOMParser, xmlText);
+const parser = new DOMParser();
+const parseXml = (xmlText) => xml2js(parser, xmlText);
 
 export {
   get,

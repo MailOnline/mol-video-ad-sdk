@@ -13,6 +13,8 @@ import {
   getAttribute
 } from './helpers/xmlSelectors';
 
+const parser = new xmldom.DOMParser();
+
 /**
  * Parses the passed xml text.
  *
@@ -21,7 +23,7 @@ import {
  * @returns {Object} - Returns the parsed xml document as a js object.
  * @static
  */
-const parseXml = (xmlText) => xml2js(xmldom.DOMParser, xmlText);
+const parseXml = (xmlText) => xml2js(parser, xmlText);
 
 export {
   get,
