@@ -143,7 +143,7 @@ describe('helpers', () => {
       ]);
     });
 
-    test('must return empty string if no element', () => {
+    test('must return empty array if no element', () => {
       expect(getAll({})).toEqual([]);
       expect(getAll(data, 'foo')).toEqual([]);
     });

@@ -36,7 +36,7 @@ export const getAll = (element, childName) => {
  * Get the first child element from the passed parsed xml element.
  *
  * @memberof module:@mol/vast-xml2js
- * @returns {Object|null} - the first child element or undefined if there are none.
+ * @returns {Object|null} - the first child element or undefined if there are non.
  */
 export const getFirstChild = (element) => getChildren(element)[0] || null;
 
@@ -49,11 +49,7 @@ export const getFirstChild = (element) => getChildren(element)[0] || null;
 export const getText = (element) => {
   const firstChild = element && getFirstChild(element);
 
-  if (firstChild) {
-    return firstChild.text || null;
-  }
-
-  return null;
+  return firstChild && firstChild.text || null;
 };
 
 /**
