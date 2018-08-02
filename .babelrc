@@ -1,0 +1,63 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "debug": false,
+        "modules": false,
+        "targets": {
+          "browsers": [
+            "> 1%",
+            "last 3 versions",
+            "ios > 8",
+            "ie > 9",
+            "not ie < 10"
+          ]
+        },
+        "useBuiltIns": true
+      }
+    ],
+    "stage-3"
+  ],
+  "plugins": [
+    [
+      "transform-runtime",
+      {
+        "helpers": false,
+        "polyfill": false,
+        "regenerator": true
+      }
+    ],
+    "transform-class-properties"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        [
+          "env",
+          {
+            "debug": false,
+            "modules": "commonjs",
+            "targets": {
+              "node": "current"
+            },
+            "useBuiltIns": true
+          }
+        ],
+        "stage-3",
+        "react"
+      ],
+      "plugins": [
+        [
+          "transform-runtime",
+          {
+            "helpers": false,
+            "polyfill": false,
+            "regenerator": true
+          }
+        ],
+        "transform-class-properties"
+      ]
+    }
+  }
+}

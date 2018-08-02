@@ -1,0 +1,1 @@
+The Icons in this folder where made by [freepik](http://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com) are licensed by [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)

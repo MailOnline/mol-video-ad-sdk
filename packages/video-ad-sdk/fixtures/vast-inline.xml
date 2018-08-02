@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<VAST version="4.0">
+  <Ad id="abc123">
+    <InLine>
+      <AdSystem version="1.0">MOL</AdSystem>
+      <AdTitle>VAST 4.0 Test</AdTitle>
+      <Error>https://test.example.com/error</Error>
+      <Impression>https://test.example.com/impression</Impression>
+      <Category authority="IAB">Inline Video</Category>
+      <Description>VAST Inline</Description>
+      <Advertiser>MOL</Advertiser>
+      <Pricing model="CPM" currency="USD">4.00</Pricing>
+      <Survey type="text/javascript">https://test.example.com/survey.js</Survey>
+      <Extensions/>
+      <ViewableImpression>
+        <Viewable>https://test.example.com/viewable</Viewable>
+        <NotViewable>https://test.example.com/notViewable</NotViewable>
+        <ViewUndetermined>https://test.example.com/notDetermined</ViewUndetermined>
+      </ViewableImpression>
+      <AdVerification/>
+      <Creatives>
+        <Creative adId="abc123" apiFramework="mol-api">
+          <UniversalAdId idValue="unknown">unknown</UniversalAdId>
+          <CreativeExtensions>
+            <CreativeExtension>
+              <Custom>this is custom stuff</Custom>
+            </CreativeExtension>
+          </CreativeExtensions>
+          <Linear skipoffset="00:00:05" >
+            <Duration>00:00:30</Duration>
+            <TrackingEvents>
+              <Tracking event="creativeView">https://test.example.com/creativeView</Tracking>
+              <Tracking event="start">https://test.example.com/start</Tracking>
+              <Tracking event="midpoint">https://test.example.com/midpoint</Tracking>
+              <Tracking event="firstQuartile">https://test.example.com/firstQuartile</Tracking>
+              <Tracking event="thirdQuartile">https://test.example.com/thirdQuartile</Tracking>
+              <Tracking event="complete">https://test.example.com/complete</Tracking>
+              <Tracking event="timeSpentViewing" offset="00:00:05"><![CDATA[https://test.example.com/timeSpentViewing]]></Tracking>
+              <Tracking event="timeSpentViewing" offset="15%"><![CDATA[https://test.example.com/timeSpentViewing2]]></Tracking>
+            </TrackingEvents>
+            <VideoClicks>
+              <ClickThrough>https://test.example.com/clickthrough</ClickThrough>
+              <ClickTracking>https://test.example.com/clicktracking</ClickTracking>
+              <CustomClick>https://test.example.com/customclick</CustomClick>
+            </VideoClicks>
+            <MediaFiles>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="1920" height="1080" scalable="true" maintainAspectRatio="true">https://test.example.com/test1920x1080.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="768" height="432" scalable="true" maintainAspectRatio="true">https://test.example.com/test768x432.mp4</MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" bitrate="600" width="640" height="362" scalable="true" maintainAspectRatio="true">https://test.example.com/test640x362.mp4</MediaFile>
+            </MediaFiles>
+            <AdParameters><![CDATA[qs=test&reddit=true]]></AdParameters>
+            <Icons>
+              <Icon program="MOL_STATIC" width="20px" height="20px" xPosition="right" yPosition="top" duration="00:00:30" offset="00:00:05" pxratio="1">
+                <StaticResource>https://test.example.com/icon/staticResource</StaticResource>
+                <IconClicks>
+                  <IconClickThrough>https://test.example.com/iconClickThrough</IconClickThrough>
+                  <IconClickTracking>https://test.example.com/iconClickTracking</IconClickTracking>
+                </IconClicks>
+                <IconViewTracking>https://test.example.com/iconViewTracking</IconViewTracking>
+              </Icon>
+              <Icon program="MOL_STATIC" width="20" height="20px" xPosition="right" yPosition="top" duration="00:00:30" offset="00:00:05" pxratio="2">
+                <StaticResource>https://test.example.com/icon/staticResource2</StaticResource>
+                <IconClicks>
+                  <IconClickThrough>https://test.example.com/iconClickThrough</IconClickThrough>
+                  <IconClickTracking>https://test.example.com/iconClickTracking</IconClickTracking>
+                </IconClicks>
+                <IconViewTracking>https://test.example.com/iconViewTracking</IconViewTracking>
+              </Icon>
+              <Icon program="MOL_HTML" width="20px" height="20" xPosition="left" yPosition="20px" duration="00:00:30" offset="00:00:05" pxratio="1">
+                <HTMLResource>https://test.example.com/icon/htmlResource</HTMLResource>
+                <IconClicks>
+                  <IconClickThrough>https://test.example.com/iconClickThrough</IconClickThrough>
+                  <IconClickTracking>https://test.example.com/iconClickTracking</IconClickTracking>
+                </IconClicks>
+                <IconViewTracking>https://test.example.com/iconViewTracking</IconViewTracking>
+              </Icon>
+              <Icon program="MOL_IFRAME" width="20px" height="20px" xPosition="10" yPosition="30" pxratio="1">
+                <IFrameResource>https://test.example.com/icon/iFrameResource</IFrameResource>
+                <IconClicks>
+                  <IconClickThrough>https://test.example.com/iconClickThrough</IconClickThrough>
+                  <IconClickTracking>https://test.example.com/iconClickTracking</IconClickTracking>
+                </IconClicks>
+                <IconViewTracking>https://test.example.com/iconViewTracking</IconViewTracking>
+              </Icon>
+            </Icons>
+          </Linear>
+        </Creative>
+        <Creative AdID="123-Companion">
+          <CompanionAds>
+            <Companion width="1920" height="1080" assetWidth="1920" assetHeight="1080">
+              <HTMLResource>http://adserver.com/htmlresourcefile.htm</HTMLResource>
+              <TrackingEvents>
+                <Tracking event="creativeView">https://test.example.com/firstCompanionCreativeView</Tracking>
+              </TrackingEvents>
+            </Companion>
+            <Companion width="1920" height="80">
+              <StaticResource creativeType="image/jpeg"><![CDATA[https://test.example.com/companion.jpg?test1=true&test2=false]]></StaticResource>
+              <CompanionClickThrough>http://www.test.example.com/clickThrough</CompanionClickThrough>
+            </Companion>
+          </CompanionAds>
+        </Creative>
+      </Creatives>
+    </InLine>
+  </Ad>
+</VAST>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VAST xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd" version="3.0">
+ <Ad id="4367623109">
+  <Wrapper allowMultipleAds="true" >
+   <AdSystem>MOL</AdSystem>
+   <VASTAdTagURI><![CDATA[https://test.example.com/vastadtaguri]]></VASTAdTagURI>
+   <Error><![CDATA[https://test.example.com/error/[ERRORCODE]]]></Error>
+   <Impression><![CDATA[https://test.example.com/impression]]></Impression>
+   <Creatives>
+    <Creative sequence="1">
+     <Linear>
+      <TrackingEvents>
+       <Tracking event="start"><![CDATA[https://test.example.com/start]]></Tracking>
+       <Tracking event="start"><![CDATA[https://test.example.com/start2]]></Tracking>
+       <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstQuartile]]></Tracking>
+       <Tracking event="firstQuartile"><![CDATA[https://test.example.com/firstQuartile2]]></Tracking>
+       <Tracking event="midpoint"><![CDATA[https://test.example.com/midpoint]]></Tracking>
+       <Tracking event="midpoint"><![CDATA[https://test.example.com/midpoint2]]></Tracking>
+       <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdQuartile]]></Tracking>
+       <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdQuartile2]]></Tracking>
+       <Tracking event="complete"><![CDATA[https://test.example.com/complete]]></Tracking>
+       <Tracking event="complete"><![CDATA[https://test.example.com/complete2]]></Tracking>
+       <Tracking event="playerExpand"><![CDATA[https://test.example.com/playerExpand]]></Tracking>
+       <Tracking event="playerExpand"><![CDATA[https://test.example.com/playerExpand2]]></Tracking>
+       <Tracking event="playerCollapse"><![CDATA[https://test.example.com/playerCollapse]]></Tracking>
+       <Tracking event="playerCollapse"><![CDATA[https://test.example.com/playerCollapse2]]></Tracking>
+       <Tracking event="mute"><![CDATA[https://test.example.com/mute]]></Tracking>
+       <Tracking event="mute"><![CDATA[https://test.example.com/mute2]]></Tracking>
+       <Tracking event="unmute"><![CDATA[https://test.example.com/unmute]]></Tracking>
+       <Tracking event="unmute"><![CDATA[https://test.example.com/unmute2]]></Tracking>
+       <Tracking event="rewind"><![CDATA[https://test.example.com/rewind]]></Tracking>
+       <Tracking event="rewind"><![CDATA[https://test.example.com/rewind2]]></Tracking>
+       <Tracking event="skip"><![CDATA[https://test.example.com/skip]]></Tracking>
+       <Tracking event="skip"><![CDATA[https://test.example.com/skip2]]></Tracking>
+       <Tracking event="pause"><![CDATA[https://test.example.com/pause]]></Tracking>
+       <Tracking event="pause"><![CDATA[https://test.example.com/pause2]]></Tracking>
+       <Tracking event="progress" offset="00:00:05"><![CDATA[https://test.example.com/progress]]></Tracking>
+       <Tracking event="progress" offset="15%"><![CDATA[https://test.example.com/progress2]]></Tracking>
+       <Tracking event="resume"><![CDATA[https://test.example.com/resume]]></Tracking>
+       <Tracking event="resume"><![CDATA[https://test.example.com/resume2]]></Tracking>
+       <Tracking event="fullscreen"><![CDATA[https://test.example.com/fullscreen]]></Tracking>
+       <Tracking event="fullscreen"><![CDATA[https://test.example.com/fullscreen2]]></Tracking>
+       <Tracking event="creativeView"><![CDATA[https://test.example.com/creativeview]]></Tracking>
+       <Tracking event="creativeView"><![CDATA[https://test.example.com/creativeview2]]></Tracking>
+       <Tracking event="exitFullscreen"><![CDATA[https://test.example.com/exitfullscreen]]></Tracking>
+       <Tracking event="exitFullscreen"><![CDATA[https://test.example.com/exitfullscreen]]></Tracking>
+       <Tracking event="acceptInvitationLinear"><![CDATA[https://test.example.com/acceptinvitationlinear]]></Tracking>
+       <Tracking event="acceptInvitationLinear"><![CDATA[https://test.example.com/acceptinvitationlinear2]]></Tracking>
+       <Tracking event="closeLinear"><![CDATA[https://test.example.com/closelinear]]></Tracking>
+       <Tracking event="closeLinear"><![CDATA[https://test.example.com/closelinear]]></Tracking>
+      </TrackingEvents>
+      <VideoClicks>
+       <ClickTracking><![CDATA[https://test.example.com/clicktracking]]></ClickTracking>
+       <CustomClick>https://test.example.com/customclick</CustomClick>
+      </VideoClicks>
+      <Icons>
+        <Icon>http://adchoices.com</Icon>
+        <Icon>https://test.example.com/icon/staticResource</Icon>
+      </Icons>
+     </Linear>
+    </Creative>
+   </Creatives>
+  </Wrapper>
+ </Ad>
+</VAST>

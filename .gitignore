@@ -1,0 +1,13 @@
+*.swo
+*.swp
+*.log
+.vscode/
+.DS_Store
+.idea/
+.nyc_output/
+coverage/
+dist/
+docs/
+node_modules/
+package-lock.json
+lerna-debug.log

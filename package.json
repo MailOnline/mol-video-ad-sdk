@@ -1,0 +1,60 @@
+{
+  "name": "@mol/video-ad",
+  "private": true,
+  "description": "Mono-repo of VAST libraries that allow Video ads to be served on a browser",
+  "author": "MailOnline <fe@mailonline.co.uk>",
+  "scripts": {
+    "build": "lerna run build",
+    "dev": "lerna run dev",
+    "clean": "git clean -fdX",
+    "docs": "rimraf docs && jsdoc -c jsdoc.json",
+    "lint": "yarn lint-scripts && lerna run lint",
+    "start": "yarn dev && browser-sync start -c ./bs-config.js",
+    "lint-scripts": "eslint --ignore-path .gitignore './*.js'",
+    "postinstall": "yarn build",
+    "precommit": "npm run lint",
+    "commitmsg": "commitlint -e $GIT_PARAMS",
+    "prepush": "npm test",
+    "test": "lerna run test",
+    "publish-ci": "lerna publish --conventional-commits --changelog-preset mol-conventional-changelog"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MailOnline/@mol/video-ad-sdk/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MailOnline/@mol/video-ad-sdk.git"
+  },
+  "homepage": "https://github.com/MailOnline/@mol/video-ad-sdk#readme",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/mol-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "./node_modules/mol-commitlint-config"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/travis-cli": "^7.0.0",
+    "browser-sync": "^2.24.6",
+    "cross-env": "^5.2.0",
+    "husky": "^0.14.3",
+    "jsdoc": "^3.5.5",
+    "lerna": "^2.9.1",
+    "mol-commitlint-config": "^1.1.0",
+    "mol-conventional-changelog": "^1.2.0",
+    "rollup": "^0.63.5",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-commonjs": "^9.1.4",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-terser": "^1.0.1",
+    "tui-jsdoc-template": "^1.2.2"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
