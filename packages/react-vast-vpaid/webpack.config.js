@@ -57,7 +57,11 @@ const devRules = [
 module.exports = (env, {mode}) => {
   const config = {
     entry: {
-      [pkg.main]: './src/index.js'
+      'main.umd': './src/index.js'
+    },
+    externals: {
+      // Use external version of React
+      react: 'React'
     },
     devtool: 'source-map',
     module: {rules},
