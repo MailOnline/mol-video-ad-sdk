@@ -27,11 +27,11 @@
   "dependencies": {
     "@mol/video-ad-sdk": "^0.1.0",
     "prop-types": "^15.6.0",
-    "react": "^16.1.1",
-    "react-dom": "^16.4.1"
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   },
   "devDependencies": {
-    "autoprefixer": "^9.0.1",
+    "autoprefixer": "^9.0.2",
     "babel-core": "^6.25.0",
     "babel-jest": "^23.4.2",
     "babel-loader": "^7.1.5",
@@ -60,7 +60,7 @@
     "stylelint": "^9.4.0",
     "stylelint-config-mailonline": "^4.0.0",
     "svg-react-loader": "^0.4.5",
-    "webpack": "^4.16.3",
+    "webpack": "^4.16.4",
     "webpack-cli": "^3.1.0"
   }
 }

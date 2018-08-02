@@ -2,7 +2,7 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
-import {uglify} from 'rollup-plugin-uglify';
+import {terser} from 'rollup-plugin-terser';
 
 export const getConfig = (pkg) => {
 // eslint-disable-next-line no-process-env
@@ -46,7 +46,7 @@ export const getConfig = (pkg) => {
       },
       plugins: [
         ...plugins,
-        production && uglify()
+        production && terser()
       ]
     },
     {
