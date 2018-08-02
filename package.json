@@ -47,6 +47,11 @@
     "lerna": "^2.9.1",
     "mol-commitlint-config": "^1.1.0",
     "mol-conventional-changelog": "^1.2.0",
+    "rollup": "^0.63.5",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-commonjs": "^9.1.4",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-terser": "^1.0.1",
     "tui-jsdoc-template": "^1.2.2"
   },
   "workspaces": [
