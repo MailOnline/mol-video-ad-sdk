@@ -1,7 +1,6 @@
 /* eslint-disable import/unambiguous, import/no-commonjs, sort-keys, global-require */
 const path = require('path');
-const baseConfig = require('../../webpack.base.config');
-const {name: pkgName} = require('./package.json');
+const pkg = require('./package.json');
 
 const cssLoaders = [
   {
@@ -28,7 +27,21 @@ const cssLoaders = [
 ];
 
 const rules = [
-  ...baseConfig.module.rules,
+  {
+    enforce: 'pre',
+    exclude: /node_modules\/(?!@mol\/).*/,
+    test: /\.js$/,
+    use: ['source-map-loader']
+  },
+  {
+    exclude: /node_modules/,
+    loader: 'babel-loader',
+    test: /\.jsx?$/
+  }
+];
+
+const devRules = [
+  ...rules,
   {
     test: /\.svg$/,
     use: ['babel-loader', 'svg-react-loader']
@@ -43,10 +56,19 @@ const rules = [
 
 module.exports = (env, {mode}) => {
   const config = {
-    ...baseConfig,
+    entry: {
+      [pkg.main]: './src/index.js'
+    },
+    devtool: 'source-map',
+    module: {rules},
+    optimization: {
+      concatenateModules: true,
+      namedModules: true,
+      noEmitOnErrors: true
+    },
     output: {
-      devtoolFallbackModuleFilenameTemplate: `webpack:///${pkgName}/[resource-path]?[hash]`,
-      devtoolModuleFilenameTemplate: `webpack:///${pkgName}/[resource-path]`,
+      devtoolFallbackModuleFilenameTemplate: `webpack:///${pkg.name}/[resource-path]?[hash]`,
+      devtoolModuleFilenameTemplate: `webpack:///${pkg.name}/[resource-path]`,
       path: path.join(__dirname, 'dist'),
       filename: '[name].js',
       library: 'reactVastVpaid',
@@ -57,10 +79,10 @@ module.exports = (env, {mode}) => {
 
   if (mode === 'development') {
     config.entry = {
-      main: './src/index.js',
+      'main.umd': './src/index.js',
       demo: './demo/index.js'
     };
-    config.module.rules = rules;
+    config.module.rules = devRules;
   }
 
   return config;
