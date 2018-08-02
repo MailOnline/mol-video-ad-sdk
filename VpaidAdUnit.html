@@ -1,0 +1,3338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Class: VpaidAdUnit | Video Ad SDK</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+        
+            <link type="text/css" rel="stylesheet" href="styles/tui_overwrites.css">
+        
+            <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Jura">
+        
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="width: 150px; height: 150px">
+        
+            <a href="https://github.com/mailonline/mol-video-ad-sdk" rel="noopener noreferrer" target="_blank">
+                <img src="assets/logo.svg" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Video Ad SDK</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-@mol_react-vast-vpaid.html">@mol/react-vast-vpaid</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/react-vast-vpaid_sub"></div></li><li><a href="module-@mol_vast-xml2js.html">@mol/vast-xml2js</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/vast-xml2js_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-@mol_vast-xml2js.html#.exports.get">exports.get</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getAll">exports.getAll</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getAttribute">exports.getAttribute</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getAttributes">exports.getAttributes</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getFirstChild">exports.getFirstChild</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getText">exports.getText</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-@mol_vast-xml2js.html#.parseXml">parseXml</a></li></ul></div></li><li><a href="module-@mol_video-ad-sdk.html">@mol/video-ad-sdk</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/video-ad-sdk_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-@mol_video-ad-sdk.html#.requestAd">requestAd</a></li><li><a href="module-@mol_video-ad-sdk.html#.requestNextAd">requestNextAd</a></li><li><a href="module-@mol_video-ad-sdk.html#.run">run</a></li><li><a href="module-@mol_video-ad-sdk.html#.runWaterfall">runWaterfall</a></li></ul></div></li><li><a href="module-@mol_videojs-vast-vpaid.html">@mol/videojs-vast-vpaid</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/videojs-vast-vpaid_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-@mol_videojs-vast-vpaid.html">vastVpaidPlugin</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-@mol_videojs-vast-vpaid.html#event:adCancelEvent">adCancelEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adErrorEvent">adErrorEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adRunFinishEvent">adRunFinishEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adStartedEvent">adStartedEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adStartEvent">adStartEvent</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="Emitter.html">Emitter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Emitter_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Emitter.html#emit">emit</a></li><li><a href="Emitter.html#on">on</a></li><li><a href="Emitter.html#once">once</a></li><li><a href="Emitter.html#removeAllListeners">removeAllListeners</a></li><li><a href="Emitter.html#removeListener">removeListener</a></li></ul></div></li><li><a href="VastAdUnit.html">VastAdUnit</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VastAdUnit_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VastAdUnit.html#error">error</a></li><li><a href="VastAdUnit.html#errorCode">errorCode</a></li><li><a href="VastAdUnit.html#icons">icons</a></li><li><a href="VastAdUnit.html#type">type</a></li><li><a href="VastAdUnit.html#vastChain">vastChain</a></li><li><a href="VastAdUnit.html#videoAdContainer">videoAdContainer</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VastAdUnit.html#cancel">cancel</a></li><li><a href="VastAdUnit.html#getVolume">getVolume</a></li><li><a href="VastAdUnit.html#isFinished">isFinished</a></li><li><a href="VastAdUnit.html#isStarted">isStarted</a></li><li><a href="VastAdUnit.html#onError">onError</a></li><li><a href="VastAdUnit.html#onFinish">onFinish</a></li><li><a href="VastAdUnit.html#pause">pause</a></li><li><a href="VastAdUnit.html#resize">resize</a></li><li><a href="VastAdUnit.html#resume">resume</a></li><li><a href="VastAdUnit.html#setVolume">setVolume</a></li><li><a href="VastAdUnit.html#start">start</a></li></ul></div></li><li><a href="VideoAd.html">VideoAd</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VideoAd_sub"></div></li><li><a href="VideoAdContainer.html">VideoAdContainer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VideoAdContainer_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="VideoAdContainer.html#addScript">addScript</a></li><li><a href="VideoAdContainer.html#destroy">destroy</a></li><li><a href="VideoAdContainer.html#isDestroyed">isDestroyed</a></li></ul></div></li><li><a href="VideoAdUnit.html">VideoAdUnit</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VideoAdUnit_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VideoAdUnit.html#error">error</a></li><li><a href="VideoAdUnit.html#errorCode">errorCode</a></li><li><a href="VideoAdUnit.html#icons">icons</a></li><li><a href="VideoAdUnit.html#type">type</a></li><li><a href="VideoAdUnit.html#vastChain">vastChain</a></li><li><a href="VideoAdUnit.html#videoAdContainer">videoAdContainer</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VideoAdUnit.html#cancel">cancel</a></li><li><a href="VideoAdUnit.html#emit">emit</a></li><li><a href="VideoAdUnit.html#getVolume">getVolume</a></li><li><a href="VideoAdUnit.html#isFinished">isFinished</a></li><li><a href="VideoAdUnit.html#isStarted">isStarted</a></li><li><a href="VideoAdUnit.html#on">on</a></li><li><a href="VideoAdUnit.html#once">once</a></li><li><a href="VideoAdUnit.html#onError">onError</a></li><li><a href="VideoAdUnit.html#onFinish">onFinish</a></li><li><a href="VideoAdUnit.html#pause">pause</a></li><li><a href="VideoAdUnit.html#removeAllListeners">removeAllListeners</a></li><li><a href="VideoAdUnit.html#removeListener">removeListener</a></li><li><a href="VideoAdUnit.html#resize">resize</a></li><li><a href="VideoAdUnit.html#resume">resume</a></li><li><a href="VideoAdUnit.html#setVolume">setVolume</a></li></ul></div></li><li><a href="VpaidAdUnit.html">VpaidAdUnit</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VpaidAdUnit_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VpaidAdUnit.html#creativeAd">creativeAd</a></li><li><a href="VpaidAdUnit.html#error">error</a></li><li><a href="VpaidAdUnit.html#errorCode">errorCode</a></li><li><a href="VpaidAdUnit.html#icons">icons</a></li><li><a href="VpaidAdUnit.html#type">type</a></li><li><a href="VpaidAdUnit.html#vastChain">vastChain</a></li><li><a href="VpaidAdUnit.html#videoAdContainer">videoAdContainer</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VpaidAdUnit.html#cancel">cancel</a></li><li><a href="VpaidAdUnit.html#emit">emit</a></li><li><a href="VpaidAdUnit.html#getVolume">getVolume</a></li><li><a href="VpaidAdUnit.html#isFinished">isFinished</a></li><li><a href="VpaidAdUnit.html#isStarted">isStarted</a></li><li><a href="VpaidAdUnit.html#on">on</a></li><li><a href="VpaidAdUnit.html#once">once</a></li><li><a href="VpaidAdUnit.html#onError">onError</a></li><li><a href="VpaidAdUnit.html#onFinish">onFinish</a></li><li><a href="VpaidAdUnit.html#pause">pause</a></li><li><a href="VpaidAdUnit.html#removeAllListeners">removeAllListeners</a></li><li><a href="VpaidAdUnit.html#removeListener">removeListener</a></li><li><a href="VpaidAdUnit.html#resize">resize</a></li><li><a href="VpaidAdUnit.html#resume">resume</a></li><li><a href="VpaidAdUnit.html#setVolume">setVolume</a></li><li><a href="VpaidAdUnit.html#start">start</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Interfaces</h3><ul><li><a href="LinearEvents.html">LinearEvents</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="LinearEvents_sub"><div class="member-type">Events</div><ul class="inner"><li><a href="LinearEvents.html#event:clickThrough">clickThrough</a></li><li><a href="LinearEvents.html#event:complete">complete</a></li><li><a href="LinearEvents.html#event:error">error</a></li><li><a href="LinearEvents.html#event:exitFullscreen">exitFullscreen</a></li><li><a href="LinearEvents.html#event:firstQuartile">firstQuartile</a></li><li><a href="LinearEvents.html#event:fullscreen">fullscreen</a></li><li><a href="LinearEvents.html#event:iconClick">iconClick</a></li><li><a href="LinearEvents.html#event:iconView">iconView</a></li><li><a href="LinearEvents.html#event:impression">impression</a></li><li><a href="LinearEvents.html#event:midpoint">midpoint</a></li><li><a href="LinearEvents.html#event:mute">mute</a></li><li><a href="LinearEvents.html#event:otherAdInteraction">otherAdInteraction</a></li><li><a href="LinearEvents.html#event:pause">pause</a></li><li><a href="LinearEvents.html#event:playerCollapse">playerCollapse</a></li><li><a href="LinearEvents.html#event:playerExpand">playerExpand</a></li><li><a href="LinearEvents.html#event:progress">progress</a></li><li><a href="LinearEvents.html#event:resume">resume</a></li><li><a href="LinearEvents.html#event:rewind">rewind</a></li><li><a href="LinearEvents.html#event:skip">skip</a></li><li><a href="LinearEvents.html#event:start">start</a></li><li><a href="LinearEvents.html#event:thirdQuartile">thirdQuartile</a></li><li><a href="LinearEvents.html#event:timeSpentViewing">timeSpentViewing</a></li><li><a href="LinearEvents.html#event:unmute">unmute</a></li></ul></div></li><li><a href="NonLinearEvents.html">NonLinearEvents</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="NonLinearEvents_sub"><div class="member-type">Events</div><ul class="inner"><li><a href="NonLinearEvents.html#event:acceptInvitation">acceptInvitation</a></li><li><a href="NonLinearEvents.html#event:adCollapse">adCollapse</a></li><li><a href="NonLinearEvents.html#event:close">close</a></li><li><a href="NonLinearEvents.html#event:creativeView">creativeView</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Global</h3><ul><li><a href="global.html#ensureCanplayGetsFired">ensureCanplayGetsFired</a></li><li class="hidden"><a href="global.html#MediaFile">MediaFile</a></li><li class="hidden"><a href="global.html#ParsedAd">ParsedAd</a></li><li class="hidden"><a href="global.html#ParsedOffset">ParsedOffset</a></li><li class="hidden"><a href="global.html#ParsedVast">ParsedVast</a></li><li><a href="global.html">pixelTracker</a></li><li class="hidden"><a href="global.html#TrackerFn">TrackerFn</a></li><li><a href="global.html#tryToResume">tryToResume</a></li><li class="hidden"><a href="global.html#VAST-macro">VAST-macro</a></li><li class="hidden"><a href="global.html#VastChain">VastChain</a></li><li class="hidden"><a href="global.html#VastIcon">VastIcon</a></li><li class="hidden"><a href="global.html#VastResponse">VastResponse</a></li><li class="hidden"><a href="global.html#VastTrackingEvent">VastTrackingEvent</a></li><li class="hidden"><a href="global.html#WrapperOptions">WrapperOptions</a></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>VpaidAdUnit<span class="signature">(vastChain, videoAdContainer, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="VpaidAdUnit">
+            
+                new <span class="type-signature"></span>VpaidAdUnit<span class="signature">(vastChain, videoAdContainer, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html">video-ad-sdk/src/adUnit/VpaidAdUnit.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html#line73">line 73</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>This class provides everything necessary to run a Vpaid ad.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>vastChain</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#VastChain">VastChain</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The <a href="global.html#VastChain">VastChain</a> with all the <a href="global.html#VastResponse">VastResponse</a></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>videoAdContainer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="VideoAdContainer.html">VideoAdContainer</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>container instance to place the ad</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Options Map. The allowed properties are:</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>logger</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Console</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Optional logger instance. Must comply to the <a href="https://developer.mozilla.org/es/docs/Web/API/Console">Console interface</a>.
+Defaults to <code>window.console</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>viewability</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>if true it will pause the ad whenever is not visible for the viewer.
+Defaults to <code>false</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>responsive</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>if true it will resize the ad unit whenever the ad container changes sizes
+Defaults to <code>false</code>
+Defaults to <code>window.console</code></p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="NonLinearEvents.html">NonLinearEvents</a></li>
+        
+            <li><a href="LinearEvents.html">LinearEvents</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+        </div>
+    
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="VideoAdUnit.html">VideoAdUnit</a></li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        <dl>
+            
+
+<dt>
+<h4 class="name" id="creativeAd">
+    <span class="type-signature"></span>creativeAd<span class="type-signature"></span>
+    
+    <div class="container-source members">
+        <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html">video-ad-sdk/src/adUnit/VpaidAdUnit.js</a></code>,
+        <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html#line186">line 186</a></code>
+    </div>
+    
+</h4>
+
+
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Reference to the Vpaid Creative ad unit. Will be null before the ad unit starts.</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        
+            
+
+<dt>
+<h4 class="name" id="error">
+    <span class="type-signature"></span>error<span class="type-signature"></span>
+    
+    <div class="container-source members">
+        <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html">video-ad-sdk/src/adUnit/VideoAdUnit.js</a></code>,
+        <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html#line60">line 60</a></code>
+    </div>
+    
+</h4>
+
+
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>If an error occurs it will contain the reference to the error otherwise it will be bull</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#error">VideoAdUnit#error</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        
+            
+
+<dt>
+<h4 class="name" id="errorCode">
+    <span class="type-signature"></span>errorCode<span class="type-signature"></span>
+    
+    <div class="container-source members">
+        <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html">video-ad-sdk/src/adUnit/VideoAdUnit.js</a></code>,
+        <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html#line63">line 63</a></code>
+    </div>
+    
+</h4>
+
+
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>If an error occurs it will contain the Vast Error code of the error</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#errorCode">VideoAdUnit#errorCode</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        
+            
+
+<dt>
+<h4 class="name" id="icons">
+    <span class="type-signature"></span>icons<span class="type-signature"></span>
+    
+    <div class="container-source members">
+        <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html">video-ad-sdk/src/adUnit/VideoAdUnit.js</a></code>,
+        <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html#line92">line 92</a></code>
+    </div>
+    
+</h4>
+
+
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Array of <a href="global.html#VastIcon">VastIcon</a> definitions to display from the passed <a href="global.html#VastChain">VastChain</a> or null if there are no icons.</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#icons">VideoAdUnit#icons</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        
+            
+
+<dt>
+<h4 class="name" id="type">
+    <span class="type-signature"></span>type<span class="type-signature"></span>
+    
+    <div class="container-source members">
+        <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html">video-ad-sdk/src/adUnit/VpaidAdUnit.js</a></code>,
+        <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html#line183">line 183</a></code>
+    </div>
+    
+</h4>
+
+
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Ad unit type. Will be <code>VPAID</code> for VpaidAdUnit</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#type">VideoAdUnit#type</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        
+            
+
+<dt>
+<h4 class="name" id="vastChain">
+    <span class="type-signature"></span>vastChain<span class="type-signature"></span>
+    
+    <div class="container-source members">
+        <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html">video-ad-sdk/src/adUnit/VideoAdUnit.js</a></code>,
+        <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html#line86">line 86</a></code>
+    </div>
+    
+</h4>
+
+
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Reference to the <a href="global.html#VastChain">VastChain</a> used to load the ad.</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#vastChain">VideoAdUnit#vastChain</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        
+            
+
+<dt>
+<h4 class="name" id="videoAdContainer">
+    <span class="type-signature"></span>videoAdContainer<span class="type-signature"></span>
+    
+    <div class="container-source members">
+        <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html">video-ad-sdk/src/adUnit/VideoAdUnit.js</a></code>,
+        <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html#line89">line 89</a></code>
+    </div>
+    
+</h4>
+
+
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Reference to the <a href="VideoAdContainer.html">VideoAdContainer</a> that contains the ad.</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#videoAdContainer">VideoAdUnit#videoAdContainer</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+                
+
+<dt>
+    
+        <h4 class="name" id="cancel">
+            
+                <span class="type-signature"></span>cancel<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html">video-ad-sdk/src/adUnit/VpaidAdUnit.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html#line327">line 327</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Cancels the ad unit.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Throws:</h5>
+    
+            
+
+    <div class="param-desc">
+    
+        <p>if ad unit is finished.</p>
+    
+    </div>
+
+
+        
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#cancel">VideoAdUnit#cancel</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="emit">
+            
+                <span class="type-signature"></span>emit<span class="signature">(eventName)</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_helpers_Emitter_index.js.html">video-ad-sdk/src/adUnit/helpers/Emitter/index.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_helpers_Emitter_index.js.html#line87">line 87</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Synchronously calls each of the listeners registered for the event named eventName, in the order they were registered,
+passing the supplied arguments to each.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The name of the event.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- <ul>
+<li>Returns true if the event had listeners, false otherwise.</li>
+</ul>
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Emitter.html#emit">Emitter#emit</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="getVolume">
+            
+                <span class="type-signature"></span>getVolume<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html">video-ad-sdk/src/adUnit/VpaidAdUnit.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html#line316">line 316</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Gets the volume of the ad unit.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Throws:</h5>
+    <ul>
+            <li>
+
+    <div class="param-desc">
+    
+        <p>if ad unit is not started.</p>
+    
+    </div>
+
+</li>
+        
+            <li>
+
+    <div class="param-desc">
+    
+        <p>if ad unit is finished.</p>
+    
+    </div>
+
+</li>
+        </ul>
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">number</span>
+
+
+
+
+
+- <ul>
+<li>the volume of the ad unit.</li>
+</ul>
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#getVolume">VideoAdUnit#getVolume</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="isFinished">
+            
+                <span class="type-signature"></span>isFinished<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html">video-ad-sdk/src/adUnit/VideoAdUnit.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html#line266">line 266</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- <ul>
+<li>true if the ad unit is finished and false otherwise</li>
+</ul>
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#isFinished">VideoAdUnit#isFinished</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="isStarted">
+            
+                <span class="type-signature"></span>isStarted<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html">video-ad-sdk/src/adUnit/VideoAdUnit.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html#line273">line 273</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- <ul>
+<li>true if the ad unit has started and false otherwise</li>
+</ul>
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#isStarted">VideoAdUnit#isStarted</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="on">
+            
+                <span class="type-signature"></span>on<span class="signature">(eventName, listener)</span><span class="type-signature"> &rarr; {<a href="Emitter.html">Emitter</a>}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_helpers_Emitter_index.js.html">video-ad-sdk/src/adUnit/helpers/Emitter/index.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_helpers_Emitter_index.js.html#line20">line 20</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Adds the listener function to the end of the listeners array for the event named eventName.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The name of the event.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>listener</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Listener fn that handles the evt.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type"><a href="Emitter.html">Emitter</a></span>
+
+
+
+
+
+- <ul>
+<li>The Emitter instance.</li>
+</ul>
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Emitter.html#on">Emitter#on</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="once">
+            
+                <span class="type-signature"></span>once<span class="signature">(eventName, listener)</span><span class="type-signature"> &rarr; {<a href="Emitter.html">Emitter</a>}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_helpers_Emitter_index.js.html">video-ad-sdk/src/adUnit/helpers/Emitter/index.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_helpers_Emitter_index.js.html#line69">line 69</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Adds a one time listener function for the event named eventName. The next time eventName is triggered,
+this listener is removed and then invoked.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The name of the event.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>listener</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Listener fn that handles the evt.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type"><a href="Emitter.html">Emitter</a></span>
+
+
+
+
+
+- <ul>
+<li>The Emitter instance.</li>
+</ul>
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Emitter.html#once">Emitter#once</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="onError">
+            
+                <span class="type-signature"></span>onError<span class="signature">(callback)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html">video-ad-sdk/src/adUnit/VideoAdUnit.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html#line253">line 253</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Register a callback function that will be called if there is an error while running the ad.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>will be called on ad unit error passing the Error instance as the only argument if available.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Throws:</h5>
+    
+            
+
+    <div class="param-desc">
+    
+        <p>if ad unit is finished.</p>
+    
+    </div>
+
+
+        
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#onError">VideoAdUnit#onError</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="onFinish">
+            
+                <span class="type-signature"></span>onFinish<span class="signature">(callback)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html">video-ad-sdk/src/adUnit/VideoAdUnit.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_VideoAdUnit.js.html#line236">line 236</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Register a callback function that will be called whenever the ad finishes. No matter if it was finished because de ad ended, or cancelled or there was an error playing the ad.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>will be called once the ad unit finished</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Throws:</h5>
+    
+            
+
+    <div class="param-desc">
+    
+        <p>if ad unit is finished.</p>
+    
+    </div>
+
+
+        
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#onFinish">VideoAdUnit#onFinish</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="pause">
+            
+                <span class="type-signature"></span>pause<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html">video-ad-sdk/src/adUnit/VpaidAdUnit.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html#line289">line 289</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Pauses the ad unit.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Throws:</h5>
+    <ul>
+            <li>
+
+    <div class="param-desc">
+    
+        <p>if ad unit is not started.</p>
+    
+    </div>
+
+</li>
+        
+            <li>
+
+    <div class="param-desc">
+    
+        <p>if ad unit is finished.</p>
+    
+    </div>
+
+</li>
+        </ul>
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#pause">VideoAdUnit#pause</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="removeAllListeners">
+            
+                <span class="type-signature"></span>removeAllListeners<span class="signature">(eventName)</span><span class="type-signature"> &rarr; {<a href="Emitter.html">Emitter</a>}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_helpers_Emitter_index.js.html">video-ad-sdk/src/adUnit/helpers/Emitter/index.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_helpers_Emitter_index.js.html#line51">line 51</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Removes all listeners, or those of the specified eventName.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The name of the event. Optional if omitted all listeners will be removed.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type"><a href="Emitter.html">Emitter</a></span>
+
+
+
+
+
+- <ul>
+<li>The Emitter instance.</li>
+</ul>
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Emitter.html#removeAllListeners">Emitter#removeAllListeners</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="removeListener">
+            
+                <span class="type-signature"></span>removeListener<span class="signature">(eventName, listener)</span><span class="type-signature"> &rarr; {<a href="Emitter.html">Emitter</a>}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_helpers_Emitter_index.js.html">video-ad-sdk/src/adUnit/helpers/Emitter/index.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_helpers_Emitter_index.js.html#line36">line 36</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Removes the specified listener from the listener array for the event named eventName.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The name of the event.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>listener</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Listener fn that handles the evt.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type"><a href="Emitter.html">Emitter</a></span>
+
+
+
+
+
+- <ul>
+<li>The Emitter instance.</li>
+</ul>
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Emitter.html#removeListener">Emitter#removeListener</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="resize">
+            
+                <span class="type-signature"><span class="icon green">async</span> </span>resize<span class="signature">()</span><span class="type-signature"> &rarr; {Promise}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html">video-ad-sdk/src/adUnit/VpaidAdUnit.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html#line343">line 343</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>This method resizes the ad unit to fit the available space in the passed <a href="VideoAdContainer.html">VideoAdContainer</a></p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Throws:</h5>
+    <ul>
+            <li>
+
+    <div class="param-desc">
+    
+        <p>if ad unit is not started.</p>
+    
+    </div>
+
+</li>
+        
+            <li>
+
+    <div class="param-desc">
+    
+        <p>if ad unit is finished.</p>
+    
+    </div>
+
+</li>
+        </ul>
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+- <ul>
+<li>that resolves once the unit was resized</li>
+</ul>
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#resize">VideoAdUnit#resize</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="resume">
+            
+                <span class="type-signature"></span>resume<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html">video-ad-sdk/src/adUnit/VpaidAdUnit.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html#line278">line 278</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Resumes a previously paused ad unit.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Throws:</h5>
+    <ul>
+            <li>
+
+    <div class="param-desc">
+    
+        <p>if ad unit is not started.</p>
+    
+    </div>
+
+</li>
+        
+            <li>
+
+    <div class="param-desc">
+    
+        <p>if ad unit is finished.</p>
+    
+    </div>
+
+</li>
+        </ul>
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#resume">VideoAdUnit#resume</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="setVolume">
+            
+                <span class="type-signature"></span>setVolume<span class="signature">(volume)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html">video-ad-sdk/src/adUnit/VpaidAdUnit.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html#line302">line 302</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Sets the volume of the ad unit.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>volume</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>must be a value between 0 and 1;</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Throws:</h5>
+    <ul>
+            <li>
+
+    <div class="param-desc">
+    
+        <p>if ad unit is not started.</p>
+    
+    </div>
+
+</li>
+        
+            <li>
+
+    <div class="param-desc">
+    
+        <p>if ad unit is finished.</p>
+    
+    </div>
+
+</li>
+        </ul>
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="VideoAdUnit.html#setVolume">VideoAdUnit#setVolume</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="start">
+            
+                <span class="type-signature"><span class="icon green">async</span> </span>start<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html">video-ad-sdk/src/adUnit/VpaidAdUnit.js</a></code>,
+                <code><a href="video-ad-sdk_src_adUnit_VpaidAdUnit.js.html#line214">line 214</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Starts the ad unit.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Throws:</h5>
+    <ul>
+            <li>
+
+    <div class="param-desc">
+    
+        <p>if called twice.</p>
+    
+    </div>
+
+</li>
+        
+            <li>
+
+    <div class="param-desc">
+    
+        <p>if ad unit is finished.</p>
+    
+    </div>
+
+</li>
+        </ul>
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="assets/logo.svg" style="width: 150px; height: 150px">
+    <div class="footer-text">Powered by <a href='http://www.mailonline.com' target='_blank' class='link'>MailOnline</a> - logo by <a class='link' href='https://www.iconfinder.com/iconbaandar' rel='nofollow'>iconbaandar</a>&nbsp;licensed under <a class='link' href='https://creativecommons.org/licenses/by/2.5/' rel='nofollow'>CC BY 2.5</a></div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = 'VpaidAdUnit_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

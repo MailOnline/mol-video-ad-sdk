@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Module: @mol/videojs-vast-vpaid | Video Ad SDK</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+        
+            <link type="text/css" rel="stylesheet" href="styles/tui_overwrites.css">
+        
+            <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Jura">
+        
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="width: 150px; height: 150px">
+        
+            <a href="https://github.com/mailonline/mol-video-ad-sdk" rel="noopener noreferrer" target="_blank">
+                <img src="assets/logo.svg" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Video Ad SDK</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-@mol_react-vast-vpaid.html">@mol/react-vast-vpaid</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/react-vast-vpaid_sub"></div></li><li><a href="module-@mol_vast-xml2js.html">@mol/vast-xml2js</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/vast-xml2js_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-@mol_vast-xml2js.html#.exports.get">exports.get</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getAll">exports.getAll</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getAttribute">exports.getAttribute</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getAttributes">exports.getAttributes</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getFirstChild">exports.getFirstChild</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getText">exports.getText</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-@mol_vast-xml2js.html#.parseXml">parseXml</a></li></ul></div></li><li><a href="module-@mol_video-ad-sdk.html">@mol/video-ad-sdk</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/video-ad-sdk_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-@mol_video-ad-sdk.html#.requestAd">requestAd</a></li><li><a href="module-@mol_video-ad-sdk.html#.requestNextAd">requestNextAd</a></li><li><a href="module-@mol_video-ad-sdk.html#.run">run</a></li><li><a href="module-@mol_video-ad-sdk.html#.runWaterfall">runWaterfall</a></li></ul></div></li><li><a href="module-@mol_videojs-vast-vpaid.html">@mol/videojs-vast-vpaid</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/videojs-vast-vpaid_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-@mol_videojs-vast-vpaid.html">vastVpaidPlugin</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-@mol_videojs-vast-vpaid.html#event:adCancelEvent">adCancelEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adErrorEvent">adErrorEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adRunFinishEvent">adRunFinishEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adStartedEvent">adStartedEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adStartEvent">adStartEvent</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="Emitter.html">Emitter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Emitter_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Emitter.html#emit">emit</a></li><li><a href="Emitter.html#on">on</a></li><li><a href="Emitter.html#once">once</a></li><li><a href="Emitter.html#removeAllListeners">removeAllListeners</a></li><li><a href="Emitter.html#removeListener">removeListener</a></li></ul></div></li><li><a href="VastAdUnit.html">VastAdUnit</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VastAdUnit_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VastAdUnit.html#error">error</a></li><li><a href="VastAdUnit.html#errorCode">errorCode</a></li><li><a href="VastAdUnit.html#icons">icons</a></li><li><a href="VastAdUnit.html#type">type</a></li><li><a href="VastAdUnit.html#vastChain">vastChain</a></li><li><a href="VastAdUnit.html#videoAdContainer">videoAdContainer</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VastAdUnit.html#cancel">cancel</a></li><li><a href="VastAdUnit.html#getVolume">getVolume</a></li><li><a href="VastAdUnit.html#isFinished">isFinished</a></li><li><a href="VastAdUnit.html#isStarted">isStarted</a></li><li><a href="VastAdUnit.html#onError">onError</a></li><li><a href="VastAdUnit.html#onFinish">onFinish</a></li><li><a href="VastAdUnit.html#pause">pause</a></li><li><a href="VastAdUnit.html#resize">resize</a></li><li><a href="VastAdUnit.html#resume">resume</a></li><li><a href="VastAdUnit.html#setVolume">setVolume</a></li><li><a href="VastAdUnit.html#start">start</a></li></ul></div></li><li><a href="VideoAd.html">VideoAd</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VideoAd_sub"></div></li><li><a href="VideoAdContainer.html">VideoAdContainer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VideoAdContainer_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="VideoAdContainer.html#addScript">addScript</a></li><li><a href="VideoAdContainer.html#destroy">destroy</a></li><li><a href="VideoAdContainer.html#isDestroyed">isDestroyed</a></li></ul></div></li><li><a href="VideoAdUnit.html">VideoAdUnit</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VideoAdUnit_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VideoAdUnit.html#error">error</a></li><li><a href="VideoAdUnit.html#errorCode">errorCode</a></li><li><a href="VideoAdUnit.html#icons">icons</a></li><li><a href="VideoAdUnit.html#type">type</a></li><li><a href="VideoAdUnit.html#vastChain">vastChain</a></li><li><a href="VideoAdUnit.html#videoAdContainer">videoAdContainer</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VideoAdUnit.html#cancel">cancel</a></li><li><a href="VideoAdUnit.html#emit">emit</a></li><li><a href="VideoAdUnit.html#getVolume">getVolume</a></li><li><a href="VideoAdUnit.html#isFinished">isFinished</a></li><li><a href="VideoAdUnit.html#isStarted">isStarted</a></li><li><a href="VideoAdUnit.html#on">on</a></li><li><a href="VideoAdUnit.html#once">once</a></li><li><a href="VideoAdUnit.html#onError">onError</a></li><li><a href="VideoAdUnit.html#onFinish">onFinish</a></li><li><a href="VideoAdUnit.html#pause">pause</a></li><li><a href="VideoAdUnit.html#removeAllListeners">removeAllListeners</a></li><li><a href="VideoAdUnit.html#removeListener">removeListener</a></li><li><a href="VideoAdUnit.html#resize">resize</a></li><li><a href="VideoAdUnit.html#resume">resume</a></li><li><a href="VideoAdUnit.html#setVolume">setVolume</a></li></ul></div></li><li><a href="VpaidAdUnit.html">VpaidAdUnit</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VpaidAdUnit_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VpaidAdUnit.html#creativeAd">creativeAd</a></li><li><a href="VpaidAdUnit.html#error">error</a></li><li><a href="VpaidAdUnit.html#errorCode">errorCode</a></li><li><a href="VpaidAdUnit.html#icons">icons</a></li><li><a href="VpaidAdUnit.html#type">type</a></li><li><a href="VpaidAdUnit.html#vastChain">vastChain</a></li><li><a href="VpaidAdUnit.html#videoAdContainer">videoAdContainer</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VpaidAdUnit.html#cancel">cancel</a></li><li><a href="VpaidAdUnit.html#emit">emit</a></li><li><a href="VpaidAdUnit.html#getVolume">getVolume</a></li><li><a href="VpaidAdUnit.html#isFinished">isFinished</a></li><li><a href="VpaidAdUnit.html#isStarted">isStarted</a></li><li><a href="VpaidAdUnit.html#on">on</a></li><li><a href="VpaidAdUnit.html#once">once</a></li><li><a href="VpaidAdUnit.html#onError">onError</a></li><li><a href="VpaidAdUnit.html#onFinish">onFinish</a></li><li><a href="VpaidAdUnit.html#pause">pause</a></li><li><a href="VpaidAdUnit.html#removeAllListeners">removeAllListeners</a></li><li><a href="VpaidAdUnit.html#removeListener">removeListener</a></li><li><a href="VpaidAdUnit.html#resize">resize</a></li><li><a href="VpaidAdUnit.html#resume">resume</a></li><li><a href="VpaidAdUnit.html#setVolume">setVolume</a></li><li><a href="VpaidAdUnit.html#start">start</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Interfaces</h3><ul><li><a href="LinearEvents.html">LinearEvents</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="LinearEvents_sub"><div class="member-type">Events</div><ul class="inner"><li><a href="LinearEvents.html#event:clickThrough">clickThrough</a></li><li><a href="LinearEvents.html#event:complete">complete</a></li><li><a href="LinearEvents.html#event:error">error</a></li><li><a href="LinearEvents.html#event:exitFullscreen">exitFullscreen</a></li><li><a href="LinearEvents.html#event:firstQuartile">firstQuartile</a></li><li><a href="LinearEvents.html#event:fullscreen">fullscreen</a></li><li><a href="LinearEvents.html#event:iconClick">iconClick</a></li><li><a href="LinearEvents.html#event:iconView">iconView</a></li><li><a href="LinearEvents.html#event:impression">impression</a></li><li><a href="LinearEvents.html#event:midpoint">midpoint</a></li><li><a href="LinearEvents.html#event:mute">mute</a></li><li><a href="LinearEvents.html#event:otherAdInteraction">otherAdInteraction</a></li><li><a href="LinearEvents.html#event:pause">pause</a></li><li><a href="LinearEvents.html#event:playerCollapse">playerCollapse</a></li><li><a href="LinearEvents.html#event:playerExpand">playerExpand</a></li><li><a href="LinearEvents.html#event:progress">progress</a></li><li><a href="LinearEvents.html#event:resume">resume</a></li><li><a href="LinearEvents.html#event:rewind">rewind</a></li><li><a href="LinearEvents.html#event:skip">skip</a></li><li><a href="LinearEvents.html#event:start">start</a></li><li><a href="LinearEvents.html#event:thirdQuartile">thirdQuartile</a></li><li><a href="LinearEvents.html#event:timeSpentViewing">timeSpentViewing</a></li><li><a href="LinearEvents.html#event:unmute">unmute</a></li></ul></div></li><li><a href="NonLinearEvents.html">NonLinearEvents</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="NonLinearEvents_sub"><div class="member-type">Events</div><ul class="inner"><li><a href="NonLinearEvents.html#event:acceptInvitation">acceptInvitation</a></li><li><a href="NonLinearEvents.html#event:adCollapse">adCollapse</a></li><li><a href="NonLinearEvents.html#event:close">close</a></li><li><a href="NonLinearEvents.html#event:creativeView">creativeView</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Global</h3><ul><li><a href="global.html#ensureCanplayGetsFired">ensureCanplayGetsFired</a></li><li class="hidden"><a href="global.html#MediaFile">MediaFile</a></li><li class="hidden"><a href="global.html#ParsedAd">ParsedAd</a></li><li class="hidden"><a href="global.html#ParsedOffset">ParsedOffset</a></li><li class="hidden"><a href="global.html#ParsedVast">ParsedVast</a></li><li><a href="global.html">pixelTracker</a></li><li class="hidden"><a href="global.html#TrackerFn">TrackerFn</a></li><li><a href="global.html#tryToResume">tryToResume</a></li><li class="hidden"><a href="global.html#VAST-macro">VAST-macro</a></li><li class="hidden"><a href="global.html#VastChain">VastChain</a></li><li class="hidden"><a href="global.html#VastIcon">VastIcon</a></li><li class="hidden"><a href="global.html#VastResponse">VastResponse</a></li><li class="hidden"><a href="global.html#VastTrackingEvent">VastTrackingEvent</a></li><li class="hidden"><a href="global.html#WrapperOptions">WrapperOptions</a></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>@mol/videojs-vast-vpaid</h2>
+        
+            
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+                <div class="description"><p><a href="http://videojs.com/">videojs</a> plugin to play VAST/VPAID video ads.</p></div>
+            
+
+            
+                
+
+<dt>
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+                
+
+<dt>
+    
+        <h4 class="name" id="vastVpaidPlugin">
+            
+                <span class="type-signature"></span>vastVpaidPlugin<span class="signature">(options)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="videojs-vast-vpaid_src_vastVpaidPlugin.js.html">videojs-vast-vpaid/src/vastVpaidPlugin.js</a></code>,
+                <code><a href="videojs-vast-vpaid_src_vastVpaidPlugin.js.html#line61">line 61</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>VideoJS Vast Vpaid plugin class</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Options Map. The allowed properties are:</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>getAdTag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>will be called to get the vast tag must return a vast tag (string) or a promise that will resolve with a vast tag.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>placeholder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLElement</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>placeholder element that will contain the video ad. If not provider the plugin will create one.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>adStartEvent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>name of the event to run an ad. The plugin try to run an ad if that event is triggered by the player.
+Defaults to <code>adStart</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>adStartedEvent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>name of the event the player will trigger to indicate an ad has started.
+Defaults to <code>adStarted</code></p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>adUnit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>the video ad unit will be added to the <code>adStartedEvent</code> event object.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>adCancelEvent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>name of the event to cancel an ad. The plugin will cancel any running ad if that event is triggered by the player
+Defaults to <code>adCancel</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>adRunFinishEvent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>name of the event the player must trigger to indicate that the ad finished. Will be called if an ad completes or gets cancel or has an error.
+Defaults to <code>adRunFinish</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>adErrorEvent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>name of the event the player must trigger to indicate that there was an error playing the video ad.
+Defaults to <code>adError</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>onAdStart</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">runWaterfall~onAdStart</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>will be called once the ad starts with the ad unit.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>onRunFinish</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">runWaterfall~onRunFinish</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>will be called whenever the ad run finishes. Can be used to know when to unmount the component</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>logger</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Console</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Optional logger instance. Must comply to the <a href="https://developer.mozilla.org/es/docs/Web/API/Console">Console interface</a>.
+Defaults to <code>window.console</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>wrapperLimit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Sets the maximum number of wrappers allowed in the <a href="global.html#VastChain">VastChain</a>.
+ Defaults to <code>5</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>viewability</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>if true it will pause the ad whenever is not visible for the viewer.
+Defaults to <code>false</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>responsive</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>if true it will resize the ad unit whenever the ad container changes sizes.
+Defaults to <code>false</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>timeout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>timeout number in milliseconds. If set, the video ad will time out if it doesn't start within the specified time.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tracker</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TrackerFn">TrackerFn</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>If provided it will be used to track the VAST events instead of the default <a href="global.html">pixelTracker</a>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>hooks</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Optional map with hooks to configure the behaviour of the ad.</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>createSkipControl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>If provided it will be called to generate the skip control. Must return a clickable <a href="https://developer.mozilla.org/es/docs/Web/API/HTMLElement">HTMLElement</a> that is detached from the DOM.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+    <h5>Fires:</h5>
+    <ul>
+        <li>event:adStartedEvent</li>
+    
+        <li>event:adErrorEvent</li>
+    
+        <li>event:adRunFinishEvent</li>
+    </ul>
+    
+
+    
+    <h5>Listens to Events:</h5>
+    <ul>
+        <li>event:adStartEvent</li>
+    
+        <li>event:adCancelEvent</li>
+    </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
+    
+
+    
+
+    
+        <h3 class="subsection-title">Events</h3>
+
+        <dl>
+            
+
+<dt>
+    
+        <h4 class="name" id="event:adCancelEvent">
+            
+                adCancelEvent
+                
+            
+            <div class="container-source members">
+                <code><a href="videojs-vast-vpaid_src_vastVpaidPlugin.js.html">videojs-vast-vpaid/src/vastVpaidPlugin.js</a></code>,
+                <code><a href="videojs-vast-vpaid_src_vastVpaidPlugin.js.html#line84">line 84</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Tells <a href="module-@mol_videojs-vast-vpaid.html">vastVpaidPlugin</a> plugin to cancel any running ad unit. If no ad is running it will do nothing.</p>
+    </div>
+    
+
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The event type (name) is configurable and defaults to <code>adCancel</code></p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:adErrorEvent">
+            
+                adErrorEvent
+                
+            
+            <div class="container-source members">
+                <code><a href="videojs-vast-vpaid_src_vastVpaidPlugin.js.html">videojs-vast-vpaid/src/vastVpaidPlugin.js</a></code>,
+                <code><a href="videojs-vast-vpaid_src_vastVpaidPlugin.js.html#line102">line 102</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fired by <a href="module-@mol_videojs-vast-vpaid.html">vastVpaidPlugin</a> plugin if there is an error while running the ad.</p>
+    </div>
+    
+
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The event type (name) is configurable and defaults to <code>adError</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>error</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Error</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The video ad error.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:adRunFinishEvent">
+            
+                adRunFinishEvent
+                
+            
+            <div class="container-source members">
+                <code><a href="videojs-vast-vpaid_src_vastVpaidPlugin.js.html">videojs-vast-vpaid/src/vastVpaidPlugin.js</a></code>,
+                <code><a href="videojs-vast-vpaid_src_vastVpaidPlugin.js.html#line93">line 93</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fired by <a href="module-@mol_videojs-vast-vpaid.html">vastVpaidPlugin</a> plugin once an ad has finished. It will be fired no matter how the ad ended.</p>
+    </div>
+    
+
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The event type (name) is configurable and defaults to <code>adRunFinish</code></p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:adStartedEvent">
+            
+                adStartedEvent
+                
+            
+            <div class="container-source members">
+                <code><a href="videojs-vast-vpaid_src_vastVpaidPlugin.js.html">videojs-vast-vpaid/src/vastVpaidPlugin.js</a></code>,
+                <code><a href="videojs-vast-vpaid_src_vastVpaidPlugin.js.html#line74">line 74</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fired by <a href="module-@mol_videojs-vast-vpaid.html">vastVpaidPlugin</a> plugin once an ad has started</p>
+    </div>
+    
+
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The event type (name) is configurable and defaults to <code>adStarted</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>adUnit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="VastAdUnit.html">VastAdUnit</a></span>
+|
+
+<span class="param-type"><a href="VpaidAdUnit.html">VpaidAdUnit</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The video ad unit.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:adStartEvent">
+            
+                adStartEvent
+                
+            
+            <div class="container-source members">
+                <code><a href="videojs-vast-vpaid_src_vastVpaidPlugin.js.html">videojs-vast-vpaid/src/vastVpaidPlugin.js</a></code>,
+                <code><a href="videojs-vast-vpaid_src_vastVpaidPlugin.js.html#line65">line 65</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Tells <a href="module-@mol_videojs-vast-vpaid.html">vastVpaidPlugin</a> plugin to run an ad.</p>
+    </div>
+    
+
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The event type (name) is configurable and defaults to <code>adStart</code></p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        </dl>
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="assets/logo.svg" style="width: 150px; height: 150px">
+    <div class="footer-text">Powered by <a href='http://www.mailonline.com' target='_blank' class='link'>MailOnline</a> - logo by <a class='link' href='https://www.iconfinder.com/iconbaandar' rel='nofollow'>iconbaandar</a>&nbsp;licensed under <a class='link' href='https://creativecommons.org/licenses/by/2.5/' rel='nofollow'>CC BY 2.5</a></div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = 'module:@mol/videojs-vast-vpaid_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: video-ad-sdk/src/adUnit/VastAdUnit.js | Video Ad SDK</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+        
+            <link type="text/css" rel="stylesheet" href="styles/tui_overwrites.css">
+        
+            <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Jura">
+        
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="width: 150px; height: 150px">
+        
+            <a href="https://github.com/mailonline/mol-video-ad-sdk" rel="noopener noreferrer" target="_blank">
+                <img src="assets/logo.svg" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Video Ad SDK</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-@mol_react-vast-vpaid.html">@mol/react-vast-vpaid</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/react-vast-vpaid_sub"></div></li><li><a href="module-@mol_vast-xml2js.html">@mol/vast-xml2js</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/vast-xml2js_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-@mol_vast-xml2js.html#.exports.get">exports.get</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getAll">exports.getAll</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getAttribute">exports.getAttribute</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getAttributes">exports.getAttributes</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getFirstChild">exports.getFirstChild</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getText">exports.getText</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-@mol_vast-xml2js.html#.parseXml">parseXml</a></li></ul></div></li><li><a href="module-@mol_video-ad-sdk.html">@mol/video-ad-sdk</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/video-ad-sdk_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-@mol_video-ad-sdk.html#.requestAd">requestAd</a></li><li><a href="module-@mol_video-ad-sdk.html#.requestNextAd">requestNextAd</a></li><li><a href="module-@mol_video-ad-sdk.html#.run">run</a></li><li><a href="module-@mol_video-ad-sdk.html#.runWaterfall">runWaterfall</a></li></ul></div></li><li><a href="module-@mol_videojs-vast-vpaid.html">@mol/videojs-vast-vpaid</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/videojs-vast-vpaid_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-@mol_videojs-vast-vpaid.html">vastVpaidPlugin</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-@mol_videojs-vast-vpaid.html#event:adCancelEvent">adCancelEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adErrorEvent">adErrorEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adRunFinishEvent">adRunFinishEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adStartedEvent">adStartedEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adStartEvent">adStartEvent</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="Emitter.html">Emitter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Emitter_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Emitter.html#emit">emit</a></li><li><a href="Emitter.html#on">on</a></li><li><a href="Emitter.html#once">once</a></li><li><a href="Emitter.html#removeAllListeners">removeAllListeners</a></li><li><a href="Emitter.html#removeListener">removeListener</a></li></ul></div></li><li><a href="VastAdUnit.html">VastAdUnit</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VastAdUnit_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VastAdUnit.html#error">error</a></li><li><a href="VastAdUnit.html#errorCode">errorCode</a></li><li><a href="VastAdUnit.html#icons">icons</a></li><li><a href="VastAdUnit.html#type">type</a></li><li><a href="VastAdUnit.html#vastChain">vastChain</a></li><li><a href="VastAdUnit.html#videoAdContainer">videoAdContainer</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VastAdUnit.html#cancel">cancel</a></li><li><a href="VastAdUnit.html#getVolume">getVolume</a></li><li><a href="VastAdUnit.html#isFinished">isFinished</a></li><li><a href="VastAdUnit.html#isStarted">isStarted</a></li><li><a href="VastAdUnit.html#onError">onError</a></li><li><a href="VastAdUnit.html#onFinish">onFinish</a></li><li><a href="VastAdUnit.html#pause">pause</a></li><li><a href="VastAdUnit.html#resize">resize</a></li><li><a href="VastAdUnit.html#resume">resume</a></li><li><a href="VastAdUnit.html#setVolume">setVolume</a></li><li><a href="VastAdUnit.html#start">start</a></li></ul></div></li><li><a href="VideoAd.html">VideoAd</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VideoAd_sub"></div></li><li><a href="VideoAdContainer.html">VideoAdContainer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VideoAdContainer_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="VideoAdContainer.html#addScript">addScript</a></li><li><a href="VideoAdContainer.html#destroy">destroy</a></li><li><a href="VideoAdContainer.html#isDestroyed">isDestroyed</a></li></ul></div></li><li><a href="VideoAdUnit.html">VideoAdUnit</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VideoAdUnit_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VideoAdUnit.html#error">error</a></li><li><a href="VideoAdUnit.html#errorCode">errorCode</a></li><li><a href="VideoAdUnit.html#icons">icons</a></li><li><a href="VideoAdUnit.html#type">type</a></li><li><a href="VideoAdUnit.html#vastChain">vastChain</a></li><li><a href="VideoAdUnit.html#videoAdContainer">videoAdContainer</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VideoAdUnit.html#cancel">cancel</a></li><li><a href="VideoAdUnit.html#emit">emit</a></li><li><a href="VideoAdUnit.html#getVolume">getVolume</a></li><li><a href="VideoAdUnit.html#isFinished">isFinished</a></li><li><a href="VideoAdUnit.html#isStarted">isStarted</a></li><li><a href="VideoAdUnit.html#on">on</a></li><li><a href="VideoAdUnit.html#once">once</a></li><li><a href="VideoAdUnit.html#onError">onError</a></li><li><a href="VideoAdUnit.html#onFinish">onFinish</a></li><li><a href="VideoAdUnit.html#pause">pause</a></li><li><a href="VideoAdUnit.html#removeAllListeners">removeAllListeners</a></li><li><a href="VideoAdUnit.html#removeListener">removeListener</a></li><li><a href="VideoAdUnit.html#resize">resize</a></li><li><a href="VideoAdUnit.html#resume">resume</a></li><li><a href="VideoAdUnit.html#setVolume">setVolume</a></li></ul></div></li><li><a href="VpaidAdUnit.html">VpaidAdUnit</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VpaidAdUnit_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VpaidAdUnit.html#creativeAd">creativeAd</a></li><li><a href="VpaidAdUnit.html#error">error</a></li><li><a href="VpaidAdUnit.html#errorCode">errorCode</a></li><li><a href="VpaidAdUnit.html#icons">icons</a></li><li><a href="VpaidAdUnit.html#type">type</a></li><li><a href="VpaidAdUnit.html#vastChain">vastChain</a></li><li><a href="VpaidAdUnit.html#videoAdContainer">videoAdContainer</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VpaidAdUnit.html#cancel">cancel</a></li><li><a href="VpaidAdUnit.html#emit">emit</a></li><li><a href="VpaidAdUnit.html#getVolume">getVolume</a></li><li><a href="VpaidAdUnit.html#isFinished">isFinished</a></li><li><a href="VpaidAdUnit.html#isStarted">isStarted</a></li><li><a href="VpaidAdUnit.html#on">on</a></li><li><a href="VpaidAdUnit.html#once">once</a></li><li><a href="VpaidAdUnit.html#onError">onError</a></li><li><a href="VpaidAdUnit.html#onFinish">onFinish</a></li><li><a href="VpaidAdUnit.html#pause">pause</a></li><li><a href="VpaidAdUnit.html#removeAllListeners">removeAllListeners</a></li><li><a href="VpaidAdUnit.html#removeListener">removeListener</a></li><li><a href="VpaidAdUnit.html#resize">resize</a></li><li><a href="VpaidAdUnit.html#resume">resume</a></li><li><a href="VpaidAdUnit.html#setVolume">setVolume</a></li><li><a href="VpaidAdUnit.html#start">start</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Interfaces</h3><ul><li><a href="LinearEvents.html">LinearEvents</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="LinearEvents_sub"><div class="member-type">Events</div><ul class="inner"><li><a href="LinearEvents.html#event:clickThrough">clickThrough</a></li><li><a href="LinearEvents.html#event:complete">complete</a></li><li><a href="LinearEvents.html#event:error">error</a></li><li><a href="LinearEvents.html#event:exitFullscreen">exitFullscreen</a></li><li><a href="LinearEvents.html#event:firstQuartile">firstQuartile</a></li><li><a href="LinearEvents.html#event:fullscreen">fullscreen</a></li><li><a href="LinearEvents.html#event:iconClick">iconClick</a></li><li><a href="LinearEvents.html#event:iconView">iconView</a></li><li><a href="LinearEvents.html#event:impression">impression</a></li><li><a href="LinearEvents.html#event:midpoint">midpoint</a></li><li><a href="LinearEvents.html#event:mute">mute</a></li><li><a href="LinearEvents.html#event:otherAdInteraction">otherAdInteraction</a></li><li><a href="LinearEvents.html#event:pause">pause</a></li><li><a href="LinearEvents.html#event:playerCollapse">playerCollapse</a></li><li><a href="LinearEvents.html#event:playerExpand">playerExpand</a></li><li><a href="LinearEvents.html#event:progress">progress</a></li><li><a href="LinearEvents.html#event:resume">resume</a></li><li><a href="LinearEvents.html#event:rewind">rewind</a></li><li><a href="LinearEvents.html#event:skip">skip</a></li><li><a href="LinearEvents.html#event:start">start</a></li><li><a href="LinearEvents.html#event:thirdQuartile">thirdQuartile</a></li><li><a href="LinearEvents.html#event:timeSpentViewing">timeSpentViewing</a></li><li><a href="LinearEvents.html#event:unmute">unmute</a></li></ul></div></li><li><a href="NonLinearEvents.html">NonLinearEvents</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="NonLinearEvents_sub"><div class="member-type">Events</div><ul class="inner"><li><a href="NonLinearEvents.html#event:acceptInvitation">acceptInvitation</a></li><li><a href="NonLinearEvents.html#event:adCollapse">adCollapse</a></li><li><a href="NonLinearEvents.html#event:close">close</a></li><li><a href="NonLinearEvents.html#event:creativeView">creativeView</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Global</h3><ul><li><a href="global.html#ensureCanplayGetsFired">ensureCanplayGetsFired</a></li><li class="hidden"><a href="global.html#MediaFile">MediaFile</a></li><li class="hidden"><a href="global.html#ParsedAd">ParsedAd</a></li><li class="hidden"><a href="global.html#ParsedOffset">ParsedOffset</a></li><li class="hidden"><a href="global.html#ParsedVast">ParsedVast</a></li><li><a href="global.html">pixelTracker</a></li><li class="hidden"><a href="global.html#TrackerFn">TrackerFn</a></li><li><a href="global.html#tryToResume">tryToResume</a></li><li class="hidden"><a href="global.html#VAST-macro">VAST-macro</a></li><li class="hidden"><a href="global.html#VastChain">VastChain</a></li><li class="hidden"><a href="global.html#VastIcon">VastIcon</a></li><li class="hidden"><a href="global.html#VastResponse">VastResponse</a></li><li class="hidden"><a href="global.html#VastTrackingEvent">VastTrackingEvent</a></li><li class="hidden"><a href="global.html#WrapperOptions">WrapperOptions</a></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable promise/prefer-await-to-callbacks */
+import {linearEvents} from '../tracker';
+import findBestMedia from './helpers/media/findBestMedia';
+import once from './helpers/dom/once';
+import setupMetricHandlers from './helpers/metrics/setupMetricHandlers';
+import updateMedia from './helpers/media/updateMedia';
+import VideoAdUnit, {_protected} from './VideoAdUnit';
+
+const {
+  complete,
+  error: errorEvt,
+  skip
+} = linearEvents;
+
+// eslint-disable-next-line id-match
+const _private = Symbol('_private');
+
+/**
+ * @class
+ * @extends VideoAdUnit
+ * @alias VastAdUnit
+ * @implements LinearEvents
+ * @description This class provides everything necessary to run a Vast ad.
+ */
+class VastAdUnit extends VideoAdUnit {
+  [_private] = {
+    handleMetric: (event, data) => {
+      switch (event) {
+      case complete: {
+        this[_protected].finish();
+        break;
+      }
+      case errorEvt: {
+        this.error = data;
+        this.errorCode = this.error &amp;&amp; this.error.errorCode ? this.error.errorCode : 405;
+        this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
+        this[_protected].finish();
+        break;
+      }
+      case skip: {
+        this.cancel();
+        break;
+      }
+      }
+
+      this.emit(event, event, this, data);
+    }
+  };
+
+  assetUri = null;
+
+  /** Ad unit type. Will be `VAST` for VastAdUnit */
+  type='VAST';
+
+  /**
+   * Creates a {VastAdUnit}.
+   *
+   * @param {VastChain} vastChain - The {@link VastChain} with all the {@link VastResponse}
+   * @param {VideoAdContainer} videoAdContainer - container instance to place the ad
+   * @param {Object} [options] - Options Map. The allowed properties are:
+   * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
+   * Defaults to `window.console`
+   * @param {Object} [options.hooks] - Optional map with hooks to configure the behaviour of the ad.
+   * @param {Function} [options.hooks.createSkipControl] - If provided it will be called to generate the skip control. Must return a clickable [HTMLElement](https://developer.mozilla.org/es/docs/Web/API/HTMLElement) that is detached from the DOM.
+   * @param {boolean} [options.viewability] - if true it will pause the ad whenever is not visible for the viewer.
+   * Defaults to `false`
+   * @param {boolean} [options.responsive] - if true it will resize the ad unit whenever the ad container changes sizes.
+   * Defaults to `false`
+   */
+  constructor (vastChain, videoAdContainer, options = {}) {
+    super(vastChain, videoAdContainer, options);
+
+    const {onFinishCallbacks} = this[_protected];
+    const {handleMetric} = this[_private];
+
+    this.hooks = options.hooks || {};
+
+    const removeMetricHandlers = setupMetricHandlers({
+      hooks: this.hooks,
+      vastChain: this.vastChain,
+      videoAdContainer: this.videoAdContainer
+    }, handleMetric);
+
+    onFinishCallbacks.push(removeMetricHandlers);
+  }
+
+  /**
+   * Starts the ad unit.
+   *
+   * @throws if called twice.
+   * @throws if ad unit is finished.
+   */
+  async start () {
+    this[_protected].throwIfFinished();
+
+    if (this.isStarted()) {
+      throw new Error('VastAdUnit already started');
+    }
+
+    const inlineAd = this.vastChain[0].ad;
+    const {videoElement, element} = this.videoAdContainer;
+    const media = findBestMedia(inlineAd, videoElement, element);
+
+    if (Boolean(media)) {
+      if (this.icons) {
+        const drawIcons = async () => {
+          if (this.isFinished()) {
+            return;
+          }
+
+          await this[_protected].drawIcons();
+
+          if (this[_protected].hasPendingIconRedraws() &amp;&amp; !this.isFinished()) {
+            once(videoElement, 'timeupdate', drawIcons);
+          }
+        };
+
+        await drawIcons();
+      }
+
+      videoElement.src = media.src;
+      this.assetUri = media.src;
+      videoElement.play();
+    } else {
+      const adUnitError = new Error('Can\'t find a suitable media to play');
+
+      adUnitError.errorCode = 403;
+      this[_private].handleMetric(errorEvt, adUnitError);
+    }
+
+    this[_protected].started = true;
+  }
+
+  /**
+   * Resumes a previously paused ad unit.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
+   */
+  resume () {
+    this[_protected].throwIfNotReady();
+    const {videoElement} = this.videoAdContainer;
+
+    videoElement.play();
+  }
+
+  /**
+   * Pauses the ad unit.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
+   */
+  pause () {
+    this[_protected].throwIfNotReady();
+    const {videoElement} = this.videoAdContainer;
+
+    videoElement.pause();
+  }
+
+  /**
+   * Sets the volume of the ad unit.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
+   *
+   * @param {number} volume - must be a value between 0 and 1;
+   */
+  setVolume (volume) {
+    this[_protected].throwIfNotReady();
+
+    const {videoElement} = this.videoAdContainer;
+
+    videoElement.volume = volume;
+  }
+
+  /**
+   * Gets the volume of the ad unit.
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
+   *
+   * @returns {number} - the volume of the ad unit.
+   */
+  getVolume () {
+    this[_protected].throwIfNotReady();
+
+    const {videoElement} = this.videoAdContainer;
+
+    return videoElement.volume;
+  }
+
+  /**
+   * Cancels the ad unit.
+   *
+   * @throws if ad unit is finished.
+   */
+  cancel () {
+    this[_protected].throwIfFinished();
+
+    this.videoAdContainer.videoElement.pause();
+
+    this[_protected].finish();
+  }
+
+  /**
+   * This method resizes the ad unit to fit the available space in the passed {@link VideoAdContainer}
+   *
+   * @throws if ad unit is not started.
+   * @throws if ad unit is finished.
+   *
+   * @returns {Promise} - that resolves once the unit was resized
+   */
+  async resize () {
+    await super.resize();
+
+    if (this.isStarted()) {
+      const inlineAd = this.vastChain[0].ad;
+      const {videoElement, element} = this.videoAdContainer;
+      const media = findBestMedia(inlineAd, videoElement, element);
+
+      if (Boolean(media) &amp;&amp; videoElement.src !== media.src) {
+        updateMedia(videoElement, media);
+      }
+    }
+  }
+}
+
+export default VastAdUnit;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="assets/logo.svg" style="width: 150px; height: 150px">
+    <div class="footer-text">Powered by <a href='http://www.mailonline.com' target='_blank' class='link'>MailOnline</a> - logo by <a class='link' href='https://www.iconfinder.com/iconbaandar' rel='nofollow'>iconbaandar</a>&nbsp;licensed under <a class='link' href='https://creativecommons.org/licenses/by/2.5/' rel='nofollow'>CC BY 2.5</a></div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

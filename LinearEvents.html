@@ -1,0 +1,2211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Interface: LinearEvents | Video Ad SDK</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+        
+            <link type="text/css" rel="stylesheet" href="styles/tui_overwrites.css">
+        
+            <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Jura">
+        
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="width: 150px; height: 150px">
+        
+            <a href="https://github.com/mailonline/mol-video-ad-sdk" rel="noopener noreferrer" target="_blank">
+                <img src="assets/logo.svg" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Video Ad SDK</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-@mol_react-vast-vpaid.html">@mol/react-vast-vpaid</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/react-vast-vpaid_sub"></div></li><li><a href="module-@mol_vast-xml2js.html">@mol/vast-xml2js</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/vast-xml2js_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-@mol_vast-xml2js.html#.exports.get">exports.get</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getAll">exports.getAll</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getAttribute">exports.getAttribute</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getAttributes">exports.getAttributes</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getFirstChild">exports.getFirstChild</a></li><li><a href="module-@mol_vast-xml2js.html#.exports.getText">exports.getText</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-@mol_vast-xml2js.html#.parseXml">parseXml</a></li></ul></div></li><li><a href="module-@mol_video-ad-sdk.html">@mol/video-ad-sdk</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/video-ad-sdk_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-@mol_video-ad-sdk.html#.requestAd">requestAd</a></li><li><a href="module-@mol_video-ad-sdk.html#.requestNextAd">requestNextAd</a></li><li><a href="module-@mol_video-ad-sdk.html#.run">run</a></li><li><a href="module-@mol_video-ad-sdk.html#.runWaterfall">runWaterfall</a></li></ul></div></li><li><a href="module-@mol_videojs-vast-vpaid.html">@mol/videojs-vast-vpaid</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:@mol/videojs-vast-vpaid_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-@mol_videojs-vast-vpaid.html">vastVpaidPlugin</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-@mol_videojs-vast-vpaid.html#event:adCancelEvent">adCancelEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adErrorEvent">adErrorEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adRunFinishEvent">adRunFinishEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adStartedEvent">adStartedEvent</a></li><li><a href="module-@mol_videojs-vast-vpaid.html#event:adStartEvent">adStartEvent</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="Emitter.html">Emitter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Emitter_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Emitter.html#emit">emit</a></li><li><a href="Emitter.html#on">on</a></li><li><a href="Emitter.html#once">once</a></li><li><a href="Emitter.html#removeAllListeners">removeAllListeners</a></li><li><a href="Emitter.html#removeListener">removeListener</a></li></ul></div></li><li><a href="VastAdUnit.html">VastAdUnit</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VastAdUnit_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VastAdUnit.html#error">error</a></li><li><a href="VastAdUnit.html#errorCode">errorCode</a></li><li><a href="VastAdUnit.html#icons">icons</a></li><li><a href="VastAdUnit.html#type">type</a></li><li><a href="VastAdUnit.html#vastChain">vastChain</a></li><li><a href="VastAdUnit.html#videoAdContainer">videoAdContainer</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VastAdUnit.html#cancel">cancel</a></li><li><a href="VastAdUnit.html#getVolume">getVolume</a></li><li><a href="VastAdUnit.html#isFinished">isFinished</a></li><li><a href="VastAdUnit.html#isStarted">isStarted</a></li><li><a href="VastAdUnit.html#onError">onError</a></li><li><a href="VastAdUnit.html#onFinish">onFinish</a></li><li><a href="VastAdUnit.html#pause">pause</a></li><li><a href="VastAdUnit.html#resize">resize</a></li><li><a href="VastAdUnit.html#resume">resume</a></li><li><a href="VastAdUnit.html#setVolume">setVolume</a></li><li><a href="VastAdUnit.html#start">start</a></li></ul></div></li><li><a href="VideoAd.html">VideoAd</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VideoAd_sub"></div></li><li><a href="VideoAdContainer.html">VideoAdContainer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VideoAdContainer_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="VideoAdContainer.html#addScript">addScript</a></li><li><a href="VideoAdContainer.html#destroy">destroy</a></li><li><a href="VideoAdContainer.html#isDestroyed">isDestroyed</a></li></ul></div></li><li><a href="VideoAdUnit.html">VideoAdUnit</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VideoAdUnit_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VideoAdUnit.html#error">error</a></li><li><a href="VideoAdUnit.html#errorCode">errorCode</a></li><li><a href="VideoAdUnit.html#icons">icons</a></li><li><a href="VideoAdUnit.html#type">type</a></li><li><a href="VideoAdUnit.html#vastChain">vastChain</a></li><li><a href="VideoAdUnit.html#videoAdContainer">videoAdContainer</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VideoAdUnit.html#cancel">cancel</a></li><li><a href="VideoAdUnit.html#emit">emit</a></li><li><a href="VideoAdUnit.html#getVolume">getVolume</a></li><li><a href="VideoAdUnit.html#isFinished">isFinished</a></li><li><a href="VideoAdUnit.html#isStarted">isStarted</a></li><li><a href="VideoAdUnit.html#on">on</a></li><li><a href="VideoAdUnit.html#once">once</a></li><li><a href="VideoAdUnit.html#onError">onError</a></li><li><a href="VideoAdUnit.html#onFinish">onFinish</a></li><li><a href="VideoAdUnit.html#pause">pause</a></li><li><a href="VideoAdUnit.html#removeAllListeners">removeAllListeners</a></li><li><a href="VideoAdUnit.html#removeListener">removeListener</a></li><li><a href="VideoAdUnit.html#resize">resize</a></li><li><a href="VideoAdUnit.html#resume">resume</a></li><li><a href="VideoAdUnit.html#setVolume">setVolume</a></li></ul></div></li><li><a href="VpaidAdUnit.html">VpaidAdUnit</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VpaidAdUnit_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VpaidAdUnit.html#creativeAd">creativeAd</a></li><li><a href="VpaidAdUnit.html#error">error</a></li><li><a href="VpaidAdUnit.html#errorCode">errorCode</a></li><li><a href="VpaidAdUnit.html#icons">icons</a></li><li><a href="VpaidAdUnit.html#type">type</a></li><li><a href="VpaidAdUnit.html#vastChain">vastChain</a></li><li><a href="VpaidAdUnit.html#videoAdContainer">videoAdContainer</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VpaidAdUnit.html#cancel">cancel</a></li><li><a href="VpaidAdUnit.html#emit">emit</a></li><li><a href="VpaidAdUnit.html#getVolume">getVolume</a></li><li><a href="VpaidAdUnit.html#isFinished">isFinished</a></li><li><a href="VpaidAdUnit.html#isStarted">isStarted</a></li><li><a href="VpaidAdUnit.html#on">on</a></li><li><a href="VpaidAdUnit.html#once">once</a></li><li><a href="VpaidAdUnit.html#onError">onError</a></li><li><a href="VpaidAdUnit.html#onFinish">onFinish</a></li><li><a href="VpaidAdUnit.html#pause">pause</a></li><li><a href="VpaidAdUnit.html#removeAllListeners">removeAllListeners</a></li><li><a href="VpaidAdUnit.html#removeListener">removeListener</a></li><li><a href="VpaidAdUnit.html#resize">resize</a></li><li><a href="VpaidAdUnit.html#resume">resume</a></li><li><a href="VpaidAdUnit.html#setVolume">setVolume</a></li><li><a href="VpaidAdUnit.html#start">start</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Interfaces</h3><ul><li><a href="LinearEvents.html">LinearEvents</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="LinearEvents_sub"><div class="member-type">Events</div><ul class="inner"><li><a href="LinearEvents.html#event:clickThrough">clickThrough</a></li><li><a href="LinearEvents.html#event:complete">complete</a></li><li><a href="LinearEvents.html#event:error">error</a></li><li><a href="LinearEvents.html#event:exitFullscreen">exitFullscreen</a></li><li><a href="LinearEvents.html#event:firstQuartile">firstQuartile</a></li><li><a href="LinearEvents.html#event:fullscreen">fullscreen</a></li><li><a href="LinearEvents.html#event:iconClick">iconClick</a></li><li><a href="LinearEvents.html#event:iconView">iconView</a></li><li><a href="LinearEvents.html#event:impression">impression</a></li><li><a href="LinearEvents.html#event:midpoint">midpoint</a></li><li><a href="LinearEvents.html#event:mute">mute</a></li><li><a href="LinearEvents.html#event:otherAdInteraction">otherAdInteraction</a></li><li><a href="LinearEvents.html#event:pause">pause</a></li><li><a href="LinearEvents.html#event:playerCollapse">playerCollapse</a></li><li><a href="LinearEvents.html#event:playerExpand">playerExpand</a></li><li><a href="LinearEvents.html#event:progress">progress</a></li><li><a href="LinearEvents.html#event:resume">resume</a></li><li><a href="LinearEvents.html#event:rewind">rewind</a></li><li><a href="LinearEvents.html#event:skip">skip</a></li><li><a href="LinearEvents.html#event:start">start</a></li><li><a href="LinearEvents.html#event:thirdQuartile">thirdQuartile</a></li><li><a href="LinearEvents.html#event:timeSpentViewing">timeSpentViewing</a></li><li><a href="LinearEvents.html#event:unmute">unmute</a></li></ul></div></li><li><a href="NonLinearEvents.html">NonLinearEvents</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="NonLinearEvents_sub"><div class="member-type">Events</div><ul class="inner"><li><a href="NonLinearEvents.html#event:acceptInvitation">acceptInvitation</a></li><li><a href="NonLinearEvents.html#event:adCollapse">adCollapse</a></li><li><a href="NonLinearEvents.html#event:close">close</a></li><li><a href="NonLinearEvents.html#event:creativeView">creativeView</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Global</h3><ul><li><a href="global.html#ensureCanplayGetsFired">ensureCanplayGetsFired</a></li><li class="hidden"><a href="global.html#MediaFile">MediaFile</a></li><li class="hidden"><a href="global.html#ParsedAd">ParsedAd</a></li><li class="hidden"><a href="global.html#ParsedOffset">ParsedOffset</a></li><li class="hidden"><a href="global.html#ParsedVast">ParsedVast</a></li><li><a href="global.html">pixelTracker</a></li><li class="hidden"><a href="global.html#TrackerFn">TrackerFn</a></li><li><a href="global.html#tryToResume">tryToResume</a></li><li class="hidden"><a href="global.html#VAST-macro">VAST-macro</a></li><li class="hidden"><a href="global.html#VastChain">VastChain</a></li><li class="hidden"><a href="global.html#VastIcon">VastIcon</a></li><li class="hidden"><a href="global.html#VastResponse">VastResponse</a></li><li class="hidden"><a href="global.html#VastTrackingEvent">VastTrackingEvent</a></li><li class="hidden"><a href="global.html#WrapperOptions">WrapperOptions</a></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>LinearEvents</h2>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+                <div class="description"><p>Interface for classes that may emit linear VAST events.</p></div>
+            
+
+            
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Events</h3>
+
+        <dl>
+            
+
+<dt>
+    
+        <h4 class="name" id="event:clickThrough">
+            
+                clickThrough
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line14">line 14</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when a user clicks the ad.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:complete">
+            
+                complete
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line7">line 7</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the the creative was played to the end at normal speed so that 100% of the creative was played.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:error">
+            
+                error
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line21">line 21</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when there was an error with the linear creative.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:exitFullscreen">
+            
+                exitFullscreen
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line77">line 77</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the user activated a control to reduce player to a smaller size.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:firstQuartile">
+            
+                firstQuartile
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line28">line 28</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the creative played continuously for at least 25% of the total duration at normal speed.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:fullscreen">
+            
+                fullscreen
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line91">line 91</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the user activated a control to extend the player to a larger size. Only for VAST 3.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:iconClick">
+            
+                iconClick
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line154">line 154</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the user clicked the creative icon.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:iconView">
+            
+                iconView
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line161">line 161</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the user viewed the creative icon.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:impression">
+            
+                impression
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line35">line 35</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when there was an impression of the linear creative.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:midpoint">
+            
+                midpoint
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line42">line 42</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the creative played continuously for at least 50% of the total duration at normal speed.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:mute">
+            
+                mute
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line49">line 49</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the user activated the mute control and muted the creative.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:otherAdInteraction">
+            
+                otherAdInteraction
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line56">line 56</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Optional metric that can capture all other user interactions under one metric such a s hover-overs, or custom clicks. It should NOT replace clickthrough events or other existing events like mute, unmute, pause, etc.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:pause">
+            
+                pause
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line63">line 63</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the user clicked the pause control and stopped the creative.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:playerCollapse">
+            
+                playerCollapse
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line70">line 70</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the user activated a control to reduce player to a smaller size. This event replaces the exitFullscreen event per the 2014 Digital Video In-Stream Ad Metric Definitions.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:playerExpand">
+            
+                playerExpand
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line84">line 84</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the user activated a control to extend the player to a larger size. This event replaces the fullscreen event per the 2014 Digital Video In-Stream Ad Metric Definitions.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:progress">
+            
+                progress
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line98">line 98</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the creative played for a duration at normal speed that is equal to or greater than the value provided in an additional offset attribute for the <Tracking> element under Linear ads. Values can be time in the format HH:MM:SS or HH:MM:SS.mmm or a percentage value in the format n%.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:resume">
+            
+                resume
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line105">line 105</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the user activated the resume control after the creative had been stopped or paused.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:rewind">
+            
+                rewind
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line112">line 112</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the user activated the rewind control to access a previous point in the creative timeline.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:skip">
+            
+                skip
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line119">line 119</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the user activated a skip control to skip the creative.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:start">
+            
+                start
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line126">line 126</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>This event is used to indicate that an individual creative within the ad was loaded and playback began. As with creativeView, this event is another way of tracking creative playback.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:thirdQuartile">
+            
+                thirdQuartile
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line133">line 133</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the creative played continuously for at least 75% of the duration at normal speed.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:timeSpentViewing">
+            
+                timeSpentViewing
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line140">line 140</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Amount of video viewed at normal speed in seconds or other appropriate time-based units. If a rewind event occurs during play, time spent viewing may be calculated on total amount of video viewed at normal speed, which may include additional amounts of video viewed after rewinding. The offset attribute for the <Tracking> element under Linear ads may be used to track when time spent viewing meets the threshold. Otherwise, a macro may be provided so that the player may return a time value. VAST does not provide a standard macro for this value, so the involved parties must establish these parameters if this metric is to be used.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="event:unmute">
+            
+                unmute
+                
+            
+            <div class="container-source members">
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html">video-ad-sdk/src/tracker/linearEvents.js</a></code>,
+                <code><a href="video-ad-sdk_src_tracker_linearEvents.js.html#line147">line 147</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Fires when the user activated the mute control and unmuted the creative.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        </dl>
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="assets/logo.svg" style="width: 150px; height: 150px">
+    <div class="footer-text">Powered by <a href='http://www.mailonline.com' target='_blank' class='link'>MailOnline</a> - logo by <a class='link' href='https://www.iconfinder.com/iconbaandar' rel='nofollow'>iconbaandar</a>&nbsp;licensed under <a class='link' href='https://creativecommons.org/licenses/by/2.5/' rel='nofollow'>CC BY 2.5</a></div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = 'LinearEvents_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>
