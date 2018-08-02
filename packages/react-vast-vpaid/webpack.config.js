@@ -36,7 +36,11 @@ const rules = [
   {
     exclude: /node_modules/,
     loader: 'babel-loader',
-    test: /\.jsx?$/
+    test: /\.jsx?$/,
+    options: {
+      presets: ['react'],
+      plugins: ['transform-react-remove-prop-types']
+    }
   }
 ];
 
