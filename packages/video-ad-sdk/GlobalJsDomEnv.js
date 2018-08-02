@@ -7,6 +7,17 @@ module.exports = class GlobalJsDomEnv extends JSDOMEnvironment {
   constructor (config) {
     super(config);
     this.global.jsdom = this.dom;
+
+    const noop = () => {
+      /* do nothing */
+    };
+
+    // Silence jsDom `Not implemented errors`
+    this.global.HTMLMediaElement.prototype.load = noop;
+    this.global.HTMLMediaElement.prototype.play = noop;
+    this.global.HTMLMediaElement.prototype.pause = noop;
+    this.global.HTMLMediaElement.prototype.addTextTrack = noop;
+    this.global.open = noop;
   }
 
   teardown () {

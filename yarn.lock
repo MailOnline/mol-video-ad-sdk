@@ -693,6 +693,14 @@ async-limiter@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
 
+async-to-gen@^1.2.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/async-to-gen/-/async-to-gen-1.4.0.tgz#f8157f9013e0c487e1e940150a4d1a1b78b2dd6b"
+  dependencies:
+    babylon "^6.14.0"
+    magic-string "^0.22.0"
+    pirates "^3.0.2"
+
 async@1.5.2, async@^1.4.0, async@^1.5.0:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
@@ -940,6 +948,12 @@ babel-messages@^6.23.0:
 babel-plugin-check-es2015-constants@^6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-check-es2015-constants/-/babel-plugin-check-es2015-constants-6.22.0.tgz#35157b101426fd2ffd3da3f75c7d1e91835bbf8a"
+  dependencies:
+    babel-runtime "^6.22.0"
+
+babel-plugin-external-helpers@^6.22.0:
+  version "6.22.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-external-helpers/-/babel-plugin-external-helpers-6.22.0.tgz#2285f48b02bd5dede85175caf8c62e86adccefa1"
   dependencies:
     babel-runtime "^6.22.0"
 
@@ -1387,7 +1401,7 @@ babylon@7.0.0-beta.44:
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-7.0.0-beta.44.tgz#89159e15e6e30c5096e22d738d8c0af8a0e8ca1d"
 
-babylon@^6.18.0:
+babylon@^6.14.0, babylon@^6.18.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.18.0.tgz#af2f3b88fa6f5c1e4c634d1a0f8eac4f55b395e3"
 
@@ -6133,7 +6147,7 @@ lru-cache@^4.0.1, lru-cache@^4.1.1, lru-cache@^4.1.2:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
-magic-string@^0.22.4:
+magic-string@^0.22.0, magic-string@^0.22.4:
   version "0.22.5"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.22.5.tgz#8e9cf5afddf44385c1da5bc2a6a0dbd10b03657e"
   dependencies:
@@ -6625,6 +6639,10 @@ node-int64@^0.4.0:
     url "^0.11.0"
     util "^0.10.3"
     vm-browserify "0.0.4"
+
+node-modules-regexp@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/node-modules-regexp/-/node-modules-regexp-1.0.0.tgz#8d9dbe28964a4ac5712e9131642107c71e90ec40"
 
 node-notifier@^5.2.1:
   version "5.2.1"
@@ -7225,6 +7243,12 @@ pinkie-promise@^2.0.0:
 pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
+
+pirates@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/pirates/-/pirates-3.0.2.tgz#7e6f85413fd9161ab4e12b539b06010d85954bb9"
+  dependencies:
+    node-modules-regexp "^1.0.0"
 
 pkg-conf@^2.1.0:
   version "2.1.0"
@@ -8161,6 +8185,13 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
+rollup-plugin-async@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-async/-/rollup-plugin-async-1.2.0.tgz#f95fdd29f8b6f2332b5a89a9d64ee8087b12b249"
+  dependencies:
+    async-to-gen "^1.2.0"
+    rollup-pluginutils "^1.5.1"
+
 rollup-plugin-babel@^3.0.7:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/rollup-plugin-babel/-/rollup-plugin-babel-3.0.7.tgz#5b13611f1ab8922497e9d15197ae5d8a23fe3b1e"
@@ -8191,7 +8222,7 @@ rollup-plugin-uglify@^4.0.0:
     "@babel/code-frame" "^7.0.0-beta.47"
     uglify-js "^3.3.25"
 
-rollup-pluginutils@^1.5.0:
+rollup-pluginutils@^1.5.0, rollup-pluginutils@^1.5.1:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-1.5.2.tgz#1e156e778f94b7255bfa1b3d0178be8f5c552408"
   dependencies:

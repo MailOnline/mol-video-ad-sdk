@@ -13,7 +13,9 @@ const plugins = [
     exclude: [
       '../../node_modules/**',
       'node_modules/**'
-    ]
+    ],
+    plugins: ['external-helpers']
+
   }),
   resolve({
     customResolveOptions: {
@@ -26,9 +28,18 @@ const plugins = [
   commonjs()
 ];
 
+// NOTE: see https://github.com/rollup/rollup/issues/408 to understand why we silences `THIS_IS_UNDEFINED` warnings
+const onwarn = (warning, warn) => {
+  if (warning.code === 'THIS_IS_UNDEFINED') {
+    return;
+  }
+  warn(warning);
+};
+
 const config = [
   {
-    input: 'src/index.browser.js',
+    input: 'src/index.js',
+    onwarn,
     output: {
       name: pkg.name,
       file: pkg.browser,
@@ -40,7 +51,8 @@ const config = [
     ]
   },
   {
-    input: 'src/index.browser.js',
+    input: 'src/index.js',
+    onwarn,
     output: {
       file: pkg.module,
       format: 'es'
@@ -49,6 +61,7 @@ const config = [
   },
   {
     input: 'src/index.js',
+    onwarn,
     output: {
       file: pkg.main,
       format: 'cjs'

@@ -9,14 +9,16 @@
     "video"
   ],
   "author": "MailOnline <fe@mailonline.co.uk>",
-  "main": "src/index.js",
+  "main": "dist/main.cjs.js",
+  "module": "dist/main.esm.js",
+  "browser": "dist/main.umd.js",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ignore-path ../../.gitignore './**/*.js'",
     "test": "cross-env NODE_ENV=test jest",
     "prebuild": "rimraf dist",
-    "build": "webpack --mode production",
-    "dev": "webpack --mode development"
+    "build": "cross-env NODE_ENV=production rollup -c",
+    "dev": "rollup -c"
   },
   "files": [
     "src"
@@ -28,7 +30,7 @@
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-jest": "^23.4.2",
-    "babel-loader": "^7.1.5",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
@@ -39,8 +41,10 @@
     "lodash.debounce": "^4.0.8",
     "mockdate": "^2.0.2",
     "rimraf": "^2.6.2",
-    "source-map-loader": "^0.2.3",
-    "webpack": "^4.16.3",
-    "webpack-cli": "^3.1.0"
+    "rollup": "^0.63.4",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-commonjs": "^9.1.4",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-uglify": "^4.0.0"
   }
 }
