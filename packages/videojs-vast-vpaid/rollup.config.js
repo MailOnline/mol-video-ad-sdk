@@ -15,7 +15,6 @@ const plugins = [
       'node_modules/**'
     ],
     plugins: ['external-helpers']
-
   }),
   resolve({
     customResolveOptions: {
