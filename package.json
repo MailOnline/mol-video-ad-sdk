@@ -16,7 +16,7 @@
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "prepush": "npm test",
     "test": "lerna run --stream test",
-    "publish-ci": "lerna publish --conventional-commits --changelog-preset mol-conventional-changelog --npm-client=npm"
+    "publish-ci": "lerna publish --conventional-commits --changelog-preset mol-conventional-changelog --registry=https://registry.npmjs.org/ --npm-client=npm"
   },
   "license": "MIT",
   "bugs": {

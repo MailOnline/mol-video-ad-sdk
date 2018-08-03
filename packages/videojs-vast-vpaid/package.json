@@ -43,5 +43,8 @@
     "rollup-plugin-commonjs": "^9.1.4",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-terser": "^1.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
