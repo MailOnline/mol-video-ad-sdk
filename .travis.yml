@@ -21,8 +21,6 @@ deploy:
   - provider: script
     skip-cleanup: true
     script:
-      - git checkout master
-      - git remote set-url origin https://mol-teamcity:$GITHUB_TOKEN@github.com/MailOnline/mol-video-ad-sdk.git
-      - yarn publish-ci --yes
+      - git checkout master && git remote set-url origin https://mol-teamcity:$GITHUB_TOKEN@github.com/MailOnline/mol-video-ad-sdk.git && yarn publish-ci --yes
     on:
       branch: master
