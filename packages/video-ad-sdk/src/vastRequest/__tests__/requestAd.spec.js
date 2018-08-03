@@ -53,12 +53,15 @@ describe('requestAd', () => {
   });
 
   test('must return a chain with error code 502 if there was an error fetching the ad', async () => {
+    const fetchError = new Error('Error doing fetch');
+
+    global.fetch = jest.fn(() => Promise.reject(fetchError));
     const vastChain = await requestAd('http://adtag.test.example.com', {});
     const lastVastResponse = vastChain[0];
 
     expect(lastVastResponse).toEqual({
       ad: null,
-      error: expect.any(Error),
+      error: fetchError,
       errorCode: 502,
       parsedXML: null,
       requestTag: 'http://adtag.test.example.com',
