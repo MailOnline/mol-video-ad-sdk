@@ -18,16 +18,9 @@ if [[ $TRAVIS_BRANCH == 'master' ]]; then
   git remote set-url origin https://$GH_USER:$GH_TOKEN@github.com/MailOnline/mol-video-ad-sdk.git
   git pull
 
-  npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN -q
-  npm prune
-
   git fetch --tags
   git branch -u origin/$TRAVIS_BRANCH
   git fsck --full #debug
-  echo "npm whoami"
-  npm whoami #debug
-  echo "git config --list"
-  git config --list #debug
 
   lerna publish --conventional-commits --npm-client=npm --skip-git --yes
 
