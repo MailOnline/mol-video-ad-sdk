@@ -21,7 +21,7 @@ if [[ $TRAVIS_BRANCH == 'master' ]]; then
 
   yarn build
 
-  lerna publish --conventional-commits --skip-git skip-npm --registry //registry.npmjs.org/:_authToken=${NPM_TOKEN} --yes
+  lerna publish --conventional-commits --skip-git --npm-client=npm --registry //registry.npmjs.org/:_authToken=${NPM_TOKEN} --yes
 
   NEW_PACKAGE_VERSION = node -pe "require('./lerna.json').version"
 
