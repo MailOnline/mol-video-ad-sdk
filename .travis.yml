@@ -5,22 +5,30 @@ cache:
     - node_modules
 notifications:
   email: false
-script:
-  - commitlint-travis
-  - yarn lint
-  - yarn test
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then yarn docs; fi
-deploy:
-  - provider: pages
-    skip-cleanup: true
-    keep-history: true
-    github-token: $GH_TOKEN
-    local-dir: docs
-    on:
-      branch: master
-  - provider: script
-    skip-cleanup: true
-    script:
-      - .travis/release.sh
-    on:
-      branch: master
+jobs:
+  include:
+    - stage: "lint"
+      name: "Lint commits"
+      script: commitlint-travis
+    - script: yarn lint
+      name: "Lint code"
+    - stage: "tests"
+      name: "Unit tests"
+      script: "yarn test"
+    - stage: "docs"
+      name: "Generate documentation"
+      if: branch = master
+      deploy:
+        - provider: pages
+          skip-cleanup: true
+          keep-history: true
+          github-token: $GH_TOKEN
+          local-dir: docs
+    - stage: "deploy"
+      name: "Publish and deploy packages"
+      if: branch = master
+        - provider: script
+          skip-cleanup: true
+          keep-history: true
+          script:
+            - .travis/release.sh
