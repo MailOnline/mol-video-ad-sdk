@@ -1,8 +1,5 @@
 #!/bin/bash
 set -e
-# Note: do not do set -x or the passwords will leak!
-#!/bin/bash
-set -x
 
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
   echo "We are in a pull request, not setting up release"
@@ -22,7 +19,9 @@ if [[ $TRAVIS_BRANCH == 'master' ]]; then
   git branch -u origin/$TRAVIS_BRANCH
   git fsck --full #debug
 
-  lerna publish --conventional-commits --npm-client=npm --skip-git --yes
+  yarn build
+
+  lerna publish --conventional-commits --skip-git skip-npm --registry //registry.npmjs.org/:_authToken=${NPM_TOKEN} --yes
 
   NEW_PACKAGE_VERSION = node -pe "require('./lerna.json').version"
 
