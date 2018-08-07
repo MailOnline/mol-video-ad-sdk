@@ -20,7 +20,6 @@ deploy:
       branch: master
   - provider: script
     skip-cleanup: true
-    script:
-      - .travis/release.sh
+    script: .travis/release.sh
     on:
       branch: master
