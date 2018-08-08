@@ -20,6 +20,6 @@ deploy:
       branch: master
   - provider: script
     skip-cleanup: true
-    script: .travis/release.sh
+    script: lerna exec --concurrency 1 -- npx --no-install semantic-release -e semantic-release-monorepo
     on:
       branch: master

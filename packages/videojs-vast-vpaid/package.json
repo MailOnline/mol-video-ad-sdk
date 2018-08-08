@@ -42,7 +42,9 @@
     "rollup-plugin-babel": "^3.0.7",
     "rollup-plugin-commonjs": "^9.1.4",
     "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-terser": "^1.0.1"
+    "rollup-plugin-terser": "^1.0.1",
+    "semantic-release": "^15.9.6",
+    "semantic-release-monorepo": "^6.0.3"
   },
   "publishConfig": {
     "access": "public"
