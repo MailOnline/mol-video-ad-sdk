@@ -1,6 +1,6 @@
 /* eslint-disable filenames/match-exported*/
 /**
- * @module @mol/react-vast-vpaid
+ * @module @mailonline/react-vast-vpaid
  * @description Contains a React component to display Vast/Vpaid video ads.
  */
 

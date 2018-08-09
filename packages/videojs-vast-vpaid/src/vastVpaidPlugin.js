@@ -1,6 +1,6 @@
-import {runWaterfall} from '@mol/video-ad-sdk';
-import getSnapshot from '../../../node_modules/@mol/videojs-vast-vpaid/src/helpers/getSnapshot';
-import restoreSnapshot from '../../../node_modules/@mol/videojs-vast-vpaid/src/helpers/restoreSnapshot';
+import {runWaterfall} from '@mailonline/video-ad-sdk';
+import getSnapshot from '../../../node_modules/@mailonline/videojs-vast-vpaid/src/helpers/getSnapshot';
+import restoreSnapshot from '../../../node_modules/@mailonline/videojs-vast-vpaid/src/helpers/restoreSnapshot';
 
 const createPlaceholder = (player) => {
   const element = document.createElement('div');
@@ -20,7 +20,7 @@ const createPlaceholder = (player) => {
 /**
  * VideoJS Vast Vpaid plugin class
  *
- * @memberof module:@mol/videojs-vast-vpaid
+ * @memberof module:@mailonline/videojs-vast-vpaid
  * @alias vastVpaidPlugin
  *
  * @param {Object} options - Options Map. The allowed properties are:
@@ -65,7 +65,7 @@ const vastVpaidPlugin = function (options) {
     /**
      * Tells {@link vastVpaidPlugin} plugin to run an ad.
      *
-     * @event module:@mol/videojs-vast-vpaid#adStartEvent
+     * @event module:@mailonline/videojs-vast-vpaid#adStartEvent
      * @type {object}
      * @property {string} type - The event type (name) is configurable and defaults to `adStart`
      */
@@ -74,7 +74,7 @@ const vastVpaidPlugin = function (options) {
     /**
      * Fired by {@link vastVpaidPlugin} plugin once an ad has started
      *
-     * @event module:@mol/videojs-vast-vpaid#adStartedEvent
+     * @event module:@mailonline/videojs-vast-vpaid#adStartedEvent
      * @type {object}
      * @property {string} type - The event type (name) is configurable and defaults to `adStarted`
      * @property {VastAdUnit|VpaidAdUnit} adUnit - The video ad unit.
@@ -84,7 +84,7 @@ const vastVpaidPlugin = function (options) {
     /**
      * Tells {@link vastVpaidPlugin} plugin to cancel any running ad unit. If no ad is running it will do nothing.
      *
-     * @event module:@mol/videojs-vast-vpaid#adCancelEvent
+     * @event module:@mailonline/videojs-vast-vpaid#adCancelEvent
      * @type {object}
      * @property {string} type - The event type (name) is configurable and defaults to `adCancel`
      */
@@ -93,7 +93,7 @@ const vastVpaidPlugin = function (options) {
     /**
      * Fired by {@link vastVpaidPlugin} plugin once an ad has finished. It will be fired no matter how the ad ended.
      *
-     * @event module:@mol/videojs-vast-vpaid#adRunFinishEvent
+     * @event module:@mailonline/videojs-vast-vpaid#adRunFinishEvent
      * @type {object}
      * @property {string} type - The event type (name) is configurable and defaults to `adRunFinish`
      */
@@ -102,7 +102,7 @@ const vastVpaidPlugin = function (options) {
     /**
      * Fired by {@link vastVpaidPlugin} plugin if there is an error while running the ad.
      *
-     * @event module:@mol/videojs-vast-vpaid#adErrorEvent
+     * @event module:@mailonline/videojs-vast-vpaid#adErrorEvent
      * @type {object}
      * @property {string} type - The event type (name) is configurable and defaults to `adError`
      * @property {Error} error - The video ad error.
