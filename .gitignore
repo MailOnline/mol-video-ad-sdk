@@ -11,3 +11,5 @@ docs/
 node_modules/
 package-lock.json
 lerna-debug.log
+.npmrc
+.yarnrc
