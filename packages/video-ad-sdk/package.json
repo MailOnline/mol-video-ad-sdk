@@ -1,6 +1,6 @@
 {
   "name": "@mol/video-ad-sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Video ad SDK to load and play video ads.",
   "keywords": [
     "vast",
@@ -24,7 +24,7 @@
     "src"
   ],
   "dependencies": {
-    "@mol/vast-xml2js": "^0.1.0",
+    "@mol/vast-xml2js": "^0.2.0",
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {

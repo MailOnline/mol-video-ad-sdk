@@ -1,6 +1,6 @@
 {
   "name": "@mol/vast-xml2js",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MOL VAST xml2js method",
   "keywords": [
     "vast",
@@ -21,7 +21,8 @@
     "test": "cross-env NODE_ENV=test jest"
   },
   "files": [
-    "src"
+    "src",
+    "dist"
   ],
   "dependencies": {
     "sane-domparser-error": "^0.2.0",

@@ -1,6 +1,6 @@
 {
   "name": "@mol/react-vast-vpaid",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "React component that loads video-ads using @mol/video-ad-sdk",
   "keywords": [
     "vast",
@@ -25,7 +25,7 @@
     "src"
   ],
   "dependencies": {
-    "@mol/video-ad-sdk": "^0.1.0",
+    "@mol/video-ad-sdk": "^0.2.0",
     "prop-types": "^15.6.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
