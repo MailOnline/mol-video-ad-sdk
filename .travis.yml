@@ -18,8 +18,3 @@ deploy:
     local-dir: docs
     on:
       branch: master
-  - provider: script
-    skip-cleanup: true
-    script: bash .travis/release.sh
-    on:
-      branch: master
