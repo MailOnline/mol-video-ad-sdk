@@ -1,23 +1,16 @@
 #!/bin/bash
 set -e
 
-if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
-  echo "We are in a pull request, not setting up release"
+BRANCH="`git symbolic-ref HEAD | cut -d/ -f3-`";
+
+if [ "$BRANCH" != "master" ]; then
+  echo "We are not in master branch, release canceled"
   exit 0
 fi
 
-if [[ $TRAVIS_BRANCH == 'master' ]]; then
-  git config --global user.email $GH_EMAIL
-  git config --global user.name $GH_USER
-  git config --global push.default simple
-
-  git checkout master
-  git remote set-url origin https://$GH_USER:$GH_TOKEN@github.com/MailOnline/mol-video-ad-sdk.git
-  git pull
-
+if [[ "$BRANCH" == 'master' ]]; then
   git fetch --tags
-  git branch -u origin/$TRAVIS_BRANCH
-  git fsck --full #debug
+  git fsck --full
 
   yarn build
 
