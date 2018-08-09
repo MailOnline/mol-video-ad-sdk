@@ -1,6 +1,6 @@
 {
   "name": "@mailonline/videojs-vast-vpaid",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "VAST plugin to use with video.js",
   "author": "MailOnline <fe@mailonline.co.uk>",
   "main": "dist/main.cjs.js",
@@ -20,7 +20,7 @@
     "src"
   ],
   "dependencies": {
-    "@mailonline/video-ad-sdk": "^0.2.0"
+    "@mailonline/video-ad-sdk": "^0.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
