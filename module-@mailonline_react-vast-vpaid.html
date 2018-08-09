@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: VideoAd | Video Ad SDK</title>
+    <title>Module: @mailonline/react-vast-vpaid | Video Ad SDK</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -54,8 +54,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="module-@mailonline_react-vast-vpaid.html">@mailonline/react-vast-vpaid</a></span>VideoAd<span class="signature">(props)</span><span class="type-signature"></span></h2>
+        <h2>@mailonline/react-vast-vpaid</h2>
+        
+            
         
     
 </header>
@@ -65,31 +66,18 @@
         <div class="container-overview">
         
             
+                <div class="description"><p>Contains a React component to display Vast/Vpaid video ads.</p></div>
+            
+
+            
+                
 
 <dt>
-    
-        <h4 class="name" id="VideoAd">
-            
-                new <span class="type-signature"></span>VideoAd<span class="signature">(props)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="react-vast-vpaid_src_VideoAd.js.html">react-vast-vpaid/src/VideoAd.js</a></code>,
-                <code><a href="react-vast-vpaid_src_VideoAd.js.html#line27">line 27</a></code>
-            </div>
-            
-        </h4>
-
-        
     
 </dt>
 <dd>
 
     
-    <div class="description">
-        <p>React component to lad a vast/vpaid video ad.</p>
-    </div>
-    
 
     
 
@@ -97,516 +85,6 @@
 
     
 
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>props</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>react props.</p>
-                <h6>Properties</h6>
-                
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>getTag</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>must return an ad tag or a promise that will resolve with an ad tag.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>children</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">React.nodes</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>whatever you pass as children will be displayed while the ad is loading.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>skipControl</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-|
-
-<span class="param-type">HTMLElement</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>If a function is provided it will be called to generate the skip control. The skip control must be a clickable <a href="https://developer.mozilla.org/es/docs/Web/API/HTMLElement">HTMLElement</a> that is detached from the DOM.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>height</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>the component will resize the ad unit if the passed height changes.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>width</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>the component will resize the ad unit if the passed width changes.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>logger</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Console</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>must comply to the <a href="https://developer.mozilla.org/es/docs/Web/API/Console">Console interface</a>.
-Defaults to <code>window.console</code></p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>onAdStart</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">runWaterfall~onAdStart</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>will be called once the ad starts with the ad unit.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>onError</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">runWaterfall~onError</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>will be called if there is an error with the video ad with the error instance.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>onRunFinish</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">runWaterfall~onRunFinish</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>will be called whenever the ad run finishes. Can be used to know when to unmount the component</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>tracker</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#TrackerFn">TrackerFn</a></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>If provided it will be used to track the VAST events instead of the default <a href="global.html">pixelTracker</a>.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>videoElement</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">HTMLVideoElement</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>If provided it will be used to display the video ad. Beware that it will not clean the sources after the ad is finished.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>viewability</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>if true it will pause the ad whenever is not visible for the viewer.
-Defaults to <code>false</code></p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>responsive</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>if true it will resize the ad unit whenever the ad container changes sizes.
-Defaults to <code>false</code></p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
     
 
     
@@ -662,24 +140,32 @@ Defaults to <code>false</code></p></td>
 
 </dd>
 
+            
         
         </div>
     
 
     
-        <h3 class="subsection-title">Extends</h3>
 
+    
+
+    
+            <h3 class="subsection-title">Classes</h3>
+            
+
+<dl>
+    
+        <dt>
+            <h4 class="name">
+                <a href="VideoAd.html">VideoAd</a>
+                <div class="container-source members">
+                    <code><a href="VideoAd.html">VideoAd</a></code>
+                </div>
+            </h4>
+        </dt>
         
-
-
-    <ul>
-        <li>React.Component</li>
-    </ul>
-
-
     
-
-    
+</dl>
 
     
 
@@ -715,7 +201,7 @@ Defaults to <code>false</code></p></td>
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'VideoAd_sub'.replace(/"/g, '_');
+        var id = 'module:@mailonline/react-vast-vpaid_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: VideoAd | Video Ad SDK</title>
+    <title>Module: @mailonline/vast-xml2js | Video Ad SDK</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -54,8 +54,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="module-@mailonline_react-vast-vpaid.html">@mailonline/react-vast-vpaid</a></span>VideoAd<span class="signature">(props)</span><span class="type-signature"></span></h2>
+        <h2>@mailonline/vast-xml2js</h2>
+        
+            
         
     
 </header>
@@ -65,31 +66,18 @@
         <div class="container-overview">
         
             
+                <div class="description"><p>Simple wrapper on top of <a href="https://www.npmjs.com/package/xml-js">xml-js</a> to ensure that is used on a consistent way and to make it easy to change in case is needed on the future.</p></div>
+            
+
+            
+                
 
 <dt>
-    
-        <h4 class="name" id="VideoAd">
-            
-                new <span class="type-signature"></span>VideoAd<span class="signature">(props)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="react-vast-vpaid_src_VideoAd.js.html">react-vast-vpaid/src/VideoAd.js</a></code>,
-                <code><a href="react-vast-vpaid_src_VideoAd.js.html#line27">line 27</a></code>
-            </div>
-            
-        </h4>
-
-        
     
 </dt>
 <dd>
 
     
-    <div class="description">
-        <p>React component to lad a vast/vpaid video ad.</p>
-    </div>
-    
 
     
 
@@ -97,516 +85,6 @@
 
     
 
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>props</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>react props.</p>
-                <h6>Properties</h6>
-                
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>getTag</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>must return an ad tag or a promise that will resolve with an ad tag.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>children</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">React.nodes</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>whatever you pass as children will be displayed while the ad is loading.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>skipControl</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-|
-
-<span class="param-type">HTMLElement</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>If a function is provided it will be called to generate the skip control. The skip control must be a clickable <a href="https://developer.mozilla.org/es/docs/Web/API/HTMLElement">HTMLElement</a> that is detached from the DOM.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>height</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>the component will resize the ad unit if the passed height changes.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>width</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>the component will resize the ad unit if the passed width changes.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>logger</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Console</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>must comply to the <a href="https://developer.mozilla.org/es/docs/Web/API/Console">Console interface</a>.
-Defaults to <code>window.console</code></p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>onAdStart</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">runWaterfall~onAdStart</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>will be called once the ad starts with the ad unit.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>onError</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">runWaterfall~onError</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>will be called if there is an error with the video ad with the error instance.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>onRunFinish</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">runWaterfall~onRunFinish</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>will be called whenever the ad run finishes. Can be used to know when to unmount the component</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>tracker</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#TrackerFn">TrackerFn</a></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>If provided it will be used to track the VAST events instead of the default <a href="global.html">pixelTracker</a>.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>videoElement</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">HTMLVideoElement</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>If provided it will be used to display the video ad. Beware that it will not clean the sources after the ad is finished.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>viewability</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>if true it will pause the ad whenever is not visible for the viewer.
-Defaults to <code>false</code></p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>responsive</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>if true it will resize the ad unit whenever the ad container changes sizes.
-Defaults to <code>false</code></p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
     
 
     
@@ -662,20 +140,583 @@ Defaults to <code>false</code></p></td>
 
 </dd>
 
+            
         
         </div>
     
 
     
-        <h3 class="subsection-title">Extends</h3>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        <dl>
+            
+
+<dt>
+<h4 class="name" id=".exports.get">
+    <span class="type-signature"><span class="icon green">static</span>, <span class="icon green">constant</span> </span>exports.get<span class="type-signature"></span>
+    
+    <div class="container-source members">
+        <code><a href="vast-xml2js_src_helpers_xmlSelectors.js.html">vast-xml2js/src/helpers/xmlSelectors.js</a></code>,
+        <code><a href="vast-xml2js_src_helpers_xmlSelectors.js.html#line17">line 17</a></code>
+    </div>
+    
+</h4>
+
+
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Get the first child element from the passed parsed xml element.</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        
+            
+
+<dt>
+<h4 class="name" id=".exports.getAll">
+    <span class="type-signature"><span class="icon green">static</span>, <span class="icon green">constant</span> </span>exports.getAll<span class="type-signature"></span>
+    
+    <div class="container-source members">
+        <code><a href="vast-xml2js_src_helpers_xmlSelectors.js.html">vast-xml2js/src/helpers/xmlSelectors.js</a></code>,
+        <code><a href="vast-xml2js_src_helpers_xmlSelectors.js.html#line27">line 27</a></code>
+    </div>
+    
+</h4>
+
+
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Get all the children elements of the passed parsed xml element filtered by the passed child name if passed.</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        
+            
+
+<dt>
+<h4 class="name" id=".exports.getAttribute">
+    <span class="type-signature"><span class="icon green">static</span>, <span class="icon green">constant</span> </span>exports.getAttribute<span class="type-signature"></span>
+    
+    <div class="container-source members">
+        <code><a href="vast-xml2js_src_helpers_xmlSelectors.js.html">vast-xml2js/src/helpers/xmlSelectors.js</a></code>,
+        <code><a href="vast-xml2js_src_helpers_xmlSelectors.js.html#line69">line 69</a></code>
+    </div>
+    
+</h4>
+
+
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Get the attribute with the passed name of the passed parsed xml element.</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        
+            
+
+<dt>
+<h4 class="name" id=".exports.getAttributes">
+    <span class="type-signature"><span class="icon green">static</span>, <span class="icon green">constant</span> </span>exports.getAttributes<span class="type-signature"></span>
+    
+    <div class="container-source members">
+        <code><a href="vast-xml2js_src_helpers_xmlSelectors.js.html">vast-xml2js/src/helpers/xmlSelectors.js</a></code>,
+        <code><a href="vast-xml2js_src_helpers_xmlSelectors.js.html#line61">line 61</a></code>
+    </div>
+    
+</h4>
+
+
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Get all the attributes of the passed parsed xml element.</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        
+            
+
+<dt>
+<h4 class="name" id=".exports.getFirstChild">
+    <span class="type-signature"><span class="icon green">static</span>, <span class="icon green">constant</span> </span>exports.getFirstChild<span class="type-signature"></span>
+    
+    <div class="container-source members">
+        <code><a href="vast-xml2js_src_helpers_xmlSelectors.js.html">vast-xml2js/src/helpers/xmlSelectors.js</a></code>,
+        <code><a href="vast-xml2js_src_helpers_xmlSelectors.js.html#line41">line 41</a></code>
+    </div>
+    
+</h4>
+
+
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Get the first child element from the passed parsed xml element.</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        
+            
+
+<dt>
+<h4 class="name" id=".exports.getText">
+    <span class="type-signature"><span class="icon green">static</span>, <span class="icon green">constant</span> </span>exports.getText<span class="type-signature"></span>
+    
+    <div class="container-source members">
+        <code><a href="vast-xml2js_src_helpers_xmlSelectors.js.html">vast-xml2js/src/helpers/xmlSelectors.js</a></code>,
+        <code><a href="vast-xml2js_src_helpers_xmlSelectors.js.html#line49">line 49</a></code>
+    </div>
+    
+</h4>
+
+
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Get the text value of the passed parsed xml element or null if there is non.</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+                
+
+<dt>
+    
+        <h4 class="name" id=".parseXml">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>parseXml<span class="signature">(xmlText)</span><span class="type-signature"> &rarr; {Object}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="vast-xml2js_src_index.js.html">vast-xml2js/src/index.js</a></code>,
+                <code><a href="vast-xml2js_src_index.js.html#line26">line 26</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Parses the passed xml text.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
 
         
 
+        
 
-    <ul>
-        <li>React.Component</li>
-    </ul>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>xmlText</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>XML text to be parsed.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Throws:</h5>
+    
+            
+
+    <div class="param-desc">
+    
+        <p>if there is an error parsing the xml.</p>
+    
+    </div>
+
+
+        
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Object</span>
+
+
+
+
+
+- <ul>
+<li>Returns the parsed xml document as a js object.</li>
+</ul>
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
 
     
 
@@ -691,6 +732,29 @@ Defaults to <code>false</code></p></td>
 
     
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
     
 
     
@@ -715,7 +779,7 @@ Defaults to <code>false</code></p></td>
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'VideoAd_sub'.replace(/"/g, '_');
+        var id = 'module:@mailonline/vast-xml2js_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
