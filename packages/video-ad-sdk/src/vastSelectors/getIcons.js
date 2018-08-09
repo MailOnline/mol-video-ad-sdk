@@ -3,7 +3,7 @@ import {
   getAll,
   getText,
   getAttributes
-} from '@mol/vast-xml2js';
+} from '@mailonline/vast-xml2js';
 import getLinearCreative from './helpers/getLinearCreative';
 import parseTime from './helpers/parseTime';
 

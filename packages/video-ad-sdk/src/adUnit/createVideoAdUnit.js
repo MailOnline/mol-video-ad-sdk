@@ -5,7 +5,7 @@ import {
   trackNonLinearEvent
 } from '../tracker';
 import VideoAdContainer from '../adContainer/VideoAdContainer';
-import {getInteractiveFiles} from '../../../../node_modules/@mol/video-ad-sdk/src/vastSelectors';
+import {getInteractiveFiles} from '../vastSelectors';
 import VastAdUnit from './VastAdUnit';
 import VpaidAdUnit from './VpaidAdUnit';
 

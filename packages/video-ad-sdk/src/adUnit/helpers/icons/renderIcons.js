@@ -40,7 +40,7 @@ const renderIcons = (icons, {onIconClick, videoAdContainer, logger}) => {
       }))
       .then((renderedIcon) => drawnIcons.push(renderedIcon))
       .catch((error) => logger.log(error))
-      , Promise.resolve(drawnIcons))
+    , Promise.resolve(drawnIcons))
     .then(() => drawnIcons);
 };
 

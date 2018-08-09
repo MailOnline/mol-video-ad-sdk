@@ -28,8 +28,8 @@ describe('restoreSnapshot', () => {
     const snapshot = {
       currentTime: '5',
       ended: false,
-      nativePoster: '//test.example.com/poster',
-      src: '//test.example.com/src',
+      nativePoster: 'http://test.example.com/poster',
+      src: 'http://test.example.com/src',
       style: 'width: 100%;',
       suppressedTracks: [],
       type: 'video/mp4'
@@ -50,8 +50,8 @@ describe('restoreSnapshot', () => {
       const snapshot = {
         currentTime: '5',
         ended: false,
-        nativePoster: '//test.example.com/poster',
-        src: '//test.example.com/src',
+        nativePoster: 'http://test.example.com/poster',
+        src: 'http://test.example.com/src',
         style: 'width: 100%;',
         suppressedTracks: [{
           mode: 'test',
@@ -79,8 +79,8 @@ describe('restoreSnapshot', () => {
       const snapshot = {
         currentTime: '5',
         ended: false,
-        nativePoster: '//test.example.com/poster',
-        src: '//test.example.com/src',
+        nativePoster: 'http://test.example.com/poster',
+        src: 'http://test.example.com/src',
         style: 'width: 100%;',
         suppressedTracks: [{
           mode: 'test',
@@ -101,8 +101,8 @@ describe('restoreSnapshot', () => {
       const snapshot = {
         currentTime: '5',
         ended: false,
-        nativePoster: '//test.example.com/poster',
-        src: '//test.example.com/src',
+        nativePoster: 'http://test.example.com/poster',
+        src: 'http://test.example.com/src',
         style: 'width: 100%;',
         suppressedTracks: [],
         type: 'video/mp4'

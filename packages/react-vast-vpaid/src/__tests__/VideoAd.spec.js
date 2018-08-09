@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {mount} from 'enzyme';
 import React from 'react';
-import {runWaterfall} from '@mol/video-ad-sdk';
+import {runWaterfall} from '@mailonline/video-ad-sdk';
 import VideoAd from '../VideoAd';
 
 const mockAdUnit = {
@@ -17,7 +17,7 @@ const mockAdUnit = {
 
 const Spinner = () => <div className='spinner' />;
 
-jest.mock('@mol/video-ad-sdk', () => ({runWaterfall: jest.fn()}));
+jest.mock('@mailonline/video-ad-sdk', () => ({runWaterfall: jest.fn()}));
 
 const getTag = () => 'http://fakeTestTagUrl';
 

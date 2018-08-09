@@ -1,5 +1,5 @@
 {
-  "name": "@mol/video-ad",
+  "name": "@mailonline/video-ad",
   "private": true,
   "description": "Mono-repo of VAST libraries that allow Video ads to be served on a browser",
   "author": "MailOnline <fe@mailonline.co.uk>",
@@ -15,17 +15,18 @@
     "precommit": "npm run lint",
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "prepush": "npm test",
-    "test": "lerna run --stream test"
+    "test": "lerna run --stream test",
+     "publish-npm": "yarn build && lerna publish --conventional-commits --skip-npm && lerna run publish-npm"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MailOnline/@mol/video-ad-sdk/issues"
+    "url": "https://github.com/MailOnline/@mailonline/video-ad-sdk/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/MailOnline/@mol/video-ad-sdk.git"
+    "url": "git+ssh://git@github.com/MailOnline/@mailonline/video-ad-sdk.git"
   },
-  "homepage": "https://github.com/MailOnline/@mol/video-ad-sdk#readme",
+  "homepage": "https://github.com/MailOnline/@mailonline/video-ad-sdk#readme",
   "config": {
     "commitizen": {
       "path": "./node_modules/mol-conventional-changelog"

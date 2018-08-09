@@ -71,7 +71,7 @@ const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
 /**
  * Will try to start one of the ads returned by the `adTag`. It will keep trying until it times out or it runs out of ads.
  *
- * @memberof module:@mol/video-ad-sdk
+ * @memberof module:@mailonline/video-ad-sdk
  * @static
  * @alias runWaterfall
  * @param {string} adTag - The VAST ad tag request url.

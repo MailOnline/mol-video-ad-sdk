@@ -12,7 +12,9 @@ module.exports = {
   ],
   coverageReporters: ['json', 'html'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   testRegex: '__tests__/.*\\.spec\\.(jsx?|tsx?)$',
+  testURL: 'http://localhost',
   transform: {
     '.+\\.jsx?$': 'babel-jest'
   },

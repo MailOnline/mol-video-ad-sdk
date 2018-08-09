@@ -1,5 +1,5 @@
 /**
- * @module @mol/videojs-vast-vpaid
+ * @module @mailonline/videojs-vast-vpaid
  * @description [videojs](http://videojs.com/) plugin to play VAST/VPAID video ads.
  */
 
