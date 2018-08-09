@@ -1,5 +1,5 @@
 /**
- * @module @mol/vast-xml2js
+ * @module @mailonline/vast-xml2js
  * @description Simple wrapper on top of [xml-js](https://www.npmjs.com/package/xml-js) to ensure that is used on a consistent way and to make it easy to change in case is needed on the future.
  */
 import xmldom from 'xmldom';

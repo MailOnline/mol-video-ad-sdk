@@ -1,5 +1,5 @@
 /* eslint-disable id-match */
-import {parseXml} from '@mol/vast-xml2js';
+import {parseXml} from '@mailonline/vast-xml2js';
 import {
   getAds,
   getFirstAd

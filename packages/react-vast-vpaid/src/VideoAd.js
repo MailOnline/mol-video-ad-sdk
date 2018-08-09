@@ -1,7 +1,7 @@
 /* eslint-disable filenames/match-exported */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {runWaterfall} from '@mol/video-ad-sdk';
+import {runWaterfall} from '@mailonline/video-ad-sdk';
 import makeCancelable from './helpers/makeCancelable';
 
 const noop = () => {};
@@ -18,7 +18,7 @@ const defer = () => {
 };
 
 /**
-  * @memberof module:@mol/react-vast-vpaid
+  * @memberof module:@mailonline/react-vast-vpaid
   * @class
   * @extends React.Component
   * @alias VideoAd

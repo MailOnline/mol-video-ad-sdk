@@ -29,7 +29,7 @@ const cssLoaders = [
 const rules = [
   {
     enforce: 'pre',
-    exclude: /node_modules\/(?!@mol\/).*/,
+    exclude: /node_modules\/(?!@mailonline\/).*/,
     test: /\.js$/,
     use: ['source-map-loader']
   },

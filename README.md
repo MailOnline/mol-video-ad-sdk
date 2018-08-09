@@ -6,8 +6,8 @@ To run video ads in the browser there are many alternatives. The most famous one
 ## Projects include:
 * [vast-xml2js](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/vast-xml2js): A wrapper on top of [DOMParser](https://developer.mozilla.org/en-US/docs/Web/API/DOMParser) to be able to parse XML files in the browser and in node if needed. For node we use [xmldom](https://www.npmjs.com/package/xmldom)
 * [video-ad-sdk](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/video-ad-sdk): SDK to load and play [VAST](https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/)/[VPAID](https://www.iab.com/guidelines/digital-video-player-ad-interface-definitions-vpaid-compliance/) video ads.
-* [videojs-vast-vpaid](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/videojs-vast-vpaid): [video.js](https://videojs.com/) plugin that loads video-ads using [@mol/video-ad-sdk](ps://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/video-ad-sdk).
-* [react-vast-vpaid](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/react-vast-vpaid): [React](https://reactjs.org/) component that loads video-ads using [@mol/video-ad-sdk](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/video-ad-sdk).
+* [videojs-vast-vpaid](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/videojs-vast-vpaid): [video.js](https://videojs.com/) plugin that loads video-ads using [@mailonline/video-ad-sdk](ps://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/video-ad-sdk).
+* [react-vast-vpaid](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/react-vast-vpaid): [React](https://reactjs.org/) component that loads video-ads using [@mailonline/video-ad-sdk](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/video-ad-sdk).
 
 ## Documentation
 Currently we only have the API which you can check [here](https://mailonline.github.io/mol-video-ad-sdk/index.html).

@@ -18,11 +18,11 @@ describe('getSnapshot', () => {
     mockTech = document.createElement('video');
     mockTech.classList.add('vjs-tech');
     mockTech.style.width = '100%';
-    mockTech.poster = '//test.example.com/poster';
+    mockTech.poster = 'http://test.example.com/poster';
 
     el.appendChild(mockTech);
 
-    mockPlayer.currentSrc.mockReturnValue('//test.example.com/src');
+    mockPlayer.currentSrc.mockReturnValue('http://test.example.com/src');
     mockPlayer.currentTime.mockReturnValue('5');
     mockPlayer.currentType.mockReturnValue('video/mp4');
     mockPlayer.ended.mockReturnValue(false);
@@ -31,8 +31,8 @@ describe('getSnapshot', () => {
     expect(getSnapshot(mockPlayer)).toEqual({
       currentTime: '5',
       ended: false,
-      nativePoster: '//test.example.com/poster',
-      src: '//test.example.com/src',
+      nativePoster: 'http://test.example.com/poster',
+      src: 'http://test.example.com/src',
       style: 'width: 100%;',
       suppressedTracks: [],
       type: 'video/mp4'
@@ -44,7 +44,7 @@ describe('getSnapshot', () => {
     expect(getSnapshot(mockPlayer)).toEqual({
       currentTime: '5',
       ended: false,
-      src: '//test.example.com/src',
+      src: 'http://test.example.com/src',
       suppressedTracks: [],
       type: 'video/mp4'
     });
@@ -62,8 +62,8 @@ describe('getSnapshot', () => {
     expect(getSnapshot(mockPlayer)).toEqual({
       currentTime: '5',
       ended: false,
-      nativePoster: '//test.example.com/poster',
-      src: '//test.example.com/src',
+      nativePoster: 'http://test.example.com/poster',
+      src: 'http://test.example.com/src',
       style: 'width: 100%;',
       suppressedTracks: [{
         mode: 'test',
@@ -84,8 +84,8 @@ describe('getSnapshot', () => {
     expect(getSnapshot(mockPlayer)).toEqual({
       currentTime: '5',
       ended: false,
-      nativePoster: '//test.example.com/poster',
-      src: '//test.example.com/src',
+      nativePoster: 'http://test.example.com/poster',
+      src: 'http://test.example.com/src',
       style: 'width: 100%;',
       suppressedTracks: [],
       type: 'video/mp4'

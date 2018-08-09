@@ -1,4 +1,4 @@
-import {parseXml} from '@mol/vast-xml2js';
+import {parseXml} from '@mailonline/vast-xml2js';
 import {
   getWrapperOptions,
   getFirstAd,
@@ -96,7 +96,7 @@ const getOptions = (vastChain, options) => {
 /**
  * @function requestAd
  *
- * @memberof module:@mol/video-ad-sdk
+ * @memberof module:@mailonline/video-ad-sdk
  * @async
  * @static
  * @description Request the ad using the passed ad tag and returns an array with the [VAST responses]{@link VastResponse} needed to get an inline ad.

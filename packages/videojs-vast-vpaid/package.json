@@ -1,5 +1,5 @@
 {
-  "name": "@mol/videojs-vast-vpaid",
+  "name": "@mailonline/videojs-vast-vpaid",
   "version": "0.2.0",
   "description": "VAST plugin to use with video.js",
   "author": "MailOnline <fe@mailonline.co.uk>",
@@ -12,14 +12,15 @@
     "test": "cross-env NODE_ENV=test jest",
     "prebuild": "rimraf dist",
     "build": "cross-env NODE_ENV=production rollup -c",
-    "dev": "rollup -c"
+    "dev": "rollup -c",
+    "publish-npm": "npm publish"
   },
   "files": [
     "dist",
     "src"
   ],
   "dependencies": {
-    "@mol/video-ad-sdk": "^0.2.0"
+    "@mailonline/video-ad-sdk": "^0.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
@@ -48,5 +49,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "d50378f65b86d9ccbf1c7a56cc4e4dc358d7f7dc"
 }

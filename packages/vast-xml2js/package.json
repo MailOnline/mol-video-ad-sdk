@@ -1,5 +1,5 @@
 {
-  "name": "@mol/vast-xml2js",
+  "name": "@mailonline/vast-xml2js",
   "version": "0.2.0",
   "description": "MOL VAST xml2js method",
   "keywords": [
@@ -18,7 +18,8 @@
     "prebuild": "rimraf dist",
     "build": "cross-env NODE_ENV=production rollup -c",
     "dev": "rollup -c",
-    "test": "cross-env NODE_ENV=test jest"
+    "test": "cross-env NODE_ENV=test jest",
+    "publish-npm": "npm publish"
   },
   "files": [
     "src",
@@ -53,5 +54,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "d50378f65b86d9ccbf1c7a56cc4e4dc358d7f7dc"
 }
