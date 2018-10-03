@@ -3,8 +3,8 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-<a name="0.2.0"></a>
-# 0.2.0 (2018-08-09)
+<a name="0.3.0"></a>
+# 0.3.0 (2018-08-09)
 
 
 ### Bug Fixes
@@ -59,6 +59,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * 🎸 remove classes from sdk package index ([8eccf88](https://github.com/MailOnline/mol-video-ad-sdk/commit/8eccf88))
 * 🎸 remove onComplete from VastAdUnit ([e42f692](https://github.com/MailOnline/mol-video-ad-sdk/commit/e42f692))
 * 🎸 remove onLinearEvent option ([2a16899](https://github.com/MailOnline/mol-video-ad-sdk/commit/2a16899))
+* 🎸 update scope of packages ([18846c5](https://github.com/MailOnline/mol-video-ad-sdk/commit/18846c5))
 * 🎸 update sdk api and remove unneeded logic ([9f47cc3](https://github.com/MailOnline/mol-video-ad-sdk/commit/9f47cc3))
 * 🎸 VpaidAdUnit onFinish/onError logic ([12ca63d](https://github.com/MailOnline/mol-video-ad-sdk/commit/12ca63d))
 * rename vast-loader module 2 vast-request ([8f720f9](https://github.com/MailOnline/mol-video-ad-sdk/commit/8f720f9))

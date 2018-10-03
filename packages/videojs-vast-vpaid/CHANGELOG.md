@@ -3,8 +3,8 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-<a name="0.2.0"></a>
-# 0.2.0 (2018-08-09)
+<a name="0.3.0"></a>
+# 0.3.0 (2018-08-09)
 
 
 ### Bug Fixes
@@ -21,3 +21,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * 🎸 add onError, onAdStart and onRunFinish ([83acde1](https://github.com/MailOnline/mol-video-ad-sdk/commit/83acde1)), closes [#57](https://github.com/MailOnline/mol-video-ad-sdk/issues/57)
 * 🎸 add pckg scheleton ([8f50a5a](https://github.com/MailOnline/mol-video-ad-sdk/commit/8f50a5a)), closes [#57](https://github.com/MailOnline/mol-video-ad-sdk/issues/57)
 * 🎸 add vast vpaid plugin ([efdc761](https://github.com/MailOnline/mol-video-ad-sdk/commit/efdc761)), closes [#57](https://github.com/MailOnline/mol-video-ad-sdk/issues/57)
+* 🎸 update scope of packages ([18846c5](https://github.com/MailOnline/mol-video-ad-sdk/commit/18846c5))
