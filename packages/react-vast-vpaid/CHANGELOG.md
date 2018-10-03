@@ -3,8 +3,8 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-<a name="0.2.0"></a>
-# 0.2.0 (2018-08-09)
+<a name="0.3.0"></a>
+# 0.3.0 (2018-08-09)
 
 
 ### Bug Fixes
@@ -19,3 +19,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * 🎸 only pass the adUnit to onStart handler ([cc00ca2](https://github.com/MailOnline/mol-video-ad-sdk/commit/cc00ca2))
 * 🎸 rename video-ad-component package to ([1c01079](https://github.com/MailOnline/mol-video-ad-sdk/commit/1c01079))
 * 🎸 rm ResponsiveVideoAd component that logic ([7df5421](https://github.com/MailOnline/mol-video-ad-sdk/commit/7df5421))
+* 🎸 update scope of packages ([18846c5](https://github.com/MailOnline/mol-video-ad-sdk/commit/18846c5))
