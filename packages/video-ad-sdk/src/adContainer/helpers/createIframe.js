@@ -1,12 +1,21 @@
 import defer from '../../utils/defer';
-import getContentDocument from './getContentDocument';
 import getOrigin from './getOrigin';
+
+const iframeContent = (id, targetOrigin) => `<!DOCTYPE html>
+<html>
+  <head><meta charset='UTF-8'></head>
+  <body style='margin:0;padding:0'>
+  <script type='text/javascript'>window.parent.postMessage('${id}_ready', '${targetOrigin}');</script>
+  </body>
+</html>`;
 
 const createIframe = (placeholder, id) => {
   const deferred = defer();
   const iframe = document.createElement('IFRAME');
+  const content = iframeContent(id, getOrigin());
 
-  iframe.src = 'about:blank';
+  iframe.src = `javascript: '${content}'`;
+  iframe.srcdoc = content;
   iframe.sandbox = 'allow-forms allow-popups allow-scripts';
   iframe.style.margin = '0';
   iframe.style.padding = '0';
@@ -17,32 +26,15 @@ const createIframe = (placeholder, id) => {
 
   placeholder.appendChild(iframe);
 
-  const iframeDocument = getContentDocument(iframe);
+  const handleMessage = ({data}) => {
+    /* istanbul ignore else */
+    if (data === `${id}_ready`) {
+      window.removeEventListener('message', handleMessage);
+      deferred.resolve(iframe);
+    }
+  };
 
-  if (iframeDocument) {
-    const targetOrigin = getOrigin();
-    const content = `<!DOCTYPE html>
-                      <html lang="en">
-                        <head><meta charset="UTF-8"></head>
-                        <body style="margin:0;padding:0">
-                        <script type="text/javascript">
-                          window.parent.postMessage('${id}_ready', '${targetOrigin}');
-                          </script>
-                        </body>
-                      </html>`;
-    const handleMessage = ({data}) => {
-      /* istanbul ignore else */
-      if (data === `${id}_ready`) {
-        window.removeEventListener('message', handleMessage);
-        deferred.resolve(iframe);
-      }
-    };
-
-    window.addEventListener('message', handleMessage, false);
-    iframeDocument.write(content);
-  } else {
-    deferred.reject(new Error('Error creating iframe, the placeholder is probably not in the DOM'));
-  }
+  window.addEventListener('message', handleMessage, false);
 
   return deferred.promise;
 };
