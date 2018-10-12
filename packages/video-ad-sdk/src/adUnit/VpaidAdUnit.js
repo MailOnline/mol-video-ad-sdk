@@ -62,6 +62,20 @@ const {
 // eslint-disable-next-line id-match
 const _private = Symbol('_private');
 
+const vpaidGeneralError = (payload) => {
+  if (payload instanceof Error) {
+    return payload;
+  }
+
+  const error = new Error('VPAID general error');
+
+  if (typeof payload === 'string') {
+    error.message = payload;
+  }
+
+  return error;
+};
+
 /**
  * @class
  * @alias VpaidAdUnit
@@ -81,8 +95,7 @@ class VpaidAdUnit extends VideoAdUnit {
         break;
       }
       case adError: {
-        this.error = payload instanceof Error ? payload : new Error('VPAID general error');
-
+        this.error = vpaidGeneralError(payload);
         this.error.errorCode = 901;
         this.errorCode = 901;
         this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
