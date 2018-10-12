@@ -68,7 +68,6 @@ class VideoAdContainer {
     const placeholder = getContentDocument(this[hidden].iframe).body;
 
     return loadScript(src, {
-      defer: true,
       placeholder,
       ...options
     });
