@@ -38,10 +38,7 @@ describe('initAd', () => {
       0,
       'thumbnail',
       -1,
-      {
-        data: 'AD_PARAMETERS_DATA',
-        xmlEncoded: 'false'
-      },
+      'AD_PARAMETERS_DATA',
       {
         slot: videoAdContainer.element,
         videoSlot: videoAdContainer.videoElement
