@@ -1,5 +1,7 @@
 import defer from '../../utils/defer';
+import getContentDocument from './getContentDocument';
 import getOrigin from './getOrigin';
+import supportsSrcdoc from './supportsSrcdoc';
 
 const iframeContent = (id, targetOrigin) => `<!DOCTYPE html>
 <html>
@@ -14,9 +16,7 @@ const createIframe = (placeholder, id) => {
   const iframe = document.createElement('IFRAME');
   const content = iframeContent(id, getOrigin());
 
-  iframe.src = `javascript: '${content}'`;
-  iframe.srcdoc = content;
-  iframe.sandbox = 'allow-forms allow-popups allow-scripts';
+  iframe.sandbox = 'allow-forms allow-popups allow-scripts allow-same-origin';
   iframe.style.margin = '0';
   iframe.style.padding = '0';
   iframe.style.border = 'none';
@@ -24,7 +24,23 @@ const createIframe = (placeholder, id) => {
   iframe.style.height = '0';
   iframe.style.position = 'absolute';
 
-  placeholder.appendChild(iframe);
+  if (supportsSrcdoc()) {
+    iframe.src = 'about:srcdoc';
+    iframe.srcdoc = content;
+    placeholder.appendChild(iframe);
+  } else {
+    iframe.src = 'about:blank';
+    placeholder.appendChild(iframe);
+
+    const iframeDocument = getContentDocument(iframe);
+
+    if (iframeDocument) {
+      iframeDocument.write(content);
+    } else {
+      placeholder.removeChild(iframe);
+      deferred.reject(new Error('Error creating iframe, the placeholder is probably not in the DOM'));
+    }
+  }
 
   const handleMessage = ({data}) => {
     /* istanbul ignore else */

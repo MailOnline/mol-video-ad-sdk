@@ -1,13 +1,17 @@
 import createIframe from '../createIframe';
+import supportsSrcdoc from '../supportsSrcdoc';
 
-// TODO: enable this test once jsdom supports srcdoc see for more info https://github.com/jsdom/jsdom/pull/2389
+jest.mock('../supportsSrcdoc');
 // eslint-disable-next-line jest/no-disabled-tests
-describe.skip('createIframe', () => {
+describe('createIframe', () => {
   beforeEach(() => {
     // eslint-disable-next-line no-undef
     jsdom.reconfigure({
       url: 'https://www.example.com/'
     });
+
+    // TODO: Test srcdoc once jsdom supports it. See https://github.com/jsdom/jsdom/pull/2389 for more info
+    supportsSrcdoc.mockReturnValue(false);
   });
 
   test('must return an empty Iframe element', async () => {

@@ -1,9 +1,11 @@
 import VideoAdContainer from '../VideoAdContainer';
 import loadScript from '../helpers/loadScript';
 import getContentDocument from '../helpers/getContentDocument';
+import supportsSrcdoc from '../helpers/supportsSrcdoc';
 
 let placeholder;
 
+jest.mock('../helpers/supportsSrcdoc');
 jest.mock('../helpers/loadScript.js');
 
 describe('VideoAdContainer', () => {
@@ -14,6 +16,7 @@ describe('VideoAdContainer', () => {
     });
     placeholder = document.createElement('DIV');
     document.body.appendChild(placeholder);
+    supportsSrcdoc.mockReturnValue(false);
   });
 
   afterEach(() => {
@@ -53,9 +56,8 @@ describe('VideoAdContainer', () => {
     expect(videoAdContainer.videoElement.parentNode).toBe(adContainerElement);
   });
 
-  // TODO: enable this test once jsdom supports srcdoc see for more info https://github.com/jsdom/jsdom/pull/2389
   // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('addScript', () => {
+  describe('addScript', () => {
     test('must create an iframe and add the scripts to it', async () => {
       loadScript.mockReturnValue(Promise.resolve('SCRIPT_MOCK'));
 
@@ -75,7 +77,6 @@ describe('VideoAdContainer', () => {
       expect(iframe).toBeInstanceOf(HTMLIFrameElement);
       expect(loadScript).toHaveBeenCalledTimes(1);
       expect(loadScript).toBeCalledWith(src, expect.objectContaining({
-        defer: true,
         placeholder: iframeBody,
         ...scriptOpts
       }));
