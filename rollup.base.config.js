@@ -3,12 +3,14 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import {terser} from 'rollup-plugin-terser';
+import sourcemaps from 'rollup-plugin-sourcemaps';
 
 export const getConfig = (pkg) => {
 // eslint-disable-next-line no-process-env
   const production = process.env.NODE_ENV === 'production';
 
   const plugins = [
+    sourcemaps(),
     babel({
       exclude: [
         '../../node_modules/**',
@@ -40,6 +42,7 @@ export const getConfig = (pkg) => {
       input: 'src/index.js',
       onwarn,
       output: {
+        sourcemap: true,
         name: pkg.name,
         file: pkg.browser,
         format: 'umd'
@@ -53,6 +56,7 @@ export const getConfig = (pkg) => {
       input: 'src/index.js',
       onwarn,
       output: {
+        sourcemap: true,
         file: pkg.module,
         format: 'es'
       },
@@ -62,6 +66,7 @@ export const getConfig = (pkg) => {
       input: 'src/index.js',
       onwarn,
       output: {
+        sourcemap: true,
         file: pkg.main,
         format: 'cjs'
       },
