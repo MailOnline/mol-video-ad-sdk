@@ -17,7 +17,7 @@ const startVideoAd = async (vastChain, videoAdContainer, options) => {
 
     return adUnit;
   } catch (error) {
-    if (adUnit) {
+    if (adUnit && !adUnit.isFinished()) {
       adUnit.cancel();
     }
 
