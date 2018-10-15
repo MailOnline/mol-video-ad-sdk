@@ -114,6 +114,67 @@ describe('runWaterfall', () => {
         tracker: options.tracker
       }));
     });
+
+    test('must throw if options.hooks.validateVastResponse fails', async () => {
+      const onError = jest.fn();
+      const vastChainError = new Error('boom');
+
+      vastChainError.errorCode = 900;
+
+      requestAd.mockReturnValue(Promise.resolve(vastAdChain));
+
+      await runWaterfall(adTag, placeholder, {
+        ...options,
+        hooks: {
+          validateVastResponse: () => {
+            throw vastChainError;
+          }
+        },
+        onError
+      });
+
+      expect(onError).toHaveBeenCalledTimes(1);
+      expect(onError.mock.calls[0][0]).toBe(vastChainError);
+      expect(trackError).toHaveBeenCalledWith(vastAdChain, expect.objectContaining({
+        errorCode: 900,
+        tracker: options.tracker
+      }));
+    });
+
+    test('must be possible to transform the vast response before calling run', async () => {
+      const deferred = defer();
+
+      requestAd.mockReturnValue(Promise.resolve(vastAdChain));
+      run.mockReturnValue(Promise.resolve(adUnit));
+
+      const onAdStart = jest.fn();
+
+      runWaterfall(adTag, placeholder, {
+        ...options,
+        hooks: {
+          transformVastResponse: (vastResponse) => {
+            // eslint-disable-next-line id-match
+            vastResponse.__transformed = true;
+
+            return vastResponse;
+          }
+        },
+        onAdStart: (...args) => {
+          deferred.resolve();
+          onAdStart(...args);
+        }
+      });
+
+      await deferred.promise;
+
+      expect(onAdStart).toHaveBeenCalledTimes(1);
+      expect(onAdStart).toHaveBeenCalledWith(adUnit);
+      expect(requestAd).toHaveBeenCalledTimes(1);
+      expect(requestAd).toHaveBeenCalledWith(adTag, expect.objectContaining(options));
+      expect(run).toHaveBeenCalledTimes(1);
+      expect(run).toHaveBeenCalledWith(vastAdChain, placeholder, expect.objectContaining(options));
+      expect(vastAdChain.__transformed).toBe(true);
+    });
   });
 
   describe('options.onAdStart', () => {

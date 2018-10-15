@@ -11,17 +11,12 @@ const validateVastChain = (vastChain, options) => {
 
   const lastVastResponse = vastChain[0];
 
-  if (Boolean(lastVastResponse.errorCode)) {
-    const {tracker} = options;
-
-    trackError(vastChain, {
-      errorCode: lastVastResponse.errorCode,
-      tracker
-    });
-  }
-
   if (Boolean(lastVastResponse.error)) {
     throw lastVastResponse.error;
+  }
+
+  if (options.hooks && typeof options.hooks.validateVastResponse === 'function') {
+    options.hooks.validateVastResponse(vastChain);
   }
 };
 
@@ -30,6 +25,16 @@ const callbackHandler = (cb) => (...args) => {
     cb(...args);
   }
 };
+
+const getErrorCode = (vastChain, error) => vastChain && vastChain[0] && vastChain[0].errorCode || error.errorCode;
+const transformVastResponse = (vastChain, {hooks}) => {
+  if (hooks && typeof hooks.transformVastResponse === 'function') {
+    return hooks.transformVastResponse(vastChain);
+  }
+
+  return vastChain;
+};
+
 const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
   let vastChain;
   let runEpoch;
@@ -62,7 +67,8 @@ const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
     }
 
     validateVastChain(vastChain, opts);
-    adUnit = await run(vastChain, placeholder, {...opts});
+
+    adUnit = await run(transformVastResponse(vastChain, opts), placeholder, {...opts});
 
     if (isCanceled()) {
       adUnit.cancel();
@@ -75,6 +81,17 @@ const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
     adUnit.onError(onError);
     adUnit.onFinish(onRunFinish);
   } catch (error) {
+    const errorCode = getErrorCode(vastChain, error);
+
+    if (Boolean(errorCode)) {
+      const {tracker} = options;
+
+      trackError(vastChain, {
+        errorCode,
+        tracker
+      });
+    }
+
     onError(error);
 
     if (vastChain && !isCanceled()) {
@@ -82,7 +99,12 @@ const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
         opts.timeout -= Date.now() - runEpoch;
       }
 
-      waterfall(() => requestNextAd(vastChain, opts), placeholder, {...opts}, isCanceled);
+      waterfall(
+        () => requestNextAd(vastChain, opts),
+        placeholder,
+        {...opts},
+        isCanceled
+      );
 
       return;
     }
@@ -116,6 +138,8 @@ const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
  * @param {TrackerFn} [options.tracker] - If provided it will be used to track the VAST events instead of the default {@link pixelTracker}.
  * @param {Object} [options.hooks] - Optional map with hooks to configure the behaviour of the ad.
  * @param {Function} [options.hooks.createSkipControl] - If provided it will be called to generate the skip control. Must return a clickable [HTMLElement](https://developer.mozilla.org/es/docs/Web/API/HTMLElement) that is detached from the DOM.
+ * @param {Function} [options.hooks.validateVastResponse] - If provided it will be called for each valid vast response. Must throw if there is a problem with the vast response. If the Error instance has an `errorCode` number then it will be tracked using the error macros in the Vast response. It will also call {@link runWaterfall~onError} with the thrown error.
+ * @param {Function} [options.hooks.transformVastResponse] - If provided it will be called before building the adUnit allowing the modification of the vastResponse if needed.
  * @returns {Function} - Cancel function. If called it will cancel the ad run. {@link runWaterfall~onRunFinish} will still be called;
  */
 const runWaterfall = (adTag, placeholder, options) => {
