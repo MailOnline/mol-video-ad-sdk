@@ -1,7 +1,29 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
+import {trackError} from '../tracker';
 import requestAd from '../vastRequest/requestAd';
 import requestNextAd from '../vastRequest/requestNextAd';
 import run from './run';
+
+const validateVastChain = (vastChain, options) => {
+  if (!vastChain || vastChain.length === 0) {
+    throw new Error('Invalid VastChain');
+  }
+
+  const lastVastResponse = vastChain[0];
+
+  if (Boolean(lastVastResponse.errorCode)) {
+    const {tracker} = options;
+
+    trackError(vastChain, {
+      errorCode: lastVastResponse.errorCode,
+      tracker
+    });
+  }
+
+  if (Boolean(lastVastResponse.error)) {
+    throw lastVastResponse.error;
+  }
+};
 
 const callbackHandler = (cb) => (...args) => {
   if (typeof cb === 'function') {
@@ -39,6 +61,7 @@ const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
       runEpoch = newEpoch;
     }
 
+    validateVastChain(vastChain, opts);
     adUnit = await run(vastChain, placeholder, {...opts});
 
     if (isCanceled()) {

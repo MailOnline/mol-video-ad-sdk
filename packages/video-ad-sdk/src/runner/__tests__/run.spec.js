@@ -7,7 +7,6 @@ import {
   wrapperAd,
   inlineAd
 } from '../../../fixtures';
-import {trackError} from '../../tracker';
 import startVideoAd from '../helpers/startVideoAd';
 import run from '../run';
 import VideoAdContainer from '../../adContainer/VideoAdContainer';
@@ -59,40 +58,6 @@ describe('run', () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
-  });
-
-  test('must throw if the vastChain is not valid or empty', async () => {
-    try {
-      await run(undefined, placeholder, options);
-    } catch (error) {
-      expect(error.message).toBe('Invalid VastChain');
-    }
-
-    try {
-      await run([], placeholder, options);
-    } catch (error) {
-      expect(error.message).toBe('Invalid VastChain');
-    }
-  });
-
-  test('must throw if the vastChain has an error and track the error', async () => {
-    const vastChainError = new Error('boom');
-    const vastChainWithError = [{
-      ...vastAdChain[0],
-      error: vastChainError,
-      errorCode: 900
-    }];
-
-    try {
-      await run(vastChainWithError, placeholder, options);
-    } catch (error) {
-      expect(error).toBe(vastChainError);
-      expect(trackError).toHaveBeenCalledTimes(1);
-      expect(trackError).toHaveBeenCalledWith(vastChainWithError, expect.objectContaining({
-        errorCode: 900,
-        tracker: options.tracker
-      }));
-    }
   });
 
   test('must return the started adUnit', async () => {
