@@ -9,7 +9,6 @@
     "clean": "git clean -fdX",
     "docs": "rimraf docs && jsdoc -c jsdoc.json",
     "lint": "yarn lint-scripts && lerna run lint",
-    "start": "yarn dev && browser-sync start -c ./bs-config.js",
     "lint-scripts": "eslint --ignore-path .gitignore './*.js'",
     "postinstall": "yarn build",
     "precommit": "npm run lint",
@@ -40,7 +39,6 @@
   "devDependencies": {
     "@commitlint/cli": "^7.0.0",
     "@commitlint/travis-cli": "^7.0.0",
-    "browser-sync": "^2.24.6",
     "cross-env": "^5.2.0",
     "husky": "^1.1.2",
     "jsdoc": "^3.5.5",
