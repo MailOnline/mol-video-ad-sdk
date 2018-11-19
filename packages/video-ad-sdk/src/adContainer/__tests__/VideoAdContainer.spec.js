@@ -1,9 +1,11 @@
 import VideoAdContainer from '../VideoAdContainer';
 import loadScript from '../helpers/loadScript';
 import getContentDocument from '../helpers/getContentDocument';
+import supportsSrcdoc from '../helpers/supportsSrcdoc';
 
 let placeholder;
 
+jest.mock('../helpers/supportsSrcdoc');
 jest.mock('../helpers/loadScript.js');
 
 describe('VideoAdContainer', () => {
@@ -14,6 +16,7 @@ describe('VideoAdContainer', () => {
     });
     placeholder = document.createElement('DIV');
     document.body.appendChild(placeholder);
+    supportsSrcdoc.mockReturnValue(false);
   });
 
   afterEach(() => {
@@ -73,7 +76,6 @@ describe('VideoAdContainer', () => {
       expect(iframe).toBeInstanceOf(HTMLIFrameElement);
       expect(loadScript).toHaveBeenCalledTimes(1);
       expect(loadScript).toBeCalledWith(src, expect.objectContaining({
-        defer: true,
         placeholder: iframeBody,
         ...scriptOpts
       }));

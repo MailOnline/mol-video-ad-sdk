@@ -152,7 +152,7 @@ const vastVpaidPlugin = function (options) {
 
       adRunning = true;
 
-      const adTag = await Promise.resolve(getAdTag());
+      const adTag = await getAdTag();
       const tech = player.el().querySelector('.vjs-tech');
 
       snapshot = getSnapshot(player);

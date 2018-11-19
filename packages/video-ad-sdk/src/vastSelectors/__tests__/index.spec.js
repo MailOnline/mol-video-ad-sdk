@@ -576,16 +576,13 @@ test('getInteractiveFiles must return vast2 interactive files', () => {
   });
 });
 
-test('getAdParameters must return null if there none', () => {
-  expect(getAdParameters()).toEqual(null);
-  expect(getAdParameters(null)).toEqual(null);
-  expect(getAdParameters({})).toEqual(null);
-  expect(getAdParameters(wrapperAd)).toEqual(null);
+test('getAdParameters must return an empty string if there none', () => {
+  expect(getAdParameters()).toEqual('');
+  expect(getAdParameters(null)).toEqual('');
+  expect(getAdParameters({})).toEqual('');
+  expect(getAdParameters(wrapperAd)).toEqual('');
 });
 
 test('getAdParameters must return the adParameters', () => {
-  expect(getAdParameters(vpaidInlineAd)).toEqual(expect.objectContaining({
-    data: 'AD_PARAMETERS_DATA',
-    xmlEncoded: 'false'
-  }));
+  expect(getAdParameters(vpaidInlineAd)).toEqual('AD_PARAMETERS_DATA');
 });

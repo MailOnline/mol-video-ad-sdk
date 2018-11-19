@@ -486,22 +486,22 @@ export const getSkipOffset = (ad) => {
   return null;
 };
 
+const htmlDecode = (input) => {
+  const doc = new DOMParser().parseFromString(input, 'text/html');
+
+  return doc.documentElement.textContent;
+};
+
 export const getAdParameters = (ad) => {
   const creativeElement = ad && getLinearCreative(ad);
   const linearElement = creativeElement && get(creativeElement, 'Linear');
   const adParametersElement = linearElement && get(linearElement, 'AdParameters');
 
   if (!adParametersElement) {
-    return null;
+    return '';
   }
 
-  const xmlEncoded = getAttribute(adParametersElement, 'xmlEncoded');
-  const data = getText(adParametersElement);
-
-  return {
-    data,
-    xmlEncoded
-  };
+  return htmlDecode(getText(adParametersElement)) || '';
 };
 
 export {

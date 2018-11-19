@@ -16,7 +16,7 @@
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "prepush": "npm test",
     "test": "lerna run --stream test",
-     "publish-npm": "yarn build && lerna publish --conventional-commits --skip-npm && lerna run publish-npm"
+    "publish-npm": "yarn build && lerna publish --conventional-commits --skip-npm && lerna run publish-npm"
   },
   "license": "MIT",
   "bugs": {
@@ -42,7 +42,7 @@
     "@commitlint/travis-cli": "^7.0.0",
     "browser-sync": "^2.24.6",
     "cross-env": "^5.2.0",
-    "husky": "^0.14.3",
+    "husky": "^1.1.2",
     "jsdoc": "^3.5.5",
     "lerna": "^2.9.1",
     "mol-commitlint-config": "^1.1.0",
@@ -51,6 +51,7 @@
     "rollup-plugin-babel": "^3.0.7",
     "rollup-plugin-commonjs": "^9.1.4",
     "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-terser": "^1.0.1",
     "tui-jsdoc-template": "^1.2.2"
   },

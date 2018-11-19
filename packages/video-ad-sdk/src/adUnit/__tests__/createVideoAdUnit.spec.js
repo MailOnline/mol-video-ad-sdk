@@ -75,21 +75,18 @@ describe('createVideoAdUnit', () => {
     trackNonLinearEvent.mockClear();
   });
 
-  test('must complain if you don\'t pass a vastAdChain or a videoAdContainer', () => {
-    expect(createVideoAdUnit).toThrowError(TypeError);
-    expect(() => createVideoAdUnit([])).toThrowError(TypeError);
-    expect(() => createVideoAdUnit(vastChain)).toThrowError(TypeError);
-    expect(() => createVideoAdUnit(vastChain, {})).toThrowError(TypeError);
-  });
-
   test('must return a VastAdUnit for Vast ads', () => {
-    const adUnit = createVideoAdUnit(vastChain, videoAdContainer, {});
+    const adUnit = createVideoAdUnit(vastChain, videoAdContainer, {
+      type: 'VAST'
+    });
 
     expect(adUnit).toBeInstanceOf(VastAdUnit);
   });
 
   test('must return a VpaidAdUnit for Vpaid ads', () => {
-    const adUnit = createVideoAdUnit(vpaidChain, videoAdContainer, {});
+    const adUnit = createVideoAdUnit(vpaidChain, videoAdContainer, {
+      type: 'VPAID'
+    });
 
     expect(adUnit).toBeInstanceOf(VpaidAdUnit);
   });

@@ -2,27 +2,6 @@ import {trackError} from '../tracker';
 import createVideoAdContainer from '../adContainer/createVideoAdContainer';
 import startVideoAd from './helpers/startVideoAd';
 
-const validateVastChain = (vastChain, options) => {
-  if (!vastChain || vastChain.length === 0) {
-    throw new Error('Invalid VastChain');
-  }
-
-  const lastVastResponse = vastChain[0];
-
-  if (Boolean(lastVastResponse.errorCode)) {
-    const {tracker} = options;
-
-    trackError(vastChain, {
-      errorCode: lastVastResponse.errorCode,
-      tracker
-    });
-  }
-
-  if (Boolean(lastVastResponse.error)) {
-    throw lastVastResponse.error;
-  }
-};
-
 /**
  * Will try to start video ad in the passed {@link VastChain} and return the started VideoAdUnit.
  *
@@ -49,7 +28,6 @@ const run = async (vastChain, placeholder, options) => {
   let videoAdContainer;
 
   try {
-    validateVastChain(vastChain, options);
     const {timeout} = options;
 
     videoAdContainer = createVideoAdContainer(placeholder, options.videoElement);

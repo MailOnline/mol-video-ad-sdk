@@ -23,9 +23,9 @@ const {
 } = linearEvents;
 const mockStopMetricHandler = jest.fn();
 
-jest.mock('../helpers/media/canPlay.js', () => jest.fn());
-jest.mock('../helpers/media/updateMedia.js', () => jest.fn());
-jest.mock('../helpers/metrics/handlers/index.js', () => [
+jest.mock('../helpers/media/canPlay');
+jest.mock('../helpers/media/updateMedia');
+jest.mock('../helpers/metrics/handlers/index', () => [
   jest.fn(({videoElement}, callback) => {
     videoElement.addEventListener('ended', () => callback('complete'));
     videoElement.addEventListener('error', () => callback('error', videoElement.error));

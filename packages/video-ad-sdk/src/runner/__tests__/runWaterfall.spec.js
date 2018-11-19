@@ -14,11 +14,16 @@ import run from '../run';
 import runWaterfall from '../runWaterfall';
 import VideoAdContainer from '../../adContainer/VideoAdContainer';
 import VastAdUnit from '../../adUnit/VastAdUnit';
+import {trackError} from '../../tracker';
 import {_protected} from '../../adUnit/VideoAdUnit';
 
 jest.mock('../../vastRequest/requestAd', () => jest.fn());
 jest.mock('../../vastRequest/requestNextAd', () => jest.fn());
 jest.mock('../run', () => jest.fn());
+jest.mock('../../tracker', () => ({
+  linearEvents: {},
+  trackError: jest.fn()
+}));
 
 describe('runWaterfall', () => {
   let adTag;
@@ -46,7 +51,9 @@ describe('runWaterfall', () => {
         XML: vastWrapperXML
       }
     ];
-    options = {};
+    options = {
+      tracker: jest.fn()
+    };
     placeholder = document.createElement('div');
     adContainer = new VideoAdContainer(placeholder, document.createElement('video'));
     adUnit = new VastAdUnit(vastAdChain, adContainer, options);
@@ -55,6 +62,119 @@ describe('runWaterfall', () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
+  });
+
+  describe('after fetching Vast response', () => {
+    test('must call onError if Vast response is undefined', async () => {
+      const onError = jest.fn();
+
+      requestAd.mockReturnValue(Promise.resolve());
+
+      await runWaterfall(adTag, placeholder, {
+        ...options,
+        onError
+      });
+
+      expect(onError).toHaveBeenCalledTimes(1);
+      expect(onError.mock.calls[0][0].message).toBe('Invalid VastChain');
+    });
+
+    test('must call onError if Vast response is an empty array', async () => {
+      const onError = jest.fn();
+
+      requestAd.mockReturnValue(Promise.resolve([]));
+
+      await runWaterfall(adTag, placeholder, {
+        ...options,
+        onError
+      });
+      expect(onError).toHaveBeenCalledTimes(1);
+      expect(onError.mock.calls[0][0].message).toBe('Invalid VastChain');
+    });
+
+    test('must throw if the vastChain has an error and track the error', async () => {
+      const onError = jest.fn();
+      const vastChainError = new Error('boom');
+      const vastChainWithError = [{
+        ...vastAdChain[0],
+        error: vastChainError,
+        errorCode: 900
+      }];
+
+      requestAd.mockReturnValue(Promise.resolve(vastChainWithError));
+
+      await runWaterfall(adTag, placeholder, {
+        ...options,
+        onError
+      });
+      expect(onError).toHaveBeenCalledTimes(1);
+      expect(onError.mock.calls[0][0]).toBe(vastChainError);
+      expect(trackError).toHaveBeenCalledWith(vastChainWithError, expect.objectContaining({
+        errorCode: 900,
+        tracker: options.tracker
+      }));
+    });
+
+    test('must throw if options.hooks.validateVastResponse fails', async () => {
+      const onError = jest.fn();
+      const vastChainError = new Error('boom');
+
+      vastChainError.errorCode = 900;
+
+      requestAd.mockReturnValue(Promise.resolve(vastAdChain));
+
+      await runWaterfall(adTag, placeholder, {
+        ...options,
+        hooks: {
+          validateVastResponse: () => {
+            throw vastChainError;
+          }
+        },
+        onError
+      });
+
+      expect(onError).toHaveBeenCalledTimes(1);
+      expect(onError.mock.calls[0][0]).toBe(vastChainError);
+      expect(trackError).toHaveBeenCalledWith(vastAdChain, expect.objectContaining({
+        errorCode: 900,
+        tracker: options.tracker
+      }));
+    });
+
+    test('must be possible to transform the vast response before calling run', async () => {
+      const deferred = defer();
+
+      requestAd.mockReturnValue(Promise.resolve(vastAdChain));
+      run.mockReturnValue(Promise.resolve(adUnit));
+
+      const onAdStart = jest.fn();
+
+      runWaterfall(adTag, placeholder, {
+        ...options,
+        hooks: {
+          transformVastResponse: (vastResponse) => {
+            // eslint-disable-next-line id-match
+            vastResponse.__transformed = true;
+
+            return vastResponse;
+          }
+        },
+        onAdStart: (...args) => {
+          deferred.resolve();
+          onAdStart(...args);
+        }
+      });
+
+      await deferred.promise;
+
+      expect(onAdStart).toHaveBeenCalledTimes(1);
+      expect(onAdStart).toHaveBeenCalledWith(adUnit);
+      expect(requestAd).toHaveBeenCalledTimes(1);
+      expect(requestAd).toHaveBeenCalledWith(adTag, expect.objectContaining(options));
+      expect(run).toHaveBeenCalledTimes(1);
+      expect(run).toHaveBeenCalledWith(vastAdChain, placeholder, expect.objectContaining(options));
+      expect(vastAdChain.__transformed).toBe(true);
+    });
   });
 
   describe('options.onAdStart', () => {
