@@ -56,7 +56,6 @@ describe('VideoAdContainer', () => {
     expect(videoAdContainer.videoElement.parentNode).toBe(adContainerElement);
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
   describe('addScript', () => {
     test('must create an iframe and add the scripts to it', async () => {
       loadScript.mockReturnValue(Promise.resolve('SCRIPT_MOCK'));

@@ -2,7 +2,6 @@ import createIframe from '../createIframe';
 import supportsSrcdoc from '../supportsSrcdoc';
 
 jest.mock('../supportsSrcdoc');
-// eslint-disable-next-line jest/no-disabled-tests
 describe('createIframe', () => {
   beforeEach(() => {
     // eslint-disable-next-line no-undef

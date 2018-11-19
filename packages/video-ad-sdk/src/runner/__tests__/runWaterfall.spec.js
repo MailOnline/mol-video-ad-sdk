@@ -65,7 +65,7 @@ describe('runWaterfall', () => {
   });
 
   describe('after fetching Vast response', () => {
-    test('must call onError is Vast response is undefined', async () => {
+    test('must call onError if Vast response is undefined', async () => {
       const onError = jest.fn();
 
       requestAd.mockReturnValue(Promise.resolve());
@@ -79,7 +79,7 @@ describe('runWaterfall', () => {
       expect(onError.mock.calls[0][0].message).toBe('Invalid VastChain');
     });
 
-    test('must call onError is Vast response is an empty array', async () => {
+    test('must call onError if Vast response is an empty array', async () => {
       const onError = jest.fn();
 
       requestAd.mockReturnValue(Promise.resolve([]));
