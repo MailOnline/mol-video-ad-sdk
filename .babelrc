@@ -44,8 +44,7 @@
             "useBuiltIns": true
           }
         ],
-        "stage-3",
-        "react"
+        "stage-3"
       ],
       "plugins": [
         [
