@@ -14,7 +14,7 @@
   "browser": "dist/main.umd.js",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint --ignore-path ../../.gitignore './**/*.js'",
+    "lint": "eslint --ignore-path ./.gitignore './**/*.js'",
     "test": "cross-env NODE_ENV=test jest",
     "prebuild": "rimraf dist",
     "build": "cross-env NODE_ENV=production rollup -c",

@@ -10,7 +10,7 @@ To run video ads in the browser there are many alternatives. The most famous one
 Currently we only have the API which you can check [here](https://mailonline.github.io/mol-video-ad-sdk/index.html).
 
 ## Compiling and Testing
-We use [nvm](https://github.com/creationix/nvm) to decide which of node to use and [Yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) together with [lerna](https://github.com/lerna/lerna) to manage the mono repo.
+We use [nvm](https://github.com/creationix/nvm) to decide which of node to use.
 
 So after you clone the repo you just need to run
 ```

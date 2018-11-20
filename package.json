@@ -1,21 +1,19 @@
 {
-  "name": "@mailonline/video-ad",
-  "private": true,
-  "description": "Mono-repo of VAST libraries that allow Video ads to be served on a browser",
+  "name": "@mailonline/video-ad-sdk",
+  "version": "0.3.0",
+  "description": "Video ad SDK to load and play video ads.",
   "author": "MailOnline <fe@mailonline.co.uk>",
   "scripts": {
-    "build": "lerna run --stream build",
-    "dev": "lerna run dev",
-    "clean": "git clean -fdX",
+    "prebuild": "rimraf dist",
+    "build": "cross-env NODE_ENV=production rollup -c",
+    "dev": "rollup -c",
     "docs": "rimraf docs && jsdoc -c jsdoc.json",
-    "lint": "yarn lint-scripts && lerna run lint",
-    "lint-scripts": "eslint --ignore-path .gitignore './*.js'",
-    "postinstall": "yarn build",
-    "precommit": "npm run lint",
+    "lint": "eslint --ignore-path ./.gitignore './**/*.js'",
+    "test": "cross-env NODE_ENV=test jest",
     "commitmsg": "commitlint -e $GIT_PARAMS",
+    "precommit": "npm run lint",
     "prepush": "npm test",
-    "test": "lerna run --stream test",
-    "publish-npm": "yarn build && lerna publish --conventional-commits --skip-npm && lerna run publish-npm"
+    "publish-npm": "npm publish"
   },
   "license": "MIT",
   "bugs": {
@@ -40,9 +38,10 @@
     "@commitlint/cli": "^7.0.0",
     "@commitlint/travis-cli": "^7.0.0",
     "cross-env": "^5.2.0",
+    "eslint": "^5.9.0",
+    "eslint-config-mailonline": "^9.0.0",
     "husky": "^1.1.2",
     "jsdoc": "^3.5.5",
-    "lerna": "^2.9.1",
     "mol-commitlint-config": "^1.1.0",
     "mol-conventional-changelog": "^1.2.0",
     "rollup": "^0.63.5",
@@ -52,8 +51,5 @@
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-terser": "^1.0.1",
     "tui-jsdoc-template": "^1.2.2"
-  },
-  "workspaces": [
-    "packages/*"
-  ]
+  }
 }
