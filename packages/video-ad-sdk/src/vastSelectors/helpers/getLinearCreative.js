@@ -2,7 +2,7 @@ import {
   get,
   getAll,
   getFirstChild
-} from '@mailonline/vast-xml2js';
+} from '../../xml';
 
 const getLinearCreative = (ad) => {
   const adTypeElement = getFirstChild(ad);

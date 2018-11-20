@@ -5,7 +5,7 @@ import {
   getText,
   getAttributes,
   getAttribute
-} from '@mailonline/vast-xml2js';
+} from '../xml';
 import parseOffset from './helpers/parseOffset';
 import getLinearCreative from './helpers/getLinearCreative';
 import getLinearTrackingEvents from './getLinearTrackingEvents';

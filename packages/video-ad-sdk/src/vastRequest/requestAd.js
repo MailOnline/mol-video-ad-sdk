@@ -1,4 +1,4 @@
-import {parseXml} from '@mailonline/vast-xml2js';
+import {parseXml} from '../xml';
 import {
   getWrapperOptions,
   getFirstAd,

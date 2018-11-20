@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import {parseXml} from '@mailonline/vast-xml2js';
+import {parseXml} from '../src/xml';
 import {getFirstAd} from '../src/vastSelectors';
 
 export const vastWrapperXML = fs.readFileSync(path.join(__dirname, 'vast-wrapper.xml'), 'utf8');

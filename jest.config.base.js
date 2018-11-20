@@ -1,5 +1,6 @@
 /* eslint-disable import/unambiguous, import/no-commonjs */
 module.exports = {
+  collectCoverage: true,
   collectCoverageFrom: [
     '**/src/**/*.js',
     '**/src/**/*.jsx',
@@ -10,7 +11,7 @@ module.exports = {
     '!**/src/**/__storybook__/**/*',
     '!**/src/**/__karma__/**/*'
   ],
-  coverageReporters: ['json', 'html'],
+  coverageReporters: ['json', 'json-summary', 'html', 'text'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   testRegex: '__tests__/.*\\.spec\\.(jsx?|tsx?)$',
