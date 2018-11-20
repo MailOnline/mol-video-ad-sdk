@@ -7,6 +7,7 @@ import {
   close
 } from '../tracker/nonLinearEvents';
 import {getClickThrough} from '../vastSelectors';
+import {volumeChanged} from './adUnitEvents';
 import loadCreative from './helpers/vpaid/loadCreative';
 import {
   adLoaded,
@@ -216,6 +217,13 @@ class VpaidAdUnit extends VideoAdUnit {
       }
       case adVolumeChange: {
         const volume = this.getVolume();
+
+        this.emit(
+          volumeChanged,
+          {
+            adUnit: this,
+            type: volumeChanged
+          });
 
         if (volume === 0 && !this[_private].muted) {
           this[_private].muted = true;

@@ -60,6 +60,7 @@ import {
 } from '../../tracker/nonLinearEvents';
 import addIcons from '../helpers/icons/addIcons';
 import retrieveIcons from '../helpers/icons/retrieveIcons';
+import {volumeChanged} from '../adUnitEvents';
 import MockVpaidCreativeAd from './MockVpaidCreativeAd';
 
 jest.mock('../helpers/vpaid/loadCreative');
@@ -911,6 +912,20 @@ describe('VpaidAdUnit', () => {
     });
 
     describe(adVolumeChange, () => {
+      test(`must emit ${volumeChanged} event`, async () => {
+        const callback = jest.fn();
+
+        adUnit.on(volumeChanged, callback);
+        await adUnit.start();
+
+        adUnit.creativeAd.setAdVolume(0);
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith({
+          adUnit,
+          type: volumeChanged
+        });
+      });
+
       test(`must emit ${mute} event if it becomes muted`, async () => {
         const callback = jest.fn();
 
@@ -918,7 +933,11 @@ describe('VpaidAdUnit', () => {
         await adUnit.start();
 
         adUnit.creativeAd.setAdVolume(0);
-        expect(callback).toHaveBeenCalled();
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith({
+          adUnit,
+          type: mute
+        });
       });
 
       test(`must emit ${unmute} event if it becomes unmuted`, async () => {
@@ -930,7 +949,11 @@ describe('VpaidAdUnit', () => {
         adUnit.creativeAd.setAdVolume(0);
         expect(callback).not.toHaveBeenCalled();
         adUnit.creativeAd.setAdVolume(0.5);
-        expect(callback).toHaveBeenCalled();
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith({
+          adUnit,
+          type: unmute
+        });
       });
 
       test('must not emit any event on normal volume change', async () => {
