@@ -3,8 +3,7 @@
 
 To run video ads in the browser there are many alternatives. The most famous one is probably Google's [IMA SDK](https://developers.google.com/interactive-media-ads/docs/sdks/html5/) for HTML5. There are two main cons with that SDK. It only works through DoubleClick and it is a black box very hard to debug and to maintain. This SDK tries to offer an alternative to play video ads that can work with any player in the world and any ad server that supports the VAST specification. And since it is open source you can read the code and debug if you need to.
 
-## Projects include:
-* [vast-xml2js](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/vast-xml2js): A wrapper on top of [DOMParser](https://developer.mozilla.org/en-US/docs/Web/API/DOMParser) to be able to parse XML files in the browser and in node if needed. For node we use [xmldom](https://www.npmjs.com/package/xmldom)
+## Projects includes:
 * [video-ad-sdk](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/video-ad-sdk): SDK to load and play [VAST](https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/)/[VPAID](https://www.iab.com/guidelines/digital-video-player-ad-interface-definitions-vpaid-compliance/) video ads.
 
 ## Documentation
