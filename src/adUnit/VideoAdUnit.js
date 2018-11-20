@@ -1,5 +1,6 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
 import {linearEvents} from '../tracker';
+import {finish} from './adUnitEvents';
 import {
   onElementVisibilityChange,
   onElementResize
@@ -31,6 +32,13 @@ class VideoAdUnit extends Emitter {
    finish: () => {
      this[_protected].finished = true;
      this[_protected].onFinishCallbacks.forEach((callback) => callback());
+
+     this.emit(
+       finish,
+       {
+         adUnit: this,
+         type: finish
+       });
    },
    finished: false,
    onErrorCallbacks: [],

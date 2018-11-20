@@ -17,6 +17,7 @@ import {
   onElementVisibilityChange
 } from '../helpers/dom/elementObservers';
 import VideoAdUnit, {_protected} from '../VideoAdUnit';
+import {finish} from '../adUnitEvents';
 import preventManualProgress from '../helpers/dom/preventManualProgress';
 
 const mockDrawIcons = jest.fn();
@@ -204,6 +205,19 @@ describe('VideoAdUnit', () => {
 
     beforeEach(() => {
       adUnit = new VideoAdUnit(vpaidChain, videoAdContainer);
+    });
+
+    test(`must emit ${finish} on ad finish`, () => {
+      const spy = jest.fn();
+
+      adUnit.on(finish, spy);
+      adUnit[_protected].finish();
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith({
+        adUnit,
+        type: finish
+      });
     });
 
     test('must throw if the adUnit is finished', () => {
