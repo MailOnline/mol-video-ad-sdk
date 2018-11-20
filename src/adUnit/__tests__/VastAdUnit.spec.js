@@ -228,7 +228,11 @@ test('VastAdUnit passed iconView must emit iconView passing the event, this and 
 
   const passedArgs = await promise;
 
-  expect(passedArgs).toEqual([iconView, adUnit, icons[0]]);
+  expect(passedArgs).toEqual([{
+    adUnit,
+    icon: icons[0],
+    type: iconView
+  }]);
 });
 
 test('VastAdUnit passed iconClick must emit iconClick passing the event, this and the viewed icon', async () => {
@@ -260,7 +264,11 @@ test('VastAdUnit passed iconClick must emit iconClick passing the event, this an
 
   const passedArgs = await promise;
 
-  expect(passedArgs).toEqual([iconClick, adUnit, icons[0]]);
+  expect(passedArgs).toEqual([{
+    adUnit,
+    icon: icons[0],
+    type: iconClick
+  }]);
 });
 
 test('VastAdUnit start emit an error if there is no suitable mediaFile to play', async () => {
@@ -287,7 +295,10 @@ test('VastAdUnit start emit an error if there is no suitable mediaFile to play',
   expect(adUnit.error.message).toBe('Can\'t find a suitable media to play');
   expect(adUnit.errorCode).toBe(403);
   expect(errorHandler).toHaveBeenCalledTimes(1);
-  expect(errorHandler).toHaveBeenCalledWith(errorEvt, adUnit, adUnit.error);
+  expect(errorHandler).toHaveBeenCalledWith({
+    adUnit,
+    type: errorEvt
+  });
   expect(onErrorCallback).toHaveBeenCalledTimes(1);
   expect(onErrorCallback).toHaveBeenCalledWith(adUnit.error);
 });
@@ -529,7 +540,10 @@ test('VastAdUnit must emit whatever metric event happens', async () => {
 
   const passedArgs = await promise;
 
-  expect(passedArgs).toEqual(['custom', adUnit, data]);
+  expect(passedArgs).toEqual([{
+    adUnit,
+    type: 'custom'
+  }]);
 });
 
 test('VastAdUnit cancel must stop the metric handlers ', async () => {

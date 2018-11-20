@@ -91,7 +91,10 @@ class VpaidAdUnit extends VideoAdUnit {
       switch (event) {
       case adVideoComplete: {
         this[_protected].finish();
-        this.emit(complete, complete, this);
+        this.emit(complete, {
+          adUnit: this,
+          type: complete
+        });
         break;
       }
       case adError: {
@@ -100,56 +103,95 @@ class VpaidAdUnit extends VideoAdUnit {
         this.errorCode = 901;
         this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
         this[_protected].finish();
-        this.emit(errorEvt, errorEvt, this, this.error);
+        this.emit(errorEvt, {
+          adUnit: this,
+          type: errorEvt
+        });
         break;
       }
       case adSkipped: {
         this.cancel();
-        this.emit(skip, skip, this);
+        this.emit(skip, {
+          adUnit: this,
+          type: skip
+        });
         break;
       }
       case adStarted: {
-        this.emit(creativeView, creativeView, this);
+        this.emit(creativeView, {
+          adUnit: this,
+          type: creativeView
+        });
         break;
       }
       case adImpression: {
-        this.emit(impression, impression, this);
+        this.emit(impression, {
+          adUnit: this,
+          type: impression
+        });
         break;
       }
       case adVideoStart: {
-        this.emit(start, start, this);
+        this.emit(start, {
+          adUnit: this,
+          type: start
+        });
         break;
       }
       case adVideoFirstQuartile: {
-        this.emit(firstQuartile, firstQuartile, this);
+        this.emit(firstQuartile, {
+          adUnit: this,
+          type: firstQuartile
+        });
         break;
       }
       case adVideoMidpoint: {
-        this.emit(midpoint, midpoint, this);
+        this.emit(midpoint, {
+          adUnit: this,
+          type: midpoint
+        });
         break;
       }
       case adVideoThirdQuartile: {
-        this.emit(thirdQuartile, thirdQuartile, this);
+        this.emit(thirdQuartile, {
+          adUnit: this,
+          type: thirdQuartile
+        });
         break;
       }
       case adUserAcceptInvitation: {
-        this.emit(acceptInvitation, acceptInvitation, this);
+        this.emit(acceptInvitation, {
+          adUnit: this,
+          type: acceptInvitation
+        });
         break;
       }
       case adUserMinimize: {
-        this.emit(adCollapse, adCollapse, this);
+        this.emit(adCollapse, {
+          adUnit: this,
+          type: adCollapse
+        });
         break;
       }
       case adUserClose: {
-        this.emit(close, close, this);
+        this.emit(close, {
+          adUnit: this,
+          type: close
+        });
         break;
       }
       case adPaused: {
-        this.emit(pause, pause, this);
+        this.emit(pause, {
+          adUnit: this,
+          type: pause
+        });
         break;
       }
       case adPlaying: {
-        this.emit(resume, resume, this);
+        this.emit(resume, {
+          adUnit: this,
+          type: resume
+        });
         break;
       }
       case adClickThru: {
@@ -166,7 +208,10 @@ class VpaidAdUnit extends VideoAdUnit {
           }
         }
 
-        this.emit(clickThrough, clickThrough, this);
+        this.emit(clickThrough, {
+          adUnit: this,
+          type: clickThrough
+        });
         break;
       }
       case adVolumeChange: {
@@ -174,20 +219,29 @@ class VpaidAdUnit extends VideoAdUnit {
 
         if (volume === 0 && !this[_private].muted) {
           this[_private].muted = true;
-          this.emit(mute, mute, this);
+          this.emit(mute, {
+            adUnit: this,
+            type: mute
+          });
         }
 
         if (volume > 0 && this[_private].muted) {
           this[_private].muted = false;
 
-          this.emit(unmute, unmute, this);
+          this.emit(unmute, {
+            adUnit: this,
+            type: unmute
+          });
         }
 
         break;
       }
       }
 
-      this.emit(event, event, this);
+      this.emit(event, {
+        adUnit: this,
+        type: event
+      });
     },
     muted: false
   };

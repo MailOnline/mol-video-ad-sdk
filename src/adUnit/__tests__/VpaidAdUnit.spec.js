@@ -358,7 +358,11 @@ describe('VpaidAdUnit', () => {
 
       const passedArgs = await promise;
 
-      expect(passedArgs).toEqual([iconClick, adUnit, icons[0]]);
+      expect(passedArgs).toEqual([{
+        adUnit,
+        icon: icons[0],
+        type: iconClick
+      }]);
     });
 
     test(`must emit '${iconView}' event on view`, async () => {
@@ -389,7 +393,11 @@ describe('VpaidAdUnit', () => {
 
       const passedArgs = await promise;
 
-      expect(passedArgs).toEqual([iconView, adUnit, icons[0]]);
+      expect(passedArgs).toEqual([{
+        adUnit,
+        icon: icons[0],
+        type: iconView
+      }]);
     });
 
     test('must periodically redraw the icons while it has pendingIconRedraws', async () => {
@@ -728,7 +736,10 @@ describe('VpaidAdUnit', () => {
 
         adUnit.creativeAd.emit(vpaidEvt);
 
-        expect(callback).toHaveBeenCalledWith(vpaidEvt, adUnit);
+        expect(callback).toHaveBeenCalledWith({
+          adUnit,
+          type: vpaidEvt
+        });
       });
     }
 
@@ -809,7 +820,10 @@ describe('VpaidAdUnit', () => {
           await adUnit.start();
 
           adUnit.creativeAd.emit(vpaidEvt, payload);
-          expect(callback).toHaveBeenCalledWith(vastEvt, adUnit);
+          expect(callback).toHaveBeenCalledWith({
+            adUnit,
+            type: vastEvt
+          });
         });
       });
     });
@@ -884,8 +898,11 @@ describe('VpaidAdUnit', () => {
 
         adUnit.creativeAd.emit(adError);
 
-        expect(callback).toHaveBeenCalledWith(vastEvt, adUnit, expect.any(Error));
-        const error = callback.mock.calls[0][2];
+        expect(callback).toHaveBeenCalledWith({
+          adUnit,
+          type: vastEvt
+        });
+        const error = adUnit.error;
 
         expect(error.message).toBe('VPAID general error');
         expect(error.errorCode).toBe(901);

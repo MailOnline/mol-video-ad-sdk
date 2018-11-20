@@ -100,8 +100,16 @@ class VideoAdUnit extends Emitter {
         removeIcons
       } = addIcons(this.icons, {
         logger,
-        onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
-        onIconView: (icon) => this.emit(iconView, iconView, this, icon),
+        onIconClick: (icon) => this.emit(iconClick, {
+          adUnit: this,
+          icon,
+          type: iconClick
+        }),
+        onIconView: (icon) => this.emit(iconView, {
+          adUnit: this,
+          icon,
+          type: iconView
+        }),
         videoAdContainer
       });
 

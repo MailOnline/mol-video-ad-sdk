@@ -141,7 +141,11 @@ describe('VideoAdUnit', () => {
 
       const passedArgs = await promise;
 
-      expect(passedArgs).toEqual([iconClick, adUnit, icons[0]]);
+      expect(passedArgs).toEqual([{
+        adUnit,
+        icon: icons[0],
+        type: iconClick
+      }]);
     });
 
     test(`must emit '${iconView}' event on view`, async () => {
@@ -170,7 +174,11 @@ describe('VideoAdUnit', () => {
 
       const passedArgs = await promise;
 
-      expect(passedArgs).toEqual([iconView, adUnit, icons[0]]);
+      expect(passedArgs).toEqual([{
+        adUnit,
+        icon: icons[0],
+        type: iconView
+      }]);
     });
   });
 
