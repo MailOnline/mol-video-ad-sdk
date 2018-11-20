@@ -2,11 +2,11 @@ import onElementVisibilityChange from '../onElementVisibilityChange';
 
 const once = (context, eventName, listener) => {
   const handler = (...args) => {
-    context.removeEmentListener(eventName, handler);
+    context.removeEventListener(eventName, handler);
     listener(...args);
   };
 
-  context.addEventListener(eventName, listener);
+  context.addEventListener(eventName, handler);
 };
 
 const waitForEvent = (eventName, context = window) => new Promise((resolve) => {
