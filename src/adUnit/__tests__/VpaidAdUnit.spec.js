@@ -36,7 +36,9 @@ import {
   adClickThru,
   getAdIcons,
   getAdDuration,
-  getAdRemainingTime
+  getAdRemainingTime,
+  adDurationChange,
+  adRemainingTimeChange
 } from '../helpers/vpaid/api';
 import linearEvents, {
   skip,
@@ -62,7 +64,7 @@ import {
 } from '../../tracker/nonLinearEvents';
 import addIcons from '../helpers/icons/addIcons';
 import retrieveIcons from '../helpers/icons/retrieveIcons';
-import {volumeChanged} from '../adUnitEvents';
+import {volumeChanged, adProgress} from '../adUnitEvents';
 import MockVpaidCreativeAd from './MockVpaidCreativeAd';
 
 jest.mock('../helpers/vpaid/loadCreative');
@@ -754,6 +756,14 @@ describe('VpaidAdUnit', () => {
       {
         vastEvt: skip,
         vpaidEvt: adSkipped
+      },
+      {
+        vastEvt: adProgress,
+        vpaidEvt: adDurationChange
+      },
+      {
+        vastEvt: adProgress,
+        vpaidEvt: adRemainingTimeChange
       },
       {
         vastEvt: creativeView,

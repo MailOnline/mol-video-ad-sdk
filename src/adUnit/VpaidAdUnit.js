@@ -7,7 +7,7 @@ import {
   close
 } from '../tracker/nonLinearEvents';
 import {getClickThrough} from '../vastSelectors';
-import {volumeChanged} from './adUnitEvents';
+import {volumeChanged, adProgress} from './adUnitEvents';
 import loadCreative from './helpers/vpaid/loadCreative';
 import {
   adLoaded,
@@ -36,6 +36,8 @@ import {
   adUserAcceptInvitation,
   adUserMinimize,
   adUserClose,
+  adDurationChange,
+  adRemainingTimeChange,
   adClickThru,
   getAdIcons,
   getAdRemainingTime
@@ -104,6 +106,20 @@ class VpaidAdUnit extends VideoAdUnit {
         this.emit(errorEvt, {
           adUnit: this,
           type: errorEvt
+        });
+        break;
+      }
+      case adDurationChange: {
+        this.emit(adProgress, {
+          adUnit: this,
+          type: adProgress
+        });
+        break;
+      }
+      case adRemainingTimeChange: {
+        this.emit(adProgress, {
+          adUnit: this,
+          type: adProgress
         });
         break;
       }
