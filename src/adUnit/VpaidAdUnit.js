@@ -133,6 +133,7 @@ class VpaidAdUnit extends VideoAdUnit {
         break;
       }
       case adVideoStart: {
+        this[_private].paused = false;
         this.emit(start, {
           adUnit: this,
           type: start
@@ -182,6 +183,7 @@ class VpaidAdUnit extends VideoAdUnit {
         break;
       }
       case adPaused: {
+        this[_private].paused = true;
         this.emit(pause, {
           adUnit: this,
           type: pause
@@ -189,6 +191,7 @@ class VpaidAdUnit extends VideoAdUnit {
         break;
       }
       case adPlaying: {
+        this[_private].paused = false;
         this.emit(resume, {
           adUnit: this,
           type: resume
@@ -251,7 +254,8 @@ class VpaidAdUnit extends VideoAdUnit {
         type: event
       });
     },
-    muted: false
+    muted: false,
+    paused: true
   };
 
   /** Ad unit type. Will be `VPAID` for VpaidAdUnit */
@@ -364,6 +368,13 @@ class VpaidAdUnit extends VideoAdUnit {
   pause () {
     this[_protected].throwIfNotReady();
     this.creativeAd[pauseAd]();
+  }
+
+  /**
+   * Returns true if the add is paused and false otherwise
+   */
+  paused () {
+    return this.isFinished() || this[_private].paused;
   }
 
   /**

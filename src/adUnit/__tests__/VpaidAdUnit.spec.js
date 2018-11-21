@@ -829,6 +829,25 @@ describe('VpaidAdUnit', () => {
       });
     });
 
+    describe('paused', () => {
+      it('must return true if the creative is paused and false otherwise', async () => {
+        await adUnit.start();
+        expect(adUnit.paused()).toBe(true);
+
+        adUnit.creativeAd.emit(adVideoStart);
+        expect(adUnit.paused()).toBe(false);
+
+        adUnit.creativeAd.emit(adPaused);
+        expect(adUnit.paused()).toBe(true);
+
+        adUnit.creativeAd.emit(adPlaying);
+        expect(adUnit.paused()).toBe(false);
+
+        adUnit.cancel();
+        expect(adUnit.paused()).toBe(true);
+      });
+    });
+
     describe(adClickThru, () => {
       let origOpen;
 

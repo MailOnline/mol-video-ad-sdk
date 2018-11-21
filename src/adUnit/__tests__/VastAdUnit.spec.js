@@ -687,3 +687,22 @@ test('VastAdUnit getVolume must return the volume of the video element', async (
   adUnit.setVolume(0.5);
   expect(adUnit.getVolume()).toBe(0.5);
 });
+
+test('VastAdUnit paused must return true if the ad is running and false otherwise', () => {
+  canPlay.mockReturnValue(true);
+  retrieveIcons.mockImplementation(() => null);
+
+  const {videoElement} = videoAdContainer;
+  const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+  Object.defineProperty(videoElement, 'paused', {
+    value: true,
+    writable: true
+  });
+
+  expect(adUnit.paused()).toBe(true);
+
+  videoElement.paused = false;
+
+  expect(adUnit.paused()).toBe(false);
+});

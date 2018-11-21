@@ -161,6 +161,15 @@ class VastAdUnit extends VideoAdUnit {
   }
 
   /**
+   * Returns true if the add is paused and false otherwise
+   */
+  paused () {
+    const {videoElement} = this.videoAdContainer;
+
+    return videoElement.paused;
+  }
+
+  /**
    * Sets the volume of the ad unit.
    *
    * @throws if ad unit is not started.
