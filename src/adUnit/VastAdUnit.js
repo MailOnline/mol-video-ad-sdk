@@ -141,7 +141,6 @@ class VastAdUnit extends VideoAdUnit {
    * @throws if ad unit is finished.
    */
   resume () {
-    this[_protected].throwIfNotReady();
     const {videoElement} = this.videoAdContainer;
 
     videoElement.play();
@@ -154,7 +153,6 @@ class VastAdUnit extends VideoAdUnit {
    * @throws if ad unit is finished.
    */
   pause () {
-    this[_protected].throwIfNotReady();
     const {videoElement} = this.videoAdContainer;
 
     videoElement.pause();
@@ -178,8 +176,6 @@ class VastAdUnit extends VideoAdUnit {
    * @param {number} volume - must be a value between 0 and 1;
    */
   setVolume (volume) {
-    this[_protected].throwIfNotReady();
-
     const {videoElement} = this.videoAdContainer;
 
     videoElement.volume = volume;
@@ -194,8 +190,6 @@ class VastAdUnit extends VideoAdUnit {
    * @returns {number} - the volume of the ad unit.
    */
   getVolume () {
-    this[_protected].throwIfNotReady();
-
     const {videoElement} = this.videoAdContainer;
 
     return videoElement.volume;
@@ -255,7 +249,7 @@ class VastAdUnit extends VideoAdUnit {
   async resize () {
     await super.resize();
 
-    if (this.isStarted()) {
+    if (this.isStarted() && !this.isFinished()) {
       const inlineAd = this.vastChain[0].ad;
       const {videoElement, element} = this.videoAdContainer;
       const media = findBestMedia(inlineAd, videoElement, element);

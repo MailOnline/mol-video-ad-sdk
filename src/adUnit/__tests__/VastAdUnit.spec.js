@@ -379,21 +379,13 @@ describe('VastAdUnit', () => {
     }
   });
 
-  [
-    'resume',
-    'pause',
-    'cancel',
-    'setVolume',
-    'getVolume'
-  ].forEach((method) => {
-    test(`VastAdUnit ${method} must throw if you call it on a finished adUnit`, async () => {
-      const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+  test('VastAdUnit `cancel` must throw if you call it on a finished adUnit', async () => {
+    const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
-      await adUnit.start();
-      adUnit.cancel();
+    await adUnit.start();
+    adUnit.cancel();
 
-      expect(() => adUnit[method]()).toThrowError('VideoAdUnit is finished');
-    });
+    expect(() => adUnit.cancel()).toThrowError('VideoAdUnit is finished');
   });
 
   test('`resize` must throw if you call it on a finished adUnit', async () => {
@@ -577,25 +569,22 @@ describe('VastAdUnit', () => {
     ['resume', 'play'],
     ['pause', 'pause']
   ].forEach(([method, vpMethod]) => {
-    test(`VastAdUnit ${method} must throw if the ad unit has not started`, () => {
-      const adUnit = new VastAdUnit(vastChain, videoAdContainer);
-
-      expect(() => adUnit[method]()).toThrowError('VideoAdUnit has not started');
-    });
-
-    test(`VastAdUnit ${method} must call ${vpMethod} on the video element`, () => {
+    test(`VastAdUnit ${method} must call ${vpMethod} on the video element`, async () => {
       canPlay.mockReturnValue(true);
-      Object.defineProperty(videoAdContainer.videoElement, vpMethod, {
+      const {videoElement} = videoAdContainer;
+
+      Object.defineProperty(videoElement, vpMethod, {
         value: jest.fn()
       });
 
       const adUnit = new VastAdUnit(vastChain, videoAdContainer);
 
-      adUnit.start();
-      videoAdContainer.videoElement[vpMethod].mockClear();
+      await adUnit.start();
+
+      videoElement[vpMethod].mockClear();
 
       adUnit[method]();
-      expect(videoAdContainer.videoElement[vpMethod]).toHaveBeenCalledTimes(1);
+      expect(videoElement[vpMethod]).toHaveBeenCalledTimes(1);
     });
   });
 
