@@ -188,6 +188,9 @@ describe('VideoAdUnit', () => {
       'start',
       'resume',
       'pause',
+      'paused',
+      'duration',
+      'currentTime',
       'setVolume',
       'getVolume',
       'cancel'

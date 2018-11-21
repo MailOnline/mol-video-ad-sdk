@@ -243,6 +243,33 @@ class VideoAdUnit extends Emitter {
   }
 
   /**
+   * Returns the duration of the ad Creative or 0 if there is no creative.
+   *
+   *
+   * @returns {number} - the duration of the ad unit.
+   */
+  duration () {
+    this[_protected].throwIfCalled();
+  }
+
+  /**
+   * Returns true if the add is paused and false otherwise
+   */
+  paused () {
+    this[_protected].throwIfCalled();
+  }
+
+  /**
+   * Returns the current time of the ad Creative or 0 if there is no creative.
+   *
+   *
+   * @returns {number} - the volume of the ad unit.
+   */
+  currentTime () {
+    this[_protected].throwIfCalled();
+  }
+
+  /**
    * Register a callback function that will be called whenever the ad finishes. No matter if it was finished because de ad ended, or cancelled or there was an error playing the ad.
    *
    * @throws if ad unit is finished.
