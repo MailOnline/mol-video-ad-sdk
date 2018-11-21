@@ -64,14 +64,10 @@ const {
 const _private = Symbol('_private');
 
 const vpaidGeneralError = (payload) => {
-  if (payload instanceof Error) {
-    return payload;
-  }
+  const error = payload instanceof Error ? payload : new Error('VPAID general error');
 
-  const error = new Error('VPAID general error');
-
-  if (typeof payload === 'string') {
-    error.message = payload;
+  if (!error.code) {
+    error.code = 901;
   }
 
   return error;
@@ -100,8 +96,7 @@ class VpaidAdUnit extends VideoAdUnit {
       }
       case adError: {
         this.error = vpaidGeneralError(payload);
-        this.error.code = 901;
-        this.errorCode = 901;
+        this.errorCode = this.error.code;
         this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
         this[_protected].finish();
         this.emit(errorEvt, {
@@ -317,6 +312,15 @@ class VpaidAdUnit extends VideoAdUnit {
       // if the ad timed out while trying to load the videoAdContainer will be destroyed
       if (!this.videoAdContainer.isDestroyed()) {
         try {
+          const {videoElement} = this.videoAdContainer;
+
+          if (videoElement.muted) {
+            this[_private].muted = true;
+            this.setVolume(0);
+          } else {
+            this.setVolume(videoElement.volume);
+          }
+
           await callAndWait(this.creativeAd, startAd, adStarted);
 
           if (this.icons) {
@@ -386,8 +390,6 @@ class VpaidAdUnit extends VideoAdUnit {
    * @param {number} volume - must be a value between 0 and 1;
    */
   setVolume (volume) {
-    this[_protected].throwIfNotReady();
-
     this.creativeAd[setAdVolume](volume);
   }
 
@@ -400,8 +402,6 @@ class VpaidAdUnit extends VideoAdUnit {
    * @returns {number} - the volume of the ad unit.
    */
   getVolume () {
-    this[_protected].throwIfNotReady();
-
     return this.creativeAd[getAdVolume]();
   }
 

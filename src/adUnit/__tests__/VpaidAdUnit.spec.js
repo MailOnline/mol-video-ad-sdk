@@ -136,6 +136,29 @@ describe('VpaidAdUnit', () => {
       adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
     });
 
+    test('must mute the creative if the videoElement is muted', async () => {
+      const {videoElement} = videoAdContainer;
+
+      videoElement.muted = true;
+
+      await adUnit.start();
+
+      expect(mockCreativeAd.setAdVolume).toHaveBeenCalledTimes(1);
+      expect(mockCreativeAd.setAdVolume).toHaveBeenCalledWith(0);
+    });
+
+    test('must set the volume of the creative to match the volume of the videoElement', async () => {
+      const {videoElement} = videoAdContainer;
+
+      videoElement.muted = false;
+      videoElement.volume = 0.6;
+
+      await adUnit.start();
+
+      expect(mockCreativeAd.setAdVolume).toHaveBeenCalledTimes(1);
+      expect(mockCreativeAd.setAdVolume).toHaveBeenCalledWith(0.6);
+    });
+
     test('must start the ad', async () => {
       expect(adUnit.isStarted()).toBe(false);
 
@@ -524,19 +547,9 @@ describe('VpaidAdUnit', () => {
     });
 
     describe('getVolume', () => {
-      test('must throw if the adUnit is not started', () => {
-        expect(() => adUnit.getVolume()).toThrow('VideoAdUnit has not started');
-      });
-
-      test('must throw if the adUnit is finished', async () => {
-        await adUnit.start();
-        await adUnit.cancel();
-
-        expect(() => adUnit.getVolume()).toThrow('VideoAdUnit is finished');
-      });
-
       test('must call getAdVolume', async () => {
         await adUnit.start();
+        mockCreativeAd.getAdVolume.mockClear();
         await adUnit.getVolume();
 
         expect(mockCreativeAd.getAdVolume).toHaveBeenCalledTimes(1);
@@ -544,22 +557,13 @@ describe('VpaidAdUnit', () => {
     });
 
     describe('setVolume', () => {
-      test('must throw if the adUnit is not started', () => {
-        expect(() => adUnit.setVolume()).toThrow('VideoAdUnit has not started');
-      });
-
-      test('must throw if the adUnit is finished', async () => {
+      test('must call setAdVolume', async () => {
         await adUnit.start();
-        await adUnit.cancel();
-
-        expect(() => adUnit.setVolume()).toThrow('VideoAdUnit is finished');
-      });
-
-      test('must call getAdVolume', async () => {
-        await adUnit.start();
-        await adUnit.setVolume();
+        mockCreativeAd.setAdVolume.mockClear();
+        await adUnit.setVolume(0.5);
 
         expect(mockCreativeAd.setAdVolume).toHaveBeenCalledTimes(1);
+        expect(mockCreativeAd.setAdVolume).toHaveBeenCalledWith(0.5);
       });
     });
 
@@ -928,15 +932,37 @@ describe('VpaidAdUnit', () => {
         expect(error.code).toBe(901);
         expect(adUnit.errorCode).toBe(901);
       });
+
+      it('must use the emitted error if provided', async () => {
+        const callback = jest.fn();
+
+        adUnit.on(vastEvt, callback);
+        await adUnit.start();
+
+        const creativeError = new Error('test error');
+
+        creativeError.code = 302;
+        adUnit.creativeAd.emit(adError, creativeError);
+
+        expect(callback).toHaveBeenCalledWith({
+          adUnit,
+          type: vastEvt
+        });
+        const error = adUnit.error;
+
+        expect(error).toBe(creativeError);
+        expect(error.code).toBe(302);
+        expect(adUnit.errorCode).toBe(302);
+      });
     });
 
     describe(adVolumeChange, () => {
       test(`must emit ${volumeChanged} event`, async () => {
         const callback = jest.fn();
 
-        adUnit.on(volumeChanged, callback);
         await adUnit.start();
 
+        adUnit.on(volumeChanged, callback);
         adUnit.creativeAd.setAdVolume(0);
         expect(callback).toHaveBeenCalledTimes(1);
         expect(callback).toHaveBeenCalledWith({
