@@ -20,6 +20,7 @@ import {
   pauseAd,
   setAdVolume,
   getAdVolume,
+  getAdDuration,
   resizeAd,
   adSizeChange,
   adError,
@@ -36,7 +37,8 @@ import {
   adUserMinimize,
   adUserClose,
   adClickThru,
-  getAdIcons
+  getAdIcons,
+  getAdRemainingTime
 } from './helpers/vpaid/api';
 import waitFor from './helpers/vpaid/waitFor';
 import callAndWait from './helpers/vpaid/callAndWait';
@@ -416,6 +418,48 @@ class VpaidAdUnit extends VideoAdUnit {
     this.creativeAd[stopAd]();
 
     this[_protected].finish();
+  }
+
+  /**
+   * Returns the duration of the ad Creative or 0 if there is no creative.
+   *
+   * Note: if the user has engaged with the ad, the duration becomes unknown and it will return 0;
+   *
+   * @returns {number} - the duration of the ad unit.
+   */
+  duration () {
+    if (!this.creativeAd) {
+      return 0;
+    }
+
+    const duration = this.creativeAd[getAdDuration]();
+
+    if (duration < 0) {
+      return 0;
+    }
+
+    return duration;
+  }
+
+  /**
+   * Returns the current time of the ad Creative or 0 if there is no creative.
+   *
+   * Note: if the user has engaged with the ad, the currentTime becomes unknown and it will return 0;
+   *
+   * @returns {number} - the volume of the ad unit.
+   */
+  currentTime () {
+    if (!this.creativeAd) {
+      return 0;
+    }
+
+    const remainingTime = this.creativeAd[getAdRemainingTime]();
+
+    if (remainingTime < 0) {
+      return 0;
+    }
+
+    return this.duration() - remainingTime;
   }
 
   /**

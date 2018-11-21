@@ -34,7 +34,9 @@ import {
   adUserMinimize,
   adUserClose,
   adClickThru,
-  getAdIcons
+  getAdIcons,
+  getAdDuration,
+  getAdRemainingTime
 } from '../helpers/vpaid/api';
 import linearEvents, {
   skip,
@@ -1010,6 +1012,58 @@ describe('VpaidAdUnit', () => {
         adUnit.creativeAd.setAdVolume(0.5);
         adUnit.creativeAd.setAdVolume(0.5);
         expect(callback).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('duration', () => {
+      it('must return 0 if there is no creative', () => {
+        expect(adUnit.duration()).toBe(0);
+      });
+
+      it('must return the creative duration', async () => {
+        await adUnit.start();
+        adUnit.creativeAd[getAdDuration].mockReturnValue(30);
+
+        expect(adUnit.duration()).toBe(30);
+      });
+
+      it('must return 0 if the creative returns a negative duration', async () => {
+        await adUnit.start();
+        adUnit.creativeAd[getAdDuration].mockReturnValue(-1);
+
+        expect(adUnit.duration()).toBe(0);
+        adUnit.creativeAd[getAdDuration].mockReturnValue(-2);
+
+        expect(adUnit.duration()).toBe(0);
+      });
+    });
+
+    describe('currentTime', () => {
+      it('must return 0 if there is no creative', () => {
+        expect(adUnit.currentTime()).toBe(0);
+      });
+
+      it('must return the creative current time', async () => {
+        await adUnit.start();
+        adUnit.creativeAd[getAdDuration].mockReturnValue(30);
+        adUnit.creativeAd[getAdRemainingTime].mockReturnValue(25);
+
+        expect(adUnit.currentTime()).toBe(5);
+        adUnit.creativeAd[getAdRemainingTime].mockReturnValue(5);
+
+        expect(adUnit.currentTime()).toBe(25);
+      });
+
+      it('must return 0 if the creative returns a negative adRemainingTime', async () => {
+        await adUnit.start();
+        adUnit.creativeAd[getAdDuration].mockReturnValue(-1);
+        adUnit.creativeAd[getAdRemainingTime].mockReturnValue(-1);
+
+        expect(adUnit.currentTime()).toBe(0);
+        adUnit.creativeAd[getAdDuration].mockReturnValue(-2);
+        adUnit.creativeAd[getAdRemainingTime].mockReturnValue(-2);
+
+        expect(adUnit.currentTime()).toBe(0);
       });
     });
   });

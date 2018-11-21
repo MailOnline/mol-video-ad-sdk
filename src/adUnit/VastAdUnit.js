@@ -215,6 +215,36 @@ class VastAdUnit extends VideoAdUnit {
   }
 
   /**
+   * Returns the duration of the ad Creative or 0 if there is no creative.
+   *
+   *
+   * @returns {number} - the duration of the ad unit.
+   */
+  duration () {
+    if (!this.isStarted()) {
+      return 0;
+    }
+    const {videoElement} = this.videoAdContainer;
+
+    return videoElement.duration;
+  }
+
+  /**
+   * Returns the current time of the ad Creative or 0 if there is no creative.
+   *
+   *
+   * @returns {number} - the volume of the ad unit.
+   */
+  currentTime () {
+    if (!this.isStarted()) {
+      return 0;
+    }
+    const {videoElement} = this.videoAdContainer;
+
+    return videoElement.currentTime;
+  }
+
+  /**
    * This method resizes the ad unit to fit the available space in the passed {@link VideoAdContainer}
    *
    * @throws if ad unit is not started.
