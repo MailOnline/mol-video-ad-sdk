@@ -271,14 +271,12 @@ describe('runWaterfall', () => {
 
       runWaterfall(adTag, placeholder, {
         ...options,
-        onRunFinish: () => {
-          deferred.resolve();
-          onRunFinish();
-        }
+        onAdStart: () => deferred.resolve(),
+        onRunFinish
       });
-      adUnit[_protected].finish();
       await deferred.promise;
 
+      adUnit[_protected].finish();
       expect(onRunFinish).toHaveBeenCalledTimes(1);
     });
 
@@ -480,14 +478,12 @@ describe('runWaterfall', () => {
 
       const cancelWaterfall = runWaterfall(adTag, placeholder, {
         ...options,
-        onRunFinish: () => {
-          deferred.resolve();
-          onRunFinish();
-        }
+        onAdStart: () => deferred.resolve(),
+        onRunFinish
       });
 
-      adUnit[_protected].finish();
       await deferred.promise;
+      adUnit[_protected].finish();
 
       expect(adUnit.cancel).not.toHaveBeenCalled();
 

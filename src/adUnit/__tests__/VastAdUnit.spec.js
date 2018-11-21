@@ -383,8 +383,6 @@ describe('VastAdUnit', () => {
     'resume',
     'pause',
     'cancel',
-    'onError',
-    'onFinish',
     'setVolume',
     'getVolume'
   ].forEach((method) => {

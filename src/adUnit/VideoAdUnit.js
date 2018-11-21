@@ -277,8 +277,6 @@ class VideoAdUnit extends Emitter {
    * @param {Function} callback - will be called once the ad unit finished
    */
   onFinish (callback) {
-    this[_protected].throwIfFinished();
-
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
     }
@@ -294,8 +292,6 @@ class VideoAdUnit extends Emitter {
    * @param {Function} callback - will be called on ad unit error passing the Error instance as the only argument if available.
    */
   onError (callback) {
-    this[_protected].throwIfFinished();
-
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
     }

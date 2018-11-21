@@ -621,13 +621,6 @@ describe('VpaidAdUnit', () => {
     });
 
     describe('onFinish', () => {
-      test('must throw if the adUnit is finished', async () => {
-        await adUnit.start();
-        await adUnit.cancel();
-
-        expect(() => adUnit.onFinish()).toThrow('VideoAdUnit is finished');
-      });
-
       test('must throw if you don\'t pass a callback function ', async () => {
         await adUnit.start();
 
@@ -664,13 +657,6 @@ describe('VpaidAdUnit', () => {
     });
 
     describe('onError', () => {
-      test('must throw if the adUnit is finished', async () => {
-        await adUnit.start();
-        await adUnit.cancel();
-
-        expect(() => adUnit.onError()).toThrow('VideoAdUnit is finished');
-      });
-
       test('must throw if you don\'t pass a callback function ', async () => {
         await adUnit.start();
 

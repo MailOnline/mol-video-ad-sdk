@@ -223,12 +223,6 @@ describe('VideoAdUnit', () => {
       });
     });
 
-    test('must throw if the adUnit is finished', () => {
-      adUnit[_protected].finish();
-
-      expect(() => adUnit.onFinish()).toThrow('VideoAdUnit is finished');
-    });
-
     test('must throw if you don\'t pass a callback function ', () => {
       expect(() => adUnit.onFinish()).toThrow('Expected a callback function');
     });
@@ -267,12 +261,6 @@ describe('VideoAdUnit', () => {
 
     beforeEach(() => {
       adUnit = new VideoAdUnit(vpaidChain, videoAdContainer);
-    });
-
-    test('must throw if the adUnit is finished', () => {
-      adUnit[_protected].finished = true;
-
-      expect(() => adUnit.onError()).toThrow('VideoAdUnit is finished');
     });
 
     test('must throw if you don\'t pass a callback function ', () => {
