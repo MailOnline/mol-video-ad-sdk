@@ -112,6 +112,7 @@ describe('startVideoAd', () => {
       }
     ];
     options = {
+      onAdReady: jest.fn(),
       onError: jest.fn()
     };
     const placeholder = document.createElement('div');
@@ -170,7 +171,7 @@ describe('startVideoAd', () => {
   });
 
   test('must cancel the ad unit if there is an error starting the VPAID ad unit', async () => {
-    expect.assertions(3);
+    expect.assertions(5);
     canPlay.mockReturnValue(false);
     const adUnitError = new Error('adUnit error');
     const adUnit = createVPAIDAdUnitMock(vpaidAdChain, videoAdContainer, options);
@@ -193,11 +194,13 @@ describe('startVideoAd', () => {
         ...options,
         type: 'VPAID'
       });
+      expect(options.onAdReady).toHaveBeenCalledTimes(1);
+      expect(options.onAdReady).toHaveBeenCalledWith(adUnit);
     }
   });
 
   test('must return the ad unit', () => {
-    expect.assertions(1);
+    expect.assertions(3);
     const adUnit = createAdUnitMock(vastAdChain, videoAdContainer, options);
 
     createVideoAdUnit.mockImplementation(() => {
@@ -210,6 +213,8 @@ describe('startVideoAd', () => {
     });
 
     expect(startVideoAd(vastAdChain, videoAdContainer, options)).resolves.toBe(adUnit);
+    expect(options.onAdReady).toHaveBeenCalledTimes(1);
+    expect(options.onAdReady).toHaveBeenCalledWith(adUnit);
   });
 
   describe('with hybrid VAST responses (a response that has a VPAID and a VAST ad together', () => {

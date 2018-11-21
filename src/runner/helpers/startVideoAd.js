@@ -25,10 +25,11 @@ const hasVastCreative = (ad, videoElement) => {
   return false;
 };
 
-const waitForAdUnitStart = (adUnit) => new Promise((resolve, reject) => {
+const startAdUnit = (adUnit, {onAdReady}) => new Promise((resolve, reject) => {
   adUnit.onError(reject);
   adUnit.on('start', () => resolve(adUnit));
 
+  onAdReady(adUnit);
   adUnit.start();
 });
 
@@ -42,7 +43,7 @@ const tryToStartVpaidAd = (vastChain, videoAdContainer, options) => {
     type: 'VPAID'
   });
 
-  return waitForAdUnitStart(adUnit);
+  return startAdUnit(adUnit, options);
 };
 
 const startVastAd = (vastChain, videoAdContainer, options) => {
@@ -51,7 +52,7 @@ const startVastAd = (vastChain, videoAdContainer, options) => {
     type: 'VAST'
   });
 
-  return waitForAdUnitStart(adUnit);
+  return startAdUnit(adUnit, options);
 };
 
 const startVideoAd = async (vastChain, videoAdContainer, options) => {
