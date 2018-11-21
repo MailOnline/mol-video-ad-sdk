@@ -925,7 +925,7 @@ describe('VpaidAdUnit', () => {
         const error = adUnit.error;
 
         expect(error.message).toBe('VPAID general error');
-        expect(error.errorCode).toBe(901);
+        expect(error.code).toBe(901);
         expect(adUnit.errorCode).toBe(901);
       });
     });

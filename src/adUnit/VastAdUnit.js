@@ -32,7 +32,7 @@ class VastAdUnit extends VideoAdUnit {
       }
       case errorEvt: {
         this.error = data;
-        this.errorCode = this.error && this.error.errorCode ? this.error.errorCode : 405;
+        this.errorCode = this.error && this.error.code ? this.error.code : 405;
         this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
         this[_protected].finish();
         break;
@@ -127,7 +127,7 @@ class VastAdUnit extends VideoAdUnit {
     } else {
       const adUnitError = new Error('Can\'t find a suitable media to play');
 
-      adUnitError.errorCode = 403;
+      adUnitError.code = 403;
       this[_private].handleMetric(errorEvt, adUnitError);
     }
 

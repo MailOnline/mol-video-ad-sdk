@@ -119,7 +119,7 @@ describe('runWaterfall', () => {
       const onError = jest.fn();
       const vastChainError = new Error('boom');
 
-      vastChainError.errorCode = 900;
+      vastChainError.code = 900;
 
       requestAd.mockReturnValue(Promise.resolve(vastAdChain));
 

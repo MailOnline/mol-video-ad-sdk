@@ -100,7 +100,7 @@ class VpaidAdUnit extends VideoAdUnit {
       }
       case adError: {
         this.error = vpaidGeneralError(payload);
-        this.error.errorCode = 901;
+        this.error.code = 901;
         this.errorCode = 901;
         this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
         this[_protected].finish();

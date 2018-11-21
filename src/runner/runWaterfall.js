@@ -26,7 +26,7 @@ const callbackHandler = (cb) => (...args) => {
   }
 };
 
-const getErrorCode = (vastChain, error) => vastChain && vastChain[0] && vastChain[0].errorCode || error.errorCode;
+const getErrorCode = (vastChain, error) => vastChain && vastChain[0] && vastChain[0].errorCode || error.code;
 const transformVastResponse = (vastChain, {hooks}) => {
   if (hooks && typeof hooks.transformVastResponse === 'function') {
     return hooks.transformVastResponse(vastChain);
