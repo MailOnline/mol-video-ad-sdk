@@ -1,0 +1,45 @@
+.vast-controls {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.vast-test-btn {
+  margin-top: 20px;
+  border: none;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+  padding: 8px 16px;
+  border-radius: 5px;
+  max-width: 100px;
+  color: #fff;
+  background: darkgray;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+}
+
+.vast-test-btn.active {
+  background-color: #039be5;
+  cursor: pointer;
+}
+
+.vast-media {
+  position: relative;
+  padding-top: 20px;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.vast-media video,
+.video-ad-container {
+  width:  100%;
+  height: 100%;
+}
+
+.video-ad-container {
+  display: none;
+  position: absolute;
+}
+
+.video-ad-container.active {
+  display: block;
+}
