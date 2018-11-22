@@ -7,8 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const testBtn = document.querySelector('.vast-test-btn');
   const videoElement = document.querySelector('.vast-media video');
   const videoAdContainer = document.querySelector('.video-ad-container');
+  let adUnit;
 
-  const onAdReady = (adUnit) => {
+  const onAdReady = (newAdUnit) => {
+    adUnit = newAdUnit;
     console.log('### onAdReady', adUnit);
     const evtHandler = (evt) => console.log(`### ${evt.type}`, evt.adUnit);
 
@@ -36,7 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
       videoElement.removeEventListener('contentloadedmetadata', resumeContent);
       videoElement.removeEventListener('canplay', resumeContent);
     };
-    const onError = (evt) => console.log('### onError', evt);
+    const onError = (evt) => {
+      console.log('### onError', evt);
+      console.error(adUnit.error);
+    };
     const onRunFinish = (evt) => {
       console.log('### onRunFinish', evt);
       videoAdContainer.classList.remove('active');
