@@ -238,7 +238,6 @@ class VideoAdUnit extends Emitter {
   /**
    * Returns the duration of the ad Creative or 0 if there is no creative.
    *
-   *
    * @returns {number} - the duration of the ad unit.
    */
   duration () {
@@ -246,7 +245,7 @@ class VideoAdUnit extends Emitter {
   }
 
   /**
-   * Returns true if the add is paused and false otherwise
+   * Returns true if the ad is paused and false otherwise
    */
   paused () {
     this[_protected].throwIfCalled();
@@ -255,8 +254,7 @@ class VideoAdUnit extends Emitter {
   /**
    * Returns the current time of the ad Creative or 0 if there is no creative.
    *
-   *
-   * @returns {number} - the volume of the ad unit.
+   * @returns {number} - the current time of the ad unit.
    */
   currentTime () {
     this[_protected].throwIfCalled();

@@ -391,7 +391,7 @@ class VpaidAdUnit extends VideoAdUnit {
   }
 
   /**
-   * Returns true if the add is paused and false otherwise
+   * Returns true if the ad is paused and false otherwise
    */
   paused () {
     return this.isFinished() || this[_private].paused;
@@ -460,7 +460,7 @@ class VpaidAdUnit extends VideoAdUnit {
    *
    * Note: if the user has engaged with the ad, the currentTime becomes unknown and it will return 0;
    *
-   * @returns {number} - the volume of the ad unit.
+   * @returns {number} - the current time of the ad unit.
    */
   currentTime () {
     if (!this.creativeAd) {

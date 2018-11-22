@@ -13,7 +13,7 @@ export const volumeChanged = 'volumeChanged';
 export const finish = 'finish';
 
 /**
- * fired when the ad .
+ * fires on ad progress.
  *
  * @event VideoAdUnit#adProgress
  */
