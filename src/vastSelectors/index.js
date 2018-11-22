@@ -486,25 +486,42 @@ export const getSkipOffset = (ad) => {
   return null;
 };
 
-const htmlDecode = (input) => {
-  const doc = new DOMParser().parseFromString(input, 'text/html');
+const getLinearContent = (xml) => {
+  const linearRegex = /<Linear([\s\S]*)<\/Linear/gm;
+  const result = linearRegex.exec(xml);
 
-  return doc.documentElement.textContent;
+  return result && result[1];
 };
 
-export const getAdParameters = (ad) => {
-  const creativeElement = ad && getLinearCreative(ad);
-  const linearElement = creativeElement && get(creativeElement, 'Linear');
-  const adParametersElement = linearElement && get(linearElement, 'AdParameters');
+const getAdParametersContent = (xml) => {
+  const paramsRegex = /<AdParameters[\s\w="]*>([\s\S]*)<\/AdParameters>/gm;
+  const result = paramsRegex.exec(xml);
 
-  if (!adParametersElement) {
-    return '';
-  }
+  return result && result[1].replace('<![CDATA[', '')
+    .replace(']]>', '')
+    .trim();
+};
 
-  return htmlDecode(getText(adParametersElement)) || '';
+const getXmlEncodedValue = (xml) => {
+  const xmlEncodedRegex = /<AdParameters[\s]*xmlEncoded="(.*?)">/gmi;
+  const result = xmlEncodedRegex.exec(xml);
+
+  return Boolean(result) && result[1] === 'true';
+};
+
+const getCreativeData = (xml) => {
+  const linearContent = getLinearContent(xml);
+  const AdParameters = linearContent && getAdParametersContent(linearContent);
+  const xmlEncoded = linearContent && getXmlEncodedValue(linearContent);
+
+  return {
+    AdParameters,
+    xmlEncoded
+  };
 };
 
 export {
+  getCreativeData,
   getIcons,
   getLinearTrackingEvents,
   getNonLinearTrackingEvents

@@ -5,12 +5,14 @@ import {
   podParsedXML,
   vpaidInlineAd,
   wrapperAd,
+  vastWrapperXML,
+  vastVpaidInlineXML,
   wrapperParsedXML,
   noAdParsedXML
 } from '../../../fixtures';
 import {
   getAds,
-  getAdParameters,
+  getCreativeData,
   getAdErrorURI,
   getClickThrough,
   getClickTracking,
@@ -576,13 +578,14 @@ test('getInteractiveFiles must return vast2 interactive files', () => {
   });
 });
 
-test('getAdParameters must return an empty string if there none', () => {
-  expect(getAdParameters()).toEqual('');
-  expect(getAdParameters(null)).toEqual('');
-  expect(getAdParameters({})).toEqual('');
-  expect(getAdParameters(wrapperAd)).toEqual('');
-});
+test('getCreativeData must return the adParameters', () => {
+  expect(getCreativeData(vastWrapperXML)).toEqual({
+    AdParameters: null,
+    xmlEncoded: false
+  });
 
-test('getAdParameters must return the adParameters', () => {
-  expect(getAdParameters(vpaidInlineAd)).toEqual('AD_PARAMETERS_DATA');
+  expect(getCreativeData(vastVpaidInlineXML)).toEqual({
+    AdParameters: 'AD_PARAMETERS_DATA',
+    xmlEncoded: false
+  });
 });
