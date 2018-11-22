@@ -511,17 +511,6 @@ describe('VpaidAdUnit', () => {
     });
 
     describe('resume', () => {
-      test('must throw if the adUnit is not started', () => {
-        expect(() => adUnit.resume()).toThrow('VideoAdUnit has not started');
-      });
-
-      test('must throw if the adUnit is finished', async () => {
-        await adUnit.start();
-        await adUnit.cancel();
-
-        expect(() => adUnit.resume()).toThrow('VideoAdUnit is finished');
-      });
-
       test('must call resumeAd', async () => {
         await adUnit.start();
         await adUnit.resume();
@@ -531,17 +520,6 @@ describe('VpaidAdUnit', () => {
     });
 
     describe('pause', () => {
-      test('must throw if the adUnit is not started', () => {
-        expect(() => adUnit.pause()).toThrow('VideoAdUnit has not started');
-      });
-
-      test('must throw if the adUnit is finished', async () => {
-        await adUnit.start();
-        await adUnit.cancel();
-
-        expect(() => adUnit.pause()).toThrow('VideoAdUnit is finished');
-      });
-
       test('must call pauseAd', async () => {
         await adUnit.start();
         await adUnit.pause();
@@ -572,29 +550,6 @@ describe('VpaidAdUnit', () => {
     });
 
     describe('resize', () => {
-      test('must throw if the adUnit is not started', async () => {
-        expect.assertions(1);
-
-        try {
-          await adUnit.resize();
-        } catch (error) {
-          expect(error.message).toBe('VideoAdUnit has not started');
-        }
-      });
-
-      test('must throw if the adUnit is finished', async () => {
-        expect.assertions(1);
-
-        await adUnit.start();
-        await adUnit.cancel();
-
-        try {
-          await adUnit.resize();
-        } catch (error) {
-          expect(error.message).toBe('VideoAdUnit is finished');
-        }
-      });
-
       test('must call resizeAd', async () => {
         await adUnit.start();
         await adUnit.resize();

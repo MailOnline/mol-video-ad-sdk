@@ -377,7 +377,6 @@ class VpaidAdUnit extends VideoAdUnit {
    * @throws if ad unit is finished.
    */
   resume () {
-    this[_protected].throwIfNotReady();
     this.creativeAd[resumeAd]();
   }
 
@@ -388,7 +387,6 @@ class VpaidAdUnit extends VideoAdUnit {
    * @throws if ad unit is finished.
    */
   pause () {
-    this[_protected].throwIfNotReady();
     this.creativeAd[pauseAd]();
   }
 

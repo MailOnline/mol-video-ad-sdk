@@ -51,13 +51,6 @@ class VideoAdUnit extends Emitter {
      if (this.isFinished()) {
        throw new Error('VideoAdUnit is finished');
      }
-   },
-   throwIfNotReady: () => {
-     this[_protected].throwIfFinished();
-
-     if (!this.isStarted()) {
-       throw new Error('VideoAdUnit has not started');
-     }
    }
  };
 
@@ -322,9 +315,7 @@ class VideoAdUnit extends Emitter {
    * @returns {Promise} - that resolves once the unit was resized
    */
   async resize () {
-    this[_protected].throwIfNotReady();
-
-    if (this.icons) {
+    if (this.isStarted() && !this.isFinished() && this.icons) {
       await this[_protected].removeIcons();
       await this[_protected].drawIcons();
     }

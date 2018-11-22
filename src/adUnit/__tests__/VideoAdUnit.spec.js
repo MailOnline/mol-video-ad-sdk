@@ -275,26 +275,22 @@ describe('VideoAdUnit', () => {
       adUnit = new VideoAdUnit(vpaidChain, videoAdContainer);
     });
 
-    test('must throw if the adUnit is not started', async () => {
-      expect.assertions(1);
+    test('must not redraw the icons if the adUnit is not started', async () => {
+      adUnit = new VideoAdUnit(vpaidChain, videoAdContainer);
 
-      try {
-        await adUnit.resize();
-      } catch (error) {
-        expect(error.message).toBe('VideoAdUnit has not started');
-      }
+      await adUnit.resize();
+
+      expect(mockDrawIcons).toHaveBeenCalledTimes(0);
     });
 
-    test('must throw if the adUnit is finished', async () => {
-      expect.assertions(1);
+    test('must not redraw the icons if the adUnit is finished', async () => {
+      adUnit = new VideoAdUnit(vpaidChain, videoAdContainer);
 
       adUnit[_protected].finished = true;
 
-      try {
-        await adUnit.resize();
-      } catch (error) {
-        expect(error.message).toBe('VideoAdUnit is finished');
-      }
+      await adUnit.resize();
+
+      expect(mockDrawIcons).toHaveBeenCalledTimes(0);
     });
 
     test('must redraw the icons', async () => {

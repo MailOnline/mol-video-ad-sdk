@@ -388,21 +388,6 @@ describe('VastAdUnit', () => {
     expect(() => adUnit.cancel()).toThrowError('VideoAdUnit is finished');
   });
 
-  test('`resize` must throw if you call it on a finished adUnit', async () => {
-    expect.assertions(1);
-    const adUnit = new VastAdUnit(vastChain, videoAdContainer);
-
-    await adUnit.start();
-
-    adUnit.cancel();
-
-    try {
-      await adUnit.resize();
-    } catch (error) {
-      expect(error.message).toBe('VideoAdUnit is finished');
-    }
-  });
-
   test('`start` must throw if you call it on a finished adUnit', async () => {
     expect.assertions(1);
     const adUnit = new VastAdUnit(vastChain, videoAdContainer);
