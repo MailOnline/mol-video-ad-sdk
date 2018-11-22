@@ -15,25 +15,29 @@ const createVideoAdUnit = (vastChain, videoAdContainer, options) => {
   const adUnit = type === 'VPAID' ? new VpaidAdUnit(vastChain, videoAdContainer, options) : new VastAdUnit(vastChain, videoAdContainer, options);
 
   Object.values(linearEvents).forEach((linearEvent) =>
-    adUnit.on(linearEvent, (event, {errorCode}, data) => {
+    adUnit.on(linearEvent, (event) => {
+      const {
+        type: evtType,
+        data
+      } = event;
       const payload = {
         data,
-        errorCode,
+        errorCode: adUnit.errorCode,
         tracker
       };
 
-      trackLinearEvent(event, vastChain, payload);
+      trackLinearEvent(evtType, vastChain, payload);
     })
   );
 
   Object.values(nonLinearEvents).forEach((nonLinearEvent) =>
-    adUnit.on(nonLinearEvent, (event, _, data) => {
+    adUnit.on(nonLinearEvent, (event) => {
       const payload = {
-        data,
+        data: event.data,
         tracker
       };
 
-      trackNonLinearEvent(event, vastChain, payload);
+      trackNonLinearEvent(event.type, vastChain, payload);
     })
   );
 

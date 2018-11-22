@@ -144,7 +144,7 @@ describe('VideoAdUnit', () => {
 
       expect(passedArgs).toEqual([{
         adUnit,
-        icon: icons[0],
+        data: icons[0],
         type: iconClick
       }]);
     });
@@ -177,7 +177,7 @@ describe('VideoAdUnit', () => {
 
       expect(passedArgs).toEqual([{
         adUnit,
-        icon: icons[0],
+        data: icons[0],
         type: iconView
       }]);
     });

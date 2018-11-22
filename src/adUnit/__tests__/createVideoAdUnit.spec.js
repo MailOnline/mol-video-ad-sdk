@@ -100,7 +100,11 @@ describe('createVideoAdUnit', () => {
       const eventPromise = new Promise((resolve) => adUnit.on(event, resolve));
 
       adUnit.errorCode = 999;
-      adUnit.emit(event, event, adUnit, data);
+      adUnit.emit(event, {
+        adUnit,
+        data,
+        type: event
+      });
 
       await eventPromise;
 
@@ -120,7 +124,11 @@ describe('createVideoAdUnit', () => {
       };
       const eventPromise = new Promise((resolve) => adUnit.on(event, resolve));
 
-      adUnit.emit(event, event, adUnit, data);
+      adUnit.emit(event, {
+        adUnit,
+        data,
+        type: event
+      });
 
       await eventPromise;
 

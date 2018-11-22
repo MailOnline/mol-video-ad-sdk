@@ -103,12 +103,12 @@ class VideoAdUnit extends Emitter {
         logger,
         onIconClick: (icon) => this.emit(iconClick, {
           adUnit: this,
-          icon,
+          data: icon,
           type: iconClick
         }),
         onIconView: (icon) => this.emit(iconView, {
           adUnit: this,
-          icon,
+          data: icon,
           type: iconView
         }),
         videoAdContainer
