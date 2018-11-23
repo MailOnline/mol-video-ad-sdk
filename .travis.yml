@@ -12,7 +12,7 @@ script:
   - yarn lint
   - yarn test
   - yarn codecov
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then yarn docs; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then yarn pages; fi
 after_success:
   - npm run travis-deploy-once "npm run semantic-release"
 branches:
