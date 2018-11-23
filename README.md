@@ -30,5 +30,7 @@ to run the tests.
 
 Please open an issue if you have any questions or concerns.
 
+
 ## License
-[MIT License](https://opensource.org/licenses/MIT)
+
+This project is licensed under the MIT license, Copyright (c) 2018 MailOnline. For more information see [LICENSE](./LICENSE)
