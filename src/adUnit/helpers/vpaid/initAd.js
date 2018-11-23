@@ -4,15 +4,17 @@ import viewmode from './viewmode';
 const createSlot = (placeholder, width, height) => {
   const slot = document.createElement('DIV');
 
-  slot.style.position = 'absolute';
-  slot.style.top = '0px';
-  slot.style.left = '0px';
-  slot.style.border = '0px';
-  slot.style.padding = '0px';
-  slot.style.margin = '0px';
-  slot.style.height = `${height}px`;
-  slot.style.width = `${width}px`;
-  slot.style.cursor = 'pointer';
+  Object.assign(slot.style, {
+    border: '0px',
+    cursor: 'pointer',
+    height: `${height}px`,
+    left: '0px',
+    margin: '0px',
+    padding: '0px',
+    position: 'absolute',
+    top: '0px',
+    width: `${width}px`
+  });
 
   placeholder.appendChild(slot);
 

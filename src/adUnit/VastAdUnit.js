@@ -141,9 +141,7 @@ class VastAdUnit extends VideoAdUnit {
    * @throws if ad unit is finished.
    */
   resume () {
-    const {videoElement} = this.videoAdContainer;
-
-    videoElement.play();
+    this.videoAdContainer.videoElement.play();
   }
 
   /**
@@ -153,18 +151,14 @@ class VastAdUnit extends VideoAdUnit {
    * @throws if ad unit is finished.
    */
   pause () {
-    const {videoElement} = this.videoAdContainer;
-
-    videoElement.pause();
+    this.videoAdContainer.videoElement.pause();
   }
 
   /**
    * Returns true if the ad is paused and false otherwise
    */
   paused () {
-    const {videoElement} = this.videoAdContainer;
-
-    return videoElement.paused;
+    return this.videoAdContainer.videoElement.paused;
   }
 
   /**
@@ -176,9 +170,7 @@ class VastAdUnit extends VideoAdUnit {
    * @param {number} volume - must be a value between 0 and 1;
    */
   setVolume (volume) {
-    const {videoElement} = this.videoAdContainer;
-
-    videoElement.volume = volume;
+    this.videoAdContainer.videoElement.volume = volume;
   }
 
   /**
@@ -190,9 +182,7 @@ class VastAdUnit extends VideoAdUnit {
    * @returns {number} - the volume of the ad unit.
    */
   getVolume () {
-    const {videoElement} = this.videoAdContainer;
-
-    return videoElement.volume;
+    return this.videoAdContainer.videoElement.volume;
   }
 
   /**
@@ -217,9 +207,8 @@ class VastAdUnit extends VideoAdUnit {
     if (!this.isStarted()) {
       return 0;
     }
-    const {videoElement} = this.videoAdContainer;
 
-    return videoElement.duration;
+    return this.videoAdContainer.videoElement.duration;
   }
 
   /**
@@ -231,9 +220,8 @@ class VastAdUnit extends VideoAdUnit {
     if (!this.isStarted()) {
       return 0;
     }
-    const {videoElement} = this.videoAdContainer;
 
-    return videoElement.currentTime;
+    return this.videoAdContainer.videoElement.currentTime;
   }
 
   /**
