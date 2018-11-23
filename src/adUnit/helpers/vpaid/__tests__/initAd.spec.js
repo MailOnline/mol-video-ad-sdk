@@ -43,9 +43,25 @@ describe('initAd', () => {
         xmlEncoded: false
       },
       {
-        slot: videoAdContainer.element,
-        videoSlot: videoAdContainer.videoElement
+        slot: expect.any(HTMLDivElement),
+        videoSlot: videoAdContainer.videoElement,
+        videoSlotCanAutoPlay: false
       }
     );
+
+    const {slot} = mockCreativeAd.initAd.mock.calls[0][5];
+
+    expect(slot).toBeInstanceOf(HTMLDivElement);
+    expect(slot.style).toEqual(expect.objectContaining({
+      border: '0px',
+      cursor: 'pointer',
+      height: '0px',
+      left: '0px',
+      margin: '0px',
+      padding: '0px',
+      position: 'absolute',
+      top: '0px',
+      width: '0px'
+    }));
   });
 });

@@ -151,4 +151,20 @@ describe('VideoAdContainer', () => {
 
     expect(videoAdContainer.isDestroyed()).toBe(true);
   });
+
+  describe('originalVideoElement', () => {
+    test('must be true if the videoElement is passed', () => {
+      expect.assertions(1);
+      const videoAdContainer = new VideoAdContainer(placeholder);
+
+      expect(videoAdContainer.originalVideoElement).toBe(false);
+    });
+
+    test('must be false if the videoElement is created by the videoAdContainer', () => {
+      expect.assertions(1);
+      const videoAdContainer = new VideoAdContainer(placeholder, document.createElement('VIDEO'));
+
+      expect(videoAdContainer.originalVideoElement).toBe(true);
+    });
+  });
 });
