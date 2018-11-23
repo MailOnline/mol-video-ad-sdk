@@ -72,7 +72,7 @@ module.exports = {
     devtoolFallbackModuleFilenameTemplate: `webpack:///${pkgName}/[resource-path]?[hash]`,
     devtoolModuleFilenameTemplate: `webpack:///${pkgName}/[resource-path]`,
     publicPath: devMode ? 'http://localhost:9000/' : '../',
-    path: path.resolve(__dirname, 'ghPage/')
+    path: path.resolve(__dirname, 'pages/demo/')
   },
   plugins: [
     new HtmlWebpackPlugin({

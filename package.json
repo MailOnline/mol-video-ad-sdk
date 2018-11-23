@@ -1,6 +1,6 @@
 {
   "name": "@mailonline/video-ad-sdk",
-  "version": "0.3.0",
+  "version": "0.0.0-development",
   "description": "Video ad SDK to load and play video ads.",
   "keywords": [
     "vast",
@@ -15,17 +15,20 @@
   "license": "MIT",
   "scripts": {
     "build": "cross-env NODE_ENV=production rollup -c",
-    "ghPage": "cross-env NODE_ENV=production webpack --mode=production",
+    "demo": "cross-env NODE_ENV=production webpack --mode=production",
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "dev": "rollup -c",
-    "docs": "rimraf docs && jsdoc -c jsdoc.json",
+    "docs": "jsdoc -c jsdoc.json",
+    "pages": "rimraf pages && npm run demo && npm run docs",
     "lint": "eslint --ignore-path ./.gitignore './**/*.js'",
-    "prebuild": "rimraf dist && rimraf ghPage",
-    "postbuild": "npm run ghPage",
+    "prebuild": "rimraf dist",
+    "postbuild": "npm run pages",
     "precommit": "npm run lint",
     "prepush": "npm test",
     "start": "cross-env NODE_ENV=development webpack-dev-server --mode development",
-    "test": "cross-env NODE_ENV=test jest"
+    "test": "cross-env NODE_ENV=test jest",
+    "travis-deploy-once": "travis-deploy-once",
+    "semantic-release": "semantic-release"
   },
   "files": [
     "src",
@@ -36,7 +39,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/MailOnline/mol-video-ad-sdk.git"
+    "url": "https://github.com/MailOnline/mol-video-ad-sdk.git"
   },
   "homepage": "https://github.com/MailOnline/mol-video-ad-sdk#readme",
   "config": {
@@ -85,11 +88,15 @@
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-terser": "^1.0.1",
     "sane-domparser-error": "^0.2.0",
+    "semantic-release": "^15.12.1",
     "terser-webpack-plugin": "^1.1.0",
-    "tui-jsdoc-template": "^1.2.2",
+    "travis-deploy-once": "^5.0.9",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5",
     "whatwg-fetch": "^2.0.4"
+  },
+  "dependencies": {
+    "braintree-jsdoc-template": "^3.3.0"
   }
 }
