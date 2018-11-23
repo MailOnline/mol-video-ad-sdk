@@ -1,0 +1,3124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      Global - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+  
+  <link type="text/css" rel="stylesheet" href="styles/collapse.css">
+  
+
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
+</head>
+
+<body>
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
+
+  <label for="nav-trigger" class="overlay"></label>
+
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      @mailonline/video-ad-sdk
+    </h3>
+
+    
+      <h3>
+        Resources
+      </h3>
+      
+        <a href="https://github.com/MailOnline/mol-video-ad-sdk">repo</a>
+      
+    
+
+    <h3>Classes</h3><ul><li id="Emitter-nav"><a href="Emitter.html">Emitter</a><ul class='methods'><li data-type="method" id="Emitter-emit-nav"><a href="Emitter.html#emit">emit</a></li><li data-type="method" id="Emitter-on-nav"><a href="Emitter.html#on">on</a></li><li data-type="method" id="Emitter-once-nav"><a href="Emitter.html#once">once</a></li><li data-type="method" id="Emitter-removeAllListeners-nav"><a href="Emitter.html#removeAllListeners">removeAllListeners</a></li><li data-type="method" id="Emitter-removeListener-nav"><a href="Emitter.html#removeListener">removeListener</a></li></ul></li><li id="VastAdUnit-nav"><a href="VastAdUnit.html">VastAdUnit</a><ul class='methods'><li data-type="method" id="VastAdUnit-cancel-nav"><a href="VastAdUnit.html#cancel">cancel</a></li><li data-type="method" id="VastAdUnit-currentTime-nav"><a href="VastAdUnit.html#currentTime">currentTime</a></li><li data-type="method" id="VastAdUnit-duration-nav"><a href="VastAdUnit.html#duration">duration</a></li><li data-type="method" id="VastAdUnit-getVolume-nav"><a href="VastAdUnit.html#getVolume">getVolume</a></li><li data-type="method" id="VastAdUnit-isFinished-nav"><a href="VastAdUnit.html#isFinished">isFinished</a></li><li data-type="method" id="VastAdUnit-isStarted-nav"><a href="VastAdUnit.html#isStarted">isStarted</a></li><li data-type="method" id="VastAdUnit-onError-nav"><a href="VastAdUnit.html#onError">onError</a></li><li data-type="method" id="VastAdUnit-onFinish-nav"><a href="VastAdUnit.html#onFinish">onFinish</a></li><li data-type="method" id="VastAdUnit-pause-nav"><a href="VastAdUnit.html#pause">pause</a></li><li data-type="method" id="VastAdUnit-paused-nav"><a href="VastAdUnit.html#paused">paused</a></li><li data-type="method" id="VastAdUnit-resize-nav"><a href="VastAdUnit.html#resize">resize</a></li><li data-type="method" id="VastAdUnit-resume-nav"><a href="VastAdUnit.html#resume">resume</a></li><li data-type="method" id="VastAdUnit-setVolume-nav"><a href="VastAdUnit.html#setVolume">setVolume</a></li><li data-type="method" id="VastAdUnit-start-nav"><a href="VastAdUnit.html#start">start</a></li></ul></li><li id="VideoAdContainer-nav"><a href="VideoAdContainer.html">VideoAdContainer</a><ul class='methods'><li data-type="method" id="VideoAdContainer-addScript-nav"><a href="VideoAdContainer.html#addScript">addScript</a></li><li data-type="method" id="VideoAdContainer-destroy-nav"><a href="VideoAdContainer.html#destroy">destroy</a></li><li data-type="method" id="VideoAdContainer-isDestroyed-nav"><a href="VideoAdContainer.html#isDestroyed">isDestroyed</a></li></ul></li><li id="VideoAdUnit-nav"><a href="VideoAdUnit.html">VideoAdUnit</a><ul class='methods'><li data-type="method" id="VideoAdUnit-cancel-nav"><a href="VideoAdUnit.html#cancel">cancel</a></li><li data-type="method" id="VideoAdUnit-currentTime-nav"><a href="VideoAdUnit.html#currentTime">currentTime</a></li><li data-type="method" id="VideoAdUnit-duration-nav"><a href="VideoAdUnit.html#duration">duration</a></li><li data-type="method" id="VideoAdUnit-emit-nav"><a href="VideoAdUnit.html#emit">emit</a></li><li data-type="method" id="VideoAdUnit-getVolume-nav"><a href="VideoAdUnit.html#getVolume">getVolume</a></li><li data-type="method" id="VideoAdUnit-isFinished-nav"><a href="VideoAdUnit.html#isFinished">isFinished</a></li><li data-type="method" id="VideoAdUnit-isStarted-nav"><a href="VideoAdUnit.html#isStarted">isStarted</a></li><li data-type="method" id="VideoAdUnit-on-nav"><a href="VideoAdUnit.html#on">on</a></li><li data-type="method" id="VideoAdUnit-once-nav"><a href="VideoAdUnit.html#once">once</a></li><li data-type="method" id="VideoAdUnit-onError-nav"><a href="VideoAdUnit.html#onError">onError</a></li><li data-type="method" id="VideoAdUnit-onFinish-nav"><a href="VideoAdUnit.html#onFinish">onFinish</a></li><li data-type="method" id="VideoAdUnit-pause-nav"><a href="VideoAdUnit.html#pause">pause</a></li><li data-type="method" id="VideoAdUnit-paused-nav"><a href="VideoAdUnit.html#paused">paused</a></li><li data-type="method" id="VideoAdUnit-removeAllListeners-nav"><a href="VideoAdUnit.html#removeAllListeners">removeAllListeners</a></li><li data-type="method" id="VideoAdUnit-removeListener-nav"><a href="VideoAdUnit.html#removeListener">removeListener</a></li><li data-type="method" id="VideoAdUnit-resize-nav"><a href="VideoAdUnit.html#resize">resize</a></li><li data-type="method" id="VideoAdUnit-resume-nav"><a href="VideoAdUnit.html#resume">resume</a></li><li data-type="method" id="VideoAdUnit-setVolume-nav"><a href="VideoAdUnit.html#setVolume">setVolume</a></li></ul></li><li id="VpaidAdUnit-nav"><a href="VpaidAdUnit.html">VpaidAdUnit</a><ul class='methods'><li data-type="method" id="VpaidAdUnit-cancel-nav"><a href="VpaidAdUnit.html#cancel">cancel</a></li><li data-type="method" id="VpaidAdUnit-currentTime-nav"><a href="VpaidAdUnit.html#currentTime">currentTime</a></li><li data-type="method" id="VpaidAdUnit-duration-nav"><a href="VpaidAdUnit.html#duration">duration</a></li><li data-type="method" id="VpaidAdUnit-emit-nav"><a href="VpaidAdUnit.html#emit">emit</a></li><li data-type="method" id="VpaidAdUnit-getVolume-nav"><a href="VpaidAdUnit.html#getVolume">getVolume</a></li><li data-type="method" id="VpaidAdUnit-isFinished-nav"><a href="VpaidAdUnit.html#isFinished">isFinished</a></li><li data-type="method" id="VpaidAdUnit-isStarted-nav"><a href="VpaidAdUnit.html#isStarted">isStarted</a></li><li data-type="method" id="VpaidAdUnit-on-nav"><a href="VpaidAdUnit.html#on">on</a></li><li data-type="method" id="VpaidAdUnit-once-nav"><a href="VpaidAdUnit.html#once">once</a></li><li data-type="method" id="VpaidAdUnit-onError-nav"><a href="VpaidAdUnit.html#onError">onError</a></li><li data-type="method" id="VpaidAdUnit-onFinish-nav"><a href="VpaidAdUnit.html#onFinish">onFinish</a></li><li data-type="method" id="VpaidAdUnit-pause-nav"><a href="VpaidAdUnit.html#pause">pause</a></li><li data-type="method" id="VpaidAdUnit-paused-nav"><a href="VpaidAdUnit.html#paused">paused</a></li><li data-type="method" id="VpaidAdUnit-removeAllListeners-nav"><a href="VpaidAdUnit.html#removeAllListeners">removeAllListeners</a></li><li data-type="method" id="VpaidAdUnit-removeListener-nav"><a href="VpaidAdUnit.html#removeListener">removeListener</a></li><li data-type="method" id="VpaidAdUnit-resize-nav"><a href="VpaidAdUnit.html#resize">resize</a></li><li data-type="method" id="VpaidAdUnit-resume-nav"><a href="VpaidAdUnit.html#resume">resume</a></li><li data-type="method" id="VpaidAdUnit-setVolume-nav"><a href="VpaidAdUnit.html#setVolume">setVolume</a></li><li data-type="method" id="VpaidAdUnit-start-nav"><a href="VpaidAdUnit.html#start">start</a></li></ul></li></ul><h3>Modules</h3><ul><li id="@mailonline_video-ad-sdk-nav"><a href="module-@mailonline_video-ad-sdk.html">@mailonline/video-ad-sdk</a><ul class='methods'><li data-type="method" id="@mailonline_video-ad-sdk-requestAd-nav"><a href="module-@mailonline_video-ad-sdk.html#.requestAd">requestAd</a></li><li data-type="method" id="@mailonline_video-ad-sdk-requestNextAd-nav"><a href="module-@mailonline_video-ad-sdk.html#.requestNextAd">requestNextAd</a></li><li data-type="method" id="@mailonline_video-ad-sdk-run-nav"><a href="module-@mailonline_video-ad-sdk.html#.run">run</a></li><li data-type="method" id="@mailonline_video-ad-sdk-runWaterfall-nav"><a href="module-@mailonline_video-ad-sdk.html#.runWaterfall">runWaterfall</a></li></ul></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#parseXml">parseXml</a></li><li><a href="global.html">pixelTracker</a></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        Global
+      </h1>
+    
+
+    
+
+<section>
+  <header>
+    
+      <h2>
+        
+        
+        
+      </h2>
+
+      
+    
+  </header>
+
+  <article>
+    <div class="container-overview">
+      
+        
+
+        
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+        
+      
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+
+<h4 class="name" id="pixelTracker">
+  <span class="type-signature">(static) </span>pixelTracker<span class="type-signature"> :<a href="global.html#TrackerFn">TrackerFn</a></span>
+</h4>
+
+
+
+
+  <div class="description">
+    <p>Creates a tracking image with the passed URL macro.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="tracker_helpers_pixelTracker.js.html">tracker/helpers/pixelTracker.js</a>, <a href="tracker_helpers_pixelTracker.js.html#line3">line 3</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+    
+
+    
+      <h3 class="subsection-title">Methods</h3>
+
+      
+        
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#parseXml">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="parseXml">
+      <span class="type-signature"></span>parseXml<span class="signature">(xmlText)</span><span class="type-signature"> &rarr; {Object}</span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <p>Parses the passed xml text.</p>
+  </div>
+
+
+
+
+
+
+
+  <h5>Parameters:</h5>
+  
+
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>xmlText</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>XML text to be parsed.</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="xml_index.js.html">xml/index.js</a>, <a href="xml_index.js.html#line21">line 21</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h5>Throws:</h5>
+  
+      
+
+  <div class="param-desc">
+    
+      <p>if there is an error parsing the xml.</p>
+    
+  </div>
+
+
+    
+
+
+
+      
+    
+
+    
+      <h3 class="subsection-title">Type Definitions</h3>
+
+      
+          
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#MediaFile">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="MediaFile">
+      <span class="type-signature"></span>MediaFile<span class="type-signature"> :Object</span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <p>VAST MediaFile representation.
+For more info please take a look at the <a href="https://%3Ca">VAST specification</a>">www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}</a></p>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h5 class="subsection-title">Properties:</h5>
+
+  
+
+<table class="props">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+        <th>Attributes</th>
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+
+    <tr>
+      
+        <td class="name"><code>codec</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>The codec used to encode the file which can take values as specified by <a href="http://tools.ietf.org/html/rfc4281">RFC 4281</a>.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>delivery</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>Either <code>progressive</code> for progressive download protocols (such as HTTP) or <code>streaming</code> for streaming protocols.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>height</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      number
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>The native height of the video file, in pixels.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>id</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>An identifier for the media file.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>maintainAspectRatio</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>Boolean value that indicates whether aspect ratio for media file dimensions
+ should be maintained when scaled to new dimensions</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>bitrate</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>For progressive load video, the bitrate value specifies the average bitrate for the media file</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>maxBitrate</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>max bitrate for streaming videos.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>minBitrate</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>min bitrate for streaming videos.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>scalable</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>Boolean value that indicates whether the media file is meant to scale to larger dimensions</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>src</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>The source file url.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>type</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>MIME type for the file container. Popular MIME types include,
+but are not limited to “video/x-flv” for Flash Video and “video/mp4” for MP4.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>width</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      number
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>The native width of the video file, in pixels.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>universalAdId</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>A string identifying the unique creative identifier.</p>
+          </td>
+    </tr>
+
+  
+  </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="types.js.html">types.js</a>, <a href="types.js.html#line107">line 107</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+          
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#ParsedAd">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="ParsedAd">
+      <span class="type-signature"></span>ParsedAd<span class="type-signature"> :Object</span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <p>Deserialised ad object from a parsedVast object.</p>
+  </div>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="types.js.html">types.js</a>, <a href="types.js.html#line68">line 68</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+          
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#ParsedOffset">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="ParsedOffset">
+      <span class="type-signature"></span>ParsedOffset<span class="type-signature"></span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <p>The parsed time offset in milliseconds or a string with the percentage</p>
+  </div>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="types.js.html">types.js</a>, <a href="types.js.html#line145">line 145</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+          
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#ParsedVast">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="ParsedVast">
+      <span class="type-signature"></span>ParsedVast<span class="type-signature"> :Object</span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <p>JS XML deserialised object.</p>
+  </div>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="types.js.html">types.js</a>, <a href="types.js.html#line59">line 59</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+          
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#TrackerFn">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="TrackerFn">
+      <span class="type-signature"></span>TrackerFn<span class="signature">(URLMacro, data)</span><span class="type-signature"></span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <p>Tracking function.</p>
+  </div>
+
+
+
+
+
+
+
+  <h5>Parameters:</h5>
+  
+
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>URLMacro</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>URL Macro that need to be tracked.</p>
+          
+        </td>
+      </tr>
+
+    
+      <tr>
+        
+          <td class="name"><code>data</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      Object
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>data to use for the URL Macro.</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="types.js.html">types.js</a>, <a href="types.js.html#line175">line 175</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+          
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#VAST-macro">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="VAST-macro">
+      <span class="type-signature"></span>VAST-macro<span class="type-signature"> :string</span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <p>From <a href="https://%3Ca">VAST specification</a>">www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}</a>:</p>
+<p>Sometimes ad servers would like to collect metadata from the video player when tracking
+event URIs are accessed. For example, the position of the video player playhead at the time
+a tracking event URI is accessed is useful to the ad server and is data that can only be
+known at the time of the prescribed tracking event. This data cannot be built into the URI at
+the time the VAST response is built and served.</p>
+<p>The following macros enable the video player to provide certain details to the ad server at
+the time tracking URIs are accessed.</p>
+<ul>
+<li><em>[ERRORCODE]</em>: replaced with one of the error codes listed in section 2.3.6.3 when the
+associated error occurs; reserved for error tracking URIs.</li>
+<li><em>[CONTENTPLAYHEAD]</em>: replaced with the current time offset “HH:MM:SS.mmm” of the
+video content.</li>
+<li><em>[CACHEBUSTING]</em>: replaced with a random 8-digit number.</li>
+<li><em>[ASSETURI]</em>: replaced with the URI of the ad asset being played.</li>
+<li><em>[TIMESTAMP]</em>: the date and time at which the URI using this macro is accessed.
+Used where ever a time stamp is needed, the macro is replaced with the date and
+time using the formatting conventions of ISO 8601. However, ISO 8601 does not
+provide a convention for adding milliseconds. To add milliseconds, use the
+convention .mmm at the end of the time provided and before any time zone
+indicator. For example, January 17, 2016 at 8:15:07 and 127 milliseconds, Eastern
+Time would be formatted as follows: 2016-01-17T8:15:07.127-05
+When replacing macros, the video player must correctly percent-encode any characters as
+defined by RFC 3986.
+VAST doesn’t provide any guidance on URI format, but using the [CACHEBUSTING] macro
+simplifies trafficking, enabling ad servers to easily search and replace the appropriate
+macro for cache busting.</li>
+</ul>
+  </div>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="types.js.html">types.js</a>, <a href="types.js.html#line24">line 24</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+          
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#VastChain">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="VastChain">
+      <span class="type-signature"></span>VastChain<span class="type-signature"> :Array.&lt;<a href="global.html#VastResponse">VastResponse</a>></span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <p>Array of <a href="global.html#VastResponse">VastResponse</a> sorted backwards. Last response goes first.
+Represents the chain of VAST responses that ended up on a playable video ad or an error.</p>
+  </div>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="types.js.html">types.js</a>, <a href="types.js.html#line15">line 15</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+          
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#VastIcon">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="VastIcon">
+      <span class="type-signature"></span>VastIcon<span class="type-signature"> :Object</span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <p>VastIcon.
+For more info please take a look at the <a href="https://%3Ca">VAST specification</a>">www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}</a></p>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h5 class="subsection-title">Properties:</h5>
+
+  
+
+<table class="props">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+        <th>Attributes</th>
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+
+    <tr>
+      
+        <td class="name"><code>offset</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      <a href="global.html#ParsedOffset">ParsedOffset</a>
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>The time of delay from when the associated linear creative begins playing to when the icon should be displayed.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>duration</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      <a href="global.html#ParsedOffset">ParsedOffset</a>
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>The duration the icon should be displayed unless ad is finished playing.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>height</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      number
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>Pixel height of the icon.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>width</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      number
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>Pixel width of the icon.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>program</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>The program represented in the icon (e.g. &quot;AdChoices&quot;).</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>pxratio</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      number
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>The pixel ratio for which the icon creative is intended.
+                               The pixel ratio is the ratio of physical pixels on the device to the device-independent pixels.
+                               An ad intended for display on a device with a pixel ratio that is twice that of a standard 1:1 pixel ratio would use the value &quot;2.&quot;
+                               Default value is &quot;1.&quot;.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>xPosition</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    |
+
+    <span class="param-type">
+      number
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>The x-coordinate of the top, left corner of the icon asset relative to the ad display area.
+                               Values of &quot;left&quot; or &quot;right&quot; also accepted and indicate the leftmost or rightmost available position for the icon asset.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>yPosition</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    |
+
+    <span class="param-type">
+      number
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>The y-coordinate of the top left corner of the icon asset relative to the ad display area.
+                               Values of &quot;top&quot; or &quot;bottom&quot; also accepted and indicate the topmost or bottom most available position for the icon asset</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>staticResource</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>The URI to a static creative file to be used as the icon.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>htmlResource</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>The URI to a static creative file to be used as the icon.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>iFrameResource</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>The URI to a static creative file to be used as the icon.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>iconViewTracking</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      Array.&lt;string>
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>Array of URIs for the tracking resource files to be called when the icon creative is displayed</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>iconClickThrough</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>A URI to the industry program page opened when a viewer clicks the icon.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>iconClickTracking</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      Array.&lt;string>
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>Array of URIs to the tracking resource files to be called when a click corresponding to the id attribute (if provided) occurs.</p>
+          </td>
+    </tr>
+
+  
+  </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="types.js.html">types.js</a>, <a href="types.js.html#line77">line 77</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+          
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#VastResponse">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="VastResponse">
+      <span class="type-signature"></span>VastResponse<span class="type-signature"> :Object</span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <p>An Object representing a processed VAST response.</p>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h5 class="subsection-title">Properties:</h5>
+
+  
+
+<table class="props">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+
+    <tr>
+      
+        <td class="name"><code>ad</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      Object
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>The selected ad extracted from the passed XML.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>parsedXML</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      Object
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>The XML parsed object.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>errorCode</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      number
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>VAST error code number to identify the error or null if there is no error.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>error</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      Error
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>Error instance with a human readable description of the error or undefined if there is no error.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>requestTag</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>Ad tag that was used to get this <code>VastResponse</code>.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>XML</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>RAW XML as it came from the server.</p>
+          </td>
+    </tr>
+
+  
+  </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="types.js.html">types.js</a>, <a href="types.js.html#line3">line 3</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+          
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#VastTrackingEvent">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="VastTrackingEvent">
+      <span class="type-signature"></span>VastTrackingEvent<span class="type-signature"> :Object</span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <p>VastTrackingEvent.
+For more info please take a look at the <a href="https://%3Ca">VAST specification</a>">www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}</a></p>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h5 class="subsection-title">Properties:</h5>
+
+  
+
+<table class="props">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+        <th>Attributes</th>
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+
+    <tr>
+      
+        <td class="name"><code>event</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>A string that defines the event being track.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>offset</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      <a href="global.html#ParsedOffset">ParsedOffset</a>
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>When the progress of the linear creative has matched the value specified, the included URI is triggered</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>uri</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      string
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>A URI to the tracking resource for the event specified using the event attribute</p>
+          </td>
+    </tr>
+
+  
+  </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="types.js.html">types.js</a>, <a href="types.js.html#line131">line 131</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+          
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#WrapperOptions">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="WrapperOptions">
+      <span class="type-signature"></span>WrapperOptions<span class="type-signature"> :Object</span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <p>Wrapper ad options.</p>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h5 class="subsection-title">Properties:</h5>
+
+  
+
+<table class="props">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+        <th>Attributes</th>
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+
+    <tr>
+      
+        <td class="name"><code>allowMultipleAds</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      boolean
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>a Boolean value that identifies whether multiple ads are allowed in the
+requested VAST response. If true, both Pods and stand-alone ads are
+allowed. If false, only the first stand-alone Ad (with no sequence values)
+in the requested VAST response is allowed. Default value is “false.”</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>fallbackOnNoAd</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      boolean
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>a Boolean value that provides instruction for using an available Ad when
+the requested VAST response returns no ads. If true, the video player
+should select from any stand-alone ads available. If false and the Wrapper
+represents an Ad in a Pod, the video player should move on to the next Ad
+in a Pod; otherwise, the video player can follow through at its own
+discretion where no-ad responses are concerned.</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
+        <td class="name"><code>followAdditionalWrappers</code></td>
+      
+
+      <td class="type">
+        
+          
+    <span class="param-type">
+      boolean
+    </span>
+
+    
+
+
+        
+      </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+          </td>
+        
+
+        
+
+        <td class="description last">
+          <p>s a Boolean value that identifies whether subsequent wrappers after a
+requested VAST response is allowed. If false, any Wrappers received (i.e.
+not an Inline VAST response) should be ignored. Otherwise, VAST
+Wrappers received should be accepted (default value is “true.”)</p>
+          </td>
+    </tr>
+
+  
+  </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="types.js.html">types.js</a>, <a href="types.js.html#line152">line 152</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+    
+  </article>
+</section>
+
+
+
+
+  </div>
+
+  <br class="clear">
+
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+  </footer>
+
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
+
+  
+
+</body>
+</html>
