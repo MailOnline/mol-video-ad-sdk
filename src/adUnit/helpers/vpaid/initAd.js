@@ -26,7 +26,7 @@ const initAd = (creativeAd, videoAdContainer, vastChain) => {
   const environmentVars = {
     slot: createSlot(placeholder, width, height),
     videoSlot: videoAdContainer.videoElement,
-    videoSlotCanAutoPlay: videoAdContainer.originalVideoElement
+    videoSlotCanAutoPlay: videoAdContainer.isOriginalVideoElement
   };
   const creativeData = getCreativeData(vastChain[0].XML);
 
