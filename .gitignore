@@ -10,6 +10,6 @@ dist/
 docs/
 node_modules/
 package-lock.json
-ghPage/
+pages/
 .npmrc
 .yarnrc

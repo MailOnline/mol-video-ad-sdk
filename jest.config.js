@@ -11,7 +11,7 @@ module.exports = {
     '!**/src/**/__storybook__/**/*',
     '!**/src/**/__karma__/**/*'
   ],
-  coverageReporters: ['json', 'json-summary', 'html', 'text'],
+  coverageDirectory: './coverage/',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testEnvironment: './GlobalJsDomEnv.js',
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],

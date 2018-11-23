@@ -3,42 +3,27 @@
     "allowUnknownTags": false
   },
   "source": {
-    "include": ["./packages"],
-    "includePattern": ".+\\/src\\/.+\\.js(doc|x)?$",
+    "include": ["src", "README.md"],
+    "includePattern": ".js$",
     "excludePattern": "(node_modules/|docs)"
   },
   "plugins": [
     "plugins/markdown"
   ],
   "opts": {
-    "template": "node_modules/tui-jsdoc-template",
+    "template": "node_modules/braintree-jsdoc-template",
     "encoding": "utf8",
-    "destination": "docs/",
+    "destination": "pages/docs/",
+    "private": true,
     "recurse": true,
     "verbose": true
   },
   "templates": {
-    "logo": {
-      "url": "assets/logo.svg",
-      "width": "150px",
-      "height": "150px",
-      "link": "https://github.com/mailonline/mol-video-ad-sdk"
-  },
-    "name": "Video Ad SDK",
-    "footerText": "Powered by <a href='http://www.mailonline.com' target='_blank' class='link'>MailOnline</a> - logo by <a class='link' href='https://www.iconfinder.com/iconbaandar' rel='nofollow'>iconbaandar</a>&nbsp;licensed under <a class='link' href='https://creativecommons.org/licenses/by/2.5/' rel='nofollow'>CC BY 2.5</a>",
-    "tabNames": {
-      "api": "API"
-    },
-    "default": {
-      "staticFiles": {
-          "include": [
-            "static/jsdoc"
-          ]
-      }
-  },
-    "css": [
-      "styles/tui_overwrites.css",
-      "https://fonts.googleapis.com/css?family=Jura"
-    ]
+    "referenceTitle": "@mailonline/video-ad-sdk",
+    "disableSort": false,
+    "collapse": true,
+    "resources": {
+        "repo": "https://github.com/MailOnline/mol-video-ad-sdk"
+    }
   }
 }
