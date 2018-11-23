@@ -1,19 +1,16 @@
-# Video Ad SDK - Mono repo
-### All the code you'll ever need to run preroll video ads in the browser
+# Video Ad SDK
+[![Build Status](https://api.travis-ci.org/MailOnline/mol-video-ad-sdk.svg?branch=master)](https://travis-ci.org/MailOnline/mol-video-ad-sdk) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/MailOnline/mol-video-ad-sdk/blob/master/LICENSE) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release) [![codecov](https://codecov.io/gh/MailOnline/mol-video-ad-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/MailOnline/mol-video-ad-sdk)
 
 To run video ads in the browser there are many alternatives. The most famous one is probably Google's [IMA SDK](https://developers.google.com/interactive-media-ads/docs/sdks/html5/) for HTML5. There are two main cons with that SDK. It only works through DoubleClick and it is a black box very hard to debug and to maintain. This SDK tries to offer an alternative to play video ads that can work with any player in the world and any ad server that supports the VAST specification. And since it is open source you can read the code and debug if you need to.
 
-## Projects include:
-* [vast-xml2js](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/vast-xml2js): A wrapper on top of [DOMParser](https://developer.mozilla.org/en-US/docs/Web/API/DOMParser) to be able to parse XML files in the browser and in node if needed. For node we use [xmldom](https://www.npmjs.com/package/xmldom)
-* [video-ad-sdk](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/video-ad-sdk): SDK to load and play [VAST](https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/)/[VPAID](https://www.iab.com/guidelines/digital-video-player-ad-interface-definitions-vpaid-compliance/) video ads.
-* [videojs-vast-vpaid](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/videojs-vast-vpaid): [video.js](https://videojs.com/) plugin that loads video-ads using [@mailonline/video-ad-sdk](ps://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/video-ad-sdk).
-* [react-vast-vpaid](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/react-vast-vpaid): [React](https://reactjs.org/) component that loads video-ads using [@mailonline/video-ad-sdk](https://github.com/MailOnline/mol-video-ad-sdk/tree/next-release/packages/video-ad-sdk).
+## DEMO
+Demo [here!](https://mailonline.github.io/mol-video-ad-sdk/demo/index.html).
 
 ## Documentation
-Currently we only have the API which you can check [here](https://mailonline.github.io/mol-video-ad-sdk/index.html).
+Currently we only have the API which you can check [here](https://mailonline.github.io/mol-video-ad-sdk/docs/index.html).
 
 ## Compiling and Testing
-We use [nvm](https://github.com/creationix/nvm) to decide which of node to use and [Yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) together with [lerna](https://github.com/lerna/lerna) to manage the mono repo.
+We use [nvm](https://github.com/creationix/nvm) to decide which of node to use.
 
 So after you clone the repo you just need to run
 ```
@@ -33,5 +30,7 @@ to run the tests.
 
 Please open an issue if you have any questions or concerns.
 
+
 ## License
-[MIT License](https://opensource.org/licenses/MIT)
+
+This project is licensed under the MIT license, Copyright (c) 2018 MailOnline. For more information see [LICENSE](./LICENSE)
