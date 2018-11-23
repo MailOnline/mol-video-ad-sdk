@@ -87,131 +87,8 @@ const vpaidGeneralError = (payload) => {
  */
 class VpaidAdUnit extends VideoAdUnit {
   [_private] = {
-    // eslint-disable-next-line complexity
-    handleVpaidEvt: (event, payload) => {
-      switch (event) {
-      case adVideoComplete: {
-        this[_protected].finish();
-        this.emit(complete, {
-          adUnit: this,
-          type: complete
-        });
-        break;
-      }
-      case adError: {
-        this.error = vpaidGeneralError(payload);
-        this.errorCode = this.error.code;
-        this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
-        this[_protected].finish();
-        this.emit(errorEvt, {
-          adUnit: this,
-          type: errorEvt
-        });
-        break;
-      }
-      case adDurationChange: {
-        this.emit(adProgress, {
-          adUnit: this,
-          type: adProgress
-        });
-        break;
-      }
-      case adRemainingTimeChange: {
-        this.emit(adProgress, {
-          adUnit: this,
-          type: adProgress
-        });
-        break;
-      }
-      case adSkipped: {
-        this.cancel();
-        this.emit(skip, {
-          adUnit: this,
-          type: skip
-        });
-        break;
-      }
-      case adStarted: {
-        this.emit(creativeView, {
-          adUnit: this,
-          type: creativeView
-        });
-        break;
-      }
-      case adImpression: {
-        this.emit(impression, {
-          adUnit: this,
-          type: impression
-        });
-        break;
-      }
-      case adVideoStart: {
-        this[_private].paused = false;
-        this.emit(start, {
-          adUnit: this,
-          type: start
-        });
-        break;
-      }
-      case adVideoFirstQuartile: {
-        this.emit(firstQuartile, {
-          adUnit: this,
-          type: firstQuartile
-        });
-        break;
-      }
-      case adVideoMidpoint: {
-        this.emit(midpoint, {
-          adUnit: this,
-          type: midpoint
-        });
-        break;
-      }
-      case adVideoThirdQuartile: {
-        this.emit(thirdQuartile, {
-          adUnit: this,
-          type: thirdQuartile
-        });
-        break;
-      }
-      case adUserAcceptInvitation: {
-        this.emit(acceptInvitation, {
-          adUnit: this,
-          type: acceptInvitation
-        });
-        break;
-      }
-      case adUserMinimize: {
-        this.emit(adCollapse, {
-          adUnit: this,
-          type: adCollapse
-        });
-        break;
-      }
-      case adUserClose: {
-        this.emit(close, {
-          adUnit: this,
-          type: close
-        });
-        break;
-      }
-      case adPaused: {
-        this[_private].paused = true;
-        this.emit(pause, {
-          adUnit: this,
-          type: pause
-        });
-        break;
-      }
-      case adPlaying: {
-        this[_private].paused = false;
-        this.emit(resume, {
-          adUnit: this,
-          type: resume
-        });
-        break;
-      }
-      case adClickThru: {
+    evtHandler: {
+      [adClickThru]: (payload) => {
         if (payload && payload.data) {
           const {
             url,
@@ -229,17 +106,123 @@ class VpaidAdUnit extends VideoAdUnit {
           adUnit: this,
           type: clickThrough
         });
-        break;
-      }
-      case adVolumeChange: {
+      },
+      [adDurationChange]: () => {
+        this.emit(adProgress, {
+          adUnit: this,
+          type: adProgress
+        });
+      },
+      [adError]: (payload) => {
+        this.error = vpaidGeneralError(payload);
+        this.errorCode = this.error.code;
+
+        this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
+
+        this[_protected].finish();
+
+        this.emit(errorEvt, {
+          adUnit: this,
+          type: errorEvt
+        });
+      },
+      [adImpression]: () => {
+        this.emit(impression, {
+          adUnit: this,
+          type: impression
+        });
+      },
+      [adPaused]: () => {
+        this[_private].paused = true;
+        this.emit(pause, {
+          adUnit: this,
+          type: pause
+        });
+      },
+      [adPlaying]: () => {
+        this[_private].paused = false;
+        this.emit(resume, {
+          adUnit: this,
+          type: resume
+        });
+      },
+      [adRemainingTimeChange]: () => {
+        this.emit(adProgress, {
+          adUnit: this,
+          type: adProgress
+        });
+      },
+      [adSkipped]: () => {
+        this.cancel();
+        this.emit(skip, {
+          adUnit: this,
+          type: skip
+        });
+      },
+      [adStarted]: () => {
+        this.emit(creativeView, {
+          adUnit: this,
+          type: creativeView
+        });
+      },
+      [adUserAcceptInvitation]: () => {
+        this.emit(acceptInvitation, {
+          adUnit: this,
+          type: acceptInvitation
+        });
+      },
+      [adUserClose]: () => {
+        this.emit(close, {
+          adUnit: this,
+          type: close
+        });
+      },
+      [adUserMinimize]: () => {
+        this.emit(adCollapse, {
+          adUnit: this,
+          type: adCollapse
+        });
+      },
+      [adVideoComplete]: () => {
+        this[_protected].finish();
+
+        this.emit(complete, {
+          adUnit: this,
+          type: complete
+        });
+      },
+      [adVideoFirstQuartile]: () => {
+        this.emit(firstQuartile, {
+          adUnit: this,
+          type: firstQuartile
+        });
+      },
+      [adVideoMidpoint]: () => {
+        this.emit(midpoint, {
+          adUnit: this,
+          type: midpoint
+        });
+      },
+      [adVideoStart]: () => {
+        this[_private].paused = false;
+        this.emit(start, {
+          adUnit: this,
+          type: start
+        });
+      },
+      [adVideoThirdQuartile]: () => {
+        this.emit(thirdQuartile, {
+          adUnit: this,
+          type: thirdQuartile
+        });
+      },
+      [adVolumeChange]: () => {
         const volume = this.getVolume();
 
-        this.emit(
-          volumeChanged,
-          {
-            adUnit: this,
-            type: volumeChanged
-          });
+        this.emit(volumeChanged, {
+          adUnit: this,
+          type: volumeChanged
+        });
 
         if (volume === 0 && !this[_private].muted) {
           this[_private].muted = true;
@@ -251,15 +234,18 @@ class VpaidAdUnit extends VideoAdUnit {
 
         if (volume > 0 && this[_private].muted) {
           this[_private].muted = false;
-
           this.emit(unmute, {
             adUnit: this,
             type: unmute
           });
         }
-
-        break;
       }
+    },
+    handleVpaidEvt: (event, ...args) => {
+      const handler = this[_private].evtHandler[event];
+
+      if (handler) {
+        handler(...args);
       }
 
       this.emit(event, {
