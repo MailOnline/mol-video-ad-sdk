@@ -1,5 +1,6 @@
 /* eslint-disable promise/prefer-await-to-callbacks, callback-return */
 import {linearEvents} from '../../../../tracker';
+import {adProgress} from '../../../adUnitEvents';
 
 const {
   complete,
@@ -52,6 +53,8 @@ const onTimeUpdate = ({videoElement}, callback) => {
         callback(complete);
       }
     }
+
+    callback(adProgress);
   };
 
   const endedHandler = () => {
@@ -64,6 +67,7 @@ const onTimeUpdate = ({videoElement}, callback) => {
     }
 
     videoElement.removeEventListener('ended', endedHandler);
+    videoElement.removeEventListener('timeupdate', timeupdateHandler);
   };
 
   videoElement.addEventListener('timeupdate', timeupdateHandler);

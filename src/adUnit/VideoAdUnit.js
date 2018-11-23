@@ -1,5 +1,6 @@
 /* eslint-disable promise/prefer-await-to-callbacks */
 import {linearEvents} from '../tracker';
+import {finish} from './adUnitEvents';
 import {
   onElementVisibilityChange,
   onElementResize
@@ -31,6 +32,13 @@ class VideoAdUnit extends Emitter {
    finish: () => {
      this[_protected].finished = true;
      this[_protected].onFinishCallbacks.forEach((callback) => callback());
+
+     this.emit(
+       finish,
+       {
+         adUnit: this,
+         type: finish
+       });
    },
    finished: false,
    onErrorCallbacks: [],
@@ -42,13 +50,6 @@ class VideoAdUnit extends Emitter {
    throwIfFinished: () => {
      if (this.isFinished()) {
        throw new Error('VideoAdUnit is finished');
-     }
-   },
-   throwIfNotReady: () => {
-     this[_protected].throwIfFinished();
-
-     if (!this.isStarted()) {
-       throw new Error('VideoAdUnit has not started');
      }
    }
  };
@@ -100,8 +101,16 @@ class VideoAdUnit extends Emitter {
         removeIcons
       } = addIcons(this.icons, {
         logger,
-        onIconClick: (icon) => this.emit(iconClick, iconClick, this, icon),
-        onIconView: (icon) => this.emit(iconView, iconView, this, icon),
+        onIconClick: (icon) => this.emit(iconClick, {
+          adUnit: this,
+          data: icon,
+          type: iconClick
+        }),
+        onIconView: (icon) => this.emit(iconView, {
+          adUnit: this,
+          data: icon,
+          type: iconView
+        }),
         videoAdContainer
       });
 
@@ -227,6 +236,31 @@ class VideoAdUnit extends Emitter {
   }
 
   /**
+   * Returns the duration of the ad Creative or 0 if there is no creative.
+   *
+   * @returns {number} - the duration of the ad unit.
+   */
+  duration () {
+    this[_protected].throwIfCalled();
+  }
+
+  /**
+   * Returns true if the ad is paused and false otherwise
+   */
+  paused () {
+    this[_protected].throwIfCalled();
+  }
+
+  /**
+   * Returns the current time of the ad Creative or 0 if there is no creative.
+   *
+   * @returns {number} - the current time of the ad unit.
+   */
+  currentTime () {
+    this[_protected].throwIfCalled();
+  }
+
+  /**
    * Register a callback function that will be called whenever the ad finishes. No matter if it was finished because de ad ended, or cancelled or there was an error playing the ad.
    *
    * @throws if ad unit is finished.
@@ -234,8 +268,6 @@ class VideoAdUnit extends Emitter {
    * @param {Function} callback - will be called once the ad unit finished
    */
   onFinish (callback) {
-    this[_protected].throwIfFinished();
-
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
     }
@@ -251,8 +283,6 @@ class VideoAdUnit extends Emitter {
    * @param {Function} callback - will be called on ad unit error passing the Error instance as the only argument if available.
    */
   onError (callback) {
-    this[_protected].throwIfFinished();
-
     if (typeof callback !== 'function') {
       throw new TypeError('Expected a callback function');
     }
@@ -283,9 +313,7 @@ class VideoAdUnit extends Emitter {
    * @returns {Promise} - that resolves once the unit was resized
    */
   async resize () {
-    this[_protected].throwIfNotReady();
-
-    if (this.icons) {
+    if (this.isStarted() && !this.isFinished() && this.icons) {
       await this[_protected].removeIcons();
       await this[_protected].drawIcons();
     }

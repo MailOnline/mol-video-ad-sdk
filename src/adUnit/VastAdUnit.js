@@ -32,7 +32,7 @@ class VastAdUnit extends VideoAdUnit {
       }
       case errorEvt: {
         this.error = data;
-        this.errorCode = this.error && this.error.errorCode ? this.error.errorCode : 405;
+        this.errorCode = this.error && this.error.code ? this.error.code : 405;
         this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
         this[_protected].finish();
         break;
@@ -43,7 +43,10 @@ class VastAdUnit extends VideoAdUnit {
       }
       }
 
-      this.emit(event, event, this, data);
+      this.emit(event, {
+        adUnit: this,
+        type: event
+      });
     }
   };
 
@@ -124,7 +127,7 @@ class VastAdUnit extends VideoAdUnit {
     } else {
       const adUnitError = new Error('Can\'t find a suitable media to play');
 
-      adUnitError.errorCode = 403;
+      adUnitError.code = 403;
       this[_private].handleMetric(errorEvt, adUnitError);
     }
 
@@ -138,10 +141,7 @@ class VastAdUnit extends VideoAdUnit {
    * @throws if ad unit is finished.
    */
   resume () {
-    this[_protected].throwIfNotReady();
-    const {videoElement} = this.videoAdContainer;
-
-    videoElement.play();
+    this.videoAdContainer.videoElement.play();
   }
 
   /**
@@ -151,10 +151,14 @@ class VastAdUnit extends VideoAdUnit {
    * @throws if ad unit is finished.
    */
   pause () {
-    this[_protected].throwIfNotReady();
-    const {videoElement} = this.videoAdContainer;
+    this.videoAdContainer.videoElement.pause();
+  }
 
-    videoElement.pause();
+  /**
+   * Returns true if the ad is paused and false otherwise
+   */
+  paused () {
+    return this.videoAdContainer.videoElement.paused;
   }
 
   /**
@@ -166,11 +170,7 @@ class VastAdUnit extends VideoAdUnit {
    * @param {number} volume - must be a value between 0 and 1;
    */
   setVolume (volume) {
-    this[_protected].throwIfNotReady();
-
-    const {videoElement} = this.videoAdContainer;
-
-    videoElement.volume = volume;
+    this.videoAdContainer.videoElement.volume = volume;
   }
 
   /**
@@ -182,11 +182,7 @@ class VastAdUnit extends VideoAdUnit {
    * @returns {number} - the volume of the ad unit.
    */
   getVolume () {
-    this[_protected].throwIfNotReady();
-
-    const {videoElement} = this.videoAdContainer;
-
-    return videoElement.volume;
+    return this.videoAdContainer.videoElement.volume;
   }
 
   /**
@@ -203,6 +199,32 @@ class VastAdUnit extends VideoAdUnit {
   }
 
   /**
+   * Returns the duration of the ad Creative or 0 if there is no creative.
+   *
+   * @returns {number} - the duration of the ad unit.
+   */
+  duration () {
+    if (!this.isStarted()) {
+      return 0;
+    }
+
+    return this.videoAdContainer.videoElement.duration;
+  }
+
+  /**
+   * Returns the current time of the ad Creative or 0 if there is no creative.
+   *
+   * @returns {number} - the current time of the ad unit.
+   */
+  currentTime () {
+    if (!this.isStarted()) {
+      return 0;
+    }
+
+    return this.videoAdContainer.videoElement.currentTime;
+  }
+
+  /**
    * This method resizes the ad unit to fit the available space in the passed {@link VideoAdContainer}
    *
    * @throws if ad unit is not started.
@@ -213,7 +235,7 @@ class VastAdUnit extends VideoAdUnit {
   async resize () {
     await super.resize();
 
-    if (this.isStarted()) {
+    if (this.isStarted() && !this.isFinished()) {
       const inlineAd = this.vastChain[0].ad;
       const {videoElement, element} = this.videoAdContainer;
       const media = findBestMedia(inlineAd, videoElement, element);

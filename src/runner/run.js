@@ -11,6 +11,7 @@ import startVideoAd from './helpers/startVideoAd';
  * @param {VastChain} vastChain - The {@link VastChain} with all the {@link VastResponse}s.
  * @param {HTMLElement} placeholder - placeholder element that will contain the video ad.
  * @param {Object} [options] - Options Map. The allowed properties are:
+ * @param {runWaterfall~onAdReady} options.onAdReady - will be called once the ad is ready with the ad unit.
  * @param {HTMLVideoElement} [options.videoElement] - optional videoElement that will be used to play the ad.
  * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
  * Defaults to `window.console`

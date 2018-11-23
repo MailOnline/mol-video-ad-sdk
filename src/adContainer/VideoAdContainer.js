@@ -36,6 +36,8 @@ class VideoAdContainer {
     this.element = createAdContainer();
     this.executionContext = null;
 
+    this.isOriginalVideoElement = Boolean(videoElement);
+
     if (videoElement) {
       this.videoElement = videoElement;
     } else {

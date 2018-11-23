@@ -14,7 +14,7 @@ const validateChain = (vastChain, {wrapperLimit = 5}) => {
   if (vastChain.length > wrapperLimit) {
     const error = new Error('Wrapper Limit reached');
 
-    error.errorCode = 304;
+    error.code = 304;
     throw error;
   }
 };
@@ -26,7 +26,7 @@ const fetchAdXML = async (adTag, options) => {
 
     return XML;
   } catch (error) {
-    error.errorCode = 502;
+    error.code = 502;
 
     throw error;
   }
@@ -36,7 +36,7 @@ const parseVastXml = (xml) => {
   try {
     return parseXml(xml);
   } catch (error) {
-    error.errorCode = 100;
+    error.code = 100;
     throw error;
   }
 };
@@ -53,7 +53,7 @@ const getAd = (parsedXML) => {
 
     throw new Error('No Ad');
   } catch (error) {
-    error.errorCode = 303;
+    error.code = 303;
     throw error;
   }
 };
@@ -62,21 +62,21 @@ const validateResponse = ({ad, parsedXML}, {allowMultipleAds = true, followAddit
   if (!isWrapper(ad) && !isInline(ad)) {
     const error = new Error('Invalid VAST, ad contains neither Wrapper nor Inline');
 
-    error.errorCode = 101;
+    error.code = 101;
     throw error;
   }
 
   if (hasAdPod(parsedXML) && !allowMultipleAds) {
     const error = new Error('Multiple ads are not allowed');
 
-    error.errorCode = 203;
+    error.code = 203;
     throw error;
   }
 
   if (isWrapper(ad) && !followAdditionalWrappers) {
     const error = new Error('To follow additional wrappers is not allowed');
 
-    error.errorCode = 200;
+    error.code = 200;
     throw error;
   }
 };
@@ -139,7 +139,7 @@ const requestAd = async (adTag, options, vastChain = []) => {
           setTimeout(() => {
             const error = new Error('RequestAd timeout');
 
-            error.errorCode = 301;
+            error.code = 301;
             reject(error);
           }, timeout);
         })
@@ -170,11 +170,11 @@ const requestAd = async (adTag, options, vastChain = []) => {
     return [VASTAdResponse, ...vastChain];
   } catch (error) {
     /* istanbul ignore if */
-    if (!Number.isInteger(error.errorCode)) {
-      error.errorCode = 900;
+    if (!Number.isInteger(error.code)) {
+      error.code = 900;
     }
 
-    VASTAdResponse.errorCode = error.errorCode;
+    VASTAdResponse.errorCode = error.code;
     VASTAdResponse.error = error;
 
     return [VASTAdResponse, ...vastChain];

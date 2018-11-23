@@ -17,6 +17,7 @@ import {
   onElementVisibilityChange
 } from '../helpers/dom/elementObservers';
 import VideoAdUnit, {_protected} from '../VideoAdUnit';
+import {finish} from '../adUnitEvents';
 import preventManualProgress from '../helpers/dom/preventManualProgress';
 
 const mockDrawIcons = jest.fn();
@@ -141,7 +142,11 @@ describe('VideoAdUnit', () => {
 
       const passedArgs = await promise;
 
-      expect(passedArgs).toEqual([iconClick, adUnit, icons[0]]);
+      expect(passedArgs).toEqual([{
+        adUnit,
+        data: icons[0],
+        type: iconClick
+      }]);
     });
 
     test(`must emit '${iconView}' event on view`, async () => {
@@ -170,7 +175,11 @@ describe('VideoAdUnit', () => {
 
       const passedArgs = await promise;
 
-      expect(passedArgs).toEqual([iconView, adUnit, icons[0]]);
+      expect(passedArgs).toEqual([{
+        adUnit,
+        data: icons[0],
+        type: iconView
+      }]);
     });
   });
 
@@ -179,6 +188,9 @@ describe('VideoAdUnit', () => {
       'start',
       'resume',
       'pause',
+      'paused',
+      'duration',
+      'currentTime',
       'setVolume',
       'getVolume',
       'cancel'
@@ -198,10 +210,17 @@ describe('VideoAdUnit', () => {
       adUnit = new VideoAdUnit(vpaidChain, videoAdContainer);
     });
 
-    test('must throw if the adUnit is finished', () => {
+    test(`must emit ${finish} on ad finish`, () => {
+      const spy = jest.fn();
+
+      adUnit.on(finish, spy);
       adUnit[_protected].finish();
 
-      expect(() => adUnit.onFinish()).toThrow('VideoAdUnit is finished');
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith({
+        adUnit,
+        type: finish
+      });
     });
 
     test('must throw if you don\'t pass a callback function ', () => {
@@ -244,12 +263,6 @@ describe('VideoAdUnit', () => {
       adUnit = new VideoAdUnit(vpaidChain, videoAdContainer);
     });
 
-    test('must throw if the adUnit is finished', () => {
-      adUnit[_protected].finished = true;
-
-      expect(() => adUnit.onError()).toThrow('VideoAdUnit is finished');
-    });
-
     test('must throw if you don\'t pass a callback function ', () => {
       expect(() => adUnit.onError()).toThrow('Expected a callback function');
     });
@@ -262,26 +275,22 @@ describe('VideoAdUnit', () => {
       adUnit = new VideoAdUnit(vpaidChain, videoAdContainer);
     });
 
-    test('must throw if the adUnit is not started', async () => {
-      expect.assertions(1);
+    test('must not redraw the icons if the adUnit is not started', async () => {
+      adUnit = new VideoAdUnit(vpaidChain, videoAdContainer);
 
-      try {
-        await adUnit.resize();
-      } catch (error) {
-        expect(error.message).toBe('VideoAdUnit has not started');
-      }
+      await adUnit.resize();
+
+      expect(mockDrawIcons).toHaveBeenCalledTimes(0);
     });
 
-    test('must throw if the adUnit is finished', async () => {
-      expect.assertions(1);
+    test('must not redraw the icons if the adUnit is finished', async () => {
+      adUnit = new VideoAdUnit(vpaidChain, videoAdContainer);
 
       adUnit[_protected].finished = true;
 
-      try {
-        await adUnit.resize();
-      } catch (error) {
-        expect(error.message).toBe('VideoAdUnit is finished');
-      }
+      await adUnit.resize();
+
+      expect(mockDrawIcons).toHaveBeenCalledTimes(0);
     });
 
     test('must redraw the icons', async () => {

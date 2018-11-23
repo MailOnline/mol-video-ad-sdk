@@ -7,6 +7,7 @@ import {
   close
 } from '../tracker/nonLinearEvents';
 import {getClickThrough} from '../vastSelectors';
+import {volumeChanged, adProgress} from './adUnitEvents';
 import loadCreative from './helpers/vpaid/loadCreative';
 import {
   adLoaded,
@@ -19,6 +20,7 @@ import {
   pauseAd,
   setAdVolume,
   getAdVolume,
+  getAdDuration,
   resizeAd,
   adSizeChange,
   adError,
@@ -34,8 +36,11 @@ import {
   adUserAcceptInvitation,
   adUserMinimize,
   adUserClose,
+  adDurationChange,
+  adRemainingTimeChange,
   adClickThru,
-  getAdIcons
+  getAdIcons,
+  getAdRemainingTime
 } from './helpers/vpaid/api';
 import waitFor from './helpers/vpaid/waitFor';
 import callAndWait from './helpers/vpaid/callAndWait';
@@ -63,14 +68,10 @@ const {
 const _private = Symbol('_private');
 
 const vpaidGeneralError = (payload) => {
-  if (payload instanceof Error) {
-    return payload;
-  }
+  const error = payload instanceof Error ? payload : new Error('VPAID general error');
 
-  const error = new Error('VPAID general error');
-
-  if (typeof payload === 'string') {
-    error.message = payload;
+  if (!error.code) {
+    error.code = 901;
   }
 
   return error;
@@ -86,110 +87,172 @@ const vpaidGeneralError = (payload) => {
  */
 class VpaidAdUnit extends VideoAdUnit {
   [_private] = {
-    // eslint-disable-next-line complexity
-    handleVpaidEvt: (event, payload) => {
-      switch (event) {
-      case adVideoComplete: {
-        this[_protected].finish();
-        this.emit(complete, complete, this);
-        break;
-      }
-      case adError: {
-        this.error = vpaidGeneralError(payload);
-        this.error.errorCode = 901;
-        this.errorCode = 901;
-        this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
-        this[_protected].finish();
-        this.emit(errorEvt, errorEvt, this, this.error);
-        break;
-      }
-      case adSkipped: {
-        this.cancel();
-        this.emit(skip, skip, this);
-        break;
-      }
-      case adStarted: {
-        this.emit(creativeView, creativeView, this);
-        break;
-      }
-      case adImpression: {
-        this.emit(impression, impression, this);
-        break;
-      }
-      case adVideoStart: {
-        this.emit(start, start, this);
-        break;
-      }
-      case adVideoFirstQuartile: {
-        this.emit(firstQuartile, firstQuartile, this);
-        break;
-      }
-      case adVideoMidpoint: {
-        this.emit(midpoint, midpoint, this);
-        break;
-      }
-      case adVideoThirdQuartile: {
-        this.emit(thirdQuartile, thirdQuartile, this);
-        break;
-      }
-      case adUserAcceptInvitation: {
-        this.emit(acceptInvitation, acceptInvitation, this);
-        break;
-      }
-      case adUserMinimize: {
-        this.emit(adCollapse, adCollapse, this);
-        break;
-      }
-      case adUserClose: {
-        this.emit(close, close, this);
-        break;
-      }
-      case adPaused: {
-        this.emit(pause, pause, this);
-        break;
-      }
-      case adPlaying: {
-        this.emit(resume, resume, this);
-        break;
-      }
-      case adClickThru: {
-        if (payload && payload.data) {
-          const {
-            url,
-            playerHandles
-          } = payload.data;
+    evtHandler: {
+      [adClickThru]: (url, id, playerHandles) => {
+        if (playerHandles) {
+          if (this.paused()) {
+            this.resume();
+          } else {
+            const clickThroughUrl = typeof url === 'string' && url.length > 0 ? url : getClickThrough(this.vastChain[0].ad);
 
-          if (playerHandles) {
-            const clickThroughUrl = url ? url : getClickThrough(this.vastChain[0].ad);
-
+            this.pause();
             window.open(clickThroughUrl, '_blank');
           }
         }
 
-        this.emit(clickThrough, clickThrough, this);
-        break;
-      }
-      case adVolumeChange: {
+        this.emit(clickThrough, {
+          adUnit: this,
+          type: clickThrough
+        });
+      },
+      [adDurationChange]: () => {
+        this.emit(adProgress, {
+          adUnit: this,
+          type: adProgress
+        });
+      },
+      [adError]: (payload) => {
+        this.error = vpaidGeneralError(payload);
+        this.errorCode = this.error.code;
+
+        this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
+
+        this[_protected].finish();
+
+        this.emit(errorEvt, {
+          adUnit: this,
+          type: errorEvt
+        });
+      },
+      [adImpression]: () => {
+        this.emit(impression, {
+          adUnit: this,
+          type: impression
+        });
+      },
+      [adPaused]: () => {
+        this[_private].paused = true;
+        this.emit(pause, {
+          adUnit: this,
+          type: pause
+        });
+      },
+      [adPlaying]: () => {
+        this[_private].paused = false;
+        this.emit(resume, {
+          adUnit: this,
+          type: resume
+        });
+      },
+      [adRemainingTimeChange]: () => {
+        this.emit(adProgress, {
+          adUnit: this,
+          type: adProgress
+        });
+      },
+      [adSkipped]: () => {
+        this.cancel();
+        this.emit(skip, {
+          adUnit: this,
+          type: skip
+        });
+      },
+      [adStarted]: () => {
+        this.emit(creativeView, {
+          adUnit: this,
+          type: creativeView
+        });
+      },
+      [adUserAcceptInvitation]: () => {
+        this.emit(acceptInvitation, {
+          adUnit: this,
+          type: acceptInvitation
+        });
+      },
+      [adUserClose]: () => {
+        this.emit(close, {
+          adUnit: this,
+          type: close
+        });
+      },
+      [adUserMinimize]: () => {
+        this.emit(adCollapse, {
+          adUnit: this,
+          type: adCollapse
+        });
+      },
+      [adVideoComplete]: () => {
+        this[_protected].finish();
+
+        this.emit(complete, {
+          adUnit: this,
+          type: complete
+        });
+      },
+      [adVideoFirstQuartile]: () => {
+        this.emit(firstQuartile, {
+          adUnit: this,
+          type: firstQuartile
+        });
+      },
+      [adVideoMidpoint]: () => {
+        this.emit(midpoint, {
+          adUnit: this,
+          type: midpoint
+        });
+      },
+      [adVideoStart]: () => {
+        this[_private].paused = false;
+        this.emit(start, {
+          adUnit: this,
+          type: start
+        });
+      },
+      [adVideoThirdQuartile]: () => {
+        this.emit(thirdQuartile, {
+          adUnit: this,
+          type: thirdQuartile
+        });
+      },
+      [adVolumeChange]: () => {
         const volume = this.getVolume();
+
+        this.emit(volumeChanged, {
+          adUnit: this,
+          type: volumeChanged
+        });
 
         if (volume === 0 && !this[_private].muted) {
           this[_private].muted = true;
-          this.emit(mute, mute, this);
+          this.emit(mute, {
+            adUnit: this,
+            type: mute
+          });
         }
 
         if (volume > 0 && this[_private].muted) {
           this[_private].muted = false;
-
-          this.emit(unmute, unmute, this);
+          this.emit(unmute, {
+            adUnit: this,
+            type: unmute
+          });
         }
-
-        break;
       }
-      }
-
-      this.emit(event, event, this);
     },
-    muted: false
+    handleVpaidEvt: (event, ...args) => {
+      const handler = this[_private].evtHandler[event];
+
+      if (handler) {
+        handler(...args);
+      }
+
+      this.emit(event, {
+        adUnit: this,
+        type: event
+      });
+    },
+    muted: false,
+    paused: true
   };
 
   /** Ad unit type. Will be `VPAID` for VpaidAdUnit */
@@ -251,6 +314,15 @@ class VpaidAdUnit extends VideoAdUnit {
       // if the ad timed out while trying to load the videoAdContainer will be destroyed
       if (!this.videoAdContainer.isDestroyed()) {
         try {
+          const {videoElement} = this.videoAdContainer;
+
+          if (videoElement.muted) {
+            this[_private].muted = true;
+            this.setVolume(0);
+          } else {
+            this.setVolume(videoElement.volume);
+          }
+
           await callAndWait(this.creativeAd, startAd, adStarted);
 
           if (this.icons) {
@@ -289,7 +361,6 @@ class VpaidAdUnit extends VideoAdUnit {
    * @throws if ad unit is finished.
    */
   resume () {
-    this[_protected].throwIfNotReady();
     this.creativeAd[resumeAd]();
   }
 
@@ -300,8 +371,14 @@ class VpaidAdUnit extends VideoAdUnit {
    * @throws if ad unit is finished.
    */
   pause () {
-    this[_protected].throwIfNotReady();
     this.creativeAd[pauseAd]();
+  }
+
+  /**
+   * Returns true if the ad is paused and false otherwise
+   */
+  paused () {
+    return this.isFinished() || this[_private].paused;
   }
 
   /**
@@ -313,8 +390,6 @@ class VpaidAdUnit extends VideoAdUnit {
    * @param {number} volume - must be a value between 0 and 1;
    */
   setVolume (volume) {
-    this[_protected].throwIfNotReady();
-
     this.creativeAd[setAdVolume](volume);
   }
 
@@ -327,8 +402,6 @@ class VpaidAdUnit extends VideoAdUnit {
    * @returns {number} - the volume of the ad unit.
    */
   getVolume () {
-    this[_protected].throwIfNotReady();
-
     return this.creativeAd[getAdVolume]();
   }
 
@@ -343,6 +416,48 @@ class VpaidAdUnit extends VideoAdUnit {
     this.creativeAd[stopAd]();
 
     this[_protected].finish();
+  }
+
+  /**
+   * Returns the duration of the ad Creative or 0 if there is no creative.
+   *
+   * Note: if the user has engaged with the ad, the duration becomes unknown and it will return 0;
+   *
+   * @returns {number} - the duration of the ad unit.
+   */
+  duration () {
+    if (!this.creativeAd) {
+      return 0;
+    }
+
+    const duration = this.creativeAd[getAdDuration]();
+
+    if (duration < 0) {
+      return 0;
+    }
+
+    return duration;
+  }
+
+  /**
+   * Returns the current time of the ad Creative or 0 if there is no creative.
+   *
+   * Note: if the user has engaged with the ad, the currentTime becomes unknown and it will return 0;
+   *
+   * @returns {number} - the current time of the ad unit.
+   */
+  currentTime () {
+    if (!this.creativeAd) {
+      return 0;
+    }
+
+    const remainingTime = this.creativeAd[getAdRemainingTime]();
+
+    if (remainingTime < 0) {
+      return 0;
+    }
+
+    return this.duration() - remainingTime;
   }
 
   /**

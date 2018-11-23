@@ -27,7 +27,6 @@
             </CreativeExtension>
           </CreativeExtensions>
           <Linear skipoffset="00:00:05" >
-            <AdParameters xmlEncoded="false"><![CDATA[AD_PARAMETERS_DATA]]></AdParameters>
             <Duration>00:00:30</Duration>
             <TrackingEvents>
               <Tracking event="creativeView">https://test.example.com/creativeView</Tracking>
@@ -50,7 +49,7 @@
               <InteractiveCreativeFile apiFramework="VPAID" type="text/javascript">https://test.example.com/html5.js</InteractiveCreativeFile>
               <InteractiveCreativeFile apiFramework="VPAID" type="application/x-shockwave-flash">https://test.example.com/flash.swf</InteractiveCreativeFile>
             </MediaFiles>
-            <AdParameters><![CDATA[qs=test&reddit=true]]></AdParameters>
+            <AdParameters xmlEncoded="false"><![CDATA[AD_PARAMETERS_DATA]]></AdParameters>
             <Icons>
               <Icon program="MOL_STATIC" width="20px" height="20px" xPosition="right" yPosition="top" duration="00:00:30" offset="00:00:05" pxratio="1">
                 <StaticResource>https://test.example.com/icon/staticResource</StaticResource>
@@ -93,6 +92,7 @@
                 <Tracking event="close">https://test.example.com/vpaid/close</Tracking>
                 <Tracking event="creativeView">https://test.example.com/vpaid/creativeView</Tracking>
             </TrackingEvents>
+            <AdParameters><![CDATA[qs=test&reddit=true]]></AdParameters>
           </NonLinearAds>>
         </Creative>
         <Creative AdID="123-Companion">

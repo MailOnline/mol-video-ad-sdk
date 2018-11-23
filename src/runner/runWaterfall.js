@@ -26,7 +26,7 @@ const callbackHandler = (cb) => (...args) => {
   }
 };
 
-const getErrorCode = (vastChain, error) => vastChain && vastChain[0] && vastChain[0].errorCode || error.errorCode;
+const getErrorCode = (vastChain, error) => vastChain && vastChain[0] && vastChain[0].errorCode || error.code;
 const transformVastResponse = (vastChain, {hooks}) => {
   if (hooks && typeof hooks.transformVastResponse === 'function') {
     return hooks.transformVastResponse(vastChain);
@@ -77,9 +77,9 @@ const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
       return;
     }
 
-    onAdStart(adUnit);
     adUnit.onError(onError);
     adUnit.onFinish(onRunFinish);
+    onAdStart(adUnit);
   } catch (error) {
     const errorCode = getErrorCode(vastChain, error);
 
@@ -126,10 +126,11 @@ const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
  * @param {Console} [options.logger] - Optional logger instance. Must comply to the [Console interface]{@link https://developer.mozilla.org/es/docs/Web/API/Console}.
  * Defaults to `window.console`
  * @param {number} [options.wrapperLimit] - Sets the maximum number of wrappers allowed in the {@link VastChain}.
+ *  Defaults to `5`.
+ * @param {runWaterfall~onAdReady} [options.onAdReady] - will be called once the ad is ready with the ad unit.
  * @param {runWaterfall~onAdStart} [options.onAdStart] - will be called once the ad starts with the ad unit.
  * @param {runWaterfall~onError} [options.onError] - will be called if there is an error with the video ad with the error instance.
  * @param {runWaterfall~onRunFinish} [options.onRunFinish] - will be called whenever the ad run finishes.
- *  Defaults to `5`.
  * @param {boolean} [options.viewability] - if true it will pause the ad whenever is not visible for the viewer.
  * Defaults to `false`
  * @param {boolean} [options.responsive] - if true it will resize the ad unit whenever the ad container changes sizes.
@@ -154,6 +155,7 @@ const runWaterfall = (adTag, placeholder, options) => {
 
   const opts = {
     ...options,
+    onAdReady: callbackHandler(options.onAdReady),
     onAdStart,
     onError: callbackHandler(options.onError),
     onRunFinish: callbackHandler(options.onRunFinish)
@@ -181,6 +183,13 @@ export default runWaterfall;
  * Called once the ad starts.
  *
  * @callback RunWaterfall~onAdStart
+ * @param {VastAdUnit | VideoAdUnit} adUnit - the ad unit instance.
+ */
+
+/**
+ * Called once the ad unit is created.
+ *
+ * @callback RunWaterfall~onAdReady
  * @param {VastAdUnit | VideoAdUnit} adUnit - the ad unit instance.
  */
 
