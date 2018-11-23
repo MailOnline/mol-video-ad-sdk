@@ -88,16 +88,14 @@ const vpaidGeneralError = (payload) => {
 class VpaidAdUnit extends VideoAdUnit {
   [_private] = {
     evtHandler: {
-      [adClickThru]: (payload) => {
-        if (payload && payload.data) {
-          const {
-            url,
-            playerHandles
-          } = payload.data;
+      [adClickThru]: (url, id, playerHandles) => {
+        if (playerHandles) {
+          if (this.paused()) {
+            this.resume();
+          } else {
+            const clickThroughUrl = typeof url === 'string' && url.length > 0 ? url : getClickThrough(this.vastChain[0].ad);
 
-          if (playerHandles) {
-            const clickThroughUrl = url ? url : getClickThrough(this.vastChain[0].ad);
-
+            this.pause();
             window.open(clickThroughUrl, '_blank');
           }
         }

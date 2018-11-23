@@ -818,47 +818,51 @@ describe('VpaidAdUnit', () => {
       });
 
       test('must not open a new tab if `playerHandles` is false', async () => {
-        const payload = {
-          data: {
-            playerHandles: false,
-            url: 'https://test.example.com/clickThrough'
-          }
-        };
-
         await adUnit.start();
 
-        adUnit.creativeAd.emit(adClickThru, payload);
+        adUnit.creativeAd.emit(adClickThru, 'https://test.example.com/clickUrl', undefined, false);
         expect(window.open).not.toHaveBeenCalled();
       });
 
       describe('with `playerHandles` true', () => {
-        test('must open the provided url in a new tab', async () => {
-          const payload = {
-            data: {
-              playerHandles: true,
-              url: 'https://test.example.com/vpaid/clickUrl'
-            }
-          };
-
+        beforeEach(async () => {
           await adUnit.start();
-
-          adUnit.creativeAd.emit(adClickThru, payload);
-          expect(window.open).toHaveBeenCalledTimes(1);
-          expect(window.open).toHaveBeenCalledWith('https://test.example.com/vpaid/clickUrl', '_blank');
         });
 
-        test('must use vast clickthrough url if no url is provided', async () => {
-          const payload = {
-            data: {
-              playerHandles: true
-            }
-          };
+        test('if paused, must resume the adUnit', () => {
+          adUnit.creativeAd.emit(adVideoStart);
+          adUnit.creativeAd.emit(adPaused);
+          expect(adUnit.paused()).toBe(true);
+          adUnit.creativeAd.emit(adClickThru, 'https://test.example.com/clickUrl', undefined, true);
+          expect(window.open).not.toHaveBeenCalled();
+          expect(adUnit.creativeAd.pauseAd).toHaveBeenCalledTimes(0);
+          expect(adUnit.creativeAd.resumeAd).toHaveBeenCalledTimes(1);
+        });
 
-          await adUnit.start();
+        describe('if playing', () => {
+          test('must pause the adUnit', () => {
+            adUnit.creativeAd.emit(adVideoStart);
+            adUnit.creativeAd.emit(adClickThru, 'https://test.example.com/clickUrl', undefined, true);
+            expect(window.open).toHaveBeenCalled();
+            expect(adUnit.creativeAd.pauseAd).toHaveBeenCalledTimes(1);
+            expect(adUnit.creativeAd.resumeAd).toHaveBeenCalledTimes(0);
+          });
 
-          adUnit.creativeAd.emit(adClickThru, payload);
-          expect(window.open).toHaveBeenCalledTimes(1);
-          expect(window.open).toHaveBeenCalledWith('https://test.example.com/clickthrough', '_blank');
+          test('must open the provided url in a new tab', () => {
+            adUnit.creativeAd.emit(adVideoStart);
+
+            adUnit.creativeAd.emit(adClickThru, 'https://test.example.com/clickUrl', undefined, true);
+            expect(window.open).toHaveBeenCalledTimes(1);
+            expect(window.open).toHaveBeenCalledWith('https://test.example.com/clickUrl', '_blank');
+          });
+
+          test('must use vast clickthrough url if no url is provided', () => {
+            adUnit.creativeAd.emit(adVideoStart);
+
+            adUnit.creativeAd.emit(adClickThru, '', '', true);
+            expect(window.open).toHaveBeenCalledTimes(1);
+            expect(window.open).toHaveBeenCalledWith('https://test.example.com/clickthrough', '_blank');
+          });
         });
       });
     });
