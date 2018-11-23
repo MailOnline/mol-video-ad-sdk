@@ -11,6 +11,7 @@ script:
   - commitlint-travis
   - yarn lint
   - yarn test
+  - yarn codecov
   - if [ "$TRAVIS_BRANCH" = "master" ]; then yarn docs; fi
 after_success:
   - npm run travis-deploy-once "npm run semantic-release"
