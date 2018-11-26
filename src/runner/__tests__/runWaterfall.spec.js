@@ -16,7 +16,9 @@ import VideoAdContainer from '../../adContainer/VideoAdContainer';
 import VastAdUnit from '../../adUnit/VastAdUnit';
 import {trackError} from '../../tracker';
 import {_protected} from '../../adUnit/VideoAdUnit';
+import isIOS from '../../utils/isIOS';
 
+jest.mock('../../utils/isIOS');
 jest.mock('../../vastRequest/requestAd', () => jest.fn());
 jest.mock('../../vastRequest/requestNextAd', () => jest.fn());
 jest.mock('../run', () => jest.fn());
@@ -34,6 +36,7 @@ describe('runWaterfall', () => {
   let adUnit;
 
   beforeEach(() => {
+    isIOS.mockReturnValue(false);
     adTag = 'https://test.example.com/adtag';
     vastAdChain = [
       {
@@ -62,6 +65,55 @@ describe('runWaterfall', () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
+  });
+
+  describe('videoElement', () => {
+    it('must call load  synchronously for iOS devices if you pass the video element', () => {
+      const {videoElement} = adContainer;
+
+      Object.defineProperty(videoElement, 'load', {
+        value: jest.fn()
+      });
+      isIOS.mockReturnValue(true);
+
+      runWaterfall(adTag, placeholder, {
+        ...options,
+        videoElement
+      });
+
+      expect(videoElement.load).toHaveBeenCalledTimes(1);
+    });
+
+    it('must not call load  synchronously for iOS devices if you don\'t pass the video element', () => {
+      const {videoElement} = adContainer;
+
+      Object.defineProperty(videoElement, 'load', {
+        value: jest.fn()
+      });
+      isIOS.mockReturnValue(true);
+
+      runWaterfall(adTag, placeholder, {
+        ...options
+      });
+
+      expect(videoElement.load).toHaveBeenCalledTimes(0);
+    });
+
+    it('must not call load if the device is not iOS', () => {
+      const {videoElement} = adContainer;
+
+      Object.defineProperty(videoElement, 'load', {
+        value: jest.fn()
+      });
+      isIOS.mockReturnValue(false);
+
+      runWaterfall(adTag, placeholder, {
+        ...options,
+        videoElement
+      });
+
+      expect(videoElement.load).toHaveBeenCalledTimes(0);
+    });
   });
 
   describe('after fetching Vast response', () => {

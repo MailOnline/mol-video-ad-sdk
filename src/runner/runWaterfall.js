@@ -2,6 +2,7 @@
 import {trackError} from '../tracker';
 import requestAd from '../vastRequest/requestAd';
 import requestNextAd from '../vastRequest/requestNextAd';
+import isIOS from '../utils/isIOS';
 import run from './run';
 
 const validateVastChain = (vastChain, options) => {
@@ -152,7 +153,6 @@ const runWaterfall = (adTag, placeholder, options) => {
     adUnit = newAdUnit;
     onAdStartHandler(adUnit);
   };
-
   const opts = {
     ...options,
     onAdReady: callbackHandler(options.onAdReady),
@@ -160,6 +160,13 @@ const runWaterfall = (adTag, placeholder, options) => {
     onError: callbackHandler(options.onError),
     onRunFinish: callbackHandler(options.onRunFinish)
   };
+
+  if (options.videoElement && isIOS()) {
+    /*
+      It seems that if the video doesn't load synchronously inside a touchend or click event handler, the user gesture breaks on iOS and it won't allow a play.
+    */
+    options.videoElement.load();
+  }
 
   waterfall(
     () => requestAd(adTag, opts),
