@@ -1,6 +1,5 @@
 # Video Ad SDK
-[![Build Status](https://api.travis-ci.org/MailOnline/mol-video-ad-sdk.svg?branch=master)](https://travis-ci.org/MailOnline/mol-video-ad-sdk) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/MailOnline/mol-video-ad-sdk/blob/master/LICENSE) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release) [![codecov](https://codecov.io/gh/MailOnline/mol-video-ad-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/MailOnline/mol-video-ad-sdk)[![Known Vulnerabilities](https://snyk.io/test/github/MailOnline/mol-video-ad-sdk/badge.svg?targetFile=package.json)](https://snyk.io/test/github/MailOnline/mol-video-ad-sdk?targetFile=package.json)
-
+[![Build Status](https://api.travis-ci.org/MailOnline/mol-video-ad-sdk.svg?branch=master)](https://travis-ci.org/MailOnline/mol-video-ad-sdk) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/MailOnline/mol-video-ad-sdk/blob/master/LICENSE) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release) [![codecov](https://codecov.io/gh/MailOnline/mol-video-ad-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/MailOnline/mol-video-ad-sdk) [![Known Vulnerabilities](https://snyk.io/test/github/MailOnline/mol-video-ad-sdk/badge.svg?targetFile=package.json)](https://snyk.io/test/github/MailOnline/mol-video-ad-sdk?targetFile=package.json)
 
 To run video ads in the browser there are many alternatives. The most famous one is probably Google's [IMA SDK](https://developers.google.com/interactive-media-ads/docs/sdks/html5/) for HTML5. There are two main cons with that SDK. It only works through DoubleClick and it is a black box very hard to debug and to maintain. This SDK tries to offer an alternative to play video ads that can work with any player in the world and any ad server that supports the VAST specification. And since it is open source you can read the code and debug if you need to.
 
@@ -28,10 +27,7 @@ $ yarn test
 to run the tests.
 
 ## Discussion
-
 Please open an issue if you have any questions or concerns.
 
-
 ## License
-
 This project is licensed under the MIT license, Copyright (c) 2018 MailOnline. For more information see [LICENSE](./LICENSE)

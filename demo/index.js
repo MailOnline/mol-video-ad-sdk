@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const onError = (evt) => {
       console.log('### onError', evt);
-      console.error(adUnit.error);
     };
     const onRunFinish = (evt) => {
       console.log('### onRunFinish', evt);
@@ -52,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         videoElement.addEventListener('contentloadedmetadata', resumeContent);
         videoElement.addEventListener('canplay', resumeContent);
         videoElement.src = src;
-        videoElement.play();
+        videoElement.load();
       }
     };
 
