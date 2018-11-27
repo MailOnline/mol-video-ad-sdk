@@ -66,6 +66,31 @@ describe('run', () => {
     expect(startVideoAd).toHaveBeenCalledWith(vastAdChain, adContainer, options);
   });
 
+  test('must destroy the ad container on adUnit finish', async () => {
+    adContainer.destroy = jest.fn();
+
+    expect(await run(vastAdChain, placeholder, options)).toBe(adUnit);
+    expect(adContainer.destroy).toHaveBeenCalledTimes(0);
+
+    adUnit.cancel();
+    expect(adContainer.destroy).toHaveBeenCalledTimes(1);
+  });
+
+  test('must propagate adUnit creation errors', async () => {
+    expect.assertions(1);
+    const testError = new Error('Ad container creation error');
+
+    createVideoAdContainer.mockImplementation(() => {
+      throw testError;
+    });
+
+    try {
+      await run(vastAdChain, placeholder, options);
+    } catch (error) {
+      expect(error).toBe(testError);
+    }
+  });
+
   test('must destroy the adContainer if there is a problem starting the adUnit', async () => {
     const adUnitError = new Error('boom');
 

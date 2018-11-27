@@ -69,6 +69,10 @@ const run = async (vastChain, placeholder, options) => {
 
     const adUnit = await adUnitPromise;
 
+    adUnit.onFinish(() => {
+      videoAdContainer.destroy();
+    });
+
     return adUnit;
   } catch (error) {
     if (videoAdContainer) {
