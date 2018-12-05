@@ -3,8 +3,7 @@ import linearEvents from '../tracker/linearEvents';
 import {
   acceptInvitation,
   creativeView,
-  adCollapse,
-  close
+  adCollapse
 } from '../tracker/nonLinearEvents';
 import {getClickThrough} from '../vastSelectors';
 import {volumeChanged, adProgress} from './adUnitEvents';
@@ -61,7 +60,8 @@ const {
   midpoint,
   thirdQuartile,
   clickThrough,
-  error: errorEvt
+  error: errorEvt,
+  closeLinear
 } = linearEvents;
 
 // eslint-disable-next-line id-match
@@ -170,10 +170,12 @@ class VpaidAdUnit extends VideoAdUnit {
         });
       },
       [adUserClose]: () => {
-        this.emit(close, {
+        this.emit(closeLinear, {
           adUnit: this,
-          type: close
+          type: closeLinear
         });
+
+        this[_protected].finish();
       },
       [adUserMinimize]: () => {
         this.emit(adCollapse, {
