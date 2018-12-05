@@ -1,4 +1,3 @@
-import defer from '../../utils/defer';
 import getContentDocument from './getContentDocument';
 import getOrigin from './getOrigin';
 import supportsSrcdoc from './supportsSrcdoc';
@@ -11,10 +10,8 @@ const iframeContent = (id, targetOrigin) => `<!DOCTYPE html>
   </body>
 </html>`;
 
-const createIframe = (placeholder, id) => {
-  const deferred = defer();
+const createBaseIframe = () => {
   const iframe = document.createElement('IFRAME');
-  const content = iframeContent(id, getOrigin());
 
   iframe.sandbox = 'allow-forms allow-popups allow-scripts allow-same-origin';
   iframe.style.margin = '0';
@@ -24,21 +21,31 @@ const createIframe = (placeholder, id) => {
   iframe.style.height = '0';
   iframe.style.position = 'absolute';
 
-  if (supportsSrcdoc()) {
-    iframe.src = 'about:srcdoc';
-    iframe.srcdoc = content;
-    placeholder.appendChild(iframe);
-  } else {
+  return iframe;
+};
+
+const createIframe = (placeholder, id) => new Promise((resolve, reject) => {
+  const content = iframeContent(id, getOrigin());
+  let iframe;
+
+  /*
+    NOTE: favor about:blank instead of srcdoc because some browsers
+  */
+  try {
+    iframe = createBaseIframe();
     iframe.src = 'about:blank';
     placeholder.appendChild(iframe);
+    getContentDocument(iframe).write(content);
+  } catch (error) {
+    placeholder.removeChild(iframe);
 
-    const iframeDocument = getContentDocument(iframe);
-
-    if (iframeDocument) {
-      iframeDocument.write(content);
+    if (supportsSrcdoc()) {
+      iframe = createBaseIframe();
+      iframe.src = 'about:srcdoc';
+      iframe.srcdoc = content;
+      placeholder.appendChild(iframe);
     } else {
-      placeholder.removeChild(iframe);
-      deferred.reject(new Error('Error creating iframe, the placeholder is probably not in the DOM'));
+      reject(error);
     }
   }
 
@@ -46,13 +53,11 @@ const createIframe = (placeholder, id) => {
     /* istanbul ignore else */
     if (data === `${id}_ready`) {
       window.removeEventListener('message', handleMessage);
-      deferred.resolve(iframe);
+      resolve(iframe);
     }
   };
 
   window.addEventListener('message', handleMessage, false);
-
-  return deferred.promise;
-};
+});
 
 export default createIframe;
