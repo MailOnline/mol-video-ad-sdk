@@ -9,7 +9,6 @@ describe('createIframe', () => {
       url: 'https://www.example.com/'
     });
 
-    // TODO: Test srcdoc once jsdom supports it. See https://github.com/jsdom/jsdom/pull/2389 for more info
     supportsSrcdoc.mockReturnValue(false);
   });
 
@@ -37,7 +36,7 @@ describe('createIframe', () => {
     try {
       await createIframe(document.createElement('div'), test);
     } catch (error) {
-      expect(error.message).toBe('Error creating iframe, the placeholder is probably not in the DOM');
+      expect(error).toBeInstanceOf(Error);
     }
   });
 });

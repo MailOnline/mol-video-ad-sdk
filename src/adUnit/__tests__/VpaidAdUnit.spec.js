@@ -54,13 +54,13 @@ import linearEvents, {
   resume,
   clickThrough,
   iconClick,
+  closeLinear,
   iconView
 } from '../../tracker/linearEvents';
 import {
   acceptInvitation,
   creativeView,
-  adCollapse,
-  close
+  adCollapse
 } from '../../tracker/nonLinearEvents';
 import addIcons from '../helpers/icons/addIcons';
 import retrieveIcons from '../helpers/icons/retrieveIcons';
@@ -609,6 +609,20 @@ describe('VpaidAdUnit', () => {
 
         expect(callback).toHaveBeenCalledTimes(1);
       });
+
+      test('must be called if the user closes the ad unit', async () => {
+        const callback = jest.fn();
+
+        adUnit.onFinish(callback);
+
+        await adUnit.start();
+
+        expect(callback).not.toHaveBeenCalled();
+
+        adUnit.creativeAd.emit(adUserClose);
+
+        expect(callback).toHaveBeenCalledTimes(1);
+      });
     });
 
     describe('onError', () => {
@@ -747,7 +761,7 @@ describe('VpaidAdUnit', () => {
         vpaidEvt: adUserMinimize
       },
       {
-        vastEvt: close,
+        vastEvt: closeLinear,
         vpaidEvt: adUserClose
       },
       {
