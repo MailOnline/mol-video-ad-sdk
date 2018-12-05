@@ -266,8 +266,16 @@ export const iconClick = 'iconClick';
  */
 export const iconView = 'iconView';
 
+/**
+ * The viewer has chosen to close the linear ad unit. This is currently inuse by some of the largest mobile SDKs to mark the dismissal of the end card companion that follows the video, as well as a close of the video itself, if applicable
+ *
+ * @event LinearEvents#closeLinear
+ */
+export const closeLinear = 'closeLinear';
+
 const linearEvents = {
   clickThrough,
+  closeLinear,
   complete,
   error,
   exitFullscreen,
