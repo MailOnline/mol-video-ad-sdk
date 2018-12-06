@@ -245,6 +245,11 @@ test('getLinearTrackingEvents must return the linear tracking events', () => {
       uri: 'https://test.example.com/start'
     },
     {
+      event: 'closeLinear',
+      offset: undefined,
+      uri: 'https://test.example.com/closeLinear'
+    },
+    {
       event: 'midpoint',
       offset: undefined,
       uri: 'https://test.example.com/midpoint'
@@ -316,6 +321,11 @@ test('getLinearTrackingEvents must return the linear tracking events', () => {
       event: 'thirdQuartile',
       offset: undefined,
       uri: 'https://test.example.com/thirdQuartile2'
+    },
+    {
+      event: 'closeLinear',
+      offset: undefined,
+      uri: 'https://test.example.com/closeLinear2'
     },
     {
       event: 'complete',

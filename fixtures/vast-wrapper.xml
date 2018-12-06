@@ -18,6 +18,7 @@
        <Tracking event="midpoint"><![CDATA[https://test.example.com/midpoint2]]></Tracking>
        <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdQuartile]]></Tracking>
        <Tracking event="thirdQuartile"><![CDATA[https://test.example.com/thirdQuartile2]]></Tracking>
+       <Tracking event="closeLinear"><![CDATA[https://test.example.com/closeLinear2]]></Tracking>
        <Tracking event="complete"><![CDATA[https://test.example.com/complete]]></Tracking>
        <Tracking event="complete"><![CDATA[https://test.example.com/complete2]]></Tracking>
        <Tracking event="playerExpand"><![CDATA[https://test.example.com/playerExpand]]></Tracking>
