@@ -5,24 +5,34 @@ cache:
 notifications:
   email: false
 node_js:
-  - '10'
-  - '8'
-script:
-  - commitlint-travis
-  - yarn lint
-  - yarn test
-  - yarn codecov
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then yarn pages; fi
-after_success:
-  - npm run travis-deploy-once "npm run semantic-release"
+  - 10
+  - 8
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
-deploy:
-  - provider: pages
-    skip-cleanup: true
-    keep-history: true
-    github-token: $GH_TOKEN
-    local-dir: pages
-    on:
-      branch: master
+jobs:
+  include:
+    - stage: validate
+      script: commitlint-travis
+      script: yarn lint
+      script:
+        - yarn test
+        - yarn codecov
+      script: yarn build
+    - stage: release
+      node_js: lts/*
+      script: npm run semantic-release
+    - stage: ghpages
+      script: then yarn pages; fi
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        keep-history: true
+        github-token: $GH_TOKEN
+        local-dir: pages
+stages:
+  - validate
+  - name: release
+    if: branch = master
+  - name: ghpages
+    if: branch = master

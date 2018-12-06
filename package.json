@@ -26,7 +26,6 @@
     "prepush": "yarn test",
     "start": "cross-env NODE_ENV=development webpack-dev-server --mode development",
     "test": "cross-env NODE_ENV=test jest",
-    "travis-deploy-once": "travis-deploy-once",
     "semantic-release": "semantic-release"
   },
   "files": [
@@ -90,13 +89,10 @@
     "sane-domparser-error": "^0.2.0",
     "semantic-release": "^15.12.1",
     "terser-webpack-plugin": "^1.1.0",
-    "travis-deploy-once": "^5.0.9",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5",
-    "whatwg-fetch": "^2.0.4"
-  },
-  "dependencies": {
+    "whatwg-fetch": "^2.0.4",
     "braintree-jsdoc-template": "^3.3.0"
   }
 }
