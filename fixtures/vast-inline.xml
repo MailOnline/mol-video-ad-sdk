@@ -31,6 +31,7 @@
             <TrackingEvents>
               <Tracking event="creativeView">https://test.example.com/creativeView</Tracking>
               <Tracking event="start">https://test.example.com/start</Tracking>
+              <Tracking event="closeLinear">https://test.example.com/closeLinear</Tracking>
               <Tracking event="midpoint">https://test.example.com/midpoint</Tracking>
               <Tracking event="firstQuartile">https://test.example.com/firstQuartile</Tracking>
               <Tracking event="thirdQuartile">https://test.example.com/thirdQuartile</Tracking>
