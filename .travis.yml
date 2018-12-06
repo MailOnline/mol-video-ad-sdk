@@ -5,25 +5,24 @@ cache:
 notifications:
   email: false
 node_js:
-  - 10
   - 8
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
 jobs:
   include:
-    - stage: validate
-      script: commitlint-travis
-      script: yarn lint
+    - stage: lint
       script:
-        - yarn test
-        - yarn codecov
-      script: yarn build
+        - commitlint-travis
+        - yarn lint
+        - yarn build
+    - stage: test
+      script: yarn test &&  yarn codecov
     - stage: release
       node_js: lts/*
       script: npm run semantic-release
     - stage: ghpages
-      script: then yarn pages; fi
+      script: yarn pages;
       deploy:
         provider: pages
         skip-cleanup: true
@@ -31,8 +30,9 @@ jobs:
         github-token: $GH_TOKEN
         local-dir: pages
 stages:
-  - validate
+  - lint
+  - test
   - name: release
-    if: branch = master
+    if: branch = master AND env(TRAVIS_PULL_REQUEST) = "false"
   - name: ghpages
-    if: branch = master
+    if: branch = master AND env(TRAVIS_PULL_REQUEST) = "false"
