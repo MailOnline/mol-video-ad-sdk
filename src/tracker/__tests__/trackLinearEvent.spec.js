@@ -9,6 +9,7 @@ import {
 import trackLinearEvent from '../trackLinearEvent';
 import {
   clickThrough,
+  closeLinear,
   complete,
   firstQuartile,
   impression,
@@ -121,6 +122,7 @@ test(`trackLinearEvent must track ${clickThrough} linear event with the default 
 
 [
   start,
+  closeLinear,
   complete,
   firstQuartile,
   midpoint,

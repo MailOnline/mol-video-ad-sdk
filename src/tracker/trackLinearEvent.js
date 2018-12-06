@@ -12,13 +12,15 @@ import trackProgress from './helpers/trackProgress';
 import createVastEventTracker from './helpers/createVastEventTracker';
 import {
   clickThrough,
+  closeLinear,
   complete,
+  error,
+  exitFullscreen,
   firstQuartile,
   fullscreen,
-  exitFullscreen,
-  impression,
   iconClick,
   iconView,
+  impression,
   midpoint,
   mute,
   pause,
@@ -30,8 +32,7 @@ import {
   skip,
   start,
   thirdQuartile,
-  unmute,
-  error
+  unmute
 } from './linearEvents';
 
 const clickTrackingSelector = (ad) => {
@@ -55,6 +56,7 @@ const clickTrackingSelector = (ad) => {
 const linearTrackingEventSelector = (event) => (ad) => getLinearTrackingEvents(ad, event);
 const linearTrackers = {
   [clickThrough]: createVastEventTracker(clickTrackingSelector),
+  [closeLinear]: createVastEventTracker(linearTrackingEventSelector(closeLinear)),
   [complete]: createVastEventTracker(linearTrackingEventSelector(complete)),
   [error]: trackError,
   [exitFullscreen]: createVastEventTracker(linearTrackingEventSelector(exitFullscreen)),
