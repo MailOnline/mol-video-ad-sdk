@@ -19,9 +19,11 @@ jobs:
     - stage: test
       script: yarn test &&  yarn codecov
     - stage: release
+      if: branch = master AND env(TRAVIS_PULL_REQUEST) = false
       node_js: lts/*
-      script: npm run semantic-release
+      script:  yarn semantic-release;
     - stage: ghpages
+      if: branch = master AND env(TRAVIS_PULL_REQUEST) = false
       script: yarn pages;
       deploy:
         provider: pages
@@ -29,10 +31,10 @@ jobs:
         keep-history: true
         github-token: $GH_TOKEN
         local-dir: pages
+        on:
+          branch: master
 stages:
   - lint
   - test
-  - name: release
-    if: branch = master AND env(TRAVIS_PULL_REQUEST) = "false"
-  - name: ghpages
-    if: branch = master AND env(TRAVIS_PULL_REQUEST) = "false"
+  - release
+  - ghpages
