@@ -19,11 +19,11 @@ jobs:
     - stage: test
       script: yarn test &&  yarn codecov
     - stage: release
-      if: branch = master AND env(TRAVIS_PULL_REQUEST) = false
+      if: branch = master
       node_js: lts/*
       script:  yarn semantic-release;
     - stage: ghpages
-      if: branch = master AND env(TRAVIS_PULL_REQUEST) = false
+      if: branch = master
       script: yarn pages;
       deploy:
         provider: pages
