@@ -20,8 +20,9 @@ jobs:
       script: yarn test &&  yarn codecov
     - stage: release
       if: branch = master
-      node_js: lts/*
-      script:  yarn semantic-release;
+      script:
+        - yarn build
+        - yarn semantic-release;
     - stage: ghpages
       if: branch = master
       script: yarn pages;
