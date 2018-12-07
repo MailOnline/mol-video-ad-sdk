@@ -1,7 +1,7 @@
 {
   "name": "@mailonline/video-ad-sdk",
   "version": "0.0.0-development",
-  "description": "Video ad SDK to load and play video ads.",
+  "description": "Video ad SDK to load and play video ads",
   "keywords": [
     "vast",
     "vpaid",
