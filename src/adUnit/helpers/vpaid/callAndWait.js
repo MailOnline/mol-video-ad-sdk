@@ -1,9 +1,9 @@
 import waitFor from './waitFor';
 
-const callAndWait = (creativeAd, method, event) => {
-  const waitPromise = waitFor(creativeAd, event, 3000);
+const callAndWait = (creativeAd, method, event, ...args) => {
+  const waitPromise = waitFor(creativeAd, event, 5000);
 
-  creativeAd[method]();
+  creativeAd[method](...args);
 
   return waitPromise;
 };
