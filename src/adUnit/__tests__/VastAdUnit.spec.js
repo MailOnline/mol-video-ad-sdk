@@ -19,6 +19,7 @@ import retrieveIcons from '../helpers/icons/retrieveIcons';
 const {
   iconClick,
   iconView,
+  skip,
   error: errorEvt
 } = linearEvents;
 const mockStopMetricHandler = jest.fn();
@@ -31,6 +32,7 @@ jest.mock('../helpers/metrics/handlers/index', () => [
     videoElement.addEventListener('error', () => callback('error', videoElement.error));
     videoElement.addEventListener('progress', ({detail}) => callback('progress', detail));
     videoElement.addEventListener('custom', (event) => callback('custom', event.data));
+    videoElement.addEventListener('skip', () => callback('skip'));
 
     return mockStopMetricHandler;
   }),
@@ -520,6 +522,34 @@ describe('VastAdUnit', () => {
       adUnit,
       type: 'custom'
     }]);
+  });
+
+  test('must cancel on `skip` event', async () => {
+    canPlay.mockReturnValue(true);
+    const adUnit = new VastAdUnit(vastChain, videoAdContainer);
+
+    const promise = new Promise((resolve) => {
+      adUnit.on(skip, (...args) => {
+        resolve(args);
+      });
+    });
+
+    await adUnit.start();
+
+    const data = {};
+    const event = new CustomEvent(skip);
+
+    event.data = data;
+    videoAdContainer.videoElement.dispatchEvent(event);
+
+    const passedArgs = await promise;
+
+    expect(passedArgs).toEqual([{
+      adUnit,
+      type: skip
+    }]);
+
+    expect(adUnit.isFinished()).toBe(true);
   });
 
   test('cancel must stop the metric handlers ', async () => {

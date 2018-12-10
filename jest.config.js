@@ -12,6 +12,7 @@ module.exports = {
     '!**/src/**/__karma__/**/*'
   ],
   coverageDirectory: './coverage/',
+  coverageReporters: ['json', 'lcov', 'text', 'clover', 'html'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testEnvironment: './GlobalJsDomEnv.js',
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
