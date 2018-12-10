@@ -328,13 +328,13 @@ class VastAdUnit extends VideoAdUnit {
   /**
    * This method resizes the ad unit to fit the available space in the passed {@link VideoAdContainer}
    *
-   * @throws if ad unit is not started.
-   * @throws if ad unit is finished.
-   *
+   * @param width {number} - the new width of the ad container.
+   * @param height {number} - the new height of the ad container.
+   * @param viewmode {string} - fullscreen | normal | thumbnail
    * @returns {Promise} - that resolves once the unit was resized
    */
-  async resize () {
-    await super.resize();
+  async resize (width, height, viewmode) {
+    await super.resize(width, height, viewmode);
 
     if (this.isStarted() &amp;&amp; !this.isFinished()) {
       const inlineAd = this.vastChain[0].ad;
