@@ -9,6 +9,7 @@ import preventManualProgress from './helpers/dom/preventManualProgress';
 import Emitter from './helpers/Emitter';
 import retrieveIcons from './helpers/icons/retrieveIcons';
 import addIcons from './helpers/icons/addIcons';
+import viewmode from './helpers/vpaid/viewmode';
 import safeCallback from './helpers/safeCallback';
 
 const {
@@ -145,6 +146,7 @@ class VideoAdUnit extends Emitter {
 
         this[_protected].size = {
           height: element.clientHeight,
+          viewmode: viewmode(element.clientWidth, element.clientHeight),
           width: element.clientWidth
         };
         const unsubscribe = onElementResize(element, () => {
@@ -156,13 +158,8 @@ class VideoAdUnit extends Emitter {
           const height = element.clientHeight;
           const width = element.clientWidth;
 
-          this[_protected].size = {
-            height: element.clientHeight,
-            width: element.clientWidth
-          };
-
           if (height !== prevSize.height || width !== prevSize.width) {
-            this.resize();
+            this.resize(width, height, viewmode(width, height));
           }
         });
 
@@ -312,7 +309,13 @@ class VideoAdUnit extends Emitter {
    *
    * @returns {Promise} - that resolves once the unit was resized
    */
-  async resize () {
+  async resize (width, height, mode) {
+    this[_protected].size = {
+      height,
+      viewmode: mode,
+      width
+    };
+
     if (this.isStarted() && !this.isFinished() && this.icons) {
       await this[_protected].removeIcons();
       await this[_protected].drawIcons();

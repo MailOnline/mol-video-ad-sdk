@@ -344,7 +344,7 @@ describe('VideoAdUnit', () => {
     test('if true must resize the adUnit on ad container resize', () => {
       const adUnit = new VideoAdUnit(vpaidChain, videoAdContainer, {responsive: true});
 
-      adUnit.resize = jest.fn();
+      jest.spyOn(adUnit, 'resize');
       adUnit.emit(start);
 
       expect(onElementResize).toHaveBeenCalledTimes(1);
@@ -362,6 +362,7 @@ describe('VideoAdUnit', () => {
       simulateResize();
 
       expect(adUnit.resize).toHaveBeenCalledTimes(1);
+      expect(adUnit.resize).toHaveBeenCalledWith(150, 100, 'thumbnail');
 
       simulateResize();
 

@@ -552,9 +552,9 @@ describe('VpaidAdUnit', () => {
     describe('resize', () => {
       test('must call resizeAd', async () => {
         await adUnit.start();
-        await adUnit.resize();
+        await adUnit.resize(100, 150, 'normal');
 
-        expect(callAndWait).toHaveBeenCalledWith(mockCreativeAd, resizeAd, adSizeChange);
+        expect(callAndWait).toHaveBeenCalledWith(mockCreativeAd, resizeAd, adSizeChange, 100, 150, 'normal');
       });
     });
 
