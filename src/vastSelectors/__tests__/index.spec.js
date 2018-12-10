@@ -45,10 +45,10 @@ test('getVastErrorURI must return the error uri of the VAST element', () => {
 
 test('getAds must return the ads of the passed adResponse or null otherwise', () => {
   expect(getAds(wrapperParsedXML)).toEqual([wrapperAd]);
-  expect(getAds(noAdParsedXML)).toBe(null);
-  expect(getAds({})).toBe(null);
-  expect(getAds(null)).toBe(null);
-  expect(getAds()).toBe(null);
+  expect(getAds(noAdParsedXML)).toEqual([]);
+  expect(getAds({})).toEqual([]);
+  expect(getAds(null)).toEqual([]);
+  expect(getAds()).toEqual([]);
 });
 
 test('getFirstAd must return the first ad of the passed adResponse or null otherwise', () => {

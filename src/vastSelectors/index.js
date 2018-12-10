@@ -40,7 +40,7 @@ const compareBySequence = (itemA, itemB) => {
  *
  * @function
  * @param {ParsedVast} parsedVAST - Parsed VAST xml.
- * @returns {?Array} - Array of ads or `null`.
+ * @returns {?Array} - Array of ads or empty array.
  * @static
  * @ignore
  */
@@ -52,7 +52,7 @@ export const getAds = (parsedVAST) => {
     return ads;
   }
 
-  return null;
+  return [];
 };
 
 /**
