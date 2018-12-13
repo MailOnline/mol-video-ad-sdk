@@ -6,8 +6,11 @@
    <VASTAdTagURI><![CDATA[https://test.example.com/vastadtaguri]]></VASTAdTagURI>
    <Error><![CDATA[https://test.example.com/error/[ERRORCODE]]]></Error>
    <Impression><![CDATA[https://test.example.com/impression]]></Impression>
+   <Pricing model="cpm" currency="USD">
+     <![CDATA[ 25.00 ]]>
+   </Pricing>
    <Creatives>
-    <Creative sequence="1">
+    <Creative sequence="1" id="wrapper123" adId="wrapper123">
      <Linear>
       <TrackingEvents>
        <Tracking event="start"><![CDATA[https://test.example.com/start]]></Tracking>
