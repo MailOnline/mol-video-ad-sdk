@@ -182,3 +182,51 @@
  * @param {string} URLMacro - URL Macro that need to be tracked.
  * @param {Object} data - data to use for the URL Macro.
  */
+
+/**
+ * Object with the trafficking ad parameters and the xmlEncoded flag.
+ *
+ * @global
+ * @typedef creativeData
+ * @type Object
+ * @property {string} [AdParameters] - the AdParameters of the linear Ad as they come in the VAST XML.
+ * @property {boolean} [xmlEncoded] - true if the AdParameters are xml encoded and false otherwise
+*/
+
+/**
+ * {@link VastChain} details object. You can think of it as a summary of the VAST Chain. Useful for debugging purposes and tracking.
+ *  for more info about the returned properties please check [VAST specification]{@link https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}
+ *
+ * @global
+ * @typedef VastChainDetails
+ * @type Object
+ * @property {string} [adId] - the ad Id. See VAST spec for more info
+ * @property {string} [adServingId] - the adServingId See VAST spec for more info
+ * @property {string} [adSystem] -- the ad system. See VAST spec for more info
+ * @property {string} [adTitle] - ad title.
+ * @property {string} [advertiser] - ad advertiser's name.
+ * @property {Array.<string>} [adWrapperCreativeAdIds] - creative ad ids of the wrapper.
+ * @property {Array.<string>} [adWrapperCreativeIds] - creative Ids of the wrappers.
+ * @property {Array.<string>} [adWrapperIds] - ad ids of the wrappers.
+ * @property {Array.<string>} [adWrapperSystems] - ad systems of the wrappers.
+ * @property {string} [category] - ad category.
+ * @property {string} [categoryAuthority] - ad category authority.
+ * @property {string} [clickThroughUrl] - the inline ad clickThroughUr.
+ * @property {string} [creativeAdId] - the ad id of the linear creative.
+ * @property {string} [creativeData] - Object with the {@link creativeData} of the Ad.
+ * @property {string} [creativeId] - the id of the linear creative.
+ * @property {string} [description] - ad description.
+ * @property {string} [duration] - the linear duration as it comes int the VAST XML
+ * @property {number} [durationInMs] - the linear duration in milliseconds
+ * @property {Array.<MediaFile>} [mediaFiles] - The linear ads {@link MediaFile}s
+ * @property {string} [pricing] - the pricing of the ad if available
+ * @property {string} [pricingCurrency] - the currency of the pricing if available.
+ * @property {string} [pricingModel] - the pricing model if available.
+ * @property {string} [skipOffset] - the linear skip offset as it comes int the VAST XML
+ * @property {number} [skipOffsetInMs] - the linear skip offset in milliseconds
+ * @property {boolean} [skippable] - true if the ad is skippable and false otherwise.
+ * @property {string} [universalAdId] - Universal Ad Id of the ad.
+ * @property {string} [universalAdIdRegistry] - registry of the Universal Ad Id of the ad.
+ * @property {string} vastVersion - VAST version of the last {@link VastResponse}. If no version is found it will contain `unknown`.
+ * @property {boolean} [vpaid] - if the VastChain has a linear ad, it will be true if it contains a VPAID creative and false otherwise.
+ */

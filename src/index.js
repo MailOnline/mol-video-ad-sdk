@@ -8,8 +8,10 @@ import run from './runner/run';
 import runWaterfall from './runner/runWaterfall';
 import requestAd from './vastRequest/requestAd';
 import requestNextAd from './vastRequest/requestNextAd';
+import getDetails from './vastChain/getDetails';
 
 export {
+  getDetails,
   run,
   runWaterfall,
   requestAd,
