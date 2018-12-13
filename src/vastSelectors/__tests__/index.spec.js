@@ -184,7 +184,7 @@ test('getMediaFiles must return the mediafiles', () => {
     scalable: 'true',
     src: 'https://test.example.com/test1920x1080.mp4',
     type: 'video/mp4',
-    universalAdId: 'unknown',
+    universalAdId: '8465',
     width: '1920'
   });
 });

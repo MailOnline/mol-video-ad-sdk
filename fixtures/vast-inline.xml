@@ -2,6 +2,10 @@
 <VAST version="4.0">
   <Ad id="abc123">
     <InLine>
+     <Pricing model="cpm" currency="EUR">
+        <![CDATA[ 25.00 ]]>
+      </Pricing>
+      <AdServingId>ADID_INSIMPLETEST_ABC123</AdServingId>
       <AdSystem version="1.0">MOL</AdSystem>
       <AdTitle>VAST 4.0 Test</AdTitle>
       <Error>https://test.example.com/error</Error>
@@ -19,8 +23,8 @@
       </ViewableImpression>
       <AdVerification/>
       <Creatives>
-        <Creative adId="abc123" apiFramework="mol-api">
-          <UniversalAdId idValue="unknown">unknown</UniversalAdId>
+        <Creative adId="inline123" id="inline123" apiFramework="mol-api">
+          <UniversalAdId idRegistry="Ad-ID">8465</UniversalAdId>
           <CreativeExtensions>
             <CreativeExtension>
               <Custom>this is custom stuff</Custom>
