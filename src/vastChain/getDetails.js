@@ -85,6 +85,17 @@ const getVastVersion = (parsedVast) => {
   return 'unknown';
 };
 
+/**
+ * @function getDetails
+ *
+ * @memberof module:@mailonline/video-ad-sdk
+ * @static
+ * @description Returns a summary of the passed {@link VastChain}.
+ *
+ * @param {VastChain} vastChain - the {@link VastChain} from which we want the details.
+ *
+ * @returns {VastChainDetails} - Returns a {@link VastChainDetails} object from the passed {@link VastChain}.
+ */
 const getDetails = (vastChain) => {
   const adIds = vastChain.map(({ad}) => getAttribute(ad, 'id'));
   const adSystems = vastChain.map(({ad}) => getAdSystem(ad));
