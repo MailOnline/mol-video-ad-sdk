@@ -7,16 +7,6 @@ import {
 import parseOffset from './helpers/parseOffset';
 import getLinearCreative from './helpers/getLinearCreative';
 
-/**
- * Gets the Linear tracking events from the Vast Ad
- *
- * @function
- * @param {ParsedAd} ad - VAST ad object.
- * @param {string} [eventName] - If provided it will filter-out the array events against it.
- * @returns {?Array.<VastTrackingEvent>} - Array of Tracking event definitions
- * @static
- * @ignore
- */
 const getLinearTrackingEvents = (ad, eventName) => {
   const creativeElement = ad && getLinearCreative(ad);
 

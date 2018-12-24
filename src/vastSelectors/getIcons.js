@@ -94,15 +94,6 @@ const getIconClicks = (iconElement) => {
   };
 };
 
-/**
- * Gets the Vast Icon definitions from the Vast Ad
- *
- * @function
- * @param {ParsedAd} ad - VAST ad object.
- * @returns {?Array.<VastIcon>} - Array of VAST icon definitions
- * @static
- * @ignore
- */
 const getIcons = (ad) => {
   const linearCreativeElement = ad && getLinearCreative(ad);
   const linearElement = linearCreativeElement && get(linearCreativeElement, 'linear');
