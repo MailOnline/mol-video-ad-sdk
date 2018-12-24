@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      Home - Documentation
+      vastSelectors/index.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -51,14 +53,14 @@
 
   <div class="top-nav-wrapper">
     <ul>
-      <li  class="active" >
+      <li >
         <a href="index.html">
           
-          
-            <svg fill="#0095dd" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
               <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
               <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
+          
           
         </a>
       </li>
@@ -87,33 +89,587 @@
 
   <div id="main">
     
+      <h1 class="page-title">
+        vastSelectors/index.js
+      </h1>
+    
 
     
       
 
+<section>
+  <article>
+    <pre class="prettyprint source linenums"><code>/**
+ * @memberof module:@mailonline/video-ad-sdk
+ * @description Published as part of {@link module:@mailonline/video-ad-sdk}
+ * @module vastSelectors
+ */
+import {
+  get,
+  getAll,
+  getFirstChild,
+  getText,
+  getAttributes,
+  getAttribute
+} from '../xml';
+import parseOffset from './helpers/parseOffset';
+import getLinearCreative from './helpers/getLinearCreative';
+import getLinearTrackingEvents from './getLinearTrackingEvents';
+import getNonLinearTrackingEvents from './getNonLinearTrackingEvents';
+import getIcons from './getIcons';
 
+const getBooleanValue = (val) => {
+  if (typeof val === 'string') {
+    return val === 'true';
+  }
 
-    
+  return Boolean(val);
+};
 
-      
+const compareBySequence = (itemA, itemB) => {
+  const itemASequence = parseInt(getAttribute(itemA, 'sequence'), 10);
+  const itemBSequence = parseInt(getAttribute(itemB, 'sequence'), 10);
 
+  if (itemASequence &lt; itemBSequence) {
+    return -1;
+  }
 
-  <section class="readme">
-    <article>
-      <h1>Video Ad SDK</h1><p><a href="https://travis-ci.org/MailOnline/mol-video-ad-sdk"><img src="https://api.travis-ci.org/MailOnline/mol-video-ad-sdk.svg?branch=master" alt="Build Status"></a> <a href="https://github.com/MailOnline/mol-video-ad-sdk/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license"></a> <a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release"></a> <a href="https://codecov.io/gh/MailOnline/mol-video-ad-sdk"><img src="https://codecov.io/gh/MailOnline/mol-video-ad-sdk/branch/master/graph/badge.svg" alt="codecov"></a> <a href="https://snyk.io/test/github/MailOnline/mol-video-ad-sdk?targetFile=package.json"><img src="https://snyk.io/test/github/MailOnline/mol-video-ad-sdk/badge.svg?targetFile=package.json" alt="Known Vulnerabilities"></a></p>
-<p>To run video ads in the browser there are many alternatives. The most famous one is probably Google's <a href="https://developers.google.com/interactive-media-ads/docs/sdks/html5/">IMA SDK</a> for HTML5. There are two main cons with that SDK. It only works through DoubleClick and it is a black box very hard to debug and to maintain. This SDK tries to offer an alternative to play video ads that can work with any player in the world and any ad server that supports the VAST specification. And since it is open source you can read the code and debug if you need to.</p>
-<h2>DEMO</h2><p>Demo <a href="https://mailonline.github.io/mol-video-ad-sdk/demo/index.html">here!</a>.</p>
-<h2>Documentation</h2><p>Currently we only have the API which you can check <a href="https://mailonline.github.io/mol-video-ad-sdk/docs/index.html">here</a>.</p>
-<h2>Compiling and Testing</h2><p>We use <a href="https://github.com/creationix/nvm">nvm</a> to decide which of node to use.</p>
-<p>So after you clone the repo you just need to run</p>
-<pre class="prettyprint source"><code>$ nvm use</code></pre><p>to install the supported node version, then run <a href="https://yarnpkg.com/lang/en/docs/cli/#toc-default-command"><code>yarn</code></a>'s default command</p>
-<pre class="prettyprint source"><code>$ yarn</code></pre><p>to install and build the packages and finally you can run</p>
-<pre class="prettyprint source"><code>$ yarn test</code></pre><p>to run the tests.</p>
-<h2>Discussion</h2><p>Please open an issue if you have any questions or concerns.</p>
-<h2>License</h2><p>This project is licensed under the MIT license, Copyright (c) 2018 MailOnline. For more information see <a href="./LICENSE">LICENSE</a></p>
-    </article>
-  </section>
+  if (itemASequence > itemBSequence) {
+    return 1;
+  }
 
+  return 0;
+};
+
+/**
+ * Selects the ads of the passed VAST.
+ *
+ * @function
+ * @param {ParsedVast} parsedVAST - Parsed VAST xml.
+ * @returns {?Array} - Array of ads or empty array.
+ * @static
+ */
+export const getAds = (parsedVAST) => {
+  const vastElement = parsedVAST &amp;&amp; get(parsedVAST, 'VAST');
+  const ads = vastElement &amp;&amp; getAll(vastElement, 'Ad');
+
+  if (ads &amp;&amp; ads.length > 0) {
+    return ads;
+  }
+
+  return [];
+};
+
+/**
+ * Gets the Error URI of the passed parsed VAST xml.
+ *
+ * @function
+ * @param {ParsedVast} parsedVAST - Parsed VAST xml.
+ * @returns {?VAST-macro} - Vast Error URI or `null` otherwise.
+ * @static
+ */
+export const getVastErrorURI = (parsedVAST) => {
+  const vastElement = parsedVAST &amp;&amp; get(parsedVAST, 'VAST');
+
+  if (vastElement) {
+    const error = get(vastElement, 'Error');
+
+    if (error) {
+      return getText(error);
+    }
+  }
+
+  return null;
+};
+
+/**
+ * Gets the sequence of the pod ad.
+ *
+ * @function
+ * @param {ParsedAd} ad - Parsed ad definition object.
+ * @returns {?number} - The pod ad sequence number or `null`.
+ * @static
+ */
+export const getPodAdSequence = (ad) => {
+  const sequence = parseInt(getAttribute(ad, 'sequence'), 10);
+
+  if (typeof sequence === 'number' &amp;&amp; !isNaN(sequence)) {
+    return sequence;
+  }
+
+  return null;
+};
+
+/**
+ * Checks if the passed ad definition is a pod ad.
+ *
+ * @function
+ * @param {ParsedAd} ad - Parsed ad definition object.
+ * @returns {?boolean} - Returns true if there the ad is a pod ad and false otherwise.
+ * @static
+ */
+export const isPodAd = (ad) => Boolean(getPodAdSequence(ad));
+
+/**
+ * Checks if the passed array of ads have an ad pod.
+ *
+ * @function
+ * @param {ParsedVAST} parsedVAST - Parsed VAST xml.
+ * @returns {?boolean} - Returns true if there is an ad pod in the array and false otherwise.
+ * @static
+ */
+export const hasAdPod = (parsedVAST) => {
+  const ads = getAds(parsedVAST);
+
+  return Array.isArray(ads) &amp;&amp; ads.filter(isPodAd).length > 1;
+};
+
+/**
+ * Returns true if the passed VastChain has an ad pod or false otherwise.
+ *
+ * @function
+ * @param {Array} VastChain - Array of VAST responses. See `load` or `requestAd` for more info.
+ *
+ * @returns {boolean} - True if the VastChain contains an ad pod and false otherwise.
+ * @static
+ */
+export const isAdPod = (VastChain = []) => VastChain.map(({parsedXML}) => parsedXML).some(hasAdPod);
+
+/**
+ * Selects the first ad of the passed VAST. If the passed VAST response contains an ad pod it will return the first ad in the ad pod sequence.
+ *
+ * @function
+ * @param {ParsedVAST} parsedVAST - Parsed VAST xml.
+ * @returns {?ParsedAd} - First ad of the VAST xml or `null`.
+ * @static
+ */
+export const getFirstAd = (parsedVAST) => {
+  const ads = getAds(parsedVAST);
+
+  if (Array.isArray(ads) &amp;&amp; ads.length > 0) {
+    if (hasAdPod(parsedVAST)) {
+      return ads.filter(isPodAd)
+        .sort(compareBySequence)[0];
+    }
+
+    return ads[0];
+  }
+
+  return null;
+};
+
+/**
+ * Checks if the passed ad is a Wrapper.
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @returns {boolean} - `true` if the ad contains a wrapper and `false` otherwise.
+ * @static
+ */
+export const isWrapper = (ad = {}) => Boolean(get(ad || {}, 'Wrapper'));
+
+/**
+ * Checks if the passed ad is an Inline.
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @returns {boolean} - Returns `true` if the ad contains an Inline or `false` otherwise.
+ * @static
+ */
+export const isInline = (ad) => Boolean(get(ad || {}, 'Inline'));
+
+/**
+ * Returns the VASTAdTagURI from the wrapper ad.
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @returns {?string} - Returns the VASTAdTagURI from the wrapper ad or `null` otherwise.
+ * @static
+ */
+export const getVASTAdTagURI = (ad) => {
+  const wrapperElement = get(ad, 'Wrapper');
+  const vastAdTagURIElement = wrapperElement &amp;&amp; get(wrapperElement, 'VastAdTagUri');
+
+  if (vastAdTagURIElement) {
+    return getText(vastAdTagURIElement) || null;
+  }
+
+  return null;
+};
+
+/**
+ * Returns the options from the wrapper ad.
+ *
+ * @function
+ * @param {Object} ad - VAST ad object.
+ * @returns {WrapperOptions} - Returns the options from the wrapper ad.
+ * @static
+ */
+export const getWrapperOptions = (ad) => {
+  const {
+    allowMultipleAds,
+    fallbackOnNoAd,
+    followAdditionalWrappers
+  } = getAttributes(get(ad, 'Wrapper'));
+
+  const opts = {};
+
+  if (allowMultipleAds) {
+    opts.allowMultipleAds = getBooleanValue(allowMultipleAds);
+  }
+
+  if (fallbackOnNoAd) {
+    opts.fallbackOnNoAd = getBooleanValue(fallbackOnNoAd);
+  }
+
+  if (followAdditionalWrappers) {
+    opts.followAdditionalWrappers = getBooleanValue(followAdditionalWrappers);
+  }
+
+  return opts;
+};
+
+/**
+ * Gets the Error URI of the passed ad.
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @returns {?string} - Vast ad Error URI or `null` otherwise.
+ * @static
+ */
+export const getAdErrorURI = (ad) => {
+  const adTypeElement = ad &amp;&amp; getFirstChild(ad);
+
+  if (adTypeElement) {
+    const error = get(adTypeElement, 'Error');
+
+    if (error) {
+      return getText(error);
+    }
+  }
+
+  return null;
+};
+
+/**
+ * Gets the Impression URI of the passed ad.
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @returns {?string} - Vast ad Impression URI or `null` otherwise.
+ * @static
+ */
+export const getImpressionUri = (ad) => {
+  const adTypeElement = ad &amp;&amp; getFirstChild(ad);
+
+  if (adTypeElement) {
+    const impression = get(adTypeElement, 'Impression');
+
+    if (impression) {
+      return getText(impression);
+    }
+  }
+
+  return null;
+};
+
+/**
+ * Gets the ad's MediaFiles.
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @returns {?Array.&lt;MediaFile>} - array of media files or null
+ * @static
+ */
+export const getMediaFiles = (ad) => {
+  const creativeElement = ad &amp;&amp; getLinearCreative(ad);
+
+  if (creativeElement) {
+    const universalAdIdElement = get(creativeElement, 'UniversalAdId');
+    const universalAdId = universalAdIdElement &amp;&amp; getText(universalAdIdElement) || null;
+    const linearElement = get(creativeElement, 'Linear');
+    const mediaFilesElement = get(linearElement, 'MediaFiles');
+    const mediaFileElements = mediaFilesElement &amp;&amp; getAll(mediaFilesElement, 'MediaFile');
+
+    if (mediaFileElements &amp;&amp; mediaFileElements.length > 0) {
+      return mediaFileElements.map((mediaFileElement) => {
+        const src = getText(mediaFileElement);
+        const {
+          apiFramework,
+          bitrate,
+          codec,
+          delivery,
+          height,
+          id,
+          maintainAspectRatio,
+          maxBitrate,
+          minBitrate,
+          scalable,
+          type,
+          width
+        } = getAttributes(mediaFileElement);
+
+        return {
+          apiFramework,
+          bitrate,
+          codec,
+          delivery,
+          height,
+          id,
+          maintainAspectRatio,
+          maxBitrate,
+          minBitrate,
+          scalable,
+          src,
+          type,
+          universalAdId,
+          width
+        };
+      });
+    }
+  }
+
+  return null;
+};
+
+/**
+ * Gets the ad's InteractiveFiles. That were added with the `InteractiveCreativeFile` tag.
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @returns {?Array.&lt;InteractiveFile>} - array of media files or null
+ * @static
+ */
+export const getInteractiveCreativeFiles = (ad) => {
+  const creativeElement = ad &amp;&amp; getLinearCreative(ad);
+
+  if (creativeElement) {
+    const linearElement = get(creativeElement, 'Linear');
+    const mediaFilesElement = get(linearElement, 'MediaFiles');
+    const interactiveElements = mediaFilesElement &amp;&amp; getAll(mediaFilesElement, 'InteractiveCreativeFile');
+
+    if (interactiveElements &amp;&amp; interactiveElements.length > 0) {
+      return interactiveElements.map((interactiveElement) => {
+        const {
+          apiFramework,
+          type
+        } = getAttributes(interactiveElement);
+        const src = getText(interactiveElement);
+
+        return {
+          apiFramework,
+          src,
+          type
+        };
+      });
+    }
+  }
+
+  return null;
+};
+
+/**
+ * Gets all the ad's InteractiveFiles.
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @returns {?Array.&lt;InteractiveFile>} - array of media files or null
+ * @static
+ */
+export const getInteractiveFiles = (ad) => {
+  let interactiveFiles = getInteractiveCreativeFiles(ad);
+
+  if (interactiveFiles) {
+    return interactiveFiles;
+  }
+
+  const mediaFiles = getMediaFiles(ad);
+
+  if (mediaFiles) {
+    interactiveFiles = mediaFiles
+      .filter(({apiFramework = ''}) => apiFramework.toLowerCase() === 'vpaid')
+      .map(({apiFramework, src, type}) => ({
+        apiFramework,
+        src,
+        type
+      }));
+
+    if (interactiveFiles.length > 0) {
+      return interactiveFiles;
+    }
+  }
+
+  return null;
+};
+
+const getVideoClicksElement = (ad) => {
+  const creativeElement = ad &amp;&amp; getLinearCreative(ad);
+  const linearElement = creativeElement &amp;&amp; get(creativeElement, 'Linear');
+  const videoClicksElement = linearElement &amp;&amp; get(linearElement, 'VideoClicks');
+
+  if (videoClicksElement) {
+    return videoClicksElement;
+  }
+
+  return null;
+};
+
+/**
+ * Gets the click through {@link VAST-macro}.
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @returns {?VAST-macro} - clickthrough macro
+ * @static
+ */
+export const getClickThrough = (ad) => {
+  const videoClicksElement = getVideoClicksElement(ad);
+  const clickThroughElement = videoClicksElement &amp;&amp; get(videoClicksElement, 'ClickThrough');
+
+  if (clickThroughElement) {
+    return getText(clickThroughElement);
+  }
+
+  return null;
+};
+
+/**
+ * Gets the click through {@link VAST-macro}.
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @returns {?Array.&lt;VAST-macro>} - click tracking macro
+ * @static
+ */
+export const getClickTracking = (ad) => {
+  const videoClicksElement = getVideoClicksElement(ad);
+  const clickTrackingElements = videoClicksElement &amp;&amp; getAll(videoClicksElement, 'ClickTracking');
+
+  if (clickTrackingElements &amp;&amp; clickTrackingElements.length > 0) {
+    return clickTrackingElements.map((element) => getText(element));
+  }
+
+  return null;
+};
+
+/**
+ * Gets the custom click {@link VAST-macro}.
+ *
+ * @function
+ * @param {ParsedAd} ad - VAST ad object.
+ * @returns {?Array.&lt;VAST-macro>} - click tracking macro
+ * @static
+ */
+export const getCustomClick = (ad) => {
+  const videoClicksElement = getVideoClicksElement(ad);
+  const customClickElements = videoClicksElement &amp;&amp; getAll(videoClicksElement, 'CustomClick');
+
+  if (customClickElements &amp;&amp; customClickElements.length > 0) {
+    return customClickElements.map((element) => getText(element));
+  }
+
+  return null;
+};
+
+/**
+ * Gets the skipoffset.
+ *
+ * @function
+ * @param {Object} ad - VAST ad object.
+ * @returns {?ParsedOffset} - the time offset in milliseconds or a string with the percentage or null
+ * @static
+ */
+export const getSkipOffset = (ad) => {
+  const creativeElement = ad &amp;&amp; getLinearCreative(ad);
+  const linearElement = creativeElement &amp;&amp; get(creativeElement, 'Linear');
+  const skipoffset = linearElement &amp;&amp; getAttribute(linearElement, 'skipoffset');
+
+  if (skipoffset) {
+    return parseOffset(skipoffset);
+  }
+
+  return null;
+};
+
+const getLinearContent = (xml) => {
+  const linearRegex = /&lt;Linear([\s\S]*)&lt;\/Linear/gm;
+  const result = linearRegex.exec(xml);
+
+  return result &amp;&amp; result[1];
+};
+
+const getAdParametersContent = (xml) => {
+  const paramsRegex = /&lt;AdParameters[\s\w="]*>([\s\S]*)&lt;\/AdParameters>/gm;
+  const result = paramsRegex.exec(xml);
+
+  return result &amp;&amp; result[1].replace('&lt;![CDATA[', '')
+    .replace(']]>', '')
+    .trim();
+};
+
+const getXmlEncodedValue = (xml) => {
+  const xmlEncodedRegex = /&lt;AdParameters[\s]*xmlEncoded="(.*?)">/gmi;
+  const result = xmlEncodedRegex.exec(xml);
+
+  return Boolean(result) &amp;&amp; result[1] === 'true';
+};
+
+/**
+ * Gets the creative data.
+ *
+ * @function
+ * @param {string} xml - VAST XML text.
+ * @returns {Object} - with `AdParameters` as they come in the XML and a flag `xmlEncoded` to indicate if the ad parameters are xml encoded.
+ * @static
+ */
+export const getCreativeData = (xml) => {
+  const linearContent = getLinearContent(xml);
+  const AdParameters = linearContent &amp;&amp; getAdParametersContent(linearContent);
+  const xmlEncoded = linearContent &amp;&amp; getXmlEncodedValue(linearContent);
+
+  return {
+    AdParameters,
+    xmlEncoded
+  };
+};
+
+export {
+
+  /**
+   * Gets the Vast Icon definitions from the Vast Ad.
+   *
+   * @function
+   * @param {ParsedAd} ad - VAST ad object.
+   * @returns {?Array.&lt;VastIcon>} - Array of VAST icon definitions
+   * @static
+   */
+  getIcons,
+
+  /**
+   * Gets the Linear tracking events from the Vast Ad
+   *
+   * @function
+   * @param {ParsedAd} ad - VAST ad object.
+   * @param {string} [eventName] - If provided it will filter-out the array events against it.
+   * @returns {?Array.&lt;VastTrackingEvent>} - Array of Tracking event definitions
+   * @static
+   */
+  getLinearTrackingEvents,
+
+  /**
+   * Gets the Non Linear tracking events from the Vast Ad
+   *
+   * @function
+   * @param {ParsedAd} ad - VAST ad object.
+   * @param {string} [eventName] - If provided it will filter-out the array events against it.
+   * @returns {?Array.&lt;VastTrackingEvent>} - Array of Tracking event definitions
+   * @static
+   */
+  getNonLinearTrackingEvents
+};
+</code></pre>
+  </article>
+</section>
 
     
 
