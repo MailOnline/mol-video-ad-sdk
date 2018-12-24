@@ -1,11 +1,14 @@
 /* eslint-disable max-nested-callbacks */
 import {
-  vastWrapperXML,
-  vastInlineXML,
-  wrapperParsedXML,
+  inlineAd,
   inlineParsedXML,
+  vastInlineXML,
+  vastVpaidInlineXML,
+  vastWrapperXML,
+  vpaidInlineAd,
+  vpaidInlineParsedXML,
   wrapperAd,
-  inlineAd
+  wrapperParsedXML
 } from '../../../fixtures';
 import defer from '../../utils/defer';
 import requestAd from '../../vastRequest/requestAd';
@@ -117,6 +120,37 @@ describe('runWaterfall', () => {
   });
 
   describe('after fetching Vast response', () => {
+    test('must throw if it gets a vpaid ad with vpaidEnabled flag set to false', async () => {
+      const onError = jest.fn();
+      const vpaidChain = [
+        {
+          ad: vpaidInlineAd,
+          errorCode: null,
+          parsedXML: vpaidInlineParsedXML,
+          requestTag: 'https://test.example.com/vastadtaguri',
+          XML: vastVpaidInlineXML
+        }
+      ];
+
+      requestAd.mockReturnValue(Promise.resolve(vpaidChain));
+
+      await runWaterfall(adTag, placeholder, {
+        ...options,
+        onError,
+        vpaidEnabled: false
+      });
+      expect(onError).toHaveBeenCalledTimes(1);
+
+      const error = onError.mock.calls[0][0];
+
+      expect(error.code).toBe(200);
+      expect(error.message).toBe('VPAID ads are not supported by the current player');
+      expect(trackError).toHaveBeenCalledWith(vpaidChain, expect.objectContaining({
+        errorCode: 200,
+        tracker: options.tracker
+      }));
+    });
+
     test('must call onError if Vast response is undefined', async () => {
       const onError = jest.fn();
 
