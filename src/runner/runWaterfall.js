@@ -152,8 +152,8 @@ const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
  * Defaults to `true`.
  * @param {Object} [options.hooks] - Optional map with hooks to configure the behaviour of the ad.
  * @param {Function} [options.hooks.createSkipControl] - If provided it will be called to generate the skip control. Must return a clickable [HTMLElement](https://developer.mozilla.org/es/docs/Web/API/HTMLElement) that is detached from the DOM.
- * @param {Function} [options.hooks.validateVastResponse] - If provided it will be called for each valid vast response. Must throw if there is a problem with the vast response. If the Error instance has an `code` number then it will be tracked using the error macros in the Vast response. It will also call {@link runWaterfall~onError} with the thrown error.
- * @param {Function} [options.hooks.transformVastResponse] - If provided it will be called before building the adUnit allowing the modification of the vastResponse if needed.
+ * @param {Function} [options.hooks.validateVastResponse] - If provided it will be called passing the current {@link VastChain} for each valid vast response. Must throw if there is a problem with the vast response. If the Error instance has an `code` number then it will be tracked using the error macros in the Vast response. It will also call {@link runWaterfall~onError} with the thrown error.
+ * @param {Function} [options.hooks.transformVastResponse] - If provided it will be called with the current {@link VastChain} before building the adUnit allowing the modification of the vastResponse if needed.
  * @returns {Function} - Cancel function. If called it will cancel the ad run. {@link runWaterfall~onRunFinish} will still be called;
  */
 const runWaterfall = (adTag, placeholder, options) => {

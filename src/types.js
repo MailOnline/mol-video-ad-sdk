@@ -129,6 +129,18 @@
  */
 
 /**
+ * VAST InteractiveFile representation
+ * For more info please take a look at the [VAST specification]{@link https://iabtechlab.com/standards/vast/}
+ *
+ * @global
+ * @typedef InteractiveFile
+ * @type Object
+ * @property {string} [apiFramework] - will most likely be `VPAID`
+ * @property {string} [src] - The source file url.
+ * @property {string} [type] - MIME type for the file container like `application/javascript`.
+ */
+
+/**
  * VastTrackingEvent.
  * For more info please take a look at the [VAST specification]{@link https://iabtechlab.com/standards/vast/}
  *
