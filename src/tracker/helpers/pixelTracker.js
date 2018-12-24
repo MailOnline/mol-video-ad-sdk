@@ -3,6 +3,8 @@ import parseMacro from './parseMacro';
 /**
  * Creates a tracking image with the passed URL macro.
  *
+ * @global
+ * @typedef pixelTracker
  * @type TrackerFn
  * @name pixelTracker
  * @param {string} URLMacro - URL Macro that need to be tracked.

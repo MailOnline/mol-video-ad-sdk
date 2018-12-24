@@ -13,6 +13,8 @@ const parser = new DOMParser();
 /**
  * Parses the passed xml text.
  *
+ * @global
+ * @typedef parseXml
  * @throws if there is an error parsing the xml.
  * @param {string} xmlText - XML text to be parsed.
  * @returns {Object} - Returns the parsed xml document as a js object.

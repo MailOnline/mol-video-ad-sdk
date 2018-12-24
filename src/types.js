@@ -22,7 +22,7 @@
  */
 
 /**
- * From [VAST specification]{@link https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}:
+ * From [VAST specification]{@link https://iabtechlab.com/standards/vast/}:
  *
  * Sometimes ad servers would like to collect metadata from the video player when tracking
  * event URIs are accessed. For example, the position of the video player playhead at the time
@@ -76,7 +76,7 @@
 
 /**
  * VastIcon.
- * For more info please take a look at the [VAST specification]{@link https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}
+ * For more info please take a look at the [VAST specification]{@link https://iabtechlab.com/standards/vast/}
  *
  * @global
  * @typedef VastIcon
@@ -106,7 +106,7 @@
 
 /**
  * VAST MediaFile representation.
- * For more info please take a look at the [VAST specification]{@link https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}
+ * For more info please take a look at the [VAST specification]{@link https://iabtechlab.com/standards/vast/}
  *
  * @global
  * @typedef MediaFile
@@ -130,7 +130,7 @@
 
 /**
  * VastTrackingEvent.
- * For more info please take a look at the [VAST specification]{@link https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}
+ * For more info please take a look at the [VAST specification]{@link https://iabtechlab.com/standards/vast/}
  *
  * @global
  * @typedef VastTrackingEvent
@@ -195,7 +195,7 @@
 
 /**
  * {@link VastChain} details object. You can think of it as a summary of the VAST Chain. Useful for debugging purposes and tracking.
- *  for more info about the returned properties please check [VAST specification]{@link https://www.iab.com/guidelines/digital-video-ad-serving-template-vast-4-0/}
+ *  for more info about the returned properties please check [VAST specification]{@link https://iabtechlab.com/standards/vast/}
  *
  * @global
  * @typedef VastChainDetails
