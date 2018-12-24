@@ -2,15 +2,25 @@
 import {trackError} from '../tracker';
 import requestAd from '../vastRequest/requestAd';
 import requestNextAd from '../vastRequest/requestNextAd';
+import {getInteractiveFiles} from '../vastSelectors';
 import isIOS from '../utils/isIOS';
 import run from './run';
 
+const isVpaid = (vastChain) => Boolean(getInteractiveFiles(vastChain[0].ad));
 const validateVastChain = (vastChain, options) => {
   if (!vastChain || vastChain.length === 0) {
     throw new Error('Invalid VastChain');
   }
 
   const lastVastResponse = vastChain[0];
+
+  if (!options.vpaidEnabled && isVpaid(vastChain)) {
+    const error = new Error('VPAID ads are not supported by the current player');
+
+    error.code = 200;
+    lastVastResponse.errorCode = 200;
+    lastVastResponse.error = error;
+  }
 
   if (Boolean(lastVastResponse.error)) {
     throw lastVastResponse.error;
@@ -138,6 +148,8 @@ const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
  * Defaults to `false`
  * @param {number} [options.timeout] - timeout number in milliseconds. If set, the video ad will time out if it doesn't start within the specified time.
  * @param {TrackerFn} [options.tracker] - If provided it will be used to track the VAST events instead of the default {@link pixelTracker}.
+ * @param {boolean} [options.vpaidEnabled] - if false and it gets a VPAID ad, it will throw an error before starting the ad and continue down in the waterfall.
+ * Defaults to `true`.
  * @param {Object} [options.hooks] - Optional map with hooks to configure the behaviour of the ad.
  * @param {Function} [options.hooks.createSkipControl] - If provided it will be called to generate the skip control. Must return a clickable [HTMLElement](https://developer.mozilla.org/es/docs/Web/API/HTMLElement) that is detached from the DOM.
  * @param {Function} [options.hooks.validateVastResponse] - If provided it will be called for each valid vast response. Must throw if there is a problem with the vast response. If the Error instance has an `errorCode` number then it will be tracked using the error macros in the Vast response. It will also call {@link runWaterfall~onError} with the thrown error.
@@ -153,8 +165,11 @@ const runWaterfall = (adTag, placeholder, options) => {
     adUnit = newAdUnit;
     onAdStartHandler(adUnit);
   };
+
   const opts = {
+    vpaidEnabled: true,
     ...options,
+    // eslint-disable-next-line sort-keys
     onAdReady: callbackHandler(options.onAdReady),
     onAdStart,
     onError: callbackHandler(options.onError),
