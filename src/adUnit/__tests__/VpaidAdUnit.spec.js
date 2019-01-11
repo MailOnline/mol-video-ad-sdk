@@ -134,6 +134,10 @@ describe('VpaidAdUnit', () => {
         mockCreativeAd.emit(adStarted);
       });
 
+      mockCreativeAd.stopAd.mockImplementationOnce(() => {
+        mockCreativeAd.emit(adStopped);
+      });
+
       loadCreative.mockReturnValue(Promise.resolve(mockCreativeAd));
       retrieveIcons.mockReturnValue(null);
 
@@ -304,6 +308,10 @@ describe('VpaidAdUnit', () => {
         mockCreativeAd.emit(adStarted);
       });
 
+      mockCreativeAd.stopAd.mockImplementationOnce(() => {
+        mockCreativeAd.emit(adStopped);
+      });
+
       mockCreativeAd.resizeAd.mockImplementationOnce(() => {
         mockCreativeAd.emit(adSizeChange);
       });
@@ -330,7 +338,7 @@ describe('VpaidAdUnit', () => {
 
       await adUnit.start();
 
-      adUnit.cancel();
+      await adUnit.cancel();
 
       expect(mockRemoveIcons).toHaveBeenCalledTimes(1);
     });
@@ -466,7 +474,7 @@ describe('VpaidAdUnit', () => {
 
       await adUnit.start();
       expect(mockDrawIcons).toHaveBeenCalledTimes(1);
-      adUnit.cancel();
+      await adUnit.cancel();
 
       expect(mockDrawIcons).toHaveBeenCalledTimes(1);
 
@@ -559,11 +567,18 @@ describe('VpaidAdUnit', () => {
     });
 
     describe('cancel', () => {
+      jest.useFakeTimers();
+
       test('must throw if the adUnit is finished', async () => {
+        expect.assertions(1);
         await adUnit.start();
         await adUnit.cancel();
 
-        expect(() => adUnit.cancel()).toThrow('VideoAdUnit is finished');
+        try {
+          await adUnit.cancel();
+        } catch (error) {
+          expect(error.message).toBe('VideoAdUnit is finished');
+        }
       });
 
       test('must call stopAd and finish the adUnit', async () => {
@@ -571,6 +586,22 @@ describe('VpaidAdUnit', () => {
         await adUnit.cancel();
 
         expect(mockCreativeAd.stopAd).toHaveBeenCalledTimes(1);
+        expect(adUnit.isFinished()).toBe(true);
+      });
+
+      it('must finish the adUnit if the creative does not emit adStopped event after some time', async () => {
+        mockCreativeAd.stopAd = jest.fn();
+        mockCreativeAd.stopAd.mockImplementationOnce(() => {
+          // empty on purpose
+        });
+
+        await adUnit.start();
+        const cancelPromise = adUnit.cancel();
+
+        expect(mockCreativeAd.stopAd).toHaveBeenCalledTimes(1);
+        expect(adUnit.isFinished()).toBe(false);
+        jest.runOnlyPendingTimers();
+        await cancelPromise;
         expect(adUnit.isFinished()).toBe(true);
       });
     });
@@ -606,6 +637,20 @@ describe('VpaidAdUnit', () => {
         expect(callback).not.toHaveBeenCalled();
 
         adUnit.creativeAd.emit(adVideoComplete);
+
+        expect(callback).toHaveBeenCalledTimes(1);
+      });
+
+      test('must be called once the ad unit stops', async () => {
+        const callback = jest.fn();
+
+        adUnit.onFinish(callback);
+
+        await adUnit.start();
+
+        expect(callback).not.toHaveBeenCalled();
+
+        adUnit.creativeAd.emit(adStopped);
 
         expect(callback).toHaveBeenCalledTimes(1);
       });
@@ -685,6 +730,10 @@ describe('VpaidAdUnit', () => {
 
       mockCreativeAd.startAd.mockImplementationOnce(() => {
         mockCreativeAd.emit(adStarted);
+      });
+
+      mockCreativeAd.stopAd.mockImplementationOnce(() => {
+        mockCreativeAd.emit(adStopped);
       });
 
       loadCreative.mockReturnValue(Promise.resolve(mockCreativeAd));
@@ -814,7 +863,7 @@ describe('VpaidAdUnit', () => {
         adUnit.creativeAd.emit(adPlaying);
         expect(adUnit.paused()).toBe(false);
 
-        adUnit.cancel();
+        await adUnit.cancel();
         expect(adUnit.paused()).toBe(true);
       });
     });
