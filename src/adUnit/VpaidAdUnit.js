@@ -11,6 +11,7 @@ import loadCreative from './helpers/vpaid/loadCreative';
 import {
   adLoaded,
   adStarted,
+  adStopped,
   adPlaying,
   adPaused,
   startAd,
@@ -162,6 +163,14 @@ class VpaidAdUnit extends VideoAdUnit {
           adUnit: this,
           type: creativeView
         });
+      },
+      [adStopped]: () => {
+        this.emit(adStopped, {
+          adUnit: this,
+          type: adStopped
+        });
+
+        this[_protected].finish();
       },
       [adUserAcceptInvitation]: () => {
         this.emit(acceptInvitation, {
@@ -412,12 +421,17 @@ class VpaidAdUnit extends VideoAdUnit {
    *
    * @throws if ad unit is finished.
    */
-  cancel () {
+  async cancel () {
     this[_protected].throwIfFinished();
 
-    this.creativeAd[stopAd]();
+    try {
+      const adStoppedPromise = waitFor(this.creativeAd, adStopped, 3000);
 
-    this[_protected].finish();
+      this.creativeAd[stopAd]();
+      await adStoppedPromise;
+    } catch (error) {
+      this[_protected].finish();
+    }
   }
 
   /**
