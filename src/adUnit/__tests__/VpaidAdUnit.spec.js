@@ -740,7 +740,7 @@ describe('VpaidAdUnit', () => {
       adUnit = new VpaidAdUnit(vpaidChain, videoAdContainer);
     });
 
-    for (const vpaidEvt of EVENTS) {
+    for (const vpaidEvt of EVENTS.filter((evt) => evt !== adLoaded)) {
       test(`${vpaidEvt} must be emitted by the ad unit`, async () => {
         const callback = jest.fn();
 
