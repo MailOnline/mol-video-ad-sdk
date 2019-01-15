@@ -65,6 +65,9 @@ const {
   closeLinear
 } = linearEvents;
 
+// NOTE some ads only allow one handler per event and we need to subscribe to the adLoaded to know the creative is loaded.
+const VPAID_EVENTS = EVENTS.filter((event) => event !== adLoaded);
+
 // eslint-disable-next-line id-match
 const _private = Symbol('_private');
 
@@ -309,7 +312,7 @@ class VpaidAdUnit extends VideoAdUnit {
       this.creativeAd = await this[_private].loadCreativePromise;
       const adLoadedPromise = waitFor(this.creativeAd, adLoaded);
 
-      for (const creativeEvt of EVENTS) {
+      for (const creativeEvt of VPAID_EVENTS) {
         this.creativeAd.subscribe(this[_private].handleVpaidEvt.bind(this, creativeEvt), creativeEvt);
       }
 
