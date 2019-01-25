@@ -18,6 +18,14 @@ import VpaidAdUnit from '../../../adUnit/VpaidAdUnit';
 import canPlay from '../../../adUnit/helpers/media/canPlay';
 import VideoAdContainer from '../../../adContainer/VideoAdContainer';
 import startVideoAd from '../startVideoAd';
+import {
+  start,
+  closeLinear
+} from '../../../tracker/linearEvents';
+import {
+  adStopped,
+  adUserClose
+} from '../../../adUnit/helpers/vpaid/api';
 
 jest.mock('../../../adUnit/createVideoAdUnit');
 jest.mock('../../../adUnit/helpers/media/canPlay');
@@ -170,14 +178,38 @@ describe('startVideoAd', () => {
     expect(startVideoAd(vastAdChain, videoAdContainer, options)).rejects.toBe(adUnitError);
   });
 
-  test('must cancel the ad unit if there is an error starting the VPAID ad unit', async () => {
+  [
+    adUserClose,
+    adStopped,
+    closeLinear
+  ].forEach((event) => {
+    test(`must cancel the ad unit start on '${event}' event`, async () => {
+      expect.assertions(1);
+      const adUnit = createAdUnitMock(vastAdChain, videoAdContainer, options);
+
+      createVideoAdUnit.mockImplementation(() => {
+        adUnit.start = () => {
+          adUnit.emit(event);
+        };
+
+        return adUnit;
+      });
+
+      try {
+        await startVideoAd(vpaidAdChain, videoAdContainer, options);
+      } catch (error) {
+        expect(error.message).toBe(`Ad unit start rejected due to event '${event}'`);
+      }
+    });
+  });
+
+  test('must onAdReady event if the ad unit gets canceled', async () => {
     expect.assertions(5);
     canPlay.mockReturnValue(false);
     const adUnitError = new Error('adUnit error');
     const adUnit = createVPAIDAdUnitMock(vpaidAdChain, videoAdContainer, options);
 
     createVideoAdUnit.mockImplementation(() => {
-    // eslint-disable-next-line promise/always-return, promise/always-return, promise/catch-or-return, promise/prefer-await-to-then
       adUnit.start = () => {
         adUnit.__simulateError(adUnitError);
       };
@@ -206,7 +238,7 @@ describe('startVideoAd', () => {
     createVideoAdUnit.mockImplementation(() => {
     // eslint-disable-next-line promise/always-return, promise/always-return, promise/catch-or-return, promise/prefer-await-to-then
       adUnit.start = () => {
-        adUnit.emit('start');
+        adUnit.emit(start);
       };
 
       return adUnit;
@@ -256,7 +288,7 @@ describe('startVideoAd', () => {
         // eslint-disable-next-line promise/always-return, promise/always-return, promise/catch-or-return, promise/prefer-await-to-then
 
           adUnit.start = () => {
-            adUnit.emit('start');
+            adUnit.emit(start);
           };
 
           return adUnit;
