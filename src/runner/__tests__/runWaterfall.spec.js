@@ -485,6 +485,73 @@ describe('runWaterfall', () => {
         timeout: 600
       }));
     });
+
+    it('must finish the ad run if it times out fetching an ad', async () => {
+      const deferred = defer();
+      const opts = {
+        timeout: 1000
+      };
+      const onAdStart = jest.fn();
+      const onError = jest.fn();
+
+      Date.now.mockReturnValueOnce(1000);
+      Date.now.mockReturnValueOnce(10000);
+
+      runWaterfall(adTag, placeholder, {
+        ...opts,
+        onAdStart,
+        onError,
+        onRunFinish: () => deferred.resolve()
+      });
+
+      await deferred.promise;
+
+      expect(requestAd).toHaveBeenCalledTimes(1);
+      expect(requestAd).toHaveBeenCalledWith(adTag, expect.objectContaining({
+        ...opts,
+        timeout: 1000
+      }));
+
+      expect(run).toHaveBeenCalledTimes(0);
+      expect(onAdStart).toHaveBeenCalledTimes(0);
+      expect(onError).toHaveBeenCalledTimes(1);
+    });
+
+    test('must not continue the waterfall if ad run has timed out', async () => {
+      const deferred = defer();
+      const opts = {
+        timeout: 1000
+      };
+      const onAdStart = jest.fn();
+      const onError = jest.fn();
+
+      Date.now.mockReturnValueOnce(1000);
+      Date.now.mockReturnValueOnce(1100);
+      Date.now.mockReturnValueOnce(2100);
+
+      run.mockReturnValue(Promise.reject(new Error('Ad start timeout simulation')));
+      requestAd.mockReturnValue(Promise.resolve(vastAdChain));
+      requestNextAd.mockReturnValueOnce(Promise.resolve(vastAdChain));
+
+      runWaterfall(adTag, placeholder, {
+        ...opts,
+        onAdStart,
+        onError,
+        onRunFinish: () => deferred.resolve()
+      });
+
+      await deferred.promise;
+
+      expect(requestAd).toHaveBeenCalledTimes(1);
+      expect(requestAd).toHaveBeenCalledWith(adTag, expect.objectContaining({
+        ...opts,
+        timeout: 1000
+      }));
+
+      expect(run).toHaveBeenCalledTimes(1);
+      expect(onAdStart).toHaveBeenCalledTimes(0);
+      expect(onError).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('cancel fn', () => {

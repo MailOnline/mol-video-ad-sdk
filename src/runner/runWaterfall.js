@@ -46,6 +46,7 @@ const transformVastResponse = (vastChain, {hooks}) => {
   return vastChain;
 };
 
+// eslint-disable-next-line complexity
 const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
   let vastChain;
   let runEpoch;
@@ -110,14 +111,16 @@ const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
         opts.timeout -= Date.now() - runEpoch;
       }
 
-      waterfall(
-        () => requestNextAd(vastChain, opts),
-        placeholder,
-        {...opts},
-        isCanceled
-      );
+      if (!runEpoch || opts.timeout > 0) {
+        waterfall(
+          () => requestNextAd(vastChain, opts),
+          placeholder,
+          {...opts},
+          isCanceled
+        );
 
-      return;
+        return;
+      }
     }
 
     onRunFinish();
