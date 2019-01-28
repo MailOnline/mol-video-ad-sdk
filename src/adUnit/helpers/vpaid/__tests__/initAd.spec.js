@@ -39,7 +39,7 @@ describe('initAd', () => {
       'thumbnail',
       -1,
       {
-        AdParameters: 'AD_PARAMETERS_DATA',
+        AdParameters: 'AD_PARAMETERS_DATA <![CDATA[nested cdata]]>',
         xmlEncoded: false
       },
       {

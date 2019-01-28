@@ -595,7 +595,7 @@ test('getCreativeData must return the adParameters', () => {
   });
 
   expect(getCreativeData(vastVpaidInlineXML)).toEqual({
-    AdParameters: 'AD_PARAMETERS_DATA',
+    AdParameters: 'AD_PARAMETERS_DATA <![CDATA[nested cdata]]>',
     xmlEncoded: false
   });
 });
