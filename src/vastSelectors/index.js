@@ -501,8 +501,11 @@ const getAdParametersContent = (xml) => {
   const paramsRegex = /<AdParameters[\s\w="]*>([\s\S]*)<\/AdParameters>/gm;
   const result = paramsRegex.exec(xml);
 
-  return result && result[1].replace('<![CDATA[', '')
-    .replace(']]>', '')
+  return result && result[1].replace(/[\n\s]*<!\[CDATA\[[\n\s]*/, '')
+    .replace(/[\n\s]*\]\]>[\n\s]*$/, '')
+
+    // unescape nested CDATA
+    .replace(/\]\]\]\]><!\[CDATA\[>/, ']]>')
     .trim();
 };
 
