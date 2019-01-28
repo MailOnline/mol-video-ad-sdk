@@ -849,6 +849,43 @@ describe('VpaidAdUnit', () => {
       });
     });
 
+    test('must emit start event once', async () => {
+      const callback = jest.fn();
+
+      adUnit.on(start, callback);
+      await adUnit.start();
+
+      adUnit.creativeAd.emit(adVideoStart);
+      adUnit.creativeAd.emit(adVideoStart);
+      adUnit.creativeAd.emit(adVideoStart);
+      expect(callback).toHaveBeenCalledTimes(1);
+    });
+
+    test('must fake `adVideoStarted` on adImpression if not called already', async () => {
+      const callback = jest.fn();
+
+      adUnit.on(start, callback);
+      await adUnit.start();
+
+      adUnit.creativeAd.emit(adImpression);
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledWith({
+        adUnit,
+        type: start
+      });
+    });
+
+    test('must not fake `adVideoStarted` on adImpression if called already', async () => {
+      const callback = jest.fn();
+
+      adUnit.on(start, callback);
+      await adUnit.start();
+      adUnit.creativeAd.emit(adVideoStart);
+      expect(callback).toHaveBeenCalledTimes(1);
+      adUnit.creativeAd.emit(adImpression);
+      expect(callback).toHaveBeenCalledTimes(1);
+    });
+
     describe('paused', () => {
       it('must return true if the creative is paused and false otherwise', async () => {
         await adUnit.start();
