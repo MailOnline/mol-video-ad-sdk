@@ -129,6 +129,11 @@ class VpaidAdUnit extends VideoAdUnit {
         });
       },
       [adImpression]: () => {
+        // NOTE: some ads forget to trigger the adVideoStart event. :(
+        if (!this[_private].videoStart) {
+          this[_private].handleVpaidEvt(adVideoStart);
+        }
+
         this.emit(impression, {
           adUnit: this,
           type: impression
@@ -216,11 +221,14 @@ class VpaidAdUnit extends VideoAdUnit {
         });
       },
       [adVideoStart]: () => {
-        this[_private].paused = false;
-        this.emit(start, {
-          adUnit: this,
-          type: start
-        });
+        if (!this[_private].videoStart) {
+          this[_private].videoStart = true;
+          this[_private].paused = false;
+          this.emit(start, {
+            adUnit: this,
+            type: start
+          });
+        }
       },
       [adVideoThirdQuartile]: () => {
         this.emit(thirdQuartile, {
