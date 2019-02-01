@@ -277,7 +277,7 @@ class VideoAdUnit extends Emitter {
    *
    * @throws if ad unit is finished.
    *
-   * @param {Function} callback - will be called on ad unit error passing the Error instance as the only argument if available.
+   * @param {Function} callback - will be called on ad unit error passing the Error instance  and an object with the adUnit and the  {@link VastChain}.
    */
   onError (callback) {
     if (typeof callback !== 'function') {

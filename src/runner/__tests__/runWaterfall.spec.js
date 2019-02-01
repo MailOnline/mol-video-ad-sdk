@@ -311,8 +311,16 @@ describe('runWaterfall', () => {
       await deferred.promise;
 
       expect(onError).toHaveBeenCalledTimes(3);
-      expect(onError).toHaveBeenCalledWith(runError);
-      expect(onError).toHaveBeenCalledWith(requestError);
+      expect(onError).toHaveBeenCalledWith(runError, {
+        adUnit: undefined,
+        vastChain: vastAdChain
+      });
+
+      expect(onError).toHaveBeenCalledWith(requestError, {
+        adUnit: undefined,
+        vastChain: undefined
+      });
+
       expect(requestAd).toHaveBeenCalledTimes(1);
       expect(requestAd).toHaveBeenCalledWith(adTag, expect.any(Object));
       expect(requestNextAd).toHaveBeenCalledTimes(2);
@@ -340,10 +348,16 @@ describe('runWaterfall', () => {
       const simulateAdUnitError = adUnit.onError.mock.calls[0][0];
       const mockError = new Error('mock error');
 
-      simulateAdUnitError(mockError);
+      simulateAdUnitError(mockError, {
+        adUnit,
+        vastChain: vastAdChain
+      });
 
       expect(onError).toHaveBeenCalledTimes(1);
-      expect(onError).toHaveBeenCalledWith(mockError);
+      expect(onError).toHaveBeenCalledWith(mockError, {
+        adUnit,
+        vastChain: adUnit.vastChain
+      });
     });
   });
 

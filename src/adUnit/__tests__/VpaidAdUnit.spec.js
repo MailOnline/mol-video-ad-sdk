@@ -693,7 +693,10 @@ describe('VpaidAdUnit', () => {
         } catch (error) {
           expect(error).toBe(handshakeVersionError);
           expect(callback).toHaveBeenCalledTimes(1);
-          expect(callback).toHaveBeenCalledWith(handshakeVersionError);
+          expect(callback).toHaveBeenCalledWith(handshakeVersionError, {
+            adUnit,
+            vastChain: adUnit.vastChain
+          });
         }
       });
 
@@ -709,10 +712,12 @@ describe('VpaidAdUnit', () => {
         adUnit.creativeAd.emit(adError);
 
         expect(callback).toHaveBeenCalledTimes(1);
-        expect(callback).toHaveBeenCalledWith(expect.any(Error));
         expect(callback).toHaveBeenCalledWith(expect.objectContaining({
           message: 'VPAID general error'
-        }));
+        }), {
+          adUnit,
+          vastChain: adUnit.vastChain
+        });
       });
     });
   });

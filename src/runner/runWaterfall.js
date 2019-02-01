@@ -104,7 +104,10 @@ const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
       });
     }
 
-    onError(error);
+    onError(error, {
+      adUnit,
+      vastChain
+    });
 
     if (vastChain && !isCanceled()) {
       if (runEpoch) {
@@ -143,7 +146,7 @@ const waterfall = async (fetchVastChain, placeholder, options, isCanceled) => {
  *  Defaults to `5`.
  * @param {runWaterfall~onAdReady} [options.onAdReady] - will be called once the ad is ready with the ad unit.
  * @param {runWaterfall~onAdStart} [options.onAdStart] - will be called once the ad starts with the ad unit.
- * @param {runWaterfall~onError} [options.onError] - will be called if there is an error with the video ad with the error instance.
+ * @param {runWaterfall~onError} [options.onError] - will be called if there is an error with the video ad with the error instance and an obj with the {@link VastChain} and the ad unit if it exists.
  * @param {runWaterfall~onRunFinish} [options.onRunFinish] - will be called whenever the ad run finishes.
  * @param {boolean} [options.viewability] - if true it will pause the ad whenever is not visible for the viewer.
  * Defaults to `false`
@@ -223,6 +226,9 @@ export default runWaterfall;
  *
  * @callback RunWaterfall~onError
  * @param {Error} error - the ad unit error.
+ * @param {Object} [data] - Data object that will contain:
+ * @param {VastChain} [data.vastChain] - The {@link VastChain} that caused the error.
+ * @param {VideoAdUnit} [data.adUnit] - Ad unit instance it can be a {@link VastAdUnit} or a {@link VpaidAdUnit}. Will only be added if the vastChain had an ad.
  */
 
 /**
