@@ -33,7 +33,10 @@ class VastAdUnit extends VideoAdUnit {
       case errorEvt: {
         this.error = data;
         this.errorCode = this.error && this.error.code ? this.error.code : 405;
-        this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
+        this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error, {
+          adUnit: this,
+          vastChain: this.vastChain
+        }));
         this[_protected].finish();
         break;
       }
