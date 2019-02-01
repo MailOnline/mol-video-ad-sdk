@@ -119,7 +119,10 @@ class VpaidAdUnit extends VideoAdUnit {
         this.error = vpaidGeneralError(payload);
         this.errorCode = this.error.code;
 
-        this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error));
+        this[_protected].onErrorCallbacks.forEach((callback) => callback(this.error, {
+          adUnit: this,
+          vastChain: this.vastChain
+        }));
 
         this[_protected].finish();
 

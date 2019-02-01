@@ -303,7 +303,10 @@ describe('VastAdUnit', () => {
       type: errorEvt
     });
     expect(onErrorCallback).toHaveBeenCalledTimes(1);
-    expect(onErrorCallback).toHaveBeenCalledWith(adUnit.error);
+    expect(onErrorCallback).toHaveBeenCalledWith(adUnit.error, {
+      adUnit,
+      vastChain
+    });
   });
 
   test('start must select a mediaFile and update the src and the assetUri', async () => {
@@ -492,7 +495,10 @@ describe('VastAdUnit', () => {
 
     videoElement.dispatchEvent(new Event('error'));
     expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith(mediaError);
+    expect(callback).toHaveBeenCalledWith(mediaError, {
+      adUnit,
+      vastChain
+    });
     expect(adUnit.error).toBe(mediaError);
     expect(adUnit.errorCode).toBe(405);
     expect(adUnit.isFinished()).toBe(true);
