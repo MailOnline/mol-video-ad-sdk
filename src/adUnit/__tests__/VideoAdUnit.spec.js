@@ -44,6 +44,7 @@ describe('VideoAdUnit', () => {
   let vpaidChain;
   let videoAdContainer;
   let stopPreventManualProgress;
+  let origScreen;
 
   beforeEach(() => {
     vpaidChain = [
@@ -58,11 +59,25 @@ describe('VideoAdUnit', () => {
     videoAdContainer = new VideoAdContainer(document.createElement('DIV'));
     stopPreventManualProgress = jest.fn();
     preventManualProgress.mockReturnValue(stopPreventManualProgress);
+    origScreen = window.screen;
+
+    Object.defineProperty(window, 'screen', {
+      value: {
+        height: 800,
+        width: 1200
+      },
+      writable: true
+    });
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
     jest.clearAllMocks();
+
+    Object.defineProperty(window, 'screen', {
+      value: origScreen,
+      writable: true
+    });
   });
 
   test('must prevent manual progress while the ad unit is running', () => {

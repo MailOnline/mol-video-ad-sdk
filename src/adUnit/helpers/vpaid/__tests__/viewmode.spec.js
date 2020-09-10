@@ -1,8 +1,29 @@
 import viewmode from '../viewmode';
 
 describe('viewmode', () => {
+  let origScreen;
+
+  beforeEach(() => {
+    origScreen = window.screen;
+
+    Object.defineProperty(window, 'screen', {
+      value: {
+        height: 800,
+        width: 1200
+      },
+      writable: true
+    });
+  });
+
+  afterEach(() => {
+    Object.defineProperty(window, 'screen', {
+      value: origScreen,
+      writable: true
+    });
+  });
+
   test('must return `fullscreen` if the width and the height are about the viewport size', () => {
-    expect(viewmode(innerWidth, innerHeight)).toBe('fullscreen');
+    expect(viewmode(window.screen.width, window.screen.height)).toBe('fullscreen');
   });
 
   test('must return `thumbnail` if the width is smaller than 400', () => {
