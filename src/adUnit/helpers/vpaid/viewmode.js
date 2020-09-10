@@ -1,5 +1,6 @@
 const viewmode = (width, height) => {
-  const isFullscreen = width + 100 > innerWidth && height + 100 > innerHeight;
+  const screen = window.screen;
+  const isFullscreen = width + 100 > screen.width && height + 100 > screen.height;
 
   if (isFullscreen) {
     return 'fullscreen';

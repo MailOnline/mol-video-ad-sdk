@@ -13,6 +13,7 @@ jest.mock('../handshake');
 describe('initAd', () => {
   let vpaidChain;
   let videoAdContainer;
+  let origScreen;
 
   beforeEach(() => {
     vpaidChain = [
@@ -25,6 +26,21 @@ describe('initAd', () => {
       }
     ];
     videoAdContainer = new VideoAdContainer(document.createElement('DIV'));
+    origScreen = window.screen;
+    Object.defineProperty(window, 'screen', {
+      value: {
+        height: 800,
+        width: 1200
+      },
+      writable: true
+    });
+  });
+
+  afterEach(() => {
+    Object.defineProperty(window, 'screen', {
+      value: origScreen,
+      writable: true
+    });
   });
 
   test('must init the creative', async () => {
